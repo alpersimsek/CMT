@@ -35,8 +35,9 @@
             </Label>
          </children>
       </Pane>
-      <FontAwesomeIconView fx:id="btnToExcel" fill="#ff007f" glyphName="FILE_EXCEL_ALT" layoutX="1105.0" layoutY="49.0" onMouseEntered="#handleMouseOver" size="23" visible="false" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="25.0" />
-      <FontAwesomeIconView fx:id="btnBack" fill="#ff007f" glyphName="ANGLE_DOUBLE_LEFT" layoutX="1146.0" layoutY="49.0" onMouseEntered="#handleMouseOver" size="23" visible="false" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="25.0" />
+      <FontAwesomeIconView fx:id="btnToExcel" fill="#ff007f" glyphName="FILE_EXCEL_ALT" layoutX="1105.0" layoutY="49.0" onMouseEntered="#handleMouseOver" size="23" visible="false" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="25.0" />
+      <FontAwesomeIconView fx:id="btnBack" fill="#ff007f" glyphName="ANGLE_DOUBLE_LEFT" layoutX="1146.0" layoutY="49.0" onMouseEntered="#handleMouseOver" size="23" visible="false" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="25.0" />
+      <FontAwesomeIconView fx:id="btnInfo" fill="#ff007f" glyphName="INFO_CIRCLE" onMouseClicked="#handleMouseClicked" onMouseEntered="#handleMouseOver" size="23" visible="false" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="25.0" />
       <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="150.0" style="-fx-background-color: #1D1F21;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <VBox prefHeight="640.0" prefWidth="200.0" style="-fx-background-color: #1D1F21;" stylesheets="@fullpackstyling.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
@@ -799,8 +800,8 @@
                         <RowConstraints maxHeight="610.0" minHeight="610.0" prefHeight="610.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Pane fx:id="browserLoginPane" prefHeight="810.0" prefWidth="1024.0" />
-                        <Pane fx:id="browserDownloadPane" layoutX="10.0" layoutY="10.0" prefHeight="810.0" prefWidth="1024.0" />
+                        <Pane fx:id="browserLoginPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="610.0" prefWidth="850.0" />
+                        <Pane fx:id="browserDownloadPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="610.0" prefWidth="850.0" />
                      </children>
                   </GridPane>
                </children>
@@ -1090,6 +1091,436 @@
                   </Pane>
                </children>
             </AnchorPane>
+            <AnchorPane fx:id="apnMyCases" minHeight="610.0" minWidth="850.0" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <GridPane alignment="CENTER" layoutX="421.0" layoutY="28.0" prefHeight="157.0" prefWidth="600.0" stylesheets="@home.css" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="0.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUSTOMER UPDATED" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnMyBCupdated" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="COMMENTING_ALT" size="38" />
+                           </graphic>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="BUSINESS CRITICAL CASES" textAlignment="CENTER" wrappingWidth="597.775390625">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnMyBCWac" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="COMMENT_ALT" size="38" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="10.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WITH CUSTMOMER" textAlignment="CENTER" wrappingWidth="131.775390625" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnMyBCWIP" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="49.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="KEYBOARD_ALT" size="38" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnMyBCINACT" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="49.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BED" size="38" />
+                           </graphic>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="WORK IN PROGRESS" textAlignment="CENTER" wrappingWidth="143.775390625" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="400.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INACTIVE" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnMyBCEngineering" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BUG" size="38" />
+                           </graphic>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ENGINEERING" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </GridPane>
+                  <GridPane alignment="CENTER" layoutX="375.0" layoutY="262.0" prefHeight="160.0" prefWidth="600.0" stylesheets="@home.css" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="160.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUSTOMER UPDATED" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnMyMJupdated" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="COMMENTING_ALT" size="38" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnMyMJWac" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="COMMENT_ALT" size="38" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="10.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WITH CUSTMOMER" textAlignment="CENTER" wrappingWidth="131.775390625" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MAJOR CASES" textAlignment="CENTER" wrappingWidth="600.775390625">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnMyMJWIP" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="KEYBOARD_ALT" size="38" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnMyMJINACT" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BED" size="38" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WORK IN PROGRESS" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="400.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INACTIVE" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnMyMJEngineering" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="50.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BUG" size="38" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ENGINEERING" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </GridPane>
+                  <GridPane alignment="CENTER" layoutX="441.0" layoutY="489.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="287.0" prefWidth="569.0" stylesheets="@home.css" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="320.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MJ's COMING DUE" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnMyMJDue" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="HOURGLASS_HALF" size="38" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnMyBCMissed" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BOMB" size="38" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="10.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BC MISSED DUE" textAlignment="CENTER" wrappingWidth="131.775390625" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CALENDAR AGE RESPONSIVENESS" textAlignment="CENTER" wrappingWidth="520.775390625">
+                           <font>
+                              <Font name="System Bold" size="24.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnMyBCDue" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="HOURGLASS_HALF" size="38" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BC's COMING DUE" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnMyMJMissed" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="50.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BOMB" size="38" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MJ's MISSED DUE" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="3" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnMyQueue" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="TH_LIST" size="38" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="140.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="QUEUE" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="3" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UPDATE TODAY" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UPDATE MISSED" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UPDATE NOT SET" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnMyUpdateToday" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="400.0" layoutY="258.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="CALENDAR" size="38" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnMyUpdateMissed" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="400.0" layoutY="258.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="CALENDAR_TIMES_ALT" size="38" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnMyUpdateNull" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="400.0" layoutY="258.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="CALENDAR_TIMES_ALT" size="38" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </GridPane>
+                  <GridPane alignment="CENTER" prefHeight="610.0" prefWidth="217.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="0.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Button fx:id="btnMyE1Cases" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="120.0" text="0" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="FIRE" size="38" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnMyE2Cases" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="120.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="CHAIN_BROKEN" size="38" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnMyOutFollow" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="120.0" text="0" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="FIRE_EXTINGUISHER" size="38" />
+                           </graphic>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="OVERVIEW" textAlignment="CENTER" wrappingWidth="241.775390625">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="10.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOT LIST" textAlignment="CENTER" wrappingWidth="126.775390625" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnMyEscalated" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="268.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="120.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="BULLHORN" size="38" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnMyHotIssues" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="120.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="BOLT" size="38" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="10.0" layoutY="463.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BC CASES" textAlignment="CENTER" wrappingWidth="126.775390625" GridPane.rowIndex="5">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnMyBCCases" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="120.0" text="0" GridPane.rowIndex="6">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="SUITCASE" size="38" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="10.0" layoutY="656.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INACTIVE" textAlignment="CENTER" wrappingWidth="126.775390625" GridPane.columnIndex="1" GridPane.rowIndex="7">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnMyInactive" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="664.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="120.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="BED" size="38" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnMyWOH" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="183.0" layoutY="664.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="120.0" text="0" GridPane.rowIndex="8">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="STACK_EXCHANGE" size="38" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="183.0" layoutY="656.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ACTIVE WOH" textAlignment="CENTER" wrappingWidth="126.775390625" GridPane.rowIndex="7">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="10.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E1 FOLLOW-UP" wrappingWidth="142.775390625" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="10.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ESCALATED" textAlignment="CENTER" wrappingWidth="126.775390625" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E2" textAlignment="CENTER" wrappingWidth="134.775390625" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CRITICAL" textAlignment="CENTER" wrappingWidth="126.775390625" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
             <AnchorPane fx:id="apnHome" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <GridPane alignment="CENTER" prefHeight="610.0" prefWidth="217.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="0.0">
@@ -1109,7 +1540,7 @@
                         <RowConstraints minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Button fx:id="btnE1Cases" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.rowIndex="2">
+                        <Button fx:id="btnE1Cases" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="120.0" text="0" GridPane.rowIndex="2">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -1117,7 +1548,7 @@
                               <FontAwesomeIconView fill="#f70000" glyphName="FIRE" size="38" />
                            </graphic>
                         </Button>
-                        <Button fx:id="btnE2Cases" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Button fx:id="btnE2Cases" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="120.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -1125,7 +1556,7 @@
                               <FontAwesomeIconView fill="#f70000" glyphName="CHAIN_BROKEN" size="38" />
                            </graphic>
                         </Button>
-                        <Button fx:id="btnOutFollow" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.rowIndex="4">
+                        <Button fx:id="btnOutFollow" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="120.0" text="0" GridPane.rowIndex="4">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -1133,7 +1564,7 @@
                               <FontAwesomeIconView fill="#4a4a4a" glyphName="FIRE_EXTINGUISHER" size="38" />
                            </graphic>
                         </Button>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="OVERVIEW" textAlignment="CENTER" wrappingWidth="260.775390625">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="OVERVIEW" textAlignment="CENTER" wrappingWidth="241.775390625">
                            <font>
                               <Font name="System Bold" size="22.0" />
                            </font>
@@ -1143,7 +1574,7 @@
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <Button fx:id="btnEscalated" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="268.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <Button fx:id="btnEscalated" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="268.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="120.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -1151,7 +1582,7 @@
                               <FontAwesomeIconView fill="#f70000" glyphName="BULLHORN" size="38" />
                            </graphic>
                         </Button>
-                        <Button fx:id="btnHotIssues" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                        <Button fx:id="btnHotIssues" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="120.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -1164,7 +1595,7 @@
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <Button fx:id="btnBCCases" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.rowIndex="6">
+                        <Button fx:id="btnBCCases" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="120.0" text="0" GridPane.rowIndex="6">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -1177,7 +1608,7 @@
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <Button fx:id="btnInactive" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="664.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                        <Button fx:id="btnInactive" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="664.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="120.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -1185,7 +1616,7 @@
                               <FontAwesomeIconView fill="#f70000" glyphName="BED" size="38" />
                            </graphic>
                         </Button>
-                        <Button fx:id="btnWOH" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="183.0" layoutY="664.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.rowIndex="8">
+                        <Button fx:id="btnWOH" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="183.0" layoutY="664.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="120.0" text="0" GridPane.rowIndex="8">
                            <font>
                               <Font size="30.0" />
                            </font>
@@ -1541,436 +1972,6 @@
                         <Text layoutX="401.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MN's MISSED DUE" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="4" GridPane.rowIndex="1">
                            <font>
                               <Font size="13.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </GridPane>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="apnMyCases" minHeight="610.0" minWidth="850.0" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
-               <children>
-                  <GridPane alignment="CENTER" layoutX="421.0" layoutY="28.0" prefHeight="157.0" prefWidth="600.0" stylesheets="@home.css" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="0.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUSTOMER UPDATED" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnMyBCupdated" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="COMMENTING_ALT" size="38" />
-                           </graphic>
-                        </Button>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="BUSINESS CRITICAL CASES" textAlignment="CENTER" wrappingWidth="597.775390625">
-                           <font>
-                              <Font name="System Bold" size="22.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnMyBCWac" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="COMMENT_ALT" size="38" />
-                           </graphic>
-                        </Button>
-                        <Text layoutX="10.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WITH CUSTMOMER" textAlignment="CENTER" wrappingWidth="131.775390625" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnMyBCWIP" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="49.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="KEYBOARD_ALT" size="38" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnMyBCINACT" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="49.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BED" size="38" />
-                           </graphic>
-                        </Button>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="WORK IN PROGRESS" textAlignment="CENTER" wrappingWidth="143.775390625" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="400.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INACTIVE" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnMyBCEngineering" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BUG" size="38" />
-                           </graphic>
-                        </Button>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ENGINEERING" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </GridPane>
-                  <GridPane alignment="CENTER" layoutX="375.0" layoutY="262.0" prefHeight="160.0" prefWidth="600.0" stylesheets="@home.css" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="160.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUSTOMER UPDATED" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnMyMJupdated" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="COMMENTING_ALT" size="38" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnMyMJWac" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="COMMENT_ALT" size="38" />
-                           </graphic>
-                        </Button>
-                        <Text layoutX="10.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WITH CUSTMOMER" textAlignment="CENTER" wrappingWidth="131.775390625" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MAJOR CASES" textAlignment="CENTER" wrappingWidth="600.775390625">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnMyMJWIP" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="KEYBOARD_ALT" size="38" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnMyMJINACT" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BED" size="38" />
-                           </graphic>
-                        </Button>
-                        <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WORK IN PROGRESS" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="400.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INACTIVE" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnMyMJEngineering" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="50.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BUG" size="38" />
-                           </graphic>
-                        </Button>
-                        <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ENGINEERING" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </GridPane>
-                  <GridPane alignment="CENTER" layoutX="441.0" layoutY="489.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="287.0" prefWidth="569.0" stylesheets="@home.css" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="320.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MJ's COMING DUE" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnMyMJDue" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="HOURGLASS_HALF" size="38" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnMyBCMissed" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BOMB" size="38" />
-                           </graphic>
-                        </Button>
-                        <Text layoutX="10.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BC MISSED DUE" textAlignment="CENTER" wrappingWidth="131.775390625" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CALENDAR AGE RESPONSIVENESS" textAlignment="CENTER" wrappingWidth="520.775390625">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnMyBCDue" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="HOURGLASS_HALF" size="38" />
-                           </graphic>
-                        </Button>
-                        <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BC's COMING DUE" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnMyMJMissed" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="50.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BOMB" size="38" />
-                           </graphic>
-                        </Button>
-                        <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MJ's MISSED DUE" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnMyQueue" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="TH_LIST" size="38" />
-                           </graphic>
-                        </Button>
-                        <Text layoutX="140.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="QUEUE" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UPDATE TODAY" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UPDATE MISSED" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UPDATE NOT SET" textAlignment="CENTER" wrappingWidth="136.775390625" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnMyUpdateToday" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="400.0" layoutY="258.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="CALENDAR" size="38" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnMyUpdateMissed" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="400.0" layoutY="258.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="CALENDAR_TIMES_ALT" size="38" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnMyUpdateNull" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="400.0" layoutY="258.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="CALENDAR_TIMES_ALT" size="38" />
-                           </graphic>
-                        </Button>
-                     </children>
-                  </GridPane>
-                  <GridPane alignment="CENTER" hgap="10.0" layoutX="35.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="558.0" prefWidth="238.0" stylesheets="@home.css" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="0.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Button fx:id="btnMyE1Cases" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#f70000" glyphName="FIRE" size="38" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnMyE2Cases" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#f70000" glyphName="CHAIN_BROKEN" size="38" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnMyOutFollow" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="FIRE_EXTINGUISHER" size="38" />
-                           </graphic>
-                        </Button>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="OVERVIEW" textAlignment="CENTER" wrappingWidth="225.775390625">
-                           <font>
-                              <Font name="System Bold" size="22.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="10.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOT LIST" textAlignment="CENTER" wrappingWidth="110.775390625" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnMyEscalated" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="268.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#f70000" glyphName="BULLHORN" size="38" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnMyHotIssues" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="466.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#f70000" glyphName="BOLT" size="38" />
-                           </graphic>
-                        </Button>
-                        <Text layoutX="10.0" layoutY="463.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BC CASES" textAlignment="CENTER" wrappingWidth="111.775390625" GridPane.rowIndex="5">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnMyBCCases" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="466.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.rowIndex="6">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#f70000" glyphName="SUITCASE" size="38" />
-                           </graphic>
-                        </Button>
-                        <Text layoutX="10.0" layoutY="656.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INACTIVE" textAlignment="CENTER" wrappingWidth="109.775390625" GridPane.columnIndex="1" GridPane.rowIndex="7">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnMyInactive" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="664.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="8">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#f70000" glyphName="BED" size="38" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnMyWOH" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="183.0" layoutY="664.0" maxHeight="100.0" maxWidth="110.0" minHeight="100.0" minWidth="110.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.rowIndex="8">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="STACK_EXCHANGE" size="38" />
-                           </graphic>
-                        </Button>
-                        <Text layoutX="183.0" layoutY="656.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ACTIVE WOH" textAlignment="CENTER" wrappingWidth="110.775390625" GridPane.rowIndex="7">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="10.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E1 FOLLOWUP" wrappingWidth="116.775390625" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="10.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ESCALATED" textAlignment="CENTER" wrappingWidth="109.775390625" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E2" textAlignment="CENTER" wrappingWidth="109.775390625" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CRITICAL" textAlignment="CENTER" wrappingWidth="110.775390625" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="18.0" />
                            </font>
                         </Text>
                      </children>

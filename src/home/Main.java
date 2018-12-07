@@ -1,18 +1,11 @@
 package home;
 
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
-import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
 import java.awt.*;
 
 import static com.sun.org.apache.xerces.internal.utils.SecuritySupport.getResourceAsStream;
@@ -33,7 +26,7 @@ public class Main extends Application {
         if (screenHeight > 1025) {
 
             loader = new FXMLLoader(getClass().getResource("Main.fxml"));
-            Pane root = (Pane) loader.load();
+            Parent root = loader.load();
             primaryStage.setTitle("RBBN Case Management Tool");
             primaryStage.getIcons().add(new Image("home/image/rbbicon.png"));
             primaryStage.setScene(new Scene(root, 1280, 950));
@@ -43,7 +36,7 @@ public class Main extends Application {
         } else {
 
             loader = new FXMLLoader(getClass().getResource("Main_2.fxml"));
-            Pane root = (Pane) loader.load();
+            Parent root = loader.load();
             primaryStage.setTitle("RBBN Case Management Tool");
             primaryStage.getIcons().add(new Image("home/image/rbbicon.png"));
             primaryStage.setScene(new Scene(root, 1000, 680));

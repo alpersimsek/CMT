@@ -289,6 +289,8 @@ public class Controller implements Initializable {
     @FXML
     private FontAwesomeIconView btnBack;
     @FXML
+    private FontAwesomeIconView btnInfo;
+    @FXML
     private FontAwesomeIconView btnToExcel;
     @FXML
     private TableView<CaseTableView> tableCases;
@@ -2449,6 +2451,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnProduct.toFront();
+                    lblStatus.setText("PRODUCT VIEW");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -2643,6 +2646,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnProduct.toFront();
+                    lblStatus.setText("PRODUCT VIEW");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -2795,6 +2799,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnProduct.toFront();
+                    lblStatus.setText("PRODUCT VIEW");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -2953,6 +2958,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnProduct.toFront();
+                    lblStatus.setText("PRODUCT VIEW");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -3104,6 +3110,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnProduct.toFront();
+                    lblStatus.setText("PRODUCT VIEW");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -3286,6 +3293,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnProduct.toFront();
+                    lblStatus.setText("PRODUCT VIEW");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -3475,6 +3483,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnProduct.toFront();
+                    lblStatus.setText("PRODUCT VIEW");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -3500,7 +3509,7 @@ public class Controller implements Initializable {
             LocalDate refreshDate = LocalDate.now();
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
             lblRefreshText.setVisible(true);
-            String dataDate = "Last used data is from:" + "\n" + LocalTime.now().format(dtf).toString() + "\n" + refreshDate.toString();
+            String dataDate = "Data Time Stamp is:" + "\n" + LocalTime.now().format(dtf).toString() + "\n" + "\n" + refreshDate.toString();
             lblRefreshText.setText(dataDate);
 
             FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_data_Date.txt"));
@@ -3696,6 +3705,34 @@ public class Controller implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void readTimeStamp(){
+
+        File timeStampFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_data_Date.txt");
+
+        if (timeStampFile.isFile()){
+            Scanner s = null;
+            try{
+
+                s = new Scanner(timeStampFile);
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+            ArrayList<String> readDate = new ArrayList<>();
+            while(s.hasNextLine()){
+                readDate.add(s.nextLine());
+            }
+            s.close();
+
+            System.out.println(readDate);
+
+            lblRefreshText.setVisible(true);
+            lblRefreshText.setText(readDate.get(0)+ "\n" + readDate.get(1) + "\n" + readDate.get(2));
+        }
+
     }
 
     private void readDefaultSettingFiles() {
@@ -3944,6 +3981,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnHome.toFront();
+                    lblStatus.setText("GENERAL OVERVIEW");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -4179,6 +4217,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnMyCases.toFront();
+                    lblStatus.setText("MY CASES");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -4319,6 +4358,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnMyCases.toFront();
+                    lblStatus.setText("MY CASES");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -4526,6 +4566,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnMyCases.toFront();
+                    lblStatus.setText("MY CASES");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -4729,6 +4770,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnMyCases.toFront();
+                    lblStatus.setText("MY CASES");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -4897,6 +4939,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnMyCases.toFront();
+                    lblStatus.setText("MY CASES");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -5073,6 +5116,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnMyCases.toFront();
+                    lblStatus.setText("MY CASES");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -5243,6 +5287,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnMyCases.toFront();
+                    lblStatus.setText("MY CASES");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -5458,6 +5503,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnMyCases.toFront();
+                    lblStatus.setText("MY CASES");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -5624,6 +5670,7 @@ public class Controller implements Initializable {
                     @Override
                     public void handle(MouseEvent event) {
                         apnHome.toFront();
+                        lblStatus.setText("GENERAL OVERVIEW");
                         btnBack.setVisible(false);
                         btnToExcel.setVisible(false);
                         tableCases.getItems().clear();
@@ -5759,6 +5806,7 @@ public class Controller implements Initializable {
                     @Override
                     public void handle(MouseEvent event) {
                         apnHome.toFront();
+                        lblStatus.setText("GENERAL OVERVIEW");
                         btnBack.setVisible(false);
                         btnToExcel.setVisible(false);
                         tableCases.getItems().clear();
@@ -5889,6 +5937,7 @@ public class Controller implements Initializable {
                     @Override
                     public void handle(MouseEvent event) {
                         apnHome.toFront();
+                        lblStatus.setText("GENERAL OVERVIEW");
                         btnBack.setVisible(false);
                         btnToExcel.setVisible(false);
                         tableCases.getItems().clear();
@@ -6019,6 +6068,7 @@ public class Controller implements Initializable {
                     @Override
                     public void handle(MouseEvent event) {
                         apnHome.toFront();
+                        lblStatus.setText("GENERAL OVERVIEW");
                         btnBack.setVisible(false);
                         btnToExcel.setVisible(false);
                         tableCases.getItems().clear();
@@ -6151,6 +6201,7 @@ public class Controller implements Initializable {
                     @Override
                     public void handle(MouseEvent event) {
                         apnHome.toFront();
+                        lblStatus.setText("GENERAL OVERVIEW");
                         btnBack.setVisible(false);
                         btnToExcel.setVisible(false);
                         tableCases.getItems().clear();
@@ -6320,6 +6371,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnHome.toFront();
+                    lblStatus.setText("GENERAL OVERVIEW");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -6445,6 +6497,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnHome.toFront();
+                    lblStatus.setText("GENERAL OVERVIEW");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -6618,6 +6671,7 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
                     apnHome.toFront();
+                    lblStatus.setText("GENERAL OVERVIEW");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
                     tableCases.getItems().clear();
@@ -8812,6 +8866,9 @@ public class Controller implements Initializable {
 
         if (event.getSource() == apnSettings) {
             pnUsersSelect.setVisible(false);
+            pnProductSelect.setVisible(false);
+            pnQueueSelect.setVisible(false);
+
         }
         if (event.getSource() == txProducts) {
             pnUsersSelect.setVisible(false);
@@ -8820,12 +8877,7 @@ public class Controller implements Initializable {
             productSelectArray();
             txtProductSelect.requestFocus();
         }
-        if (event.getSource() == apnSettings) {
-            pnProductSelect.setVisible(false);
-        }
-        if (event.getSource() == apnSettings) {
-            pnQueueSelect.setVisible(false);
-        }
+
         if (event.getSource() == txQueues) {
             pnUsersSelect.setVisible(false);
             pnProductSelect.setVisible(false);
@@ -8875,6 +8927,19 @@ public class Controller implements Initializable {
         if (event.getSource() == btnLoadDefault) {
 
             readDefaultSettingFiles();
+        }
+
+        if(event.getSource() == btnInfo){
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.PNG"));
+            alert.setTitle("RBBN CASE MANAGEMENT TOOL");
+            alert.setHeaderText(null);
+            alert.setContentText("Designed by:" + "\n" + "\n" + "Ali Alper Simsek & Vehbi Benli" + "\n" + "\n" +
+                    "For any issues please inform below:" + "\n" +
+                    "asimsek@rbbn.com" + "\n" +
+                    "vbenli@rbbn.com");
+            alert.showAndWait();
         }
     }
 
@@ -8975,6 +9040,7 @@ public class Controller implements Initializable {
 
         readDefaultSettingFiles();
         setqueueArray();
+        readTimeStamp();
 
     }
 }
