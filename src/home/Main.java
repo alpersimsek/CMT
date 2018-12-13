@@ -8,8 +8,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.awt.*;
 
-import static com.sun.org.apache.xerces.internal.utils.SecuritySupport.getResourceAsStream;
-
 public class Main extends Application {
 
     @Override
@@ -20,9 +18,6 @@ public class Main extends Application {
 
         FXMLLoader loader;
 
-        //loader = new FXMLLoader(getClass().getResource("Main.fxml"));
-
-
         if (screenHeight > 1025) {
 
             loader = new FXMLLoader(getClass().getResource("Main.fxml"));
@@ -31,7 +26,8 @@ public class Main extends Application {
             primaryStage.getIcons().add(new Image("home/image/rbbicon.png"));
             primaryStage.setScene(new Scene(root, 1280, 950));
             primaryStage.show();
-
+            primaryStage.setMinHeight(950);
+            primaryStage.setMinWidth(1280);
 
         } else {
 
@@ -41,7 +37,8 @@ public class Main extends Application {
             primaryStage.getIcons().add(new Image("home/image/rbbicon.png"));
             primaryStage.setScene(new Scene(root, 1000, 680));
             primaryStage.show();
-            //primaryStage.setFullScreen(true);
+            primaryStage.setMinHeight(680);
+            primaryStage.setMinWidth(1000);
         }
     }
 
