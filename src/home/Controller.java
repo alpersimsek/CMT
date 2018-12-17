@@ -669,14 +669,20 @@ public class Controller implements Initializable {
 
         if (event.getSource() == btnSurvey) {
 
-            lblStatus.setText("MY PERSONAL CASE NOTES");
-            apnNotes.toFront();
-            btnAddNewNote.setVisible(false);
-            btnDelNote.setVisible(false);
-            btnToExcel.setVisible(false);
-            btnBack.setVisible(false);
-            txtShowCaseNotes.clear();
             caseNoteTable();
+
+            if (caseNoteList.getItems().size()> 0) {
+                lblStatus.setText("MY PERSONAL CASE NOTES");
+                apnNotes.toFront();
+                btnAddNewNote.setVisible(false);
+                btnDelNote.setVisible(false);
+                btnToExcel.setVisible(false);
+                btnBack.setVisible(false);
+                txtShowCaseNotes.clear();
+                caseNoteTable();
+            }else {
+                alertCommentUser();
+            }
         }
 
         if (event.getSource() == btnSettings) {
@@ -698,8 +704,6 @@ public class Controller implements Initializable {
             //Download the related reports to work on them
             downloadCSV();
             parseUserData();
-            apnHome.toFront();
-
         }
 
         if (event.getSource() == btnE1Cases) {
@@ -1978,6 +1982,9 @@ public class Controller implements Initializable {
                                 File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + selectedCase);
                                 caseNoteFile.delete();
                                 caseNoteList.getItems().remove(selectedCase);
+                                if (caseNoteList.getItems().size() == 0){
+                                    apnNotes.toBack();
+                                }
                                 txtShowCaseNotes.clear();
                             }
                         });
@@ -3745,7 +3752,6 @@ public class Controller implements Initializable {
 
         parseData();
         parseUserData();
-        overviewPage();
 
         time = new Timeline();
         time.setCycleCount(Timeline.INDEFINITE);
@@ -3785,13 +3791,21 @@ public class Controller implements Initializable {
                             webEngine.load("https://sonus.okta.com/home/salesforce/0oayiqwes0HuzLJ6a1t6/46?fromHome=true");
                             progressBar.setProgress(0.50);
                             apnBrowser.toBack();
-                            progressBar.setProgress(0.70);
+                            progressBar.setProgress(0.60);
                         }
                         if (webEngine.getLocation().equals("https://na8.salesforce.com/500/o") || webEngine.getLocation().equals("https://na8.salesforce.com/home/home.jsp")) {
-                            progressBar.setProgress(1.00);
+                            progressBar.setProgress(0.80);
                             btnLoadData.setVisible(true);
                             progressBar.setVisible(false);
                             btnLogin.setText("Logged!");
+                            downloadCSV();
+                            progressBar.setProgress(0.85);
+                            parseUserData();
+                            progressBar.setProgress(0.90);
+                            myCasesPage();
+                            progressBar.setProgress(1);
+                            apnMyCases.toFront();
+                            lblStatus.setText("MY CASES");
                         }
                     }
                 }
@@ -3806,7 +3820,6 @@ public class Controller implements Initializable {
     }
 
     private void writeDefaultSettingsToFile(String userFilter, String queueFilter, String productFilter) {
-
 
         ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
         ArrayList<String> setUser2 = new ArrayList();
@@ -8594,6 +8607,15 @@ public class Controller implements Initializable {
         alert.setTitle("RBBN CASE MANAGEMENT TOOL WARNING:");
         alert.setHeaderText(null);
         alert.setContentText("NO RECORD FOUND..." + "\n" + "\n" + "PLEASE RELOAD DATA FOR RECENT DATA!" + "\n" + "\n" + "IF NOT ALREADY, PLEASE LOGIN!");
+        alert.showAndWait();
+    }
+
+    private void alertCommentUser() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.png"));
+        alert.setTitle("RBBN CASE MANAGEMENT TOOL WARNING:");
+        alert.setHeaderText(null);
+        alert.setContentText("THERE IS NO PERSONAL NOTE..." + "\n" + "\n" + "PLEASE CREATE PERSONAL NOTE FIRST!");
         alert.showAndWait();
     }
 
