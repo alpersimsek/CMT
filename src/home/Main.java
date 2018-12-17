@@ -29,7 +29,7 @@ public class Main extends Application {
             primaryStage.setMinHeight(950);
             primaryStage.setMinWidth(1280);
 
-        } else {
+        } if (screenHeight < 1025) {
 
             loader = new FXMLLoader(getClass().getResource("Main_2.fxml"));
             Parent root = loader.load();
@@ -37,8 +37,8 @@ public class Main extends Application {
             primaryStage.getIcons().add(new Image("home/image/rbbicon.png"));
             primaryStage.setScene(new Scene(root, 1000, 680));
             primaryStage.show();
-            primaryStage.setMinHeight(680);
-            primaryStage.setMinWidth(1000);
+            primaryStage.setMinHeight(720);
+            primaryStage.setMinWidth(1020);
         }
     }
 

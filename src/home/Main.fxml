@@ -4,9 +4,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -24,174 +28,107 @@
    <children>
       <StackPane prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
-            <AnchorPane prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
+            <AnchorPane fx:id="apnNotes" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
                <children>
-                  <GridPane layoutX="14.0" layoutY="14.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0">
+                  <VBox prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <SplitPane dividerPositions="0.2505567928730512" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1080.0" VBox.vgrow="ALWAYS">
+                           <items>
+                              <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="310.0" style="-fx-background-color: #FFFFFF;">
+                                 <children>
+                                    <ListView fx:id="caseNoteList" prefHeight="800.0" prefWidth="310.0" stylesheets="@home.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0" />
+                                    <Label layoutX="41.0" layoutY="5.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" text="Available Personal Notes:" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </AnchorPane>
+                              <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="-1.0" prefWidth="-1.0" style="-fx-background-color: #FFFFFF;">
+                                 <content>
+                                    <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="850.0" prefWidth="430.0" style="-fx-background-color: #FFFFFF;">
+                                       <children>
+                                          <TextArea fx:id="txtShowCaseNotes" editable="false" layoutX="14.0" layoutY="115.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                                             <font>
+                                                <Font size="20.0" />
+                                             </font>
+                                          </TextArea>
+                                          <GridPane layoutX="-10.0" layoutY="-12.0" prefHeight="50.0" prefWidth="200.0" AnchorPane.bottomAnchor="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="3.0">
+                                            <columnConstraints>
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
+                                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                              <RowConstraints maxHeight="45.0" minHeight="45.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                             <children>
+                                                <Button fx:id="btnAddNewNote" alignment="BASELINE_CENTER" graphicTextGap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" text="ADD NEW NOTE">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                   <graphic>
+                                                      <FontAwesomeIconView fill="GREY" glyphName="EDIT" size="24" />
+                                                   </graphic>
+                                                </Button>
+                                                <Button fx:id="btnDelNote" alignment="BASELINE_CENTER" graphicTextGap="5.0" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="45.0" prefWidth="200.0" text="DELETE NOTE" GridPane.columnIndex="2">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                   <graphic>
+                                                      <FontAwesomeIconView fill="GREY" glyphName="TRASH_ALT" size="24" />
+                                                   </graphic>
+                                                </Button>
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </ScrollPane>
+                           </items>
+                        </SplitPane>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="apnMyNotes" layoutX="10.0" layoutY="10.0" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <GridPane layoutX="20.0" layoutY="183.0" prefHeight="850.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="110.0" minWidth="90.0" prefWidth="90.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="15.0" prefWidth="15.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" prefWidth="90.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="15.0" prefWidth="15.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" prefWidth="90.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="30.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" prefWidth="90.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="15.0" prefWidth="15.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" prefWidth="90.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="15.0" prefWidth="15.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" prefWidth="90.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="30.0" prefWidth="30.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" prefWidth="90.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="15.0" prefWidth="15.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="15.0" prefWidth="15.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="90.0" prefWidth="90.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="500.0" prefWidth="500.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="500.0" minWidth="500.0" prefWidth="500.0" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="TECHNICAL SUPPORT SURVEYS" textAlignment="CENTER" wrappingWidth="301.583984375" GridPane.columnSpan="2">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="181211-164622" wrappingWidth="620.1367206573486" GridPane.columnSpan="3">
                            <font>
-                              <Font size="18.0" />
+                              <Font size="30.0" />
                            </font>
                         </Text>
-                        <Button contentDisplay="TOP" mnemonicParsing="false" prefHeight="120.0" prefWidth="90.0" text="0" GridPane.rowIndex="1">
+                        <Text layoutX="10.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E1: Call failures at Airtel UK" wrappingWidth="1162.1367206573486" GridPane.columnSpan="3" GridPane.rowIndex="1">
                            <font>
-                              <Font size="32.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image/happy.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ER SURVEYS" textAlignment="CENTER" wrappingWidth="300.583984375" GridPane.columnIndex="6">
-                           <font>
-                              <Font size="18.0" />
+                              <Font size="30.0" />
                            </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="KANDY SUPPORT SURVEYS" textAlignment="CENTER" wrappingWidth="311.583984375" GridPane.columnIndex="12">
+                        <Button maxHeight="50.0" minHeight="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="429.0" text="Button" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <font>
-                              <Font size="18.0" />
+                              <Font size="20.0" />
                            </font>
-                        </Text>
-                        <Button contentDisplay="TOP" layoutX="10.0" layoutY="59.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="90.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="32.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image/neutral.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
                         </Button>
-                        <Button contentDisplay="TOP" layoutX="115.0" layoutY="59.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="90.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                        <Button layoutX="90.0" layoutY="110.0" maxHeight="50.0" minHeight="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="429.0" text="Button" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2">
                            <font>
-                              <Font size="32.0" />
+                              <Font size="20.0" />
                            </font>
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image/sad.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
                         </Button>
-                        <Button contentDisplay="TOP" layoutX="10.0" layoutY="59.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="90.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="32.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image/happy.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button contentDisplay="TOP" layoutX="10.0" layoutY="59.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="90.0" text="0" GridPane.columnIndex="12" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="32.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image/happy.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button contentDisplay="TOP" layoutX="115.0" layoutY="59.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="90.0" text="0" GridPane.columnIndex="8" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="32.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image/neutral.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button contentDisplay="TOP" layoutX="115.0" layoutY="59.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="90.0" text="0" GridPane.columnIndex="14" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="32.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image/neutral.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button contentDisplay="TOP" layoutX="220.0" layoutY="59.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="90.0" text="0" GridPane.columnIndex="16" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="32.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image/sad.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button contentDisplay="TOP" layoutX="220.0" layoutY="59.0" mnemonicParsing="false" prefHeight="120.0" prefWidth="90.0" text="0" GridPane.columnIndex="10" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="32.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image/sad.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Label prefHeight="25.0" prefWidth="600.0" text="Survey Data is from last 7 Days" GridPane.columnSpan="7" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
                      </children>
                   </GridPane>
-                  <Pane layoutX="14.0" layoutY="390.0" prefHeight="620.0" prefWidth="1050.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="230.0">
-                     <children>
-                        <TableView prefHeight="620.0" prefWidth="1050.0">
-                          <columns>
-                            <TableColumn prefWidth="75.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </Pane>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="apnBrowser" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #F9F9F9;">
@@ -2142,6 +2079,14 @@
                         <Font size="24.0" />
                      </font>
                   </Button>
+                  <Button fx:id="btnSurvey" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="My Notes" textFill="WHITE">
+                     <graphic>
+                        <FontAwesomeIconView fill="#ff007f" glyphName="PENCIL_SQUARE_ALT" size="24" />
+                     </graphic>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
                   <Button fx:id="btnProducts" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="Products" textFill="WHITE">
                      <graphic>
                         <FontAwesomeIconView fill="#ff007f" glyphName="SUBWAY" size="24" />
@@ -2161,14 +2106,6 @@
                   <Button fx:id="btnProjects" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="Projects" textFill="WHITE">
                      <graphic>
                         <FontAwesomeIconView fill="#ff007f" glyphName="TH" size="24" />
-                     </graphic>
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="btnSurvey" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="Survey" textFill="WHITE">
-                     <graphic>
-                        <FontAwesomeIconView fill="#ff007f" glyphName="PENCIL_SQUARE_ALT" size="24" />
                      </graphic>
                      <font>
                         <Font size="24.0" />

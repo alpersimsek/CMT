@@ -14,7 +14,10 @@ import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -43,12 +46,14 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import java.awt.*;
+import javafx.scene.control.TextArea;
 import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -56,11 +61,15 @@ import java.util.stream.Collectors;
 public class Controller implements Initializable {
 
     @FXML
-    private VBox vbox;
+    private VBox caseNotVBox;
     @FXML
     private ProgressBar progressBar;
     @FXML
     private AnchorPane apnTableView;
+    @FXML
+    private AnchorPane apnMyNotes;
+    @FXML
+    private AnchorPane apnNotes;
     @FXML
     private AnchorPane apnSettings;
     @FXML
@@ -91,6 +100,10 @@ public class Controller implements Initializable {
     public TextField customerText;
     @FXML
     private TextField txQueues;
+    @FXML
+    private Button btnDelNote;
+    @FXML
+    private Button btnAddNewNote;
     @FXML
     private Button btnHome;
     @FXML
@@ -447,8 +460,14 @@ public class Controller implements Initializable {
     private Button btnProductSelectClear;
     @FXML
     private Button btnQueueSelectClear;
-    Timeline time = new Timeline();
 
+    @FXML
+    private ListView caseNoteList = new ListView();
+
+    @FXML
+    private TextArea txtShowCaseNotes;
+
+    Timeline time = new Timeline();
 
     WebView browserLogin = new WebView();
     ArrayList<String> settingsUsers = new ArrayList<>();
@@ -460,9 +479,10 @@ public class Controller implements Initializable {
     ArrayList<String> queuesFiltered = new ArrayList<String>();
     ArrayList<String> queueArray = new ArrayList<>();
 
+
     ContextMenu menu = new ContextMenu();
-    MenuItem openCaseSFDC = new MenuItem("Search case in SalesForce...");
-    MenuItem caseNote = new MenuItem("View/Add Personal Notes...");
+    MenuItem openCaseSFDC = new MenuItem("Search This Case in SalesForce...");
+    MenuItem casePersonalNote = new MenuItem("Add Personal Note To This Case...");
 
 
     //Case Ref Cells
@@ -648,8 +668,14 @@ public class Controller implements Initializable {
         }
 
         if (event.getSource() == btnSurvey) {
-            //parseSurveyData();
-            //readSurveyData();
+
+            apnNotes.toFront();
+            btnAddNewNote.setVisible(false);
+            btnDelNote.setVisible(false);
+            btnToExcel.setVisible(false);
+            btnBack.setVisible(false);
+            txtShowCaseNotes.clear();
+            caseNoteTable();
         }
 
         if (event.getSource() == btnSettings) {
@@ -1889,6 +1915,100 @@ public class Controller implements Initializable {
                 tableCustomers.setVisible(false);
             }
         }
+    }
+
+    private void caseNoteTable(){
+        caseNoteList.getItems().clear();
+        ObservableList<String> Notes = FXCollections.observableArrayList();
+
+        ArrayList<File> files = new ArrayList<File>();
+        File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes");
+        File[] fileList = repo.listFiles();
+
+        for (int i = 0 ; i < fileList.length ; i++) {
+            Notes.addAll(fileList[i].getName());
+        }
+
+        caseNoteList.getItems().addAll(Notes);
+        caseNoteList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        caseNoteList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                txtShowCaseNotes.clear();
+
+                try{
+
+                    if (caseNoteList.getItems().size() > 0) {
+
+                        btnAddNewNote.setVisible(true);
+                        btnDelNote.setVisible(true);
+
+                        String selectedCase = caseNoteList.getSelectionModel().getSelectedItem().toString();
+                        File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + selectedCase);
+
+                        if (caseNoteFile.isFile()) {
+                            Scanner s = null;
+                            try {
+                                s = new Scanner(caseNoteFile);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            while (s.hasNextLine()) {
+                                txtShowCaseNotes.appendText(s.nextLine() + "\n");
+                            }
+                            s.close();
+                        }
+
+                        btnAddNewNote.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+
+                                ClipboardContent content = new ClipboardContent();
+                                content.putString(selectedCase);
+                                Clipboard.getSystemClipboard().setContent(content);
+                                newCaseNote();
+                                txtShowCaseNotes.clear();
+                            }
+                        });
+                        btnDelNote.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + selectedCase);
+                                caseNoteFile.delete();
+                                caseNoteList.getItems().remove(selectedCase);
+                                txtShowCaseNotes.clear();
+                            }
+                        });
+                    }
+
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void newCaseNote(){
+
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("home/CaseNote.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("ADD PERSONAL CASE NOTE");
+            stage.getIcons().add(new Image("home/image/rbbicon.png"));
+            stage.setScene(new Scene(root, 600, 400));
+            stage.show();
+            stage.setMinWidth(620);
+            stage.setMinHeight(420);
+            stage.setMaxWidth(620);
+            stage.setMaxHeight(420);
+
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void customerWOHTable(TableView<CaseTableView> tableCustomers, boolean bool) {
@@ -4195,7 +4315,16 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCases.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
+
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -4337,7 +4466,16 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCases.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
+
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -4545,7 +4683,15 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCases.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -4574,6 +4720,7 @@ public class Controller implements Initializable {
                     }
                 }
             });
+
 
             btnBack.setVisible(true);
             btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -4749,7 +4896,15 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCases.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -4919,7 +5074,16 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCases.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
+
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -5096,7 +5260,16 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCases.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
+
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -5266,7 +5439,16 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCases.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
+
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -5483,7 +5665,16 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCases.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
+
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -6180,7 +6371,6 @@ public class Controller implements Initializable {
                 menu = new ContextMenu();
                 String caseno = "";
                 menu.getItems().add(openCaseSFDC);
-                menu.getItems().add(caseNote);
                 tableCases.setContextMenu(menu);
 
                 openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
@@ -6199,15 +6389,6 @@ public class Controller implements Initializable {
                     }
                 });
 
-                caseNote.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-
-
-
-
-                    }
-                });
 
                 // Selecting and Copy the Case Number to Clipboard
                 tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -6999,12 +7180,6 @@ public class Controller implements Initializable {
                     casesWCom.add(caseWCom);
                 }
             }*/
-
-            System.out.println(casesWCom.get(0));
-            System.out.println(casesWCom.get(1));
-            System.out.println(casesWCom.get(2));
-            System.out.println(casesWCom.get(3));
-
 
         }catch(Exception e){
             e.printStackTrace();
@@ -8054,7 +8229,7 @@ public class Controller implements Initializable {
         if (event.getSource() == btnSurvey) {
 
             Tooltip surveyTooltip = new Tooltip();
-            surveyTooltip.setText("VERY SOON");
+            surveyTooltip.setText("PERSONAL NOTES...");
             btnSurvey.setTooltip(surveyTooltip);
 
         }
@@ -9060,9 +9235,9 @@ public class Controller implements Initializable {
             ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.png"));
             alert.setTitle("RBBN CASE MANAGEMENT TOOL");
             alert.setHeaderText(null);
-            alert.setContentText("For any issues/requests please inform us:" + "\n" +
-                    "asimsek@rbbn.com" + "\n" +
-                    "vbenli@rbbn.com");
+            alert.setContentText("For any issues/requests please inform us:" + "\n" + "\n" +
+                    "Alper Simsek"+ "    " + "asimsek@rbbn.com" + "\n" + "\n" +
+                    "Vehbi Benli" + "       " + "vbenli@rbbn.com");
             alert.showAndWait();
         }
     }
