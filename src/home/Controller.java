@@ -669,6 +669,7 @@ public class Controller implements Initializable {
 
         if (event.getSource() == btnSurvey) {
 
+            lblStatus.setText("MY PERSONAL CASE NOTES");
             apnNotes.toFront();
             btnAddNewNote.setVisible(false);
             btnDelNote.setVisible(false);
@@ -2176,7 +2177,15 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCustomers.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -2361,7 +2370,15 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCustomers.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -2539,7 +2556,15 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCases.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -2734,7 +2759,15 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCases.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -2887,7 +2920,15 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCases.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -3046,7 +3087,15 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCases.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -3198,7 +3247,15 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCases.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -3381,7 +3438,15 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCases.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -3571,7 +3636,15 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             tableCases.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -8517,7 +8590,7 @@ public class Controller implements Initializable {
 
     private void alertUser() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
-        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.PNG"));
+        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.png"));
         alert.setTitle("RBBN CASE MANAGEMENT TOOL WARNING:");
         alert.setHeaderText(null);
         alert.setContentText("NO RECORD FOUND..." + "\n" + "\n" + "PLEASE RELOAD DATA FOR RECENT DATA!" + "\n" + "\n" + "IF NOT ALREADY, PLEASE LOGIN!");
@@ -9340,6 +9413,7 @@ public class Controller implements Initializable {
         readDefaultSettingFiles();
         setqueueArray();
         readTimeStamp();
-
+        tableCases.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableCustomers.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 }

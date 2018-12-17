@@ -70,6 +70,11 @@
      -fx-border-width: 0px;
   }
 
+.table-column-cell:empty .table-column {
+   -fx-background-color: #ffffff;
+   -fx-border-width: 0px;
+}
+
 .table-row-cell:selected {
     -fx-background-color:  rgb(127, 172, 243);
  }

@@ -28,6 +28,31 @@
    <children>
       <StackPane prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
+            <AnchorPane fx:id="apnTableView" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <TableView fx:id="tableCases" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <columns>
+                        <TableColumn fx:id="NumberCol" editable="false" maxWidth="114.0" minWidth="105.0" prefWidth="114.0" text="Case Number" />
+                        <TableColumn fx:id="SeverityCol" maxWidth="110.0" minWidth="101.0" prefWidth="101.0" text="Severity" />
+                        <TableColumn fx:id="StatusCol" maxWidth="150.0" minWidth="80.0" text="Status" />
+                        <TableColumn fx:id="OwnerCol" maxWidth="150.0" minWidth="80.0" text="Owner" />
+                        <TableColumn fx:id="ResponsibleCol" maxWidth="150.0" minWidth="100.0" prefWidth="100.0" text="Responsible" />
+                        <TableColumn fx:id="AgeCol" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" text="Age" />
+                        <TableColumn fx:id="NextUpdateCol" maxWidth="80.0" minWidth="80.0" text="Update" />
+                        <TableColumn fx:id="EscalatedByCol" maxWidth="150.0" minWidth="80.0" text="Escalated By" />
+                        <TableColumn fx:id="HotListCol" maxWidth="120.0" minWidth="80.0" text="Hot List" />
+                        <TableColumn fx:id="OutFollowCol" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="E1 Follow" />
+                        <TableColumn fx:id="SupportTypeCol" maxWidth="150.0" minWidth="80.0" text="Type" />
+                        <TableColumn fx:id="ProductCol" maxWidth="200.0" minWidth="80.0" text="Product" />
+                        <TableColumn fx:id="SubjectCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="100.0" text="Subject" />
+                        <TableColumn fx:id="AccountCol" maxWidth="200.0" minWidth="100.0" prefWidth="100.0" text="Account" />
+                        <TableColumn fx:id="RegionCol" maxWidth="150.0" minWidth="100.0" prefWidth="100.0" text="Region" />
+                        <TableColumn fx:id="SecurityCol" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Security" />
+                        <TableColumn fx:id="DateTimeOpenedCol" prefWidth="75.0" text="Date Opened" visible="false" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
             <AnchorPane fx:id="apnNotes" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <VBox prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -48,7 +73,7 @@
                                  <content>
                                     <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="850.0" prefWidth="430.0" style="-fx-background-color: #FFFFFF;">
                                        <children>
-                                          <TextArea fx:id="txtShowCaseNotes" editable="false" layoutX="14.0" layoutY="115.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                                          <TextArea fx:id="txtShowCaseNotes" editable="false" layoutX="14.0" layoutY="115.0" prefHeight="200.0" prefWidth="200.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
                                              <font>
                                                 <Font size="20.0" />
                                              </font>
@@ -146,31 +171,6 @@
                         <Pane fx:id="browserLoginPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="650.0" prefWidth="1080.0" style="-fx-background-color: #F9F9F9;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="apnTableView" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
-               <children>
-                  <TableView fx:id="tableCases" prefHeight="850.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <columns>
-                        <TableColumn fx:id="NumberCol" editable="false" maxWidth="114.0" minWidth="105.0" prefWidth="114.0" text="Case Number" />
-                        <TableColumn fx:id="SeverityCol" maxWidth="110.0" minWidth="101.0" prefWidth="101.0" text="Severity" />
-                        <TableColumn fx:id="StatusCol" maxWidth="150.0" minWidth="80.0" text="Status" />
-                        <TableColumn fx:id="OwnerCol" maxWidth="150.0" minWidth="80.0" text="Owner" />
-                        <TableColumn fx:id="ResponsibleCol" maxWidth="150.0" minWidth="100.0" prefWidth="100.0" text="Responsible" />
-                        <TableColumn fx:id="AgeCol" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" text="Age" />
-                        <TableColumn fx:id="NextUpdateCol" maxWidth="80.0" minWidth="80.0" text="Update" />
-                        <TableColumn fx:id="EscalatedByCol" maxWidth="150.0" minWidth="80.0" text="Escalated By" />
-                        <TableColumn fx:id="HotListCol" maxWidth="120.0" minWidth="80.0" text="Hot List" />
-                        <TableColumn fx:id="OutFollowCol" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="E1 Follow" />
-                        <TableColumn fx:id="SupportTypeCol" maxWidth="150.0" minWidth="80.0" text="Type" />
-                        <TableColumn fx:id="ProductCol" maxWidth="200.0" minWidth="80.0" text="Product" />
-                        <TableColumn fx:id="SubjectCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="100.0" text="Subject" />
-                        <TableColumn fx:id="AccountCol" maxWidth="200.0" minWidth="100.0" prefWidth="100.0" text="Account" />
-                        <TableColumn fx:id="RegionCol" maxWidth="150.0" minWidth="100.0" prefWidth="100.0" text="Region" />
-                        <TableColumn fx:id="SecurityCol" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Security" />
-                        <TableColumn fx:id="DateTimeOpenedCol" prefWidth="75.0" text="Date Opened" visible="false" />
-                     </columns>
-                  </TableView>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="apnMyCases" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
