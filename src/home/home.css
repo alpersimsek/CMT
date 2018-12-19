@@ -30,7 +30,7 @@
 
   -fx-text-fill: #000000;
   -fx-alignment: CENTER_LEFT;
-  -fx-font-size: 18 ;
+  -fx-font-size: 14 ;
 }
 
 .list-cell:odd {

@@ -4,6 +4,7 @@ import au.com.bytecode.opencsv.CSVReader;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -61,13 +62,59 @@ import java.util.stream.Collectors;
 public class Controller implements Initializable {
 
     @FXML
-    private VBox caseNotVBox;
+    private TextField txtUsersSave;
+    @FXML
+    private ChoiceBox<String> userProfCheck;
+    @FXML
+    private TextField txtProductsSave;
+    @FXML
+    private TextField txtQueuesSave;
+    @FXML
+    private Button btnUsersSaveAs;
+    @FXML
+    private Button btnProductsSaveAs;
+    @FXML
+    private Button btnQueuesSaveAs;
+    @FXML
+    private Button btnUsersSaveClose;
+    @FXML
+    private Button btnUsersLoad;
+    @FXML
+    private Button btnProductsLoad;
+    @FXML
+    private Button btnQueuesLoad;
+    @FXML
+    private Button btnUserProfDelete;
+    @FXML
+    private Button btnProductProfDelete;
+    @FXML
+    private Button btnQueueProfDelete;
+    @FXML
+    private Button btnProductsSave;
+    @FXML
+    private Button btnProductsSaveClose;
+    @FXML
+    private Button btnQueuesSave;
+    @FXML
+    private Button btnUsersSave;
+    @FXML
+    private Button btnQueuesSaveClose;
+    @FXML
+    private Pane pnUsersSave;
+    @FXML
+    private Pane pnProductsSave;
+    @FXML
+    private Pane pnQueuesSave;
+    @FXML
+    private Pane pnUsersLoad;
+    @FXML
+    private Pane pnProductsLoad;
+    @FXML
+    private Pane pnQueuesLoad;
     @FXML
     private ProgressBar progressBar;
     @FXML
     private AnchorPane apnTableView;
-    @FXML
-    private AnchorPane apnMyNotes;
     @FXML
     private AnchorPane apnNotes;
     @FXML
@@ -80,10 +127,6 @@ public class Controller implements Initializable {
     private AnchorPane apnProduct;
     @FXML
     private AnchorPane apnCustomers;
-    @FXML
-    private AnchorPane apnProjects;
-    @FXML
-    private Pane pnProjectCaseTable;
     @FXML
     private AnchorPane apnBrowser;
     @FXML
@@ -381,10 +424,6 @@ public class Controller implements Initializable {
     @FXML
     private Pane pnAccountSelect;
     @FXML
-    private Button btnFilterAccountAdd;
-    @FXML
-    private Button btnFilterAccountClear;
-    @FXML
     private Button btnFilterAccountUpdate;
     @FXML
     private Button btnFilterAccountClose;
@@ -460,9 +499,27 @@ public class Controller implements Initializable {
     private Button btnProductSelectClear;
     @FXML
     private Button btnQueueSelectClear;
+    @FXML
+    private Button btnUserProfLoad;
+    @FXML
+    private Button btnUsersLoadClose;
+    @FXML
+    private Button btnProdProfLoad;
+    @FXML
+    private Button btnProductsLoadClose;
+    @FXML
+    private Button btnQueueProfLoad;
+    @FXML
+    private Button btnQueueLoadClose;
 
     @FXML
-    private ListView caseNoteList = new ListView();
+    private ListView caseNoteList;
+    @FXML
+    private ListView userProfileList;
+    @FXML
+    private ListView productProfileList;
+    @FXML
+    private ListView queueProfileList;
 
     @FXML
     private TextArea txtShowCaseNotes;
@@ -483,7 +540,6 @@ public class Controller implements Initializable {
     ContextMenu menu = new ContextMenu();
     MenuItem openCaseSFDC = new MenuItem("Search This Case in SalesForce...");
     MenuItem casePersonalNote = new MenuItem("Add Personal Note To This Case...");
-
 
     //Case Ref Cells
     int caseAccountRef = 0;
@@ -703,12 +759,11 @@ public class Controller implements Initializable {
 
             //Download the related reports to work on them
             downloadCSV();
-            parseUserData();
         }
 
         if (event.getSource() == btnE1Cases) {
             if (e1Cases != 0) {
-                lblStatus.setText("E1 - OUTAGE CASES");
+                lblStatus.setText("CRITICAL (OUTAGE) CASES");
                 tableCases.getItems().clear();
                 String columnSelect = "Severity";
                 String filter1 = "Critical";
@@ -793,7 +848,7 @@ public class Controller implements Initializable {
 
         if (event.getSource() == btnWOH) {
             if (wohCases != 0) {
-                lblStatus.setText("WORK ON HAND CASES");
+                lblStatus.setText("ACTIVE WORK ON HAND CASES");
                 tableCases.getItems().clear();
                 initTableView(tableCases);
                 overviewWOHView(true);
@@ -805,7 +860,7 @@ public class Controller implements Initializable {
 
         if (event.getSource() == btnInactive) {
             if (inactiveCases != 0) {
-                lblStatus.setText("INACTIVE(PENDING CLOSURE) CASES");
+                lblStatus.setText("INACTIVE(PC/FA) CASES");
                 tableCases.getItems().clear();
                 initTableView(tableCases);
                 overviewWOHView(false);
@@ -1331,6 +1386,7 @@ public class Controller implements Initializable {
         if (event.getSource() == btnMyMJupdated) {
 
             if (myMJUpdated != 0) {
+                lblStatus.setText("MY MAJOR CASES CUSTOMER PROVIDED UPDATE");
                 String columSelect1 = "Severity";
                 String filter1 = "Major";
                 String columSelect2 = "Currently Responsible";
@@ -1679,7 +1735,7 @@ public class Controller implements Initializable {
 
         if (event.getSource() == btnMJWIPProd) {
             if (prodMJWIP != 0) {
-                lblStatus.setText("MAJOR WORK IN PROGRESS CASES");
+                lblStatus.setText("PRODUCT VIEW - MAJOR WORK IN PROGRESS CASES");
                 tableCases.getItems().clear();
                 initTableView(tableCases);
                 String columnSelect = "Severity";
@@ -1693,7 +1749,7 @@ public class Controller implements Initializable {
 
         if (event.getSource() == btnMJWacProd) {
             if (prodMJWAC != 0) {
-                lblStatus.setText("MAJOR CASES PENDING CUSTOMER ACTION");
+                lblStatus.setText("PRODUCT VIEW - MAJOR CASES PENDING CUSTOMER ACTION");
                 tableCases.getItems().clear();
                 String columSelect1 = "Severity";
                 String filter1 = "Major";
@@ -1709,7 +1765,7 @@ public class Controller implements Initializable {
 
         if (event.getSource() == btnMJupdatedProd) {
             if (prodMJUpdated != 0) {
-                lblStatus.setText("MAJOR CASES CUSTOMER PROVIDED UPDATE");
+                lblStatus.setText("PRODUCT VIEW - MAJOR CASES CUSTOMER PROVIDED UPDATE");
                 tableCases.getItems().clear();
                 String columSelect1 = "Severity";
                 String filter1 = "Major";
@@ -1983,7 +2039,9 @@ public class Controller implements Initializable {
                                 caseNoteFile.delete();
                                 caseNoteList.getItems().remove(selectedCase);
                                 if (caseNoteList.getItems().size() == 0){
-                                    apnNotes.toBack();
+                                    apnMyCases.toFront();
+                                    lblStatus.setText("MY CASES");
+
                                 }
                                 txtShowCaseNotes.clear();
                             }
@@ -3752,6 +3810,7 @@ public class Controller implements Initializable {
 
         parseData();
         parseUserData();
+        myCasesPage();
 
         time = new Timeline();
         time.setCycleCount(Timeline.INDEFINITE);
@@ -3799,10 +3858,6 @@ public class Controller implements Initializable {
                             progressBar.setVisible(false);
                             btnLogin.setText("Logged!");
                             downloadCSV();
-                            progressBar.setProgress(0.85);
-                            parseUserData();
-                            progressBar.setProgress(0.90);
-                            myCasesPage();
                             progressBar.setProgress(1);
                             apnMyCases.toFront();
                             lblStatus.setText("MY CASES");
@@ -9300,6 +9355,7 @@ public class Controller implements Initializable {
             tableAccountsSelected.getItems().clear();
             customerText.setText("");
             tableCustomers.setVisible(false);
+            btnToExcel.setVisible(false);
             initCustomerNumbers();
             pnAccountSelect.setVisible(false);
         }
@@ -9335,6 +9391,474 @@ public class Controller implements Initializable {
                     "Vehbi Benli" + "       " + "vbenli@rbbn.com");
             alert.showAndWait();
         }
+        if (event.getSource() == btnUsersSaveAs){
+            pnUsersSave.toFront();
+            pnUsersSave.setVisible(true);
+            saveUserProfile();
+            pnProductsSave.setVisible(false);
+            pnQueuesSave.setVisible(false);
+            pnUsersLoad.setVisible(false);
+            pnQueuesLoad.setVisible(false);
+            pnProductsLoad.setVisible(false);
+        }
+        if (event.getSource() == btnUsersSaveClose){
+            pnUsersSave.toBack();
+            pnUsersSave.setVisible(false);
+        }
+        if (event.getSource() == btnProductsSaveAs){
+            pnProductsSave.toFront();
+            pnProductsSave.setVisible(true);
+            saveProductProfile();
+            pnUsersSave.setVisible(false);
+            pnQueuesSave.setVisible(false);
+            pnUsersLoad.setVisible(false);
+            pnQueuesLoad.setVisible(false);
+            pnProductsLoad.setVisible(false);
+
+        }
+        if (event.getSource() == btnProductsSaveClose){
+            pnProductsSave.setVisible(false);
+            pnProductsSave.toBack();
+        }
+        if (event.getSource() == btnQueuesSaveAs){
+            pnQueuesSave.toFront();
+            pnQueuesSave.setVisible(true);
+            saveQueueProfile();
+            pnUsersSave.setVisible(false);
+            pnProductsSave.setVisible(false);
+            pnUsersLoad.setVisible(false);
+            pnQueuesLoad.setVisible(false);
+            pnProductsLoad.setVisible(false);
+
+        }
+        if (event.getSource() == btnQueuesSaveClose){
+            pnQueuesSave.setVisible(false);
+            pnQueuesSave.toBack();
+        }
+        if (event.getSource() == btnUsersLoad){
+
+            pnUsersLoad.toFront();
+            pnUsersLoad.setVisible(true);
+            loadUserProfile();
+            pnProductsLoad.setVisible(false);
+            pnQueuesLoad.setVisible(false);
+            pnUsersSave.setVisible(false);
+            pnProductsSave.setVisible(false);
+            pnQueuesSave.setVisible(false);
+        }
+        if (event.getSource() == btnUsersLoadClose){
+            pnUsersLoad.toBack();
+            pnUsersLoad.setVisible(false);
+        }
+        if (event.getSource() == btnProductsLoad){
+            pnProductsLoad.toFront();
+            pnProductsLoad.setVisible(true);
+            pnUsersLoad.setVisible(false);
+            pnQueuesLoad.setVisible(false);
+            loadProductProfile();
+            pnUsersSave.setVisible(false);
+            pnProductsSave.setVisible(false);
+            pnQueuesSave.setVisible(false);
+
+        }
+        if (event.getSource() == btnProductsLoadClose){
+            pnProductsLoad.toBack();
+            pnProductsLoad.setVisible(false);
+        }
+
+        if (event.getSource() == btnQueuesLoad){
+            pnQueuesLoad.toFront();
+            pnQueuesLoad.setVisible(true);
+            pnUsersLoad.setVisible(false);
+            pnProductsLoad.setVisible(false);
+            loadQueueProfile();
+            pnUsersSave.setVisible(false);
+            pnProductsSave.setVisible(false);
+            pnQueuesSave.setVisible(false);
+        }
+        if (event.getSource() == btnQueueLoadClose){
+            pnQueuesLoad.toBack();
+            pnQueuesLoad.setVisible(false);
+        }
+    }
+
+    private void loadQueueProfile(){
+
+        queueProfileList.getItems().clear();
+        ObservableList<String> queueProfiles = FXCollections.observableArrayList();
+
+        ArrayList<File> files = new ArrayList<File>();
+        File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Queue");
+        File[] fileList = repo.listFiles();
+
+        for (int i = 0 ; i < fileList.length ; i++) {
+            queueProfiles.addAll(fileList[i].getName());
+        }
+
+        queueProfileList.getItems().addAll(queueProfiles);
+        queueProfileList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        queueProfileList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                String selectedProfile = queueProfileList.getSelectionModel().getSelectedItem().toString();
+
+                btnQueueProfLoad.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+
+                        File queueProfileFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Queue\\" + selectedProfile);
+
+                        txQueues.clear();
+
+                        if (queueProfileFile.isFile()) {
+                            Scanner s = null;
+                            try {
+                                s = new Scanner(queueProfileFile);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            while (s.hasNextLine()) {
+                                txQueues.appendText(s.nextLine() + ",");
+                            }
+                            s.close();
+                            pnQueuesLoad.toBack();
+                            pnQueuesLoad.setVisible(false);
+                        }
+                    }
+                });
+
+                btnQueueProfDelete.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Queue\\" + selectedProfile);
+                        caseNoteFile.delete();
+                        queueProfileList.getItems().remove(selectedProfile);
+                    }
+                });
+            }});
+
+    }
+
+    private void loadProductProfile(){
+
+        productProfileList.getItems().clear();
+        ObservableList<String> productProfiles = FXCollections.observableArrayList();
+
+        ArrayList<File> files = new ArrayList<File>();
+        File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Product");
+        File[] fileList = repo.listFiles();
+
+        for (int i = 0 ; i < fileList.length ; i++) {
+            productProfiles.addAll(fileList[i].getName());
+        }
+
+        productProfileList.getItems().addAll(productProfiles);
+        productProfileList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        productProfileList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                String selectedProfile = productProfileList.getSelectionModel().getSelectedItem().toString();
+
+                btnProdProfLoad.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+
+                        File productProfileFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Product\\" + selectedProfile);
+
+                        txProducts.clear();
+
+                        if (productProfileFile.isFile()) {
+                            Scanner s = null;
+                            try {
+                                s = new Scanner(productProfileFile);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            while (s.hasNextLine()) {
+                                txProducts.appendText(s.nextLine() + ",");
+                            }
+                            s.close();
+                            pnProductsLoad.toBack();
+                            pnProductsLoad.setVisible(false);
+                        }
+                    }
+                });
+
+                btnProductProfDelete.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Product\\" + selectedProfile);
+                        caseNoteFile.delete();
+                        productProfileList.getItems().remove(selectedProfile);
+                    }
+                });
+            }});
+    }
+
+    private void loadUserProfile(){
+
+        userProfileList.getItems().clear();
+        ObservableList<String> userProfiles = FXCollections.observableArrayList();
+
+        ArrayList<String> profileUsers = new ArrayList<>();
+
+        ArrayList<File> files = new ArrayList<File>();
+        File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\User");
+        File[] fileList = repo.listFiles();
+
+        for (int i = 0 ; i < fileList.length ; i++) {
+            userProfiles.addAll(fileList[i].getName());
+        }
+
+        userProfileList.getItems().addAll(userProfiles);
+        userProfileList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        userProfileList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                String selectedProfile = userProfileList.getSelectionModel().getSelectedItem().toString();
+
+                    btnUserProfLoad.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+
+                            File userProfileFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\User\\" + selectedProfile);
+
+                            txUsers.clear();
+
+                            if (userProfileFile.isFile()) {
+                                Scanner s = null;
+                                try {
+                                    s = new Scanner(userProfileFile);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                while (s.hasNextLine()) {
+                                    txUsers.appendText(s.nextLine() + ",");
+                                }
+                                s.close();
+                                pnUsersLoad.toBack();
+                                pnUsersLoad.setVisible(false);
+                            }
+                        }
+                    });
+
+                    btnUserProfDelete.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\User\\" + selectedProfile);
+                            caseNoteFile.delete();
+                            userProfileList.getItems().remove(selectedProfile);
+                        }
+                    });
+            }});
+
+    }
+
+    private void saveQueueProfile(){
+
+        ArrayList<String> setQue = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
+
+        btnQueuesSave.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (!txtQueuesSave.getText().isEmpty()) {
+
+                    try {
+
+                        File userProfFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Queue\\" + txtQueuesSave.getText());
+
+                        if (!userProfFile.exists()) {
+                            try {
+
+                                new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Queue").mkdir();
+                                FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Queue\\" + txtQueuesSave.getText()));
+
+                                int size = setQue.size();
+
+                                for (int i = 0; i < size; i++) {
+
+                                    writer.write(setQue.get(i) + "\n");
+
+                                }
+                                writer.close();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            try {
+
+                                FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Queue\\" + txtQueuesSave.getText()));
+                                int size = setQue.size();
+                                for (int i = 0; i < size; i++) {
+
+                                    writer.write(setQue.get(i) + "\n");
+                                }
+                                writer.close();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        pnQueuesSave.toBack();
+                        pnQueuesSave.setVisible(false);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else{
+                    alertSave();
+                }
+            }
+        });
+
+    }
+    private void saveProductProfile(){
+
+        ArrayList<String> setProd = new ArrayList<>(Arrays.asList(txProducts.getText().split(",\\s*")));
+
+        btnProductsSave.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (!txtProductsSave.getText().isEmpty()) {
+
+                    try {
+
+                        File userProfFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Product\\" + txtProductsSave.getText());
+
+                        if (!userProfFile.exists()) {
+                            try {
+
+                                new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Product").mkdir();
+                                FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Product\\" + txtProductsSave.getText()));
+
+                                int size = setProd.size();
+
+                                for (int i = 0; i < size; i++) {
+
+                                    writer.write(setProd.get(i) + "\n");
+
+                                }
+                                writer.close();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            try {
+
+                                FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Product\\" + txtProductsSave.getText()));
+                                int size = setProd.size();
+                                for (int i = 0; i < size; i++) {
+
+                                    writer.write(setProd.get(i) + "\n");
+                                }
+                                writer.close();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        pnProductsSave.toBack();
+                        pnProductsSave.setVisible(false);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    alertSave();
+                }
+            }
+        });
+    }
+
+    private void saveUserProfile(){
+
+        ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
+
+        btnUsersSave.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (!txtUsersSave.getText().isEmpty()) {
+
+                    try {
+
+                        File userProfFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\User\\" + txtUsersSave.getText());
+
+                        if (!userProfFile.exists()) {
+                            try {
+
+                                new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\User").mkdir();
+                                FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\User\\" + txtUsersSave.getText()));
+
+                                int size = setUser.size();
+
+                                for (int i = 0; i < size; i++) {
+
+                                    writer.write(setUser.get(i) + "\n");
+
+                                }
+                                writer.close();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            try {
+
+                                FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\User\\" + txtUsersSave.getText()));
+                                int size = setUser.size();
+                                for (int i = 0; i < size; i++) {
+
+                                    writer.write(setUser.get(i) + "\n");
+                                }
+                                writer.close();
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        pnUsersSave.toBack();
+                        pnUsersSave.setVisible(false);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    alertSave();
+                }
+            }
+        });
+    }
+
+    private void alertSave(){
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.png"));
+        alert.setTitle("RBBN CASE MANAGEMENT TOOL WARNING:");
+        alert.setHeaderText(null);
+        alert.setContentText("PLEASE PROMPT A PROFILE NAME");
+        alert.showAndWait();
+    }
+
+    private void alertLoad(){
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.png"));
+        alert.setTitle("RBBN CASE MANAGEMENT TOOL WARNING:");
+        alert.setHeaderText(null);
+        alert.setContentText("PLEASE SELECT A PROFILE NAME");
+        alert.showAndWait();
     }
 
     public void setqueueArray() {
@@ -9437,5 +9961,9 @@ public class Controller implements Initializable {
         readTimeStamp();
         tableCases.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tableCustomers.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        myProductsPage();
+        overviewPage();
+        myCasesPage();
+
     }
 }
