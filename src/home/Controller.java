@@ -9674,6 +9674,7 @@ public class Controller implements Initializable {
                         if (!userProfFile.exists()) {
                             try {
 
+                                new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile").mkdir();
                                 new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Queue").mkdir();
                                 FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Queue\\" + txtQueuesSave.getText()));
 
@@ -9735,6 +9736,7 @@ public class Controller implements Initializable {
                         if (!userProfFile.exists()) {
                             try {
 
+                                new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile").mkdir();
                                 new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Product").mkdir();
                                 FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Product\\" + txtProductsSave.getText()));
 
@@ -9796,6 +9798,7 @@ public class Controller implements Initializable {
                         if (!userProfFile.exists()) {
                             try {
 
+                                new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile").mkdir();
                                 new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\User").mkdir();
                                 FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\User\\" + txtUsersSave.getText()));
 
