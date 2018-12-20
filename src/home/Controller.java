@@ -50,6 +50,7 @@ import java.awt.*;
 import javafx.scene.control.TextArea;
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -8475,6 +8476,22 @@ public class Controller implements Initializable {
         ClipboardContent content = new ClipboardContent();
         content.putString(data1);
         Clipboard.getSystemClipboard().setContent(content);
+
+        String data2 = caseview.getCaseSeverity();
+        String data3 = caseview.getCaseSubject();
+        String data4 =  caseview.getCaseAccount();
+
+        try {
+
+            File caseSelFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\" + "caseSel");
+
+            FileWriter writer = new FileWriter(caseSelFile);
+            writer.write(data1 + "\n" + data2 + "\n" + data3);
+            writer.close();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 

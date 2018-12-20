@@ -16,7 +16,9 @@ import java.io.FileWriter;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class CaseNote implements Initializable {
 
@@ -41,6 +43,8 @@ public class CaseNote implements Initializable {
     @FXML
     private Button btnCaseNoteClear;
 
+    ArrayList<String> caseSelection;
+
     @FXML
     void handleMouseClicked(MouseEvent event) {
 
@@ -53,17 +57,14 @@ public class CaseNote implements Initializable {
                     File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + txtCaseNoteNum.getText());
 
                     if (!caseNoteFile.exists()){
-                        System.out.println("1");
                         new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes").mkdir();
 
                         FileWriter writer = new FileWriter(caseNoteFile);
                         writer.write("====================="+ "\n" + LocalTime.now() + "           " + LocalDate.now() + "\n" + "\n" + txtCaseNote.getText() + "\n" + "\n");
                         writer.close();
-                        System.out.println("2");
 
                     }else {
 
-                        System.out.println("3");
                         FileWriter writer = new FileWriter(caseNoteFile, true);
                         writer.append("====================="+"\n" +LocalTime.now() + "           " + LocalDate.now() + "\n" + "\n" + txtCaseNote.getText() + "\n" + "\n");
                         writer.close();
@@ -88,16 +89,43 @@ public class CaseNote implements Initializable {
 
     }
 
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    private void setCaseNumber(){
         txtCaseNoteNum.setText(Clipboard.getSystemClipboard().getString());
+
+    }
+
+    private void setFields(){
+        caseSelection = new ArrayList<>();
+
+        File casesel = new File(System.getProperty("user.home") + "\\Documents\\CMT\\" + "caseSel");
+
+        if (casesel.isFile()) {
+            Scanner s = null;
+            try {
+                s = new Scanner(casesel);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            while (s.hasNextLine()) {
+                caseSelection.add(s.nextLine());
+            }
+
+            txtCaseNoteSeverity.setText(caseSelection.get(1));
+            txtCaseNoteSubject.setText(caseSelection.get(2));
+        }
+
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 txtCaseNote.requestFocus();
             }
         });
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        setCaseNumber();
+        setFields();
     }
 }
 
