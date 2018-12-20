@@ -78,14 +78,11 @@
 .table-row-cell:selected {
     -fx-background-color:  rgb(127, 172, 243);
  }
- .table-row-cell:selected .text {
+.table-row-cell:selected .text {
         -fx-fill : white ;
 
  }
 
-.context-menu {
-  -fx-font-size: 16;
-}
 
 
  .progress-bar .bar {
