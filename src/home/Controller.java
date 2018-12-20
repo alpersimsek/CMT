@@ -1984,75 +1984,83 @@ public class Controller implements Initializable {
 
         ArrayList<File> files = new ArrayList<File>();
         File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes");
-        File[] fileList = repo.listFiles();
 
-        for (int i = 0 ; i < fileList.length ; i++) {
-            Notes.addAll(fileList[i].getName());
-        }
+        if (!repo.exists()){
+            new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes").mkdir();
+            alertCommentUser();
 
-        caseNoteList.getItems().addAll(Notes);
-        caseNoteList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        caseNoteList.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
+        }else {
 
-                txtShowCaseNotes.clear();
+            File[] fileList = repo.listFiles();
 
-                try{
+            for (int i = 0; i < fileList.length; i++) {
+                Notes.addAll(fileList[i].getName());
+            }
 
-                    if (caseNoteList.getItems().size() > 0) {
+            caseNoteList.getItems().addAll(Notes);
+            caseNoteList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+            caseNoteList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
 
-                        btnAddNewNote.setVisible(true);
-                        btnDelNote.setVisible(true);
+                    txtShowCaseNotes.clear();
 
-                        String selectedCase = caseNoteList.getSelectionModel().getSelectedItem().toString();
-                        File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + selectedCase);
+                    try {
 
-                        if (caseNoteFile.isFile()) {
-                            Scanner s = null;
-                            try {
-                                s = new Scanner(caseNoteFile);
-                            } catch (Exception e) {
-                                e.printStackTrace();
+                        if (caseNoteList.getItems().size() > 0) {
+
+                            btnAddNewNote.setVisible(true);
+                            btnDelNote.setVisible(true);
+
+                            String selectedCase = caseNoteList.getSelectionModel().getSelectedItem().toString();
+                            File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + selectedCase);
+
+                            if (caseNoteFile.isFile()) {
+                                Scanner s = null;
+                                try {
+                                    s = new Scanner(caseNoteFile);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                while (s.hasNextLine()) {
+                                    txtShowCaseNotes.appendText(s.nextLine() + "\n");
+                                }
+                                s.close();
                             }
-                            while (s.hasNextLine()) {
-                                txtShowCaseNotes.appendText(s.nextLine() + "\n");
-                            }
-                            s.close();
+
+                            btnAddNewNote.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+
+                                    ClipboardContent content = new ClipboardContent();
+                                    content.putString(selectedCase);
+                                    Clipboard.getSystemClipboard().setContent(content);
+                                    newCaseNote();
+                                    txtShowCaseNotes.clear();
+                                }
+                            });
+                            btnDelNote.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + selectedCase);
+                                    caseNoteFile.delete();
+                                    caseNoteList.getItems().remove(selectedCase);
+                                    if (caseNoteList.getItems().size() == 0) {
+                                        apnMyCases.toFront();
+                                        lblStatus.setText("MY CASES");
+
+                                    }
+                                    txtShowCaseNotes.clear();
+                                }
+                            });
                         }
 
-                        btnAddNewNote.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                            @Override
-                            public void handle(MouseEvent event) {
-
-                                ClipboardContent content = new ClipboardContent();
-                                content.putString(selectedCase);
-                                Clipboard.getSystemClipboard().setContent(content);
-                                newCaseNote();
-                                txtShowCaseNotes.clear();
-                            }
-                        });
-                        btnDelNote.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                            @Override
-                            public void handle(MouseEvent event) {
-                                File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + selectedCase);
-                                caseNoteFile.delete();
-                                caseNoteList.getItems().remove(selectedCase);
-                                if (caseNoteList.getItems().size() == 0){
-                                    apnMyCases.toFront();
-                                    lblStatus.setText("MY CASES");
-
-                                }
-                                txtShowCaseNotes.clear();
-                            }
-                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-
-                }catch (Exception e){
-                    e.printStackTrace();
                 }
-            }
-        });
+            });
+        }
     }
 
     private void newCaseNote(){
@@ -2063,18 +2071,17 @@ public class Controller implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("ADD PERSONAL CASE NOTE");
             stage.getIcons().add(new Image("home/image/rbbicon.png"));
-            stage.setScene(new Scene(root, 600, 400));
+            stage.setScene(new Scene(root, 650, 400));
             stage.show();
-            stage.setMinWidth(620);
+            stage.setMinWidth(650);
             stage.setMinHeight(420);
-            stage.setMaxWidth(620);
+            stage.setMaxWidth(650);
             stage.setMaxHeight(420);
 
         }
         catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     private void customerWOHTable(TableView<CaseTableView> tableCustomers, boolean bool) {
