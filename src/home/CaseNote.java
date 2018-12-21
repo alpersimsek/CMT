@@ -14,8 +14,10 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileWriter;
 import java.net.URL;
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -33,6 +35,8 @@ public class CaseNote implements Initializable {
 
     @FXML
     private TextField txtCaseNoteSeverity;
+    @FXML
+    private TextField txtCaseNoteAccount;
 
     @FXML
     private TextField txtCaseNoteSubject;
@@ -44,6 +48,9 @@ public class CaseNote implements Initializable {
     private Button btnCaseNoteClear;
 
     ArrayList<String> caseSelection;
+
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+
 
     @FXML
     void handleMouseClicked(MouseEvent event) {
@@ -60,7 +67,9 @@ public class CaseNote implements Initializable {
                         new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes").mkdir();
 
                         FileWriter writer = new FileWriter(caseNoteFile);
-                        writer.write("====================="+ "\n" + LocalTime.now() + "           " + LocalDate.now() + "\n" + "\n" + txtCaseNote.getText() + "\n" + "\n");
+                        writer.write("====================="+ "\n" + LocalTime.now().format(dtf) + "           " + LocalDate.now() + "\n" + "\n" +
+                                txtCaseNote.getText() + "\n" + "\n");
+
                         writer.close();
 
                     }else {
@@ -111,7 +120,8 @@ public class CaseNote implements Initializable {
             }
 
             txtCaseNoteSeverity.setText(caseSelection.get(1));
-            txtCaseNoteSubject.setText(caseSelection.get(2));
+            txtCaseNoteSubject.setText(caseSelection.get(9));
+            txtCaseNoteAccount.setText(caseSelection.get(10));
         }
 
         Platform.runLater(new Runnable() {

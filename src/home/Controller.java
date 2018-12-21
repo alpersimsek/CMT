@@ -23,6 +23,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -64,8 +65,6 @@ public class Controller implements Initializable {
 
     @FXML
     private TextField txtUsersSave;
-    @FXML
-    private ChoiceBox<String> userProfCheck;
     @FXML
     private TextField txtProductsSave;
     @FXML
@@ -113,6 +112,10 @@ public class Controller implements Initializable {
     @FXML
     private Pane pnQueuesLoad;
     @FXML
+    private ScrollPane spnNote;
+    @FXML
+    private Pane pnCaseDetailsNote;
+    @FXML
     private ProgressBar progressBar;
     @FXML
     private AnchorPane apnTableView;
@@ -145,9 +148,35 @@ public class Controller implements Initializable {
     @FXML
     private TextField txQueues;
     @FXML
+    private TextField txtCaseRegionNote;
+    @FXML
+    private TextField txtCaseAccountNote;
+    @FXML
+    private TextField txtCaseSubjectNote;
+    @FXML
+    private TextField txtCaseTypeNote;
+    @FXML
+    private TextField txtCaseStatusNote;
+    @FXML
+    private TextField txtCaseAgeNote;
+    @FXML
+    private TextField txtCaseOwnerNote;
+    @FXML
+    private TextField txtCaseSeverityNote;
+    @FXML
+    private TextField txtCaseNumnberNote;
+    @FXML
+    private CheckBox checkBoxHotIssueNote;
+    @FXML
+    private CheckBox checkBoxEscalatedNote;
+    @FXML
+    private TextField txtCaseProductNote;
+    @FXML
     private Button btnDelNote;
     @FXML
     private Button btnAddNewNote;
+    @FXML
+    private Button btnViewNote;
     @FXML
     private Button btnHome;
     @FXML
@@ -536,6 +565,7 @@ public class Controller implements Initializable {
     ArrayList<String> productsFiltered = new ArrayList<String>();
     ArrayList<String> queuesFiltered = new ArrayList<String>();
     ArrayList<String> queueArray = new ArrayList<>();
+    ArrayList<String> selectedCase = new ArrayList<>();
 
 
     ContextMenu menu = new ContextMenu();
@@ -8477,16 +8507,33 @@ public class Controller implements Initializable {
         content.putString(data1);
         Clipboard.getSystemClipboard().setContent(content);
 
-        String data2 = caseview.getCaseSeverity();
-        String data3 = caseview.getCaseSubject();
-        String data4 =  caseview.getCaseAccount();
+        selectedCase = new ArrayList<>();
+        selectedCase.add(caseview.getCaseNumber());
+        selectedCase.add(caseview.getCaseSeverity());
+        selectedCase.add(caseview.getCaseStatus());
+        selectedCase.add(caseview.getCaseOwner());
+        selectedCase.add(caseview.getCaseAge().toString());
+        selectedCase.add(caseview.getCaseEscalatedBy());
+        selectedCase.add(caseview.getCaseHotList());
+        selectedCase.add(caseview.getCaseSupportType());
+        selectedCase.add(caseview.getCaseProduct());
+        selectedCase.add(caseview.getCaseSubject());
+        selectedCase.add(caseview.getCaseAccount());
+        selectedCase.add(caseview.getCaseRegion());
+
+        int selectedsize= selectedCase.size();
 
         try {
 
             File caseSelFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\" + "caseSel");
 
             FileWriter writer = new FileWriter(caseSelFile);
-            writer.write(data1 + "\n" + data2 + "\n" + data3);
+
+            for (int i = 0; i <selectedsize ; i++) {
+
+                writer.write(selectedCase.get(i) + "\n");
+            }
+
             writer.close();
 
         }catch (Exception e){
