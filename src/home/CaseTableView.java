@@ -28,7 +28,6 @@ public class CaseTableView {
     private final SimpleStringProperty caseOutFollow;
 
 
-
     protected CaseTableView(String cNum, String cSev, String cStat, String cOwn, String cResp, Integer cAge, LocalDate cNextUp, String cEsc, String cHot, String cOutF, String cSType, String cProd,
                             String cSubj, String cAcc, String cReg, String cSecur, String cOpDat) {
         //this.caseCount = new SimpleIntegerProperty(cCount);

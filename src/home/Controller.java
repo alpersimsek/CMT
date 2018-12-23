@@ -33,6 +33,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
@@ -147,6 +149,8 @@ public class Controller implements Initializable {
     public TextField customerText;
     @FXML
     private TextField txQueues;
+    @FXML
+    Text txtEscalated;
     @FXML
     private TextField txtCaseRegionNote;
     @FXML
@@ -761,8 +765,6 @@ public class Controller implements Initializable {
             if (caseNoteList.getItems().size()> 0) {
                 lblStatus.setText("MY PERSONAL CASE NOTES");
                 apnNotes.toFront();
-                btnAddNewNote.setVisible(false);
-                btnDelNote.setVisible(false);
                 btnToExcel.setVisible(false);
                 btnBack.setVisible(false);
                 txtShowCaseNotes.clear();
@@ -2013,11 +2015,10 @@ public class Controller implements Initializable {
         caseNoteList.getItems().clear();
         ObservableList<String> Notes = FXCollections.observableArrayList();
 
-        ArrayList<File> files = new ArrayList<File>();
+        ArrayList<String> details = new ArrayList<String>();
         File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes");
 
         if (!repo.exists()){
-            new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes").mkdir();
             alertCommentUser();
 
         }else {
@@ -2034,30 +2035,79 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(MouseEvent event) {
 
+                    details.clear();
                     txtShowCaseNotes.clear();
 
                     try {
 
                         if (caseNoteList.getItems().size() > 0) {
 
-                            btnAddNewNote.setVisible(true);
-                            btnDelNote.setVisible(true);
-
                             String selectedCase = caseNoteList.getSelectionModel().getSelectedItem().toString();
-                            File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + selectedCase);
+                            File caseDetails = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\" + selectedCase);
 
-                            if (caseNoteFile.isFile()) {
+                            if (caseDetails.isFile()) {
                                 Scanner s = null;
                                 try {
-                                    s = new Scanner(caseNoteFile);
+                                    s = new Scanner(caseDetails);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                                 while (s.hasNextLine()) {
-                                    txtShowCaseNotes.appendText(s.nextLine() + "\n");
+                                    details.add(s.nextLine());
                                 }
                                 s.close();
+                                txtCaseNumnberNote.setText(details.get(0));
+                                txtCaseSeverityNote.setText(details.get(1));
+                                txtCaseStatusNote.setText(details.get(2));
+                                txtCaseOwnerNote.setText(details.get(3));
+                                txtCaseAgeNote.setText(details.get(4));
+                                txtCaseTypeNote.setText(details.get(7));
+                                txtCaseProductNote.setText(details.get(8));
+                                txtCaseSubjectNote.setText(details.get(9));
+                                txtCaseAccountNote.setText(details.get(10));
+                                txtCaseRegionNote.setText(details.get(11));
+
+                                if (!details.get(5).equals("NotSet")) {
+                                    checkBoxEscalatedNote.setSelected(true);
+                                }
+                                else{
+                                    checkBoxEscalatedNote.setSelected(false);
+                                }
+                                if (!details.get(6).equals("NotSet")){
+                                    checkBoxHotIssueNote.setSelected(true);
+                                }else{
+                                    checkBoxHotIssueNote.setSelected(false);
+                                }
                             }
+
+                            pnCaseDetailsNote.setVisible(true);
+                            btnViewNote.setVisible(true);
+                            btnAddNewNote.setVisible(true);
+                            btnDelNote.setVisible(true);
+
+                            btnViewNote.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+
+                                    File caseNote = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + selectedCase);
+
+                                    if (caseNote.isFile()) {
+                                        Scanner s = null;
+                                        try {
+                                            s = new Scanner(caseNote);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                        while (s.hasNextLine()) {
+                                            txtShowCaseNotes.appendText(s.nextLine() + "\n");
+                                        }
+                                        s.close();
+                                    }
+                                    spnNote.setVisible(true);
+
+                                }
+                            });
+
 
                             btnAddNewNote.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
@@ -2070,11 +2120,15 @@ public class Controller implements Initializable {
                                     txtShowCaseNotes.clear();
                                 }
                             });
+
                             btnDelNote.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
                                     File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + selectedCase);
+                                    File caseDetail = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\" + selectedCase);
+
                                     caseNoteFile.delete();
+                                    caseDetail.delete();
                                     caseNoteList.getItems().remove(selectedCase);
                                     if (caseNoteList.getItems().size() == 0) {
                                         apnMyCases.toFront();
@@ -2109,8 +2163,58 @@ public class Controller implements Initializable {
             stage.setMaxWidth(650);
             stage.setMaxHeight(420);
 
+            saveCaseDetails();
+
         }
         catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void saveCaseDetails() {
+
+        TablePosition tablePosition = (TablePosition) tableCases.getSelectionModel().getSelectedCells().get(0);
+        int row = tablePosition.getRow();
+        CaseTableView caseview = (CaseTableView) tableCases.getItems().get(row);
+        TableColumn tableColumn = tablePosition.getTableColumn();
+
+        selectedCase = new ArrayList<>();
+        selectedCase.add(caseview.getCaseNumber());
+        selectedCase.add(caseview.getCaseSeverity());
+        selectedCase.add(caseview.getCaseStatus());
+        selectedCase.add(caseview.getCaseOwner());
+        selectedCase.add(caseview.getCaseAge().toString());
+        selectedCase.add(caseview.getCaseEscalatedBy());
+        selectedCase.add(caseview.getCaseHotList());
+        selectedCase.add(caseview.getCaseSupportType());
+        selectedCase.add(caseview.getCaseProduct());
+        selectedCase.add(caseview.getCaseSubject());
+        selectedCase.add(caseview.getCaseAccount());
+        selectedCase.add(caseview.getCaseRegion());
+
+        int selectedsize= selectedCase.size();
+
+        try {
+
+            File caseDetailsFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\" + caseview.getCaseNumber());
+
+            if (!caseDetailsFile.exists()) {
+
+                new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails").mkdir();
+            }
+
+                File caseSelFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\" + caseview.getCaseNumber());
+
+                FileWriter writer = new FileWriter(caseSelFile);
+
+                for (int i = 0; i < selectedsize; i++) {
+
+                    writer.write(selectedCase.get(i) + "\n");
+                }
+
+                writer.close();
+
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
@@ -2287,7 +2391,6 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     newCaseNote();
-
                 }});
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
