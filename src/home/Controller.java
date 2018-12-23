@@ -114,7 +114,7 @@ public class Controller implements Initializable {
     @FXML
     private Pane pnQueuesLoad;
     @FXML
-    private ScrollPane spnNote;
+    private AnchorPane spnNote;
     @FXML
     private Pane pnCaseDetailsNote;
     @FXML
