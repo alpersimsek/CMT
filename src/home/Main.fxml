@@ -1842,7 +1842,7 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Pane fx:id="pnCaseDetailsNote" layoutX="305.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="780.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                  <Pane fx:id="pnCaseDetailsNote" layoutX="305.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="780.0" style="-fx-background-color: #FFFFFF;" visible="false" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
                      <children>
                         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="395.0" prefWidth="780.0">
                           <columnConstraints>
@@ -2049,7 +2049,7 @@
                               </TextField>
                               <Button fx:id="btnViewNote" graphicTextGap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="View Notes" GridPane.columnIndex="1" GridPane.rowIndex="8">
                                  <font>
-                                    <Font size="16.0" />
+                                    <Font size="15.0" />
                                  </font>
                                  <graphic>
                                     <FontAwesomeIconView fill="GREY" glyphName="BOOK" size="20" />
@@ -2057,18 +2057,21 @@
                               </Button>
                               <Button fx:id="btnAddNewNote" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Add New Note" GridPane.columnIndex="4" GridPane.rowIndex="8">
                                  <font>
-                                    <Font size="16.0" />
+                                    <Font size="15.0" />
                                  </font>
                                  <graphic>
                                     <FontAwesomeIconView fill="GREY" glyphName="PENCIL_SQUARE_ALT" size="20" />
                                  </graphic>
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
                               </Button>
                               <Button fx:id="btnDelNote" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Delete Note" GridPane.columnIndex="4" GridPane.rowIndex="8">
                                  <font>
-                                    <Font size="16.0" />
+                                    <Font size="15.0" />
                                  </font>
                                  <GridPane.margin>
-                                    <Insets left="150.0" />
+                                    <Insets left="170.0" />
                                  </GridPane.margin>
                                  <graphic>
                                     <FontAwesomeIconView fill="GREY" glyphName="TRASH_ALT" size="20" />
@@ -2078,7 +2081,7 @@
                         </GridPane>
                      </children>
                   </Pane>
-                  <AnchorPane fx:id="spnNote" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="405.0">
+                  <AnchorPane fx:id="spnNote" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="405.0">
                      <children>
                         <TextArea fx:id="txtShowCaseNotes" prefHeight="435.0" prefWidth="1060.0" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                            <font>
@@ -2549,7 +2552,7 @@
                   <Font size="28.0" />
                </font>
             </Label>
-            <Label fx:id="lblStatus" layoutX="10.0" layoutY="55.0" prefHeight="37.0" prefWidth="881.0" text="GENERAL OVERVIEW" textFill="#ff007f">
+            <Label fx:id="lblStatus" layoutX="10.0" layoutY="55.0" prefHeight="37.0" prefWidth="881.0" text="MY CASES" textFill="#ff007f">
                <font>
                   <Font size="18.0" />
                </font>

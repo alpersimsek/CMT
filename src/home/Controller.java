@@ -2116,8 +2116,9 @@ public class Controller implements Initializable {
                                     ClipboardContent content = new ClipboardContent();
                                     content.putString(selectedCase);
                                     Clipboard.getSystemClipboard().setContent(content);
-                                    newCaseNote();
                                     txtShowCaseNotes.clear();
+                                    spnNote.setVisible(false);
+                                    newCaseNote();
                                 }
                             });
 
