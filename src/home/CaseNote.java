@@ -7,14 +7,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.net.URL;
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -75,7 +73,7 @@ public class CaseNote implements Initializable {
                     }else {
 
                         FileWriter writer = new FileWriter(caseNoteFile, true);
-                        writer.append("====================="+"\n" +LocalTime.now() + "           " + LocalDate.now() + "\n" + "\n" + txtCaseNote.getText() + "\n" + "\n");
+                        writer.append("====================="+"\n" +LocalTime.now().format(dtf) + "           " + LocalDate.now() + "\n" + "\n" + txtCaseNote.getText() + "\n" + "\n");
                         writer.close();
                     }
 
@@ -84,7 +82,6 @@ public class CaseNote implements Initializable {
                 }
 
                 ((Stage)(btnCaseNoteSave).getScene().getWindow()).close();
-
             }
 
         }
@@ -95,17 +92,14 @@ public class CaseNote implements Initializable {
         if (event.getSource() == btnCaseNoteClear){
             txtCaseNote.clear();
         }
-
     }
 
     private void setCaseNumber(){
         txtCaseNoteNum.setText(Clipboard.getSystemClipboard().getString());
-
     }
 
     private void setFields(){
         caseSelection = new ArrayList<>();
-
         File casesel = new File(System.getProperty("user.home") + "\\Documents\\CMT\\" + "caseSel");
 
         if (casesel.isFile()) {
@@ -138,4 +132,3 @@ public class CaseNote implements Initializable {
         setFields();
     }
 }
-

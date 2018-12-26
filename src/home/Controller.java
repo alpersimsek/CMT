@@ -4,7 +4,6 @@ import au.com.bytecode.opencsv.CSVReader;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -23,7 +22,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -32,8 +30,6 @@ import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -53,12 +49,10 @@ import java.awt.*;
 import javafx.scene.control.TextArea;
 import java.io.*;
 import java.net.URL;
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -181,6 +175,8 @@ public class Controller implements Initializable {
     private Button btnAddNewNote;
     @FXML
     private Button btnViewNote;
+    @FXML
+    private Button btnViewComment;
     @FXML
     private Button btnHome;
     @FXML
@@ -575,6 +571,7 @@ public class Controller implements Initializable {
     ContextMenu menu = new ContextMenu();
     MenuItem openCaseSFDC = new MenuItem("Search This Case in SalesForce...");
     MenuItem casePersonalNote = new MenuItem("Add Personal Note To This Case...");
+    MenuItem openCaseComments = new MenuItem("Open Comments for this case...");
 
     //Case Ref Cells
     int caseAccountRef = 0;
@@ -588,10 +585,6 @@ public class Controller implements Initializable {
     int caseHotListRefCell = 0;
     int caseOutFolRefCell = 0;
     int caseAgeRefCell = 0;
-    int caseMainQuestionRefCell = 0;
-    int caseSubQuestionRefCell = 0;
-    int caseAnswerRefCell = 0;
-    int caseSurveyTypeRef;
     int mycaseNumCellRef = 0;
     int mycaseSupTypeRefCell = 0;
     int mycaseStatRefCell = 0;
@@ -603,6 +596,8 @@ public class Controller implements Initializable {
     int mycaseOutFolRefCell = 0;
     int mycaseAgeRefCell = 0;
     int mycaseUpdateCell = 0;
+    int myCaseCommentRef = 0;
+    int myCaseCommentDateRef = 0;
     int caseCellRef = 0;
     int caseCellRef2 = 0;
     int myCaseCellRef1 = 0;
@@ -716,8 +711,6 @@ public class Controller implements Initializable {
             btnBack.setVisible(false);
             apnHome.toFront();
             overviewPage();
-            //parseComments();
-            //createComments();
         }
 
         if (event.getSource() == btnCases) {
@@ -737,7 +730,7 @@ public class Controller implements Initializable {
         }
 
         if (event.getSource() == btnProjects) {
-
+            parseComments();
         }
 
         if (event.getSource() == btnCustomers) {
@@ -770,7 +763,7 @@ public class Controller implements Initializable {
                 txtShowCaseNotes.clear();
                 caseNoteTable();
             }else {
-                alertCommentUser();
+                alertNoNoteUser();
             }
         }
 
@@ -2019,7 +2012,7 @@ public class Controller implements Initializable {
         File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes");
 
         if (!repo.exists()){
-            alertCommentUser();
+            alertNoNoteUser();
 
         }else {
 
@@ -2082,12 +2075,15 @@ public class Controller implements Initializable {
 
                             pnCaseDetailsNote.setVisible(true);
                             btnViewNote.setVisible(true);
+                            btnViewComment.setVisible(true);
                             btnAddNewNote.setVisible(true);
                             btnDelNote.setVisible(true);
 
                             btnViewNote.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
+
+                                    txtShowCaseNotes.clear();
 
                                     File caseNote = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + selectedCase);
 
@@ -2108,6 +2104,12 @@ public class Controller implements Initializable {
                                 }
                             });
 
+                            btnViewComment.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                @Override
+                                public void handle(MouseEvent event) {
+                                    viewComments(details.get(0));
+                                }
+                            });
 
                             btnAddNewNote.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
@@ -3902,13 +3904,11 @@ public class Controller implements Initializable {
 
         String filename = "cmt_case_data.csv";
         String filename2 = "cmt_user_prod.csv";
-        //String filename3 = "cmt_survey.csv";
-        //String filename4 = "cmt_comments.csv";
+        String filename4 = "cmt_comments.csv";
 
         String newLoc = "https://na8.salesforce.com/00OC0000006r1EX?export=1&enc=UTF-8&xf=csv?filename=" + filename;
         String newLoc2 = "https://na8.salesforce.com/00OC0000006r1xS?export=1&enc=UTF-8&xf=csv?filename=" + filename2;
-        //String newLoc3 = "https://na8.salesforce.com/00OC0000006r36Q?export=1&enc=UTF-8&xf=csv?filename=" + filename3;
-        //String newLoc4 = "https://na8.salesforce.com/00OC0000006r5iq?export=1&enc=UTF-8&xf=csv?filename=" + filename4;
+        String newLoc4 = "https://na8.salesforce.com/00OC0000006r5ig?export=1&enc=UTF-8&xf=csv?filename=" + filename4;
         try {
             FileUtils.copyURLToFile(new URL(newLoc), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.csv"));
             LocalDate refreshDate = LocalDate.now();
@@ -3934,25 +3934,18 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
 
-        /*try{
-
-            FileUtils.copyURLToFile(new URL(newLoc3), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_survey.csv"));
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
         try{
 
             FileUtils.copyURLToFile(new URL(newLoc4), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_comments.csv"));
 
         }catch (Exception e){
             e.printStackTrace();
-        }*/
+        }
 
         parseData();
         parseUserData();
         myCasesPage();
+        parseComments();
 
         time = new Timeline();
         time.setCycleCount(Timeline.INDEFINITE);
@@ -5077,7 +5070,6 @@ public class Controller implements Initializable {
 
                 int mergedUserNum = mergedOwner.size();
 
-
                 if ((!mergedOwner.isEmpty())) {
 
                     for (int j = 0; j < mergedUserNum; j++) {
@@ -5180,6 +5172,7 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -5202,6 +5195,13 @@ public class Controller implements Initializable {
                         e.printStackTrace();
                     }
 
+                }
+            });
+
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
                 }
             });
 
@@ -5230,6 +5230,102 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void viewComments(String caseNum){
+
+        ArrayList<String> caseCommentArray = new ArrayList();
+
+        try(HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_comments.xls")))){
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int mycaseNumCellRef = 0;
+            int myCaseCommentDateRef = 0;
+            int myCaseCommentRef = 0;
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+
+            HSSFCell cellVal1;
+            HSSFCell cellVal2;
+            HSSFCell cellVal3;
+
+            for (int i = 0; i < cellnum ; i++) {
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+
+                if (filterColName.equals("Case Number")) {
+                    mycaseNumCellRef = i;
+                }
+                if (filterColName.equals("Work Note: Created Date")) {
+                    myCaseCommentDateRef = i;
+                }
+                if (filterColName.equals("Work Comments")) {
+                    myCaseCommentRef = i;
+                }
+            }
+
+            for (int i = 1; i < lastRow + 1; i++) {
+
+                cellVal1 = filtersheet.getRow(i).getCell(mycaseNumCellRef);
+                String commentCaseNumber = cellVal1.getStringCellValue();
+
+                cellVal2 = filtersheet.getRow(i).getCell(myCaseCommentDateRef);
+                String commentDate = cellVal2.getStringCellValue();
+
+                cellVal3 = filtersheet.getRow(i).getCell(myCaseCommentRef);
+                String commentComment = cellVal3.getStringCellValue();
+
+                if (commentCaseNumber.equals(caseNum)){
+
+                    caseCommentArray.add(commentDate);
+                    caseCommentArray.add(commentComment);
+                }
+            }
+
+            int arraySize = caseCommentArray.size();
+
+            if (arraySize == 0){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.png"));
+                alert.setTitle("RBBN CASE MANAGEMENT TOOL WARNING:");
+                alert.setHeaderText(null);
+                alert.setContentText("THERE IS NO COMMENT FOR THIS CASE"+ "\n" + "SINCE 7 DAYS!");
+                alert.showAndWait();
+            }
+
+            spnNote.setVisible(true);
+            txtShowCaseNotes.clear();
+
+            for (int i = 0; i < arraySize; i += 2) {
+
+                txtShowCaseNotes.appendText("===============" + "\n" + caseCommentArray.get(i)+ "\n" + "\n" + caseCommentArray.get(i+1) + "\n");
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        caseCommentArray.clear();
+    }
+
+    private void viewCaseComments() {
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("home/CaseComment.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("ADD PERSONAL CASE NOTE");
+            stage.getIcons().add(new Image("home/image/rbbicon.png"));
+            stage.setScene(new Scene(root, 650, 400));
+            stage.show();
+            stage.setMinWidth(650);
+            stage.setMinHeight(420);
+            stage.setMaxWidth(650);
+            stage.setMaxHeight(420);
+
+            saveCaseDetails();
+
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -7349,126 +7445,6 @@ public class Controller implements Initializable {
         }
     }
 
-    private void parseSurveyData(){
-
-        try {
-
-            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_survey.csv");
-
-            BufferedReader read = new BufferedReader(new FileReader(csvfile));
-
-            HSSFWorkbook workBook = new HSSFWorkbook();
-            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\cmt_survey.xls";
-            HSSFSheet sheet = workBook.createSheet("Survey");
-            CreationHelper helper = workBook.getCreationHelper();
-
-            CSVReader csvReader = new CSVReader(read);
-            String[] line;
-            int r = 0;
-
-            while((line = csvReader.readNext()) != null){
-
-                Row row = sheet.createRow((short) r++);
-                for (int i = 0; i <line.length ; i++) {
-                    row.createCell(i).setCellValue(helper.createRichTextString(line[i]));
-                }
-            }
-
-            int lastRow = sheet.getLastRowNum();
-
-            for (int i = 0; i < 7; i++) {
-                sheet.removeRow(sheet.getRow(lastRow - i));
-            }
-
-            FileOutputStream fileOutputStream = new FileOutputStream(xlsFileAddress);
-            workBook.write(fileOutputStream);
-            fileOutputStream.close();
-
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void createComments(){
-
-
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_comments.xls")))) {
-
-            HSSFSheet filtersheet = workbook.getSheetAt(0);
-            int cellnum = filtersheet.getRow(0).getLastCellNum();
-            int lastRow = filtersheet.getLastRowNum();
-
-            for (int i = 0; i < cellnum; i++) {
-                String filterColName = filtersheet.getRow(0).getCell(i).toString();
-
-                if (filterColName.equals("Case Number")){
-                    caseNumCommentRef = i;
-                }
-                if (filterColName.equals("Work Comments")){
-                    caseCommentRef = i;
-                }
-            }
-
-            HSSFCell caseNum;
-            HSSFCell comment;
-
-            ArrayList<String> caseNumbers = new ArrayList<>();
-
-            for (int i = 1; i < lastRow + 1 ; i++) {
-
-                caseNum = filtersheet.getRow(i).getCell(caseNumCommentRef);
-                String caseNumber = caseNum.getStringCellValue();
-
-                caseNumbers.add(caseNumber);
-            }
-
-            caseNumbers = (ArrayList) caseNumbers.stream().distinct().collect(Collectors.toList());
-            int caseArray =  caseNumbers.size();
-
-            ArrayList<String> caseWCom = new ArrayList<>();
-            ArrayList<ArrayList<String>> casesWCom = new ArrayList<ArrayList<String>>();
-
-            for (int i = 0; i < caseArray ; i++) {
-
-                for (int j = 1; j < lastRow+1 ; j++) {
-
-                    caseNum = filtersheet.getRow(j).getCell(caseNumCommentRef);
-                    String caseNo = caseNum.getStringCellValue();
-
-                    comment = filtersheet.getRow(j).getCell(caseCommentRef);
-                    String caseComment = comment.getStringCellValue();
-
-                    if ( caseNo == caseNumbers.get(i)) {
-                        caseWCom.add(caseNo);
-                        caseWCom.add(caseComment);
-                    }
-
-                    caseWCom = (ArrayList) caseWCom.stream().distinct().collect(Collectors.toList());
-                }
-                casesWCom.add(caseWCom);
-            }
-
-            /*for (int i = 0; i < lastRow ; i++) {
-
-                caseNum = filtersheet.getRow(i+1).getCell(caseNumCommentRef);
-                String caseNo = caseNum.getStringCellValue();
-
-                comment = filtersheet.getRow(i+1).getCell(caseCommentRef);
-                String caseComment = comment.getStringCellValue();
-
-                if ( caseArray < i && caseNo == caseNumbers.get(i)) {
-                    caseWCom.add(caseNo);
-                    caseWCom.add(caseComment);
-                    caseWCom = (ArrayList) caseWCom.stream().distinct().collect(Collectors.toList());
-                    casesWCom.add(caseWCom);
-                }
-            }*/
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
     // Splitting the CSV File for reading
     private String[] parseCsvLine(String line) throws IOException {
 
@@ -7480,104 +7456,6 @@ public class Controller implements Initializable {
 
         return fields;
     }
-
-
-    private void readSurveyData(){
-
-        ArrayList<String> techCaseNumStr = new ArrayList<>();
-        ArrayList<String> kbsCaseNumStr = new ArrayList<>();
-        ArrayList<String> erCaseNumStr = new ArrayList<>();
-
-
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_survey.xls")))) {
-
-            HSSFSheet filtersheet = workbook.getSheetAt(0);
-            int cellnum = filtersheet.getRow(0).getLastCellNum();
-            int lastRow = filtersheet.getLastRowNum();
-
-            for (int i = 0; i < cellnum; i++) {
-                String filterColName = filtersheet.getRow(0).getCell(i).toString();
-
-                if (filterColName.equals("RelatedCase: Case Number")){
-                    caseNumCellRef = i;
-                }
-                if (filterColName.equals("RelatedCase: Severity")){
-                    caseSevRefCell = i;
-                }
-                if (filterColName.equals("Question Summary Name")){
-                    caseMainQuestionRefCell = i;
-                }
-                if (filterColName.equals("Sub Question")){
-                    caseSubQuestionRefCell = i;
-                }
-                if (filterColName.equals("Answer(s)")) {
-                    caseAnswerRefCell = i;
-                }
-                if (filterColName.equals("Complete Survey Name")){
-                    caseSurveyTypeRef = i;
-                }
-            }
-
-            HSSFCell caseNum;
-            HSSFCell caseNum2;
-            HSSFCell caseMain;
-            HSSFCell caseSub;
-            HSSFCell caseAns;
-            HSSFCell surType;
-
-            for (int i = 1; i < lastRow + 1; i++) {
-
-                caseNum = filtersheet.getRow(i).getCell(caseNumCellRef);
-                String caseNumber = caseNum.getStringCellValue();
-
-                surType =  filtersheet.getRow(i).getCell(caseSurveyTypeRef);
-                String surveyType = surType.getStringCellValue();
-
-                if (surveyType.equals("Ribbon Technical Support Customer Survey v3") || surveyType.equals("Ribbon Technical Support Customer Survey v2") || surveyType.equals("Ribbon Technical Support Customer Survey")){
-
-                    techCaseNumStr.add(caseNumber);
-                }
-
-                if (surveyType.equals("KBS Support")){
-
-                    kbsCaseNumStr.add(caseNumber);
-                }
-
-                if (surveyType.equals("Emergency Recovery Support")){
-
-                    erCaseNumStr.add(caseNumber);
-                }
-
-            }
-
-            techCaseNumStr = (ArrayList) techCaseNumStr.stream().distinct().collect(Collectors.toList());
-            int techCaseNumStrSize = techCaseNumStr.size();
-
-            kbsCaseNumStr = (ArrayList) kbsCaseNumStr.stream().distinct().collect(Collectors.toList());
-            int kbsCaseNumStrSize = kbsCaseNumStr.size();
-
-            erCaseNumStr = (ArrayList) erCaseNumStr.stream().distinct().collect(Collectors.toList());
-            int erCaseNumStrSize = techCaseNumStr.size();
-
-
-
-           for (int i = 1; i < techCaseNumStrSize + 1; i++) {
-
-               for (int j = 0; j < lastRow ; j++) {
-                   
-               }
-
-                caseMain = filtersheet.getRow(i).getCell(caseMainQuestionRefCell);
-                String casMain = caseMain.getStringCellValue();
-
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-    }
-
 
     private void overviewPage() {
 
@@ -8840,13 +8718,24 @@ public class Controller implements Initializable {
         alert.showAndWait();
     }
 
-    private void alertCommentUser() {
+    private void alertNoNoteUser() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.png"));
         alert.setTitle("RBBN CASE MANAGEMENT TOOL WARNING:");
         alert.setHeaderText(null);
         alert.setContentText("THERE IS NO PERSONAL NOTE..." + "\n" + "\n" + "PLEASE CREATE PERSONAL NOTE FIRST!");
         alert.showAndWait();
+    }
+
+    private void alertNoComment(){
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.png"));
+        alert.setTitle("RBBN CASE MANAGEMENT TOOL WARNING:");
+        alert.setHeaderText(null);
+        alert.setContentText("THERE IS NO COMMENT IN THIS CASE..." + "\n" + "\n" + "CREATED IN LAST 7 DAYS!");
+        alert.showAndWait();
+
     }
 
     private void userSelectArray() {
