@@ -2388,12 +2388,14 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCustomers.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
                     newCaseNote();
+
                 }});
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
@@ -2401,7 +2403,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCustomers, caseno);
+                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -2409,6 +2411,13 @@ public class Controller implements Initializable {
                         e.printStackTrace();
                     }
 
+                }
+            });
+
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
                 }
             });
 
@@ -2580,6 +2589,7 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCustomers.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -2602,6 +2612,13 @@ public class Controller implements Initializable {
                         e.printStackTrace();
                     }
 
+                }
+            });
+
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
                 }
             });
             // Selecting and Copy the Case Number to Clipboard
@@ -2766,6 +2783,7 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -2791,6 +2809,12 @@ public class Controller implements Initializable {
                 }
             });
 
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
+                }
+            });
             // Selecting and Copy the Case Number to Clipboard
             tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -2969,6 +2993,7 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -2991,6 +3016,13 @@ public class Controller implements Initializable {
                         e.printStackTrace();
                     }
 
+                }
+            });
+
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
                 }
             });
 
@@ -3130,6 +3162,7 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -3155,6 +3188,12 @@ public class Controller implements Initializable {
                 }
             });
 
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
+                }
+            });
             // Selecting and Copy the Case Number to Clipboard
             tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -3297,6 +3336,7 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -3322,6 +3362,12 @@ public class Controller implements Initializable {
                 }
             });
 
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
+                }
+            });
             // Selecting and Copy the Case Number to Clipboard
             tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -3457,6 +3503,7 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -3482,6 +3529,12 @@ public class Controller implements Initializable {
                 }
             });
 
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
+                }
+            });
             // Selecting and Copy the Case Number to Clipboard
             tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -3648,6 +3701,7 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -3673,6 +3727,12 @@ public class Controller implements Initializable {
                 }
             });
 
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
+                }
+            });
             // Selecting and Copy the Case Number to Clipboard
             tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -3846,6 +3906,7 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -3871,6 +3932,12 @@ public class Controller implements Initializable {
                 }
             });
 
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
+                }
+            });
             // Selecting and Copy the Case Number to Clipboard
             tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -4592,6 +4659,7 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -4600,7 +4668,6 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
-
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -4615,6 +4682,13 @@ public class Controller implements Initializable {
                         e.printStackTrace();
                     }
 
+                }
+            });
+
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
                 }
             });
 
@@ -4743,6 +4817,7 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -4751,7 +4826,6 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
-
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -4766,6 +4840,13 @@ public class Controller implements Initializable {
                         e.printStackTrace();
                     }
 
+                }
+            });
+
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
                 }
             });
 
@@ -4960,6 +5041,7 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -4985,6 +5067,12 @@ public class Controller implements Initializable {
                 }
             });
 
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
+                }
+            });
             // Selecting and Copy the Case Number to Clipboard
             tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -5454,6 +5542,7 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -5462,7 +5551,6 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
-
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -5480,6 +5568,12 @@ public class Controller implements Initializable {
                 }
             });
 
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
+                }
+            });
             // Selecting and Copy the Case Number to Clipboard
             tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -5640,6 +5734,7 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -5648,7 +5743,6 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
-
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -5666,6 +5760,12 @@ public class Controller implements Initializable {
                 }
             });
 
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
+                }
+            });
             // Selecting and Copy the Case Number to Clipboard
             tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -5819,6 +5919,7 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -5827,7 +5928,6 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
-
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -5845,6 +5945,12 @@ public class Controller implements Initializable {
                 }
             });
 
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
+                }
+            });
             // Selecting and Copy the Case Number to Clipboard
             tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
@@ -6045,6 +6151,7 @@ public class Controller implements Initializable {
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -6053,7 +6160,6 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
-
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -6071,6 +6177,12 @@ public class Controller implements Initializable {
                 }
             });
 
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
+                }
+            });
             // Selecting and Copy the Case Number to Clipboard
             tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
