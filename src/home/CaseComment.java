@@ -1,5 +1,6 @@
 package home;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -8,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.MouseEvent;
@@ -18,12 +20,13 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
+import java.util.Scanner;
 
 
 public class CaseComment implements Initializable {
@@ -32,14 +35,26 @@ public class CaseComment implements Initializable {
     private TextArea txtCaseComments;
 
     @FXML
-    private Text txtCaseNum;
-
-    @FXML
     private Button btnClose;
+
     @FXML
     private Button btnNewNote;
 
-    ArrayList<String> caseCommentArray = new ArrayList<>();
+    @FXML
+    private TextField txtComNum;
+
+    @FXML
+    private TextField txtComSev;
+
+    @FXML
+    private TextField txtComAcc;
+
+    @FXML
+    private TextField txtComSubj;
+
+    ArrayList<String> caseCommentArray;
+    ArrayList<String> caseSelection;
+
 
 
     private void setCaseNumber(){
@@ -50,6 +65,7 @@ public class CaseComment implements Initializable {
 
         try(HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_comments.xls")))){
 
+            caseCommentArray = new ArrayList<>();
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int mycaseNumCellRef = 0;
             int myCaseCommentDateRef = 0;
@@ -62,9 +78,7 @@ public class CaseComment implements Initializable {
             HSSFCell cellVal3;
 
             String caseNumber = Clipboard.getSystemClipboard().getString();
-            txtCaseNum.setText(caseNumber + "  " + "Work Notes From Last 7 Days: ");
-
-            System.out.println(caseNumber);
+            //txtComNum.setText(caseNumber + "  " + "Work Notes From Last 7 Days: ");
 
             for (int i = 0; i < cellnum ; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -133,6 +147,35 @@ public class CaseComment implements Initializable {
         }
     }
 
+    private void setFields(){
+        caseSelection = new ArrayList<>();
+        File casesel = new File(System.getProperty("user.home") + "\\Documents\\CMT\\" + "caseSel");
+
+        if (casesel.isFile()) {
+            Scanner s = null;
+            try {
+                s = new Scanner(casesel);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            while (s.hasNextLine()) {
+                caseSelection.add(s.nextLine());
+            }
+
+            txtComNum.setText(caseSelection.get(0));
+            txtComSev.setText(caseSelection.get(1));
+            txtComSubj.setText(caseSelection.get(9));
+            txtComAcc.setText(caseSelection.get(10));
+        }
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                txtCaseComments.requestFocus();
+            }
+        });
+    }
+
     private void newNote(){
 
         ((Stage)(btnClose).getScene().getWindow()).close();
@@ -159,5 +202,6 @@ public class CaseComment implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         viewCases();
+        setFields();
     }
 }

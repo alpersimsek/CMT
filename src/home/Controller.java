@@ -5401,7 +5401,7 @@ public class Controller implements Initializable {
         try {
             root = FXMLLoader.load(getClass().getClassLoader().getResource("home/CaseComment.fxml"));
             Stage stage = new Stage();
-            stage.setTitle("ADD PERSONAL CASE NOTE");
+            stage.setTitle("VIEW CASE COMMENTS FROM LAST 7 DAYS");
             stage.getIcons().add(new Image("home/image/rbbicon.png"));
             stage.setScene(new Scene(root, 650, 400));
             stage.show();
