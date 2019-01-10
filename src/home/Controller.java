@@ -731,7 +731,7 @@ public class Controller implements Initializable {
         }
 
         if (event.getSource() == btnProjects) {
-            parseComments();
+
         }
 
         if (event.getSource() == btnCustomers) {

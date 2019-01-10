@@ -135,7 +135,7 @@
       </AnchorPane>
       <StackPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
          <children>
-            <AnchorPane fx:id="apnNotes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
+            <AnchorPane fx:id="apnNotes" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <Pane layoutX="14.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="250.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
                      <children>
@@ -406,7 +406,7 @@
                   </AnchorPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apnProduct" minHeight="610.0" minWidth="850.0" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
+            <AnchorPane fx:id="apnProduct" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <GridPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="5.0">
                      <columnConstraints>
@@ -731,7 +731,7 @@
                   </GridPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apnCustomers" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
+            <AnchorPane fx:id="apnCustomers" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <TableView fx:id="tableCustomers" prefHeight="200.0" prefWidth="200.0" stylesheets="@home.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="210.0">
                      <columns>
@@ -960,7 +960,7 @@
                   </Pane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apnSettings" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleMouseClicked" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
+            <AnchorPane fx:id="apnSettings" onMouseClicked="#handleMouseClicked" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <Pane fx:id="pnQueuesSave" layoutX="735.0" layoutY="313.0" prefHeight="224.0" prefWidth="350.0" style="-fx-background-color: #FFFFFF; -fx-border-color: GRAY; -fx-border-width: 1;" visible="false" AnchorPane.leftAnchor="495.0" AnchorPane.topAnchor="330.0">
                      <children>
@@ -1549,7 +1549,7 @@
                   </Pane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apnTableView" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;">
+            <AnchorPane fx:id="apnTableView" prefHeight="200.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <TableView fx:id="tableCases" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columns>
@@ -1574,7 +1574,7 @@
                   </TableView>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apnBrowser" minHeight="610.0" minWidth="850.0" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
+            <AnchorPane fx:id="apnBrowser" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <GridPane AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columnConstraints>
@@ -1590,7 +1590,7 @@
                   </GridPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apnHome" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
+            <AnchorPane fx:id="apnHome" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <GridPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="5.0">
                      <columnConstraints>
@@ -1955,7 +1955,7 @@
                   </GridPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apnMyCases" minHeight="610.0" minWidth="850.0" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
+            <AnchorPane fx:id="apnMyCases" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <GridPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="5.0">
                      <columnConstraints>
