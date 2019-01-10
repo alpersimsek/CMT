@@ -1,6 +1,7 @@
 package home;
 
-import au.com.bytecode.opencsv.CSVReader;
+import com.univocity.parsers.csv.CsvParser;
+import com.univocity.parsers.csv.CsvParserSettings;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -7523,27 +7524,32 @@ public class Controller implements Initializable {
 
             File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_comments.csv");
 
-            BufferedReader read = new BufferedReader(new FileReader(csvfile));
-
             HSSFWorkbook workBook = new HSSFWorkbook();
             String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\cmt_comments.xls";
             HSSFSheet sheet = workBook.createSheet("Survey");
             CreationHelper helper = workBook.getCreationHelper();
 
-            CSVReader csvReader = new CSVReader(read);
-            String[] line;
             int r = 0;
 
-            while((line = csvReader.readNext()) != null){
+            CsvParserSettings settings = new CsvParserSettings();
+            settings.setMaxCharsPerColumn(100000);
+            settings.getFormat().setLineSeparator("\n");
 
-                Row row = sheet.createRow((short) r++);
-                for (int i = 0; i <line.length ; i++) {
-                    row.createCell(i).setCellValue(helper.createRichTextString(line[i]));
+            CsvParser parser = new CsvParser(settings);
+            parser.beginParsing(csvfile);
+
+            String[] row;
+            while ((row = parser.parseNext()) != null) {
+
+                Row frow = sheet.createRow((short) r++);
+                for (int i = 0; i <row.length ; i++) {
+                    frow.createCell(i).setCellValue(helper.createRichTextString(row[i]));
                 }
             }
 
-            int lastRow = sheet.getLastRowNum();
+            parser.stopParsing();
 
+            int lastRow = sheet.getLastRowNum();
             for (int i = 0; i < 7; i++) {
                 sheet.removeRow(sheet.getRow(lastRow - i));
             }
