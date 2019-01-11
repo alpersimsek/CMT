@@ -10144,8 +10144,8 @@ public class Controller implements Initializable {
         readDefaultSettingFiles();
         setqueueArray();
         readTimeStamp();
-        tableCases.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tableCustomers.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        //tableCases.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        //tableCustomers.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         myProductsPage();
         overviewPage();
         myCasesPage();

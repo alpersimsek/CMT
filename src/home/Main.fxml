@@ -124,7 +124,7 @@
                                     <Insets left="40.0" />
                                  </GridPane.margin>
                               </Text>
-                              <Text fx:id="txtEscalated" layoutX="330.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Escalated : " wrappingWidth="78.515625" GridPane.rowIndex="4">
+                              <Text fx:id="txtEscalated" fill="RED" layoutX="330.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Escalated : " wrappingWidth="78.515625" GridPane.rowIndex="4">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -132,7 +132,7 @@
                                     <Insets left="1.0" />
                                  </GridPane.margin>
                               </Text>
-                              <CheckBox fx:id="checkBoxEscalatedNote" disable="true" mnemonicParsing="false" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                              <CheckBox fx:id="checkBoxEscalatedNote" mnemonicParsing="false" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <GridPane.margin>
                                     <Insets left="5.0" />
                                  </GridPane.margin>
@@ -145,7 +145,7 @@
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </Text>
-                              <TextField fx:id="txtCaseAgeNote" layoutX="410.0" layoutY="93.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="50.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                              <TextField fx:id="txtCaseAgeNote" editable="false" layoutX="410.0" layoutY="93.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="50.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -174,7 +174,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="573.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hot Issue :" wrappingWidth="85.515625" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                              <Text fill="ORANGE" layoutX="573.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hot Issue :" wrappingWidth="85.515625" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -182,7 +182,7 @@
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </Text>
-                              <CheckBox fx:id="checkBoxHotIssueNote" disable="true" layoutX="658.0" layoutY="82.0" mnemonicParsing="false" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                              <CheckBox fx:id="checkBoxHotIssueNote" disable="true" layoutX="658.0" layoutY="82.0" mnemonicParsing="false" textFill="RED" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4">
                                  <GridPane.margin>
                                     <Insets left="5.0" />
                                  </GridPane.margin>
@@ -291,7 +291,7 @@
                   </Pane>
                   <AnchorPane fx:id="spnNote" prefHeight="200.0" prefWidth="200.0" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="405.0">
                      <children>
-                        <TextArea fx:id="txtShowCaseNotes" prefHeight="435.0" prefWidth="1060.0" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                        <TextArea fx:id="txtShowCaseNotes" editable="false" prefHeight="435.0" prefWidth="1060.0" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -356,24 +356,24 @@
                         </GridPane>
                      </children>
                   </Pane>
-                  <TableView fx:id="tableCustomers" prefHeight="200.0" prefWidth="200.0" stylesheets="@home.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="230.0">
+                  <TableView fx:id="tableCustomers" prefHeight="200.0" prefWidth="200.0" stylesheets="@home.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="235.0">
                      <columns>
-                        <TableColumn fx:id="NumberColCust" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" resizable="false" text="Case Number" />
-                        <TableColumn fx:id="SeverityColCust" prefWidth="75.0" text="Severity" />
-                        <TableColumn fx:id="StatusColCust" prefWidth="75.0" text="Status" />
-                        <TableColumn fx:id="OwnerColCust" prefWidth="75.0" text="Owner" />
-                        <TableColumn fx:id="ResponsibleColCust" prefWidth="75.0" text="Responsible" visible="false" />
-                        <TableColumn fx:id="AgeColCust" prefWidth="75.0" text="Age" />
-                        <TableColumn fx:id="NextUpdateColCust" prefWidth="75.0" text="Next Update" visible="false" />
-                        <TableColumn fx:id="EscalatedByColCust" prefWidth="75.0" text="Escalated By" />
-                        <TableColumn fx:id="HotListColCust" prefWidth="75.0" text="Hot List" />
-                        <TableColumn fx:id="OutFollowColCust" prefWidth="75.0" text="E1 Follow-Up" />
-                        <TableColumn fx:id="SupportTypeColCust" prefWidth="75.0" text="Support Type" />
-                        <TableColumn fx:id="ProductColCust" prefWidth="75.0" text="Product" />
-                        <TableColumn fx:id="SubjectColCust" prefWidth="75.0" text="Subject" />
-                        <TableColumn fx:id="AccountColCust" prefWidth="75.0" text="Account" />
-                        <TableColumn fx:id="RegionColCust" prefWidth="75.0" text="Region" />
-                        <TableColumn fx:id="SecurityColCust" prefWidth="75.0" text="Security" visible="false" />
+                        <TableColumn fx:id="NumberColCust" maxWidth="113.0" minWidth="113.0" prefWidth="113.0" resizable="false" text="Case Number" />
+                        <TableColumn fx:id="SeverityColCust" maxWidth="110.0" minWidth="50.0" prefWidth="110.0" text="Severity" />
+                        <TableColumn fx:id="StatusColCust" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" resizable="false" text="Status" />
+                        <TableColumn fx:id="OwnerColCust" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Owner" />
+                        <TableColumn fx:id="ResponsibleColCust" maxWidth="150.0" minWidth="80.0" prefWidth="150.0" text="Responsible" visible="false" />
+                        <TableColumn fx:id="AgeColCust" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" resizable="false" text="Age" />
+                        <TableColumn fx:id="NextUpdateColCust" maxWidth="80.0" minWidth="80.0" resizable="false" text="Next Update" visible="false" />
+                        <TableColumn fx:id="EscalatedByColCust" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Escalated By" />
+                        <TableColumn fx:id="HotListColCust" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="Hot List" />
+                        <TableColumn fx:id="OutFollowColCust" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" text="E1 Follow-Up" />
+                        <TableColumn fx:id="SupportTypeColCust" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" resizable="false" text="Support Type" />
+                        <TableColumn fx:id="ProductColCust" maxWidth="320.0" minWidth="80.0" prefWidth="220.0" text="Product" />
+                        <TableColumn fx:id="SubjectColCust" maxWidth="600.0" minWidth="200.0" prefWidth="400.0" text="Subject" />
+                        <TableColumn fx:id="AccountColCust" maxWidth="200.0" minWidth="100.0" prefWidth="150.0" text="Account" />
+                        <TableColumn fx:id="RegionColCust" maxWidth="80.0" minWidth="80.0" resizable="false" text="Region" />
+                        <TableColumn fx:id="SecurityColCust" maxWidth="80.0" minWidth="80.0" resizable="false" text="Security" />
                         <TableColumn fx:id="DateTimeOpenedColCust" prefWidth="75.0" text="Date Opened" visible="false" />
                      </columns>
                   </TableView>
@@ -1600,22 +1600,22 @@
                <children>
                   <TableView fx:id="tableCases" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columns>
-                        <TableColumn fx:id="NumberCol" editable="false" maxWidth="114.0" minWidth="105.0" prefWidth="114.0" text="Case Number" />
-                        <TableColumn fx:id="SeverityCol" maxWidth="110.0" minWidth="101.0" prefWidth="101.0" text="Severity" />
-                        <TableColumn fx:id="StatusCol" maxWidth="150.0" minWidth="80.0" text="Status" />
-                        <TableColumn fx:id="OwnerCol" maxWidth="150.0" minWidth="80.0" text="Owner" />
-                        <TableColumn fx:id="ResponsibleCol" maxWidth="150.0" minWidth="100.0" prefWidth="100.0" text="Responsible" />
-                        <TableColumn fx:id="AgeCol" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" text="Age" />
-                        <TableColumn fx:id="NextUpdateCol" maxWidth="80.0" minWidth="80.0" text="Update" />
-                        <TableColumn fx:id="EscalatedByCol" maxWidth="150.0" minWidth="80.0" text="Escalated By" />
-                        <TableColumn fx:id="HotListCol" maxWidth="120.0" minWidth="80.0" text="Hot List" />
-                        <TableColumn fx:id="OutFollowCol" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" text="E1 Follow" />
-                        <TableColumn fx:id="SupportTypeCol" maxWidth="150.0" minWidth="80.0" text="Type" />
-                        <TableColumn fx:id="ProductCol" maxWidth="200.0" minWidth="80.0" text="Product" />
-                        <TableColumn fx:id="SubjectCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="100.0" text="Subject" />
-                        <TableColumn fx:id="AccountCol" maxWidth="200.0" minWidth="100.0" prefWidth="100.0" text="Account" />
-                        <TableColumn fx:id="RegionCol" maxWidth="150.0" minWidth="100.0" prefWidth="100.0" text="Region" />
-                        <TableColumn fx:id="SecurityCol" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Security" />
+                        <TableColumn fx:id="NumberCol" editable="false" maxWidth="113.0" minWidth="113.0" prefWidth="113.0" text="Case Number" />
+                        <TableColumn fx:id="SeverityCol" maxWidth="110.0" minWidth="50.0" prefWidth="110.0" text="Severity" />
+                        <TableColumn fx:id="StatusCol" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" resizable="false" text="Status" />
+                        <TableColumn fx:id="OwnerCol" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Owner" />
+                        <TableColumn fx:id="ResponsibleCol" maxWidth="150.0" minWidth="80.0" prefWidth="150.0" text="Responsible" />
+                        <TableColumn fx:id="AgeCol" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" resizable="false" text="Age" />
+                        <TableColumn fx:id="NextUpdateCol" maxWidth="80.0" minWidth="80.0" resizable="false" text="Update" />
+                        <TableColumn fx:id="EscalatedByCol" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Escalated By" />
+                        <TableColumn fx:id="HotListCol" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="Hot List" />
+                        <TableColumn fx:id="OutFollowCol" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" text="E1 Follow" />
+                        <TableColumn fx:id="SupportTypeCol" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" resizable="false" text="Type" />
+                        <TableColumn fx:id="ProductCol" maxWidth="280.0" minWidth="80.0" prefWidth="180.0" text="Product" />
+                        <TableColumn fx:id="SubjectCol" maxWidth="600.0" minWidth="200.0" prefWidth="300.0" text="Subject" />
+                        <TableColumn fx:id="AccountCol" maxWidth="200.0" minWidth="100.0" prefWidth="150.0" text="Account" />
+                        <TableColumn fx:id="RegionCol" maxWidth="80.0" minWidth="80.0" resizable="false" text="Region" />
+                        <TableColumn fx:id="SecurityCol" maxWidth="80.0" minWidth="80.0" resizable="false" text="Security" />
                         <TableColumn fx:id="DateTimeOpenedCol" prefWidth="75.0" text="Date Opened" visible="false" />
                      </columns>
                   </TableView>

@@ -230,7 +230,7 @@
                                     <Insets left="40.0" />
                                  </GridPane.margin>
                               </Text>
-                              <Text fx:id="txtEscalated" layoutX="330.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Escalated : " wrappingWidth="78.515625" GridPane.rowIndex="4">
+                              <Text fx:id="txtEscalated" fill="RED" layoutX="330.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Escalated : " wrappingWidth="78.515625" GridPane.rowIndex="4">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -238,7 +238,7 @@
                                     <Insets left="1.0" />
                                  </GridPane.margin>
                               </Text>
-                              <CheckBox fx:id="checkBoxEscalatedNote" disable="true" mnemonicParsing="false" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                              <CheckBox fx:id="checkBoxEscalatedNote" mnemonicParsing="false" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                  <GridPane.margin>
                                     <Insets left="5.0" />
                                  </GridPane.margin>
@@ -251,7 +251,7 @@
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </Text>
-                              <TextField fx:id="txtCaseAgeNote" layoutX="410.0" layoutY="93.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="50.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                              <TextField fx:id="txtCaseAgeNote" editable="false" layoutX="410.0" layoutY="93.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="50.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -280,7 +280,7 @@
                                     <Font size="16.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="573.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hot Issue :" wrappingWidth="85.515625" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                              <Text fill="ORANGE" layoutX="573.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hot Issue :" wrappingWidth="85.515625" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -288,7 +288,7 @@
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </Text>
-                              <CheckBox fx:id="checkBoxHotIssueNote" disable="true" layoutX="658.0" layoutY="82.0" mnemonicParsing="false" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="4">
+                              <CheckBox fx:id="checkBoxHotIssueNote" layoutX="658.0" layoutY="82.0" mnemonicParsing="false" textFill="RED" GridPane.columnIndex="3" GridPane.rowIndex="4">
                                  <GridPane.margin>
                                     <Insets left="5.0" />
                                  </GridPane.margin>
@@ -397,7 +397,7 @@
                   </Pane>
                   <AnchorPane fx:id="spnNote" layoutY="312.0" prefHeight="293.0" prefWidth="840.0" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="312.0">
                      <children>
-                        <TextArea fx:id="txtShowCaseNotes" layoutY="-5.0" prefHeight="290.0" prefWidth="835.0" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                        <TextArea fx:id="txtShowCaseNotes" editable="false" layoutY="-5.0" prefHeight="290.0" prefWidth="835.0" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                            <font>
                               <Font size="14.0" />
                            </font>
