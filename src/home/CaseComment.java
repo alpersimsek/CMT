@@ -171,9 +171,17 @@ public class CaseComment implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                setHeader();
                 txtCaseComments.requestFocus();
             }
         });
+    }
+
+    private void setHeader(){
+
+        Stage stage = (Stage) txtCaseComments.getScene().getWindow();
+        stage.setTitle(caseSelection.get(0) +  " : COMMENTS FROM LAST 7 DAYS" );
+
     }
 
     private void newNote(){

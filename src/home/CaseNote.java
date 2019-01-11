@@ -121,9 +121,17 @@ public class CaseNote implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
+                setHeader();
                 txtCaseNote.requestFocus();
             }
         });
+    }
+
+    private void setHeader(){
+
+        Stage stage = (Stage) txtCaseNote.getScene().getWindow();
+        stage.setTitle(caseSelection.get(0) +  " : PERSONAL NOTE" );
+
     }
 
     @Override
