@@ -27,7 +27,7 @@
    <children>
       <Pane layoutX="200.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="850.0" style="-fx-background-color: #1D1F21;" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="10.0" prefHeight="43.0" prefWidth="289.0" text="Case Management Tool" textFill="#ff007f">
+            <Label layoutX="10.0" prefHeight="43.0" prefWidth="289.0" text="RBBN SUPPORT DASHBOARD" textFill="#ff007f">
                <font>
                   <Font size="24.0" />
                </font>

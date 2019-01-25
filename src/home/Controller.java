@@ -50,6 +50,7 @@ import java.awt.*;
 import javafx.scene.control.TextArea;
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -703,6 +704,12 @@ public class Controller implements Initializable {
     int prodQueuePS = 0;
     int prodQueueTS = 0;
 
+    //Alert Strings
+    String strAlert = "NO RECORD FOUND..." + "\n" + "\n" + "PLEASE RELOAD DATA FOR RECENT DATA!" + "\n" + "\n" + "IF NOT ALREADY, PLEASE LOGIN!";
+    String strNoNote = "THERE IS NO PERSONAL NOTE..." + "\n" + "\n" + "PLEASE CREATE PERSONAL NOTE FIRST!";
+    String strSave = "PLEASE PROMPT A PROFILE NAME";
+    String strLoadProf = "THERE IS NO USER PROFILE SAVED!";
+
     @FXML
     private void handleClicks(ActionEvent event) throws IOException, InvalidFormatException {
 
@@ -731,6 +738,28 @@ public class Controller implements Initializable {
         }
 
         if (event.getSource() == btnProjects) {
+
+            projectionLoginPage();
+
+            /*ClassLoader loader = Controller.class.getClassLoader();
+            File pythonSource = new File(loader.getResource("home/Python").getFile());
+            File pythonDestination = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Python\\");
+
+
+            if(!pythonDestination.exists()) {
+                try {
+
+                    FileUtils.copyDirectory(pythonSource, pythonDestination);
+                    System.out.println("Copied");
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Python Copy Failed");
+                }
+            }
+
+            Process process = new ProcessBuilder(System.getProperty("user.home") + "\\Documents\\CMT\\Python\\test.exe").start();
+            */
 
         }
 
@@ -764,7 +793,8 @@ public class Controller implements Initializable {
                 txtShowCaseNotes.clear();
                 caseNoteTable();
             }else {
-                alertNoNoteUser();
+                //alertNoNoteUser();
+                alertUser(strNoNote);
             }
         }
 
@@ -798,7 +828,7 @@ public class Controller implements Initializable {
                 oneFilterTableView(columnSelect, filter1, tableCases, apnTableView, true);
             }
             if (e1Cases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -812,7 +842,7 @@ public class Controller implements Initializable {
                 oneFilterTableView(columnSelect, filter1, tableCases, apnTableView, true);
             }
             if (e2Cases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -826,7 +856,7 @@ public class Controller implements Initializable {
                 oneFilterTableView(columnSelect, filter1, tableCases, apnTableView, true);
             }
             if (outFollow == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
 
         }
@@ -841,7 +871,7 @@ public class Controller implements Initializable {
                 oneFilterTableView(columnSelect, filter1, tableCases, apnTableView, false);
             }
             if (escCase == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -855,7 +885,7 @@ public class Controller implements Initializable {
                 oneFilterTableView(columnSelect, filter1, tableCases, apnTableView, true);
             }
             if (bcCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -869,7 +899,7 @@ public class Controller implements Initializable {
                 oneFilterTableView(columnSelect, filter1, tableCases, apnTableView, false);
             }
             if (hotlist == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -881,7 +911,7 @@ public class Controller implements Initializable {
                 overviewWOHView(true);
             }
             if (wohCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -893,7 +923,7 @@ public class Controller implements Initializable {
                 overviewWOHView(false);
             }
             if (inactiveCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -907,7 +937,7 @@ public class Controller implements Initializable {
                 overviewWIPCaseTableView(columnSelect, filter, tableCases, apnTableView);
             }
             if (BCwip == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -923,7 +953,7 @@ public class Controller implements Initializable {
                 twoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
             }
             if (custActBC == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -939,7 +969,7 @@ public class Controller implements Initializable {
                 twoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
             }
             if (custRpdBC == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -953,7 +983,7 @@ public class Controller implements Initializable {
                 overviewEngineeringTableView(columSelect, filter1, tableCases, apnTableView);
             }
             if (BCds == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -967,7 +997,7 @@ public class Controller implements Initializable {
                 overViewInactiveTable(columnSelect1, filter1, tableCases, apnTableView);
             }
             if (BCpc == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -983,7 +1013,7 @@ public class Controller implements Initializable {
                 overviewWIPCaseTableView(columnSelect, filter, tableCases, apnTableView);
             }
             if (MJwip == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -999,7 +1029,7 @@ public class Controller implements Initializable {
                 twoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
             }
             if (custActMJ == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1015,7 +1045,7 @@ public class Controller implements Initializable {
                 twoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
             }
             if (custRpdMJ == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1030,7 +1060,7 @@ public class Controller implements Initializable {
                 overviewEngineeringTableView(columSelect, filter1, tableCases, apnTableView);
             }
             if (MJds == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1044,7 +1074,7 @@ public class Controller implements Initializable {
                 overViewInactiveTable(columnSelect1, filter1, tableCases, apnTableView);
             }
             if (MJpc == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1058,7 +1088,7 @@ public class Controller implements Initializable {
                 overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
             }
             if (bcDue == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1072,7 +1102,7 @@ public class Controller implements Initializable {
                 overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
             }
             if (misBCdue == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1086,7 +1116,7 @@ public class Controller implements Initializable {
                 overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, true);
             }
             if (dueMJday == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1100,7 +1130,7 @@ public class Controller implements Initializable {
                 overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
             }
             if (misMJdue == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1114,7 +1144,7 @@ public class Controller implements Initializable {
                 overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 180, false);
             }
             if (misMNdue == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1128,7 +1158,7 @@ public class Controller implements Initializable {
                 overviewQueueView(columnselect, filter, tableCases, apnTableView, "GPS QUEUE");
             }
             if (queueTS == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1142,7 +1172,7 @@ public class Controller implements Initializable {
                 overviewQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "RTS QUEUE");
             }
             if (queuePS == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1155,7 +1185,7 @@ public class Controller implements Initializable {
                 caseUpdateTableView(columnSelect, tableCases, apnTableView, true, true);
             }
             if (updateToday == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1168,7 +1198,7 @@ public class Controller implements Initializable {
                 caseUpdateTableView(columnSelect, tableCases, apnTableView, false, true);
             }
             if (updateMissed == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1181,7 +1211,7 @@ public class Controller implements Initializable {
                 caseUpdateTableView(columnSelect, tableCases, apnTableView, false, false);
             }
             if (updateNull == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1195,7 +1225,7 @@ public class Controller implements Initializable {
                 oneFilterMyTableView(columnSelect, filter, tableCases, apnTableView, true);
             }
             if (myE1Case == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1209,7 +1239,7 @@ public class Controller implements Initializable {
                 oneFilterMyTableView(columnSelect, filter, tableCases, apnTableView, true);
             }
             if (myE2Cases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1224,7 +1254,7 @@ public class Controller implements Initializable {
                 oneFilterMyTableView(columnSelect, filter, tableCases, apnTableView, true);
             }
             if (myOutFollow == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1238,7 +1268,7 @@ public class Controller implements Initializable {
                 oneFilterMyTableView(columnSelect, filter, tableCases, apnTableView, false);
             }
             if (myEscCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1252,7 +1282,7 @@ public class Controller implements Initializable {
                 oneFilterMyTableView(columnSelect, filter, tableCases, apnTableView, true);
             }
             if (myBCCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1266,7 +1296,7 @@ public class Controller implements Initializable {
                 oneFilterMyTableView(columnSelect, filter, tableCases, apnTableView, false);
             }
             if (myHotList == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1278,7 +1308,7 @@ public class Controller implements Initializable {
                 myWOHTableView(tableCases, apnTableView, true);
             }
             if (myWOHCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1290,7 +1320,7 @@ public class Controller implements Initializable {
                 myWOHTableView(tableCases, apnTableView, false);
             }
             if (myInactiveCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1306,7 +1336,7 @@ public class Controller implements Initializable {
                 overviewMyWIPCaseTableView(columFilter, filter, tableCases, apnTableView);
             }
             if (myBCWIP == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1323,7 +1353,7 @@ public class Controller implements Initializable {
                 twoFilterMyTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
             }
             if (myBCWac == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1340,7 +1370,7 @@ public class Controller implements Initializable {
                 twoFilterMyTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
             }
             if (myBCupdated == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1357,7 +1387,7 @@ public class Controller implements Initializable {
                 twoFilterMyTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
             }
             if (myBCDSCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1373,7 +1403,7 @@ public class Controller implements Initializable {
                 inactiveCasesMyTableView(columnSelect, filter, tableCases, apnTableView);
             }
             if (myBCInactiveCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1389,7 +1419,7 @@ public class Controller implements Initializable {
                 overviewMyWIPCaseTableView(columFilter, filter, tableCases, apnTableView);
             }
             if (myMJWIP == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1406,7 +1436,7 @@ public class Controller implements Initializable {
                 twoFilterMyTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
             }
             if (myMJWAC == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1422,7 +1452,7 @@ public class Controller implements Initializable {
                 twoFilterMyTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
             }
             if (myMJUpdated == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1442,7 +1472,7 @@ public class Controller implements Initializable {
             }
 
             if (myMJDSCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnMyMJINACT) {
@@ -1457,7 +1487,7 @@ public class Controller implements Initializable {
                 inactiveCasesMyTableView(columnSelect, filter, tableCases, apnTableView);
             }
             if (myMJInactiveCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1472,7 +1502,7 @@ public class Controller implements Initializable {
                 myDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
             }
             if (myBCDueCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1488,7 +1518,7 @@ public class Controller implements Initializable {
             }
 
             if (myBCMissedCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1504,7 +1534,7 @@ public class Controller implements Initializable {
             }
 
             if (myMJDueCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1520,7 +1550,7 @@ public class Controller implements Initializable {
             }
 
             if (myMJMissedCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1534,7 +1564,7 @@ public class Controller implements Initializable {
                 createMyQueueCaseView(columnSelect, tableCases, apnTableView);
             }
             if (myQueuedCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1550,7 +1580,7 @@ public class Controller implements Initializable {
             }
 
             if (myUpdateToday == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
 
         }
@@ -1566,7 +1596,7 @@ public class Controller implements Initializable {
                 mycaseUpdateTableView(caseTableSelect, tableCases, apnTableView, false, true);
             }
             if (myUpdateMissed == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1580,7 +1610,7 @@ public class Controller implements Initializable {
                 mycaseUpdateTableView(caseTableSelect, tableCases, apnTableView, false, false);
             }
             if (myUpdateNull == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnE1Prod) {
@@ -1594,7 +1624,7 @@ public class Controller implements Initializable {
             }
 
             if (prodE1Case == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnE2Prod) {
@@ -1607,7 +1637,7 @@ public class Controller implements Initializable {
                 productOneFilterView(columnSelect, filter, tableCases, apnTableView, true);
             }
             if (prodE2Cases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnOutFollowProd) {
@@ -1620,7 +1650,7 @@ public class Controller implements Initializable {
                 productOneFilterView(columnSelect, filter, tableCases, apnTableView, true);
             }
             if (prodOutFollow == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnEscalatedProd) {
@@ -1633,7 +1663,7 @@ public class Controller implements Initializable {
                 productOneFilterView(columnSelect, filter, tableCases, apnTableView, false);
             }
             if (prodEscCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnBCProd) {
@@ -1646,7 +1676,7 @@ public class Controller implements Initializable {
                 productOneFilterView(columnSelect, filter, tableCases, apnTableView, true);
             }
             if (prodBCCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnHotIssuesProd) {
@@ -1659,7 +1689,7 @@ public class Controller implements Initializable {
                 productOneFilterView(columnSelect, filter, tableCases, apnTableView, false);
             }
             if (prodHotList == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnWOHProd) {
@@ -1670,7 +1700,7 @@ public class Controller implements Initializable {
                 prodWOHTable(tableCases, apnTableView, true);
             }
             if (prodWOHCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnInactiveProd) {
@@ -1681,7 +1711,7 @@ public class Controller implements Initializable {
                 prodWOHTable(tableCases, apnTableView, false);
             }
             if (prodInactiveCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnBCWIPProd) {
@@ -1694,7 +1724,7 @@ public class Controller implements Initializable {
                 productWIPCaseView(columnSelect, filter, tableCases, apnTableView);
             }
             if (prodBCWIP == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1710,7 +1740,7 @@ public class Controller implements Initializable {
                 twoFilterProductTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
             }
             if (prodBCWac == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1726,7 +1756,7 @@ public class Controller implements Initializable {
                 twoFilterProductTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
             }
             if (prodBCupdated == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnBCEngineeringProd) {
@@ -1742,7 +1772,7 @@ public class Controller implements Initializable {
                 twoFilterProductTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
             }
             if (prodBCDSCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnBCINACTProd) {
@@ -1756,7 +1786,7 @@ public class Controller implements Initializable {
                 inactiveCasesProductTableView(columnSelect, filter, tableCases, apnTableView);
             }
             if (prodBCInactiveCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1770,7 +1800,7 @@ public class Controller implements Initializable {
                 productWIPCaseView(columnSelect, filter, tableCases, apnTableView);
             }
             if (prodMJWIP == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1786,7 +1816,7 @@ public class Controller implements Initializable {
                 twoFilterProductTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
             }
             if (prodMJWAC == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1802,7 +1832,7 @@ public class Controller implements Initializable {
                 twoFilterProductTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
             }
             if (prodMJUpdated == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1819,7 +1849,7 @@ public class Controller implements Initializable {
                 twoFilterProductTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
             }
             if (prodMJDSCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1834,7 +1864,7 @@ public class Controller implements Initializable {
                 inactiveCasesProductTableView(columnSelect, filter, tableCases, apnTableView);
             }
             if (prodMJInactiveCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1849,7 +1879,7 @@ public class Controller implements Initializable {
                 productDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
             }
             if (prodBCDueCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1864,7 +1894,7 @@ public class Controller implements Initializable {
                 productDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
             }
             if (prodBCMissedCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1879,7 +1909,7 @@ public class Controller implements Initializable {
                 productDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, true);
             }
             if (prodMJDueCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1894,7 +1924,7 @@ public class Controller implements Initializable {
                 productDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
             }
             if (prodMJMissedCases == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnTSQueueProd) {
@@ -1905,7 +1935,7 @@ public class Controller implements Initializable {
                 productViewCasesQueued(tableCases, apnTableView, false);
             }
             if (prodQueueTS == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
 
@@ -1917,7 +1947,7 @@ public class Controller implements Initializable {
                 productViewCasesQueued(tableCases, apnTableView, true);
             }
             if (prodQueuePS == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnCustomerCritical) {
@@ -1929,7 +1959,7 @@ public class Controller implements Initializable {
                 customerTable(columnSelect, filter, tableCustomers, true);
             }
             if (customerE1 == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnCustomerE2) {
@@ -1941,7 +1971,7 @@ public class Controller implements Initializable {
                 customerTable(columnSelect, filter, tableCustomers, true);
             }
             if (customerE2 == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnCustomerOutFollow) {
@@ -1953,7 +1983,7 @@ public class Controller implements Initializable {
                 customerTable(columnSelect, filter, tableCustomers, true);
             }
             if (customerOutFol == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnCustomerEscalated) {
@@ -1965,7 +1995,7 @@ public class Controller implements Initializable {
                 customerTable(columnSelect, filter, tableCustomers, false);
             }
             if (customerEsc == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnCustomerHotIssues) {
@@ -1977,7 +2007,7 @@ public class Controller implements Initializable {
                 customerTable(columnSelect, filter, tableCustomers, false);
             }
             if (customerHot == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnCustomerBC) {
@@ -1989,7 +2019,7 @@ public class Controller implements Initializable {
                 customerTable(columnSelect, filter, tableCustomers, true);
             }
             if (customerBC == 0) {
-                alertUser();
+                alertUser(strAlert);
             }
         }
         if (event.getSource() == btnCustomerActWOH) {
@@ -1999,7 +2029,7 @@ public class Controller implements Initializable {
                 customerWOHTable(tableCustomers, true);
             }
             if (customerWoh == 0) {
-                alertUser();
+                alertUser(strAlert);
                 tableCustomers.setVisible(false);
             }
         }
@@ -2013,7 +2043,10 @@ public class Controller implements Initializable {
         File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes");
 
         if (!repo.exists()){
-            alertNoNoteUser();
+            //alertNoNoteUser();
+            String strNoNote = "THERE IS NO PERSONAL NOTE..." + "\n" + "\n" + "PLEASE CREATE PERSONAL NOTE FIRST!";
+            alertUser(strNoNote);
+
 
         }else {
 
@@ -2044,7 +2077,7 @@ public class Controller implements Initializable {
                                 try {
                                     s = new Scanner(caseDetails);
                                 } catch (Exception e) {
-                                    e.printStackTrace();
+                                    System.out.println("No Case Details Saved");
                                 }
                                 while (s.hasNextLine()) {
                                     details.add(s.nextLine());
@@ -2093,7 +2126,7 @@ public class Controller implements Initializable {
                                         try {
                                             s = new Scanner(caseNote);
                                         } catch (Exception e) {
-                                            e.printStackTrace();
+                                            System.out.println("No Selection of Any Case");
                                         }
                                         while (s.hasNextLine()) {
                                             txtShowCaseNotes.appendText(s.nextLine() + "\n");
@@ -2145,7 +2178,7 @@ public class Controller implements Initializable {
                         }
 
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        System.out.println("No Case Notes");
                     }
                 }
             });
@@ -2171,8 +2204,30 @@ public class Controller implements Initializable {
 
         }
         catch (IOException e) {
+            System.out.println("Not Able To Open Case Note Window");
+        }
+    }
+
+    private void projectionLoginPage(){
+
+        Parent root;
+
+        try {
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("home/Login.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("PLEASE LOGIN TO PROCEED...");
+            stage.getIcons().add(new Image("home/image/rbbicon.png"));
+            stage.setScene(new Scene(root, 650, 400));
+            stage.show();
+            stage.setMinWidth(650);
+            stage.setMinHeight(420);
+            stage.setMaxWidth(650);
+            stage.setMaxHeight(420);
+
+        }catch(Exception e){
             e.printStackTrace();
         }
+
     }
 
     private void saveCaseDetails() {
@@ -2219,7 +2274,7 @@ public class Controller implements Initializable {
                 writer.close();
 
         }catch (Exception e){
-            e.printStackTrace();
+            System.out.println("Not Able to Save Case Details");
         }
     }
 
@@ -5377,7 +5432,7 @@ public class Controller implements Initializable {
             if (arraySize == 0){
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.png"));
-                alert.setTitle("RBBN CASE MANAGEMENT TOOL WARNING:");
+                alert.setTitle("RBBN CMT WARNING:");
                 alert.setHeaderText(null);
                 alert.setContentText("THERE IS NO COMMENT FOR THIS CASE"+ "\n" + "SINCE 7 DAYS!");
                 alert.showAndWait();
@@ -7847,7 +7902,7 @@ public class Controller implements Initializable {
 
             workbook.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("No Data Downloaded");
         }
 
     }
@@ -7855,8 +7910,6 @@ public class Controller implements Initializable {
     private void surveyPage() {
 
         //TODO: Download the survey report and work on it
-
-
     }
 
     private void myCasesPage() {
@@ -8165,7 +8218,7 @@ public class Controller implements Initializable {
             btnMyUpdateNull.setText(String.valueOf(myUpdateNull));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("No Data Downloaded");
         }
     }
 
@@ -8182,7 +8235,6 @@ public class Controller implements Initializable {
         HSSFCell caseQueue;
         HSSFCell mycaseUpdate;
         HSSFCell productName;
-
 
         try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
 
@@ -8474,7 +8526,7 @@ public class Controller implements Initializable {
             //btnMyUpdateNull.setText(String.valueOf(myUpdateNull));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("No Data Downloaded");
         }
     }
 
@@ -8827,29 +8879,11 @@ public class Controller implements Initializable {
         }
     }
 
-    private void alertUser() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.png"));
-        alert.setTitle("RBBN CASE MANAGEMENT TOOL WARNING:");
-        alert.setHeaderText(null);
-        alert.setContentText("NO RECORD FOUND..." + "\n" + "\n" + "PLEASE RELOAD DATA FOR RECENT DATA!" + "\n" + "\n" + "IF NOT ALREADY, PLEASE LOGIN!");
-        alert.showAndWait();
-    }
-
-    private void alertNoNoteUser() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.png"));
-        alert.setTitle("RBBN CASE MANAGEMENT TOOL WARNING:");
-        alert.setHeaderText(null);
-        alert.setContentText("THERE IS NO PERSONAL NOTE..." + "\n" + "\n" + "PLEASE CREATE PERSONAL NOTE FIRST!");
-        alert.showAndWait();
-    }
-
     private void alertNoComment(){
 
         Alert alert = new Alert(Alert.AlertType.WARNING);
         ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.png"));
-        alert.setTitle("RBBN CASE MANAGEMENT TOOL WARNING:");
+        alert.setTitle("RBBN CMT WARNING:");
         alert.setHeaderText(null);
         alert.setContentText("THERE IS NO COMMENT IN THIS CASE..." + "\n" + "\n" + "CREATED IN LAST 7 DAYS!");
         alert.showAndWait();
@@ -9566,11 +9600,11 @@ public class Controller implements Initializable {
 
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.png"));
-            alert.setTitle("RBBN CASE MANAGEMENT TOOL");
+            alert.setTitle("RBBN CMT");
             alert.setHeaderText(null);
             alert.setContentText("For any issues/requests please inform us:" + "\n" + "\n" +
                     "Alper Simsek"+ "    " + "asimsek@rbbn.com" + "\n" + "\n" +
-                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN CMT Version 1.07");
+                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.07");
             alert.showAndWait();
         }
         if (event.getSource() == btnUsersSaveAs){
@@ -9784,23 +9818,25 @@ public class Controller implements Initializable {
         userProfileList.getItems().clear();
         ObservableList<String> userProfiles = FXCollections.observableArrayList();
 
-        ArrayList<String> profileUsers = new ArrayList<>();
+        //ArrayList<String> profileUsers = new ArrayList<>();
 
         ArrayList<File> files = new ArrayList<File>();
         File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\User");
         File[] fileList = repo.listFiles();
 
-        for (int i = 0 ; i < fileList.length ; i++) {
-            userProfiles.addAll(fileList[i].getName());
-        }
+        if(fileList.length != 0){
 
-        userProfileList.getItems().addAll(userProfiles);
-        userProfileList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        userProfileList.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
+            for (int i = 0 ; i < fileList.length ; i++) {
+                userProfiles.addAll(fileList[i].getName());
+            }
 
-                String selectedProfile = userProfileList.getSelectionModel().getSelectedItem().toString();
+            userProfileList.getItems().addAll(userProfiles);
+            userProfileList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+            userProfileList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+
+                    String selectedProfile = userProfileList.getSelectionModel().getSelectedItem().toString();
 
                     btnUserProfLoad.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
@@ -9824,6 +9860,7 @@ public class Controller implements Initializable {
                                 pnUsersLoad.toBack();
                                 pnUsersLoad.setVisible(false);
                             }
+
                         }
                     });
 
@@ -9835,7 +9872,12 @@ public class Controller implements Initializable {
                             userProfileList.getItems().remove(selectedProfile);
                         }
                     });
-            }});
+                }
+            });
+        }else{
+            alertUser(strLoadProf);
+            pnUsersLoad.setVisible(false);
+        }
 
     }
 
@@ -9895,7 +9937,7 @@ public class Controller implements Initializable {
                         e.printStackTrace();
                     }
                 } else{
-                    alertSave();
+                    alertUser(strSave);
                 }
             }
         });
@@ -9957,7 +9999,7 @@ public class Controller implements Initializable {
                         e.printStackTrace();
                     }
                 }else {
-                    alertSave();
+                    alertUser(strSave);
                 }
             }
         });
@@ -10020,29 +10062,19 @@ public class Controller implements Initializable {
                     }
                 }
                 else{
-                    alertSave();
+                    alertUser(strSave);
                 }
             }
         });
     }
 
-    private void alertSave(){
+    private void alertUser(String str){
 
         Alert alert = new Alert(Alert.AlertType.WARNING);
         ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.png"));
-        alert.setTitle("RBBN CASE MANAGEMENT TOOL WARNING:");
+        alert.setTitle("RBBN CMT WARNING:");
         alert.setHeaderText(null);
-        alert.setContentText("PLEASE PROMPT A PROFILE NAME");
-        alert.showAndWait();
-    }
-
-    private void alertLoad(){
-
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.png"));
-        alert.setTitle("RBBN CASE MANAGEMENT TOOL WARNING:");
-        alert.setHeaderText(null);
-        alert.setContentText("PLEASE SELECT A PROFILE NAME");
+        alert.setContentText(str);
         alert.showAndWait();
     }
 
@@ -10144,11 +10176,8 @@ public class Controller implements Initializable {
         readDefaultSettingFiles();
         setqueueArray();
         readTimeStamp();
-        //tableCases.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        //tableCustomers.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         myProductsPage();
         overviewPage();
         myCasesPage();
-
     }
 }

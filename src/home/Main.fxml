@@ -1598,7 +1598,7 @@
             </AnchorPane>
             <AnchorPane fx:id="apnTableView" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
                <children>
-                  <TableView fx:id="tableCases" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <TableView fx:id="tableCases" prefHeight="850.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columns>
                         <TableColumn fx:id="NumberCol" editable="false" maxWidth="113.0" minWidth="113.0" prefWidth="113.0" text="Case Number" />
                         <TableColumn fx:id="SeverityCol" maxWidth="110.0" minWidth="50.0" prefWidth="110.0" text="Severity" />
@@ -2518,7 +2518,7 @@
       </StackPane>
       <Pane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" prefWidth="1000.0" style="-fx-background-color: #1D1F21;" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="10.0" prefHeight="55.0" prefWidth="436.0" text="Case Management Tool" textFill="#ff007f">
+            <Label layoutX="10.0" prefHeight="55.0" prefWidth="436.0" text="RBBN SUPPORT DASHBOARD" textFill="#ff007f">
                <font>
                   <Font size="28.0" />
                </font>
