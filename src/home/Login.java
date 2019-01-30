@@ -86,12 +86,12 @@ public class Login implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("RBBN Case Management Tool Forecast Modeling Page");
             stage.getIcons().add(new Image("home/image/rbbicon.png"));
-            stage.setScene(new Scene(root, 1280, 950));
+            stage.setScene(new Scene(root, 800, 600));
             stage.show();
-            stage.setMinWidth(1280);
-            stage.setMinHeight(950);
-            stage.setMaxWidth(1280);
-            stage.setMaxHeight(950);
+            stage.setMinWidth(800);
+            stage.setMinHeight(600);
+            stage.setMaxWidth(800);
+            stage.setMaxHeight(600);
 
         }
         catch (IOException e) {

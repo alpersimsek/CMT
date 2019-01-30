@@ -2217,12 +2217,8 @@ public class Controller implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("PLEASE LOGIN TO PROCEED...");
             stage.getIcons().add(new Image("home/image/rbbicon.png"));
-            stage.setScene(new Scene(root, 650, 400));
+            stage.setScene(new Scene(root, 450, 250));
             stage.show();
-            stage.setMinWidth(650);
-            stage.setMinHeight(420);
-            stage.setMaxWidth(650);
-            stage.setMaxHeight(420);
 
         }catch(Exception e){
             e.printStackTrace();

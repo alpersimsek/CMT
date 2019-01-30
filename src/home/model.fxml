@@ -1,14 +1,151 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="home.Model"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.Model">
+   <children>
+      <GridPane layoutX="77.0" layoutY="117.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Product :" wrappingWidth="88.341796875" GridPane.rowIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </Text>
+            <TextField fx:id="txtProducts" editable="false" onMouseClicked="#handleMouseClicked" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <RadioButton fx:id="rdAll" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" text="All Products" GridPane.columnIndex="4" GridPane.rowIndex="1">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+            </RadioButton>
+            <Text layoutX="30.0" layoutY="125.0" onMouseClicked="#handleMouseClicked" strokeType="OUTSIDE" strokeWidth="0.0" text="Period :" wrappingWidth="163.341796875" GridPane.rowIndex="2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="20.0" />
+               </GridPane.margin>
+            </Text>
+            <RadioButton fx:id="rdMonth" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" text="Month" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </RadioButton>
+            <RadioButton fx:id="rdQuarter" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" text="Quarter" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </RadioButton>
+            <RadioButton fx:id="rdYear" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" text="Year" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </RadioButton>
+            <Button fx:id="btnRun" graphicTextGap="20.0" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="50.0" prefWidth="150.0" text="RUN" GridPane.columnIndex="4" GridPane.rowIndex="2">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin>
+               <graphic>
+                  <FontAwesomeIconView fill="GREY" glyphName="CARET_SQUARE_ALT_RIGHT" size="30" />
+               </graphic>
+            </Button>
+         </children>
+      </GridPane>
+      <ImageView fx:id="imageFor" fitHeight="450.0" fitWidth="800.0" layoutX="224.0" layoutY="217.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="150.0" />
+      <AnchorPane fx:id="apnFCProdSelect" prefHeight="400.0" prefWidth="740.0" visible="false" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0">
+         <children>
+            <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints maxHeight="40.0" minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TableView fx:id="tableForecastProd" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="740.0" prefWidth="320.0" GridPane.rowIndex="1" GridPane.rowSpan="3">
+                    <columns>
+                      <TableColumn fx:id="tableColumn" maxWidth="320.0" minWidth="320.0" prefWidth="320.0" text="Available Products" />
+                    </columns>
+                  </TableView>
+                  <Button fx:id="btnUpdatetxt" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <graphic>
+                        <FontAwesomeIconView glyphName="ARROW_UP" size="24" />
+                     </graphic>
+                  </Button>
+                  <Button layoutX="330.0" layoutY="95.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <graphic>
+                        <FontAwesomeIconView fx:id="btnaddSelected" glyphName="ARROW_RIGHT" size="24" />
+                     </graphic>
+                  </Button>
+                  <Button layoutX="330.0" layoutY="274.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <graphic>
+                        <FontAwesomeIconView fx:id="btnremoveSelected" glyphName="ARROW_LEFT" size="24" />
+                     </graphic>
+                  </Button>
+                  <TableView fx:id="tableFCProdSelected" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="320.0" prefWidth="740.0" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="3">
+                     <columns>
+                        <TableColumn fx:id="tableFCColumn" maxWidth="320.0" minWidth="320.0" prefWidth="320.0" text="Selected Products" />
+                     </columns>
+                  </TableView>
+                  <TextField fx:id="txtFilter">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>
