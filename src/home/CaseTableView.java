@@ -14,6 +14,8 @@ public class CaseTableView {
     private final SimpleStringProperty caseSeverity;
     private final SimpleStringProperty caseResponsible;
     private final SimpleStringProperty caseOwner;
+    private final SimpleStringProperty caseCoOwner;
+    private final SimpleStringProperty caseCoOwnerQueue;
     private final SimpleStringProperty caseEscalatedBy;
     private final SimpleStringProperty caseHotList;
     private final SimpleIntegerProperty caseAge;
@@ -22,20 +24,21 @@ public class CaseTableView {
     private final SimpleStringProperty caseSubject;
     private final SimpleStringProperty caseSupportType;
     private final SimpleObjectProperty nextCaseUpdate;
-    private final SimpleStringProperty caseDateTimeOpened;
     private final SimpleStringProperty caseRegion;
     private final SimpleStringProperty caseSecurity;
     private final SimpleStringProperty caseOutFollow;
 
 
-    protected CaseTableView(String cNum, String cSev, String cStat, String cOwn, String cResp, Integer cAge, LocalDate cNextUp, String cEsc, String cHot, String cOutF, String cSType, String cProd,
-                            String cSubj, String cAcc, String cReg, String cSecur, String cOpDat) {
+    protected CaseTableView(String cNum, String cSev, String cStat, String cOwn, String coOwn, String coOwnQueu, String cResp, Integer cAge, LocalDate cNextUp, String cEsc, String cHot, String cOutF, String cSType, String cProd,
+                            String cSubj, String cAcc, String cReg, String cSecur) {
         //this.caseCount = new SimpleIntegerProperty(cCount);
         this.caseNumber = new SimpleStringProperty(cNum);
         this.caseStatus = new SimpleStringProperty(cStat);
         this.caseSeverity = new SimpleStringProperty(cSev);
         this.caseResponsible = new SimpleStringProperty(cResp);
         this.caseOwner = new SimpleStringProperty(cOwn);
+        this.caseCoOwner = new SimpleStringProperty(coOwn);
+        this.caseCoOwnerQueue = new SimpleStringProperty(coOwnQueu);
         this.caseEscalatedBy = new SimpleStringProperty(cEsc);
         this.caseHotList = new SimpleStringProperty(cHot);
         this.caseAge = new SimpleIntegerProperty(cAge);
@@ -44,7 +47,6 @@ public class CaseTableView {
         this.caseSubject = new SimpleStringProperty(cSubj);
         this.caseSupportType = new SimpleStringProperty(cSType);
         this.nextCaseUpdate = new SimpleObjectProperty(cNextUp);
-        this.caseDateTimeOpened = new SimpleStringProperty(cOpDat);
         this.caseRegion = new SimpleStringProperty(cReg);
         this.caseSecurity = new SimpleStringProperty(cSecur);
         this.caseOutFollow = new SimpleStringProperty(cOutF);
@@ -95,6 +97,22 @@ public class CaseTableView {
 
     public void setCaseOwner(String cOwn) {
         caseOwner.set(cOwn);
+    }
+
+    public String getCaseCoOwner() {
+        return caseCoOwner.get();
+    }
+
+    public void setCaseCoOwner(String coOwn) {
+        caseOwner.set(coOwn);
+    }
+
+    public String getCaseCoOwnerQueue() {
+        return caseCoOwnerQueue.get();
+    }
+
+    public void setCaseCoOwnerQueue(String coOwnerQueue) {
+        caseOwner.set(coOwnerQueue);
     }
 
     public String getCaseEscalatedBy() {
@@ -159,14 +177,6 @@ public class CaseTableView {
 
     public void setNextCaseUpdate(LocalDate cNextUp) {
         nextCaseUpdate.set(cNextUp);
-    }
-
-    public String getCaseDateTimeOpened() {
-        return caseDateTimeOpened.get();
-    }
-
-    public void setCaseDateTimeOpened(String cOpDat) {
-        caseDateTimeOpened.set(cOpDat);
     }
 
     public String getCaseRegion() {

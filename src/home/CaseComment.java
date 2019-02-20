@@ -126,6 +126,7 @@ public class CaseComment implements Initializable {
 
                     txtCaseComments.appendText("===============" + "\n" + caseCommentArray.get(i)+ "\n" + "\n" + caseCommentArray.get(i+1) + "\n");
                 }
+                txtCaseComments.positionCaret(0);
 
         }catch (Exception e){
             e.printStackTrace();

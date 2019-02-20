@@ -62,7 +62,7 @@
                         <Font size="20.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnSurvey" alignment="BASELINE_LEFT" graphicTextGap="5.0" layoutX="10.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="My Notes" textFill="WHITE">
+                  <Button fx:id="btnMyNotes" alignment="BASELINE_LEFT" graphicTextGap="5.0" layoutX="10.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="My Notes" textFill="WHITE">
                      <graphic>
                         <FontAwesomeIconView fill="#ff007f" glyphName="PENCIL_SQUARE_ALT" size="21" />
                      </graphic>
@@ -2258,7 +2258,7 @@
                            </graphic>
                         </Button>
                         <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MJ's MISSED DUE" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.columnIndex="6" GridPane.rowIndex="1" />
-                        <Button fx:id="btnMyQueue" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="110.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                        <Button fx:id="btnMyCoQueueAssigned" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="4">
                            <font>
                               <Font size="26.0" />
                            </font>
@@ -2266,7 +2266,7 @@
                               <FontAwesomeIconView fill="#4a4a4a" glyphName="TH_LIST" size="32" />
                            </graphic>
                         </Button>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="QUEUE" textAlignment="CENTER" wrappingWidth="97.775390625" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="QUEUE" textAlignment="CENTER" wrappingWidth="97.775390625" GridPane.columnIndex="8" GridPane.rowIndex="1" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UPDATE TODAY" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.rowIndex="3" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UPDATE MISSED" textAlignment="CENTER" wrappingWidth="99.775390625" GridPane.columnIndex="2" GridPane.rowIndex="3" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UPDATE NOT SET" textAlignment="CENTER" wrappingWidth="102.775390625" GridPane.columnIndex="4" GridPane.rowIndex="3" />
@@ -2294,6 +2294,24 @@
                               <FontAwesomeIconView fill="#4a4a4a" glyphName="CALENDAR_TIMES_ALT" size="32" />
                            </graphic>
                         </Button>
+                        <Button fx:id="btnMyCoOwnQueue" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="350.0" layoutY="186.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="8" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="TH_LIST" size="32" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnMyQueue" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="350.0" layoutY="186.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="8" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="TH_LIST" size="32" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="470.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CO-QUEUE ASSIGNED" textAlignment="CENTER" wrappingWidth="97.775390625" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                        <Text layoutX="350.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CO-QUEUE" textAlignment="CENTER" wrappingWidth="97.775390625" GridPane.columnIndex="8" GridPane.rowIndex="3" />
                      </children>
                   </GridPane>
                </children>

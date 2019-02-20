@@ -27,6 +27,265 @@
    <children>
       <StackPane prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
+            <AnchorPane fx:id="apnTableView" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <TableView fx:id="tableCases" prefHeight="850.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <columns>
+                        <TableColumn fx:id="NumberCol" editable="false" maxWidth="113.0" minWidth="113.0" prefWidth="113.0" text="Case Number" />
+                        <TableColumn fx:id="SeverityCol" maxWidth="110.0" minWidth="50.0" prefWidth="110.0" text="Severity" />
+                        <TableColumn fx:id="StatusCol" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" resizable="false" text="Status" />
+                        <TableColumn fx:id="OwnerCol" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Owner" />
+                        <TableColumn fx:id="CoOwnerCol" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Co-Owner" />
+                        <TableColumn fx:id="CoOwnerQueueCol" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Co-Owner Queue" />
+                        <TableColumn fx:id="ResponsibleCol" maxWidth="150.0" minWidth="80.0" prefWidth="150.0" text="Responsible" />
+                        <TableColumn fx:id="AgeCol" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" resizable="false" text="Age" />
+                        <TableColumn fx:id="NextUpdateCol" maxWidth="80.0" minWidth="80.0" resizable="false" text="Update" />
+                        <TableColumn fx:id="EscalatedByCol" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Escalated By" />
+                        <TableColumn fx:id="HotListCol" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="Hot List" />
+                        <TableColumn fx:id="OutFollowCol" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" text="E1 Follow" />
+                        <TableColumn fx:id="SupportTypeCol" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" resizable="false" text="Type" />
+                        <TableColumn fx:id="ProductCol" maxWidth="280.0" minWidth="80.0" prefWidth="180.0" text="Product" />
+                        <TableColumn fx:id="SubjectCol" maxWidth="600.0" minWidth="200.0" prefWidth="300.0" text="Subject" />
+                        <TableColumn fx:id="AccountCol" maxWidth="200.0" minWidth="100.0" prefWidth="150.0" text="Account" />
+                        <TableColumn fx:id="RegionCol" maxWidth="80.0" minWidth="80.0" resizable="false" text="Region" />
+                        <TableColumn fx:id="SecurityCol" maxWidth="80.0" minWidth="80.0" resizable="false" text="Security" />
+                     </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="apnCustomers" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <Pane fx:id="pnAccountSelect" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1050.0" style="-fx-background-color: #FFFFFF;" visible="false" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="80.0">
+                     <children>
+                        <GridPane prefHeight="508.0" prefWidth="845.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="350.0" prefWidth="350.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="350.0" prefWidth="350.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="200.0" minHeight="200.0" prefHeight="200.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="200.0" minHeight="200.0" prefHeight="200.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="200.0" minHeight="200.0" prefHeight="200.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <TableView fx:id="tableAccounts" maxHeight="600.0" maxWidth="350.0" minHeight="600.0" minWidth="350.0" prefHeight="600.0" prefWidth="350.0" GridPane.rowIndex="1" GridPane.rowSpan="3">
+                                 <columns>
+                                    <TableColumn fx:id="customerCol" editable="false" maxWidth="350.0" minWidth="350.0" prefWidth="350.0" resizable="false" text="Available Accounts" />
+                                 </columns>
+                              </TableView>
+                              <Button fx:id="btnFilterAccountUpdate" graphicTextGap="20.0" layoutX="470.0" layoutY="260.0" maxHeight="70.0" maxWidth="350.0" minHeight="70.0" minWidth="350.0" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="70.0" prefWidth="350.0" text="ADD SELECTED" textAlignment="CENTER" GridPane.columnIndex="2">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="GREY" glyphName="CHEVRON_UP" size="24" />
+                                 </graphic>
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Button>
+                              <TableView fx:id="tableAccountsSelected" layoutX="10.0" layoutY="10.0" maxHeight="600.0" maxWidth="350.0" minHeight="600.0" minWidth="350.0" prefHeight="600.0" prefWidth="350.0" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="3">
+                                 <columns>
+                                    <TableColumn fx:id="customerSelectedCol" editable="false" maxWidth="350.0" minWidth="350.0" prefWidth="350.0" resizable="false" text="Selected Accounts" />
+                                 </columns>
+                              </TableView>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Double Click To Select  /  Deselect Accounts" textAlignment="CENTER" wrappingWidth="218.13671875" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                              <TextField fx:id="txtFilterAccounts" prefHeight="50.0" prefWidth="400.0">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font></TextField>
+                              <Button fx:id="btnFilterAccountClose" graphicTextGap="20.0" layoutX="410.0" layoutY="10.0" maxHeight="70.0" maxWidth="250.0" minHeight="70.0" minWidth="250.0" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="70.0" prefWidth="250.0" text="CLOSE SELECTION" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="GREY" glyphName="CLOSE" size="24" />
+                                 </graphic>
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </Pane>
+                  <TableView fx:id="tableCustomers" prefHeight="200.0" prefWidth="200.0" stylesheets="@home.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="235.0">
+                     <columns>
+                        <TableColumn fx:id="NumberColCust" maxWidth="113.0" minWidth="113.0" prefWidth="113.0" resizable="false" text="Case Number" />
+                        <TableColumn fx:id="SeverityColCust" maxWidth="110.0" minWidth="50.0" prefWidth="110.0" text="Severity" />
+                        <TableColumn fx:id="StatusColCust" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" resizable="false" text="Status" />
+                        <TableColumn fx:id="OwnerColCust" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Owner" />
+                        <TableColumn fx:id="CoOwnerColCust" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Co-Owner" />
+                        <TableColumn fx:id="CoOwnerQueuColCust" maxWidth="180.0" minWidth="130.0" prefWidth="130.0" text="Co-Owner Queue" />
+                        <TableColumn fx:id="ResponsibleColCust" maxWidth="150.0" minWidth="80.0" prefWidth="150.0" text="Responsible" visible="false" />
+                        <TableColumn fx:id="AgeColCust" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" resizable="false" text="Age" />
+                        <TableColumn fx:id="NextUpdateColCust" maxWidth="80.0" minWidth="80.0" resizable="false" text="Next Update" visible="false" />
+                        <TableColumn fx:id="EscalatedByColCust" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Escalated By" />
+                        <TableColumn fx:id="HotListColCust" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="Hot List" />
+                        <TableColumn fx:id="OutFollowColCust" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" text="E1 Follow-Up" />
+                        <TableColumn fx:id="SupportTypeColCust" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" resizable="false" text="Support Type" />
+                        <TableColumn fx:id="ProductColCust" maxWidth="320.0" minWidth="80.0" prefWidth="220.0" text="Product" />
+                        <TableColumn fx:id="SubjectColCust" maxWidth="600.0" minWidth="200.0" prefWidth="400.0" text="Subject" />
+                        <TableColumn fx:id="AccountColCust" maxWidth="200.0" minWidth="100.0" prefWidth="150.0" text="Account" />
+                        <TableColumn fx:id="RegionColCust" maxWidth="80.0" minWidth="80.0" resizable="false" text="Region" />
+                        <TableColumn fx:id="SecurityColCust" maxWidth="80.0" minWidth="80.0" resizable="false" text="Security" />
+                     </columns>
+                  </TableView>
+                  <GridPane prefHeight="73.0" prefWidth="850.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="0.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="700.0" minWidth="700.0" prefWidth="700.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <TextField fx:id="customerText" editable="false" onMouseClicked="#handleMouseClicked" prefHeight="34.0" prefWidth="700.0" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </TextField>
+                        <Button fx:id="btnCustomerLoad" contentDisplay="RIGHT" graphicTextGap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="39.0" prefWidth="150.0" text="LOAD" textFill="#4a4a4a" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView glyphName="ARROW_CIRCLE_DOWN" size="24" />
+                           </graphic>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Customer Account Name(s)" wrappingWidth="346.13671875">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnAccountClear" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="720.0" layoutY="79.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="39.0" prefWidth="150.0" text="CLEAR" textFill="#4a4a4a" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView glyphName="REMOVE" size="24" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </GridPane>
+                  <GridPane prefHeight="117.0" prefWidth="830.0" stylesheets="@home.css" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="80.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="120.0" minHeight="120.0" prefHeight="120.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CRITICAL" textAlignment="CENTER" wrappingWidth="120.775390625">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnCustomerEscalated" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="BULLHORN" size="38" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnCustomerOutFollow" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="FIRE_EXTINGUISHER" size="38" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnCustomerE2" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="CHAIN_BROKEN" size="38" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnCustomerCritical" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="FIRE" size="38" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="10.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E2 CASES" textAlignment="CENTER" wrappingWidth="120.775390625" GridPane.columnIndex="2">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="147.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OUT-FOLLOW" textAlignment="CENTER" wrappingWidth="119.775390625" GridPane.columnIndex="4">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="284.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ESCALATED" textAlignment="CENTER" wrappingWidth="119.775390625" GridPane.columnIndex="6">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="421.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOT ISSUES" textAlignment="CENTER" wrappingWidth="120.775390625" GridPane.columnIndex="8">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="558.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BC CASES" textAlignment="CENTER" wrappingWidth="120.775390625" GridPane.columnIndex="10">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="695.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ACT WOH" textAlignment="CENTER" wrappingWidth="119.775390625" GridPane.columnIndex="12">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnCustomerHotIssues" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="66.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.columnIndex="8" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="BOLT" size="38" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnCustomerBC" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="558.0" layoutY="66.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.columnIndex="10" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="SUITCASE" size="38" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnCustomerActWOH" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="695.0" layoutY="66.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.columnIndex="12" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="LIST" size="38" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
             <AnchorPane fx:id="apnNotes" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <Pane layoutX="14.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
@@ -298,238 +557,6 @@
                         </TextArea>
                      </children>
                   </AnchorPane>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="apnCustomers" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
-               <children>
-                  <Pane fx:id="pnAccountSelect" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1050.0" style="-fx-background-color: #FFFFFF;" visible="false" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="80.0">
-                     <children>
-                        <GridPane prefHeight="508.0" prefWidth="845.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="350.0" prefWidth="350.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="250.0" prefWidth="250.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="350.0" minWidth="350.0" prefWidth="350.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="200.0" minHeight="200.0" prefHeight="200.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="200.0" minHeight="200.0" prefHeight="200.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="200.0" minHeight="200.0" prefHeight="200.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <TableView fx:id="tableAccounts" maxHeight="600.0" maxWidth="350.0" minHeight="600.0" minWidth="350.0" prefHeight="600.0" prefWidth="350.0" GridPane.rowIndex="1" GridPane.rowSpan="3">
-                                 <columns>
-                                    <TableColumn fx:id="customerCol" editable="false" maxWidth="350.0" minWidth="350.0" prefWidth="350.0" resizable="false" text="Available Accounts" />
-                                 </columns>
-                              </TableView>
-                              <Button fx:id="btnFilterAccountUpdate" graphicTextGap="20.0" layoutX="470.0" layoutY="260.0" maxHeight="70.0" maxWidth="350.0" minHeight="70.0" minWidth="350.0" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="70.0" prefWidth="350.0" text="ADD SELECTED" textAlignment="CENTER" GridPane.columnIndex="2">
-                                 <graphic>
-                                    <FontAwesomeIconView fill="GREY" glyphName="CHEVRON_UP" size="24" />
-                                 </graphic>
-                                 <font>
-                                    <Font size="22.0" />
-                                 </font>
-                              </Button>
-                              <TableView fx:id="tableAccountsSelected" layoutX="10.0" layoutY="10.0" maxHeight="600.0" maxWidth="350.0" minHeight="600.0" minWidth="350.0" prefHeight="600.0" prefWidth="350.0" GridPane.columnIndex="2" GridPane.rowIndex="1" GridPane.rowSpan="3">
-                                 <columns>
-                                    <TableColumn fx:id="customerSelectedCol" editable="false" maxWidth="350.0" minWidth="350.0" prefWidth="350.0" resizable="false" text="Selected Accounts" />
-                                 </columns>
-                              </TableView>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Double Click To Select  /  Deselect Accounts" textAlignment="CENTER" wrappingWidth="218.13671875" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Text>
-                              <TextField fx:id="txtFilterAccounts" prefHeight="50.0" prefWidth="400.0">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font></TextField>
-                              <Button fx:id="btnFilterAccountClose" graphicTextGap="20.0" layoutX="410.0" layoutY="10.0" maxHeight="70.0" maxWidth="250.0" minHeight="70.0" minWidth="250.0" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="70.0" prefWidth="250.0" text="CLOSE SELECTION" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                                 <graphic>
-                                    <FontAwesomeIconView fill="GREY" glyphName="CLOSE" size="24" />
-                                 </graphic>
-                                 <font>
-                                    <Font size="22.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </GridPane>
-                     </children>
-                  </Pane>
-                  <TableView fx:id="tableCustomers" prefHeight="200.0" prefWidth="200.0" stylesheets="@home.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="235.0">
-                     <columns>
-                        <TableColumn fx:id="NumberColCust" maxWidth="113.0" minWidth="113.0" prefWidth="113.0" resizable="false" text="Case Number" />
-                        <TableColumn fx:id="SeverityColCust" maxWidth="110.0" minWidth="50.0" prefWidth="110.0" text="Severity" />
-                        <TableColumn fx:id="StatusColCust" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" resizable="false" text="Status" />
-                        <TableColumn fx:id="OwnerColCust" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Owner" />
-                        <TableColumn fx:id="ResponsibleColCust" maxWidth="150.0" minWidth="80.0" prefWidth="150.0" text="Responsible" visible="false" />
-                        <TableColumn fx:id="AgeColCust" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" resizable="false" text="Age" />
-                        <TableColumn fx:id="NextUpdateColCust" maxWidth="80.0" minWidth="80.0" resizable="false" text="Next Update" visible="false" />
-                        <TableColumn fx:id="EscalatedByColCust" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Escalated By" />
-                        <TableColumn fx:id="HotListColCust" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="Hot List" />
-                        <TableColumn fx:id="OutFollowColCust" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" text="E1 Follow-Up" />
-                        <TableColumn fx:id="SupportTypeColCust" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" resizable="false" text="Support Type" />
-                        <TableColumn fx:id="ProductColCust" maxWidth="320.0" minWidth="80.0" prefWidth="220.0" text="Product" />
-                        <TableColumn fx:id="SubjectColCust" maxWidth="600.0" minWidth="200.0" prefWidth="400.0" text="Subject" />
-                        <TableColumn fx:id="AccountColCust" maxWidth="200.0" minWidth="100.0" prefWidth="150.0" text="Account" />
-                        <TableColumn fx:id="RegionColCust" maxWidth="80.0" minWidth="80.0" resizable="false" text="Region" />
-                        <TableColumn fx:id="SecurityColCust" maxWidth="80.0" minWidth="80.0" resizable="false" text="Security" />
-                        <TableColumn fx:id="DateTimeOpenedColCust" prefWidth="75.0" text="Date Opened" visible="false" />
-                     </columns>
-                  </TableView>
-                  <GridPane prefHeight="73.0" prefWidth="850.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="0.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="700.0" minWidth="700.0" prefWidth="700.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <TextField fx:id="customerText" editable="false" onMouseClicked="#handleMouseClicked" prefHeight="34.0" prefWidth="700.0" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </TextField>
-                        <Button fx:id="btnCustomerLoad" contentDisplay="RIGHT" graphicTextGap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="39.0" prefWidth="150.0" text="LOAD" textFill="#4a4a4a" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView glyphName="ARROW_CIRCLE_DOWN" size="24" />
-                           </graphic>
-                        </Button>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Selected Customer Account Name(s)" wrappingWidth="346.13671875">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnAccountClear" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="720.0" layoutY="79.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="39.0" prefWidth="150.0" text="CLEAR" textFill="#4a4a4a" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView glyphName="REMOVE" size="24" />
-                           </graphic>
-                        </Button>
-                     </children>
-                  </GridPane>
-                  <GridPane prefHeight="117.0" prefWidth="830.0" stylesheets="@home.css" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="80.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="120.0" minHeight="120.0" prefHeight="120.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CRITICAL" textAlignment="CENTER" wrappingWidth="120.775390625">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnCustomerEscalated" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#f70000" glyphName="BULLHORN" size="38" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnCustomerOutFollow" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#4a4a4a" glyphName="FIRE_EXTINGUISHER" size="38" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnCustomerE2" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#f70000" glyphName="CHAIN_BROKEN" size="38" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnCustomerCritical" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#f70000" glyphName="FIRE" size="38" />
-                           </graphic>
-                        </Button>
-                        <Text layoutX="10.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E2 CASES" textAlignment="CENTER" wrappingWidth="120.775390625" GridPane.columnIndex="2">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="147.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OUT-FOLLOW" textAlignment="CENTER" wrappingWidth="119.775390625" GridPane.columnIndex="4">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="284.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ESCALATED" textAlignment="CENTER" wrappingWidth="119.775390625" GridPane.columnIndex="6">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="421.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOT ISSUES" textAlignment="CENTER" wrappingWidth="120.775390625" GridPane.columnIndex="8">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="558.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BC CASES" textAlignment="CENTER" wrappingWidth="120.775390625" GridPane.columnIndex="10">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Text>
-                        <Text layoutX="695.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ACT WOH" textAlignment="CENTER" wrappingWidth="119.775390625" GridPane.columnIndex="12">
-                           <font>
-                              <Font name="System Bold" size="15.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnCustomerHotIssues" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="66.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.columnIndex="8" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#f70000" glyphName="BOLT" size="38" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnCustomerBC" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="558.0" layoutY="66.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.columnIndex="10" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#f70000" glyphName="SUITCASE" size="38" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnCustomerActWOH" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="695.0" layoutY="66.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.columnIndex="12" GridPane.rowIndex="1">
-                           <font>
-                              <Font size="30.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="#f70000" glyphName="LIST" size="38" />
-                           </graphic>
-                        </Button>
-                     </children>
-                  </GridPane>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="apnHome" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
@@ -1596,31 +1623,6 @@
                   </Pane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apnTableView" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
-               <children>
-                  <TableView fx:id="tableCases" prefHeight="850.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <columns>
-                        <TableColumn fx:id="NumberCol" editable="false" maxWidth="113.0" minWidth="113.0" prefWidth="113.0" text="Case Number" />
-                        <TableColumn fx:id="SeverityCol" maxWidth="110.0" minWidth="50.0" prefWidth="110.0" text="Severity" />
-                        <TableColumn fx:id="StatusCol" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" resizable="false" text="Status" />
-                        <TableColumn fx:id="OwnerCol" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Owner" />
-                        <TableColumn fx:id="ResponsibleCol" maxWidth="150.0" minWidth="80.0" prefWidth="150.0" text="Responsible" />
-                        <TableColumn fx:id="AgeCol" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" resizable="false" text="Age" />
-                        <TableColumn fx:id="NextUpdateCol" maxWidth="80.0" minWidth="80.0" resizable="false" text="Update" />
-                        <TableColumn fx:id="EscalatedByCol" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Escalated By" />
-                        <TableColumn fx:id="HotListCol" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="Hot List" />
-                        <TableColumn fx:id="OutFollowCol" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" text="E1 Follow" />
-                        <TableColumn fx:id="SupportTypeCol" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" resizable="false" text="Type" />
-                        <TableColumn fx:id="ProductCol" maxWidth="280.0" minWidth="80.0" prefWidth="180.0" text="Product" />
-                        <TableColumn fx:id="SubjectCol" maxWidth="600.0" minWidth="200.0" prefWidth="300.0" text="Subject" />
-                        <TableColumn fx:id="AccountCol" maxWidth="200.0" minWidth="100.0" prefWidth="150.0" text="Account" />
-                        <TableColumn fx:id="RegionCol" maxWidth="80.0" minWidth="80.0" resizable="false" text="Region" />
-                        <TableColumn fx:id="SecurityCol" maxWidth="80.0" minWidth="80.0" resizable="false" text="Security" />
-                        <TableColumn fx:id="DateTimeOpenedCol" prefWidth="75.0" text="Date Opened" visible="false" />
-                     </columns>
-                  </TableView>
-               </children>
-            </AnchorPane>
             <AnchorPane fx:id="apnBrowser" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #F9F9F9;">
                <children>
                   <GridPane prefHeight="850.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -2458,7 +2460,7 @@
                               <Font size="13.0" />
                            </font>
                         </Text>
-                        <Button fx:id="btnMyQueue" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                        <Button fx:id="btnMyQueue" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.columnIndex="8" GridPane.rowIndex="3">
                            <font>
                               <Font size="32.0" />
                            </font>
@@ -2466,7 +2468,7 @@
                               <FontAwesomeIconView fill="#4a4a4a" glyphName="TH_LIST" size="36" />
                            </graphic>
                         </Button>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="QUEUE" textAlignment="CENTER" wrappingWidth="120.775390625" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="QUEUE" textAlignment="CENTER" wrappingWidth="120.775390625" GridPane.columnIndex="8" GridPane.rowIndex="2">
                            <font>
                               <Font size="13.0" />
                            </font>
@@ -2510,6 +2512,32 @@
                               <FontAwesomeIconView fill="#4a4a4a" glyphName="CALENDAR_TIMES_ALT" size="36" />
                            </graphic>
                         </Button>
+                        <Button fx:id="btnMyCoOwnQueue" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="430.0" layoutY="260.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.columnIndex="8" GridPane.rowIndex="6">
+                           <font>
+                              <Font size="32.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="TH_LIST" size="36" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnMyCoQueueAssigned" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="570.0" layoutY="260.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleClicks" prefHeight="120.0" prefWidth="120.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                           <font>
+                              <Font size="32.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="TH_LIST" size="36" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="570.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CO-QUEUE" textAlignment="CENTER" wrappingWidth="120.775390625" GridPane.columnIndex="8" GridPane.rowIndex="5">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="430.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CO-QUEUE ASSIGNED" textAlignment="CENTER" wrappingWidth="120.775390625" GridPane.columnIndex="6" GridPane.rowIndex="5">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
                      </children>
                   </GridPane>
                </children>
@@ -2550,7 +2578,7 @@
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnSurvey" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="My Notes" textFill="WHITE">
+                  <Button fx:id="btnMyNotes" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="My Notes" textFill="WHITE">
                      <graphic>
                         <FontAwesomeIconView fill="#ff007f" glyphName="PENCIL_SQUARE_ALT" size="24" />
                      </graphic>

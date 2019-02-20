@@ -82,16 +82,16 @@ public class Login implements Initializable {
 
         Parent root;
         try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("home/model.fxml"));
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("home/Model.fxml"));
             Stage stage = new Stage();
             stage.setTitle("RBBN Case Management Tool Forecast Modeling Page");
             stage.getIcons().add(new Image("home/image/rbbicon.png"));
-            stage.setScene(new Scene(root, 800, 600));
+            stage.setScene(new Scene(root, 1024, 768));
             stage.show();
-            stage.setMinWidth(800);
-            stage.setMinHeight(600);
-            stage.setMaxWidth(800);
-            stage.setMaxHeight(600);
+            stage.setMinWidth(1024);
+            stage.setMinHeight(768);
+            stage.setMaxWidth(1024);
+            stage.setMaxHeight(768);
 
         }
         catch (IOException e) {

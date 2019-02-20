@@ -14,7 +14,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -40,19 +41,7 @@ public class Model implements Initializable {
     private RadioButton rdAll;
 
     @FXML
-    private RadioButton rdMonth;
-
-    @FXML
-    private RadioButton rdQuarter;
-
-    @FXML
-    private RadioButton rdYear;
-
-    @FXML
     private Button btnRun;
-
-    @FXML
-    private ImageView imageFor;
 
     @FXML
     private AnchorPane apnFCProdSelect;
@@ -82,6 +71,9 @@ public class Model implements Initializable {
     Boolean periodMonthly = false;
     Boolean perodQuarter = false;
     Boolean periodYear = false;
+
+    @FXML
+    private WebView webimage;
 
     ArrayList<String> productsFCFiltered = new ArrayList<String>();
 
@@ -256,46 +248,7 @@ public class Model implements Initializable {
             rdAll.setSelected(false);
             allProducts = false;
         }
-        if (event.getSource() == rdAll) {
-            apnFCProdSelect.toBack();
-            apnFCProdSelect.setVisible(false);
-            txtProducts.clear();
-            allProducts = true;
-            if (rdMonth.isSelected()){
-                periodMonthly = true;
-                periodYear = false;
-                perodQuarter = false;
-            }
-        }
-        if (event.getSource() == rdMonth){
-            rdQuarter.setSelected(false);
-            rdYear.setSelected(false);
-            if (rdMonth.isSelected()){
-                periodMonthly = true;
-                periodYear = false;
-                perodQuarter = false;
-            }
-
-        }
-        if (event.getSource() == rdQuarter){
-            rdMonth.setSelected(false);
-            rdYear.setSelected(false);
-            if (rdQuarter.isSelected()){
-                periodMonthly = false;
-                periodYear = false;
-                perodQuarter = true;
-            }
-        }
-        if (event.getSource() == rdYear){
-            rdMonth.setSelected(false);
-            rdQuarter.setSelected(false);
-            if (rdYear.isSelected()){
-                periodMonthly = false;
-                periodYear = true;
-                perodQuarter = false;
-            }
-        }
-        if (event.getSource() == btnRun){
+          if (event.getSource() == btnRun){
             runForecast();
         }
 
@@ -328,19 +281,24 @@ public class Model implements Initializable {
             }
         }
 
-        File file = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Python\\test2.jpg");
-        System.out.println(file.toURI().toString());
-        Image image = new Image(file.toURI().toString());
-        imageFor.setVisible(true);
-        imageFor.setImage(image);
-        imageFor.toFront();
+        WebEngine webEngine = webimage.getEngine();
+        try {
+            webEngine.load(String.valueOf(new File("D:\\Users\\asimsek\\PycharmProjects\\rbbnCrystalBall-master\\data\\Forecast_in_Future_M.html").toURI().toURL()));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+    @FXML
+    void handleWebClick(MouseEvent event) {
+
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         selectForecastArray();
-        rdMonth.setSelected(true);
-
     }
 }

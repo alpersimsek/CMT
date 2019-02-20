@@ -50,7 +50,6 @@ import java.awt.*;
 import javafx.scene.control.TextArea;
 import java.io.*;
 import java.net.URL;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -190,7 +189,7 @@ public class Controller implements Initializable {
     @FXML
     private Button btnCustomers;
     @FXML
-    private Button btnSurvey;
+    private Button btnMyNotes;
     @FXML
     private Button btnSettings;
     @FXML
@@ -302,6 +301,10 @@ public class Controller implements Initializable {
     @FXML
     private Button btnMyQueue;
     @FXML
+    private Button btnMyCoOwnQueue;
+    @FXML
+    private Button btnMyCoQueueAssigned;
+    @FXML
     private Button btnPSQueue;
     @FXML
     private Button btnTSQueue;
@@ -392,6 +395,10 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn<CaseTableView, String> OwnerCol;
     @FXML
+    private TableColumn<CaseTableView, String> CoOwnerCol;
+    @FXML
+    private TableColumn<CaseTableView, String> CoOwnerQueueCol;
+    @FXML
     private TableColumn<CaseTableView, String> EscalatedByCol;
     @FXML
     private TableColumn<CaseTableView, String> HotListCol;
@@ -410,8 +417,6 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn<CaseTableView, LocalDate> NextUpdateCol;
     @FXML
-    private TableColumn<CaseTableView, String> DateTimeOpenedCol;
-    @FXML
     private TableColumn<CaseTableView, String> RegionCol;
     @FXML
     private TableColumn<CaseTableView, String> SecurityCol;
@@ -425,6 +430,10 @@ public class Controller implements Initializable {
     private TableColumn<CaseTableView, String> ResponsibleColCust;
     @FXML
     private TableColumn<CaseTableView, String> OwnerColCust;
+    @FXML
+    private TableColumn<CaseTableView, String> CoOwnerColCust;
+    @FXML
+    private TableColumn<CaseTableView, String> CoOwnerQueuColCust;
     @FXML
     private TableColumn<CaseTableView, String> EscalatedByColCust;
     @FXML
@@ -443,8 +452,6 @@ public class Controller implements Initializable {
     private TableColumn<CaseTableView, String> SupportTypeColCust;
     @FXML
     private TableColumn<CaseTableView, LocalDate> NextUpdateColCust;
-    @FXML
-    private TableColumn<CaseTableView, String> DateTimeOpenedColCust;
     @FXML
     private TableColumn<CaseTableView, String> RegionColCust;
     @FXML
@@ -543,7 +550,6 @@ public class Controller implements Initializable {
     private Button btnQueueProfLoad;
     @FXML
     private Button btnQueueLoadClose;
-
     @FXML
     private ListView caseNoteList;
     @FXML
@@ -552,7 +558,6 @@ public class Controller implements Initializable {
     private ListView productProfileList;
     @FXML
     private ListView queueProfileList;
-
     @FXML
     private TextArea txtShowCaseNotes;
 
@@ -569,7 +574,6 @@ public class Controller implements Initializable {
     ArrayList<String> queueArray = new ArrayList<>();
     ArrayList<String> selectedCase = new ArrayList<>();
 
-
     ContextMenu menu = new ContextMenu();
     MenuItem openCaseSFDC = new MenuItem("Search This Case in SalesForce...");
     MenuItem casePersonalNote = new MenuItem("Add Personal Note To This Case...");
@@ -583,6 +587,7 @@ public class Controller implements Initializable {
     int caseSevRefCell = 0;
     int caseRespRefCell = 0;
     int caseOwnerRefCell = 0;
+    int caseCoOwnerRefCell = 0;
     int caseEscalatedRefCell = 0;
     int caseHotListRefCell = 0;
     int caseOutFolRefCell = 0;
@@ -598,15 +603,14 @@ public class Controller implements Initializable {
     int mycaseOutFolRefCell = 0;
     int mycaseAgeRefCell = 0;
     int mycaseUpdateCell = 0;
-    int myCaseCommentRef = 0;
-    int myCaseCommentDateRef = 0;
+    int myCoOwnCaseRefCell = 0;
+    int myCoOwnQueueRefCell = 0;
+
     int caseCellRef = 0;
     int caseCellRef2 = 0;
     int myCaseCellRef1 = 0;
     int caseNextUpdateDateRef = 0;
     int caseProductRef = 0;
-    int caseNumCommentRef = 0;
-    int caseCommentRef = 0;
     int customerE1 = 0;
     int customerE2 = 0;
     int customerOutFol = 0;
@@ -662,6 +666,8 @@ public class Controller implements Initializable {
     int myMJDSCases = 0;
     int myMJWIP = 0;
     int myQueuedCases = 0;
+    int myCoOwnerQueueCases = 0;
+    int myCoOwnerQueueCasesAssigned = 0;
     int myE1Case = 0;
     int myE2Cases = 0;
     int myBCupdated = 0;
@@ -672,6 +678,8 @@ public class Controller implements Initializable {
     int myUpdateToday = 0;
     int myUpdateMissed = 0;
     int myUpdateNull = 0;
+    int myCoOwnCase = 0;
+    int myCoOwnQueue = 0;
 
     //Product Page # variables
 
@@ -725,7 +733,7 @@ public class Controller implements Initializable {
             lblStatus.setText("MY CASES");
             btnToExcel.setVisible(false);
             btnBack.setVisible(false);
-            myCasesPage();
+            myCasesPage2();
             apnMyCases.toFront();
         }
 
@@ -739,29 +747,9 @@ public class Controller implements Initializable {
 
         if (event.getSource() == btnProjects) {
 
-            projectionLoginPage();
+            //projectionLoginPage();
 
-            /*ClassLoader loader = Controller.class.getClassLoader();
-            File pythonSource = new File(loader.getResource("home/Python").getFile());
-            File pythonDestination = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Python\\");
-
-
-            if(!pythonDestination.exists()) {
-                try {
-
-                    FileUtils.copyDirectory(pythonSource, pythonDestination);
-                    System.out.println("Copied");
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("Python Copy Failed");
-                }
-            }
-
-            Process process = new ProcessBuilder(System.getProperty("user.home") + "\\Documents\\CMT\\Python\\test.exe").start();
-            */
-
-        }
+         }
 
         if (event.getSource() == btnCustomers) {
             lblStatus.setText("CUSTOMER VIEW");
@@ -781,7 +769,7 @@ public class Controller implements Initializable {
             tableCustomers.setVisible(false);
         }
 
-        if (event.getSource() == btnSurvey) {
+        if (event.getSource() == btnMyNotes) {
 
             caseNoteTable();
 
@@ -1567,6 +1555,19 @@ public class Controller implements Initializable {
                 alertUser(strAlert);
             }
         }
+        if (event.getSource() == btnMyCoOwnQueue) {
+
+            if (myQueuedCases != 0) {
+                lblStatus.setText("CASES IN MY QUEUE(S)");
+                tableCases.getItems().clear();
+                initTableView(tableCases);
+                createMyCoOwnerQueueCaseView();
+            }
+            if (myQueuedCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
 
         if (event.getSource() == btnMyUpdateToday) {
 
@@ -2280,7 +2281,7 @@ public class Controller implements Initializable {
 
         tableCustomers.setVisible(true);
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -2372,11 +2373,11 @@ public class Controller implements Initializable {
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            localDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCustomers.getItems().addAll(observableList);
                                     caseCount++;
@@ -2408,11 +2409,11 @@ public class Controller implements Initializable {
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            localDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCustomers.getItems().addAll(observableList);
                                     caseCount++;
@@ -2499,7 +2500,7 @@ public class Controller implements Initializable {
 
         tableCustomers.setVisible(true);
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -2573,11 +2574,11 @@ public class Controller implements Initializable {
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            localDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCustomers.getItems().addAll(observableList);
                                     caseCount++;
@@ -2609,11 +2610,11 @@ public class Controller implements Initializable {
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            localDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCustomers.getItems().addAll(observableList);
                                     caseCount++;
@@ -2694,7 +2695,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -2768,11 +2769,11 @@ public class Controller implements Initializable {
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            localDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCases.getItems().addAll(observableList);
                                     caseCount++;
@@ -2804,11 +2805,11 @@ public class Controller implements Initializable {
                                     int age;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            localDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCases.getItems().addAll(observableList);
                                     caseCount++;
@@ -2901,7 +2902,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -2977,11 +2978,11 @@ public class Controller implements Initializable {
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            localDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCases.getItems().addAll(observableList);
                                     caseCount++;
@@ -3014,11 +3015,11 @@ public class Controller implements Initializable {
                                     int age;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            localDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCases.getItems().addAll(observableList);
                                     caseCount++;
@@ -3112,7 +3113,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3184,11 +3185,11 @@ public class Controller implements Initializable {
                                 int age = 0;
                                 age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), age,
-                                        localDate, array.get(7), array.get(8),
-                                        array.get(9), array.get(10), array.get(11),
-                                        array.get(12), array.get(13), array.get(14),
-                                        array.get(15), array.get(16)));
+                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        localDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
 
                                 tableCases.getItems().addAll(observableList);
                                 caseCount++;
@@ -3280,7 +3281,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3358,11 +3359,11 @@ public class Controller implements Initializable {
                                 int age = 0;
                                 age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), age,
-                                        localDate, array.get(7), array.get(8),
-                                        array.get(9), array.get(10), array.get(11),
-                                        array.get(12), array.get(13), array.get(14),
-                                        array.get(15), array.get(16)));
+                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        localDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
 
                                 tableCases.getItems().addAll(observableList);
                                 caseCount++;
@@ -3454,7 +3455,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3525,11 +3526,11 @@ public class Controller implements Initializable {
                                 int age = 0;
                                 age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), age,
-                                        localDate, array.get(7), array.get(8),
-                                        array.get(9), array.get(10), array.get(11),
-                                        array.get(12), array.get(13), array.get(14),
-                                        array.get(15), array.get(16)));
+                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        localDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
 
                                 tableCases.getItems().addAll(observableList);
                                 caseCount++;
@@ -3620,7 +3621,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3686,11 +3687,11 @@ public class Controller implements Initializable {
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            localDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCases.getItems().addAll(observableList);
                                     caseCount++;
@@ -3722,11 +3723,11 @@ public class Controller implements Initializable {
                                     int age;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            localDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCases.getItems().addAll(observableList);
                                     caseCount++;
@@ -3819,7 +3820,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3891,11 +3892,11 @@ public class Controller implements Initializable {
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            localDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCases.getItems().addAll(observableList);
                                     caseCount++;
@@ -3927,11 +3928,11 @@ public class Controller implements Initializable {
                                     int age;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            localDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCases.getItems().addAll(observableList);
                                     caseCount++;
@@ -4023,11 +4024,13 @@ public class Controller implements Initializable {
 
         String filename = "cmt_case_data.csv";
         String filename2 = "cmt_user_prod.csv";
+        String filename3 = "cmt_case_data_V2.csv";
         String filename4 = "cmt_comments.csv";
-
         String newLoc = "https://na8.salesforce.com/00OC0000006r1EX?export=1&enc=UTF-8&xf=csv?filename=" + filename;
         String newLoc2 = "https://na8.salesforce.com/00OC0000006r1xS?export=1&enc=UTF-8&xf=csv?filename=" + filename2;
+        String newLoc3 = "https://na8.salesforce.com/00OC00000076uIg?export=1&enc=UTF-8&xf=csv?filename=" + filename2;
         String newLoc4 = "https://na8.salesforce.com/00OC0000006r5ig?export=1&enc=UTF-8&xf=csv?filename=" + filename4;
+
         try {
             FileUtils.copyURLToFile(new URL(newLoc), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.csv"));
             LocalDate refreshDate = LocalDate.now();
@@ -4055,6 +4058,14 @@ public class Controller implements Initializable {
 
         try{
 
+            FileUtils.copyURLToFile(new URL(newLoc3), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V2.csv"));
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+
             FileUtils.copyURLToFile(new URL(newLoc4), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_comments.csv"));
 
         }catch (Exception e){
@@ -4062,8 +4073,9 @@ public class Controller implements Initializable {
         }
 
         parseData();
+        rectifyAccountNames();
         parseUserData();
-        myCasesPage();
+        myCasesPage2();
         parseComments();
 
         time = new Timeline();
@@ -4335,7 +4347,7 @@ public class Controller implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
 
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -4390,11 +4402,11 @@ public class Controller implements Initializable {
                             int age = 0;
                             age = Integer.parseInt(array.get(caseAgeRefCell));
                             observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                    array.get(3), array.get(4), age,
-                                    caseUpdateDate, array.get(7), array.get(8),
-                                    array.get(9), array.get(10), array.get(11),
-                                    array.get(12), array.get(13), array.get(14),
-                                    array.get(15), array.get(16)));
+                                    array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                    caseUpdateDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
 
                             tableCases.getItems().addAll(observableList);
                             caseCount++;
@@ -4419,11 +4431,11 @@ public class Controller implements Initializable {
                             int age = 0;
                             age = Integer.parseInt(array.get(caseAgeRefCell));
                             observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                    array.get(3), array.get(4), age,
-                                    caseUpdateDate, array.get(7), array.get(8),
-                                    array.get(9), array.get(10), array.get(11),
-                                    array.get(12), array.get(13), array.get(14),
-                                    array.get(15), array.get(16)));
+                                    array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                    caseUpdateDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
 
                             tableCases.getItems().addAll(observableList);
                             caseCount++;
@@ -4446,11 +4458,11 @@ public class Controller implements Initializable {
                         int age = 0;
                         age = Integer.parseInt(array.get(caseAgeRefCell));
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), age,
-                                caseUpdateDate, array.get(7), array.get(8),
-                                array.get(9), array.get(10), array.get(11),
-                                array.get(12), array.get(13), array.get(14),
-                                array.get(15), array.get(16)));
+                                array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                caseUpdateDate, array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16),
+                                array.get(17)));
 
                         tableCases.getItems().addAll(observableList);
                         caseCount++;
@@ -4531,7 +4543,7 @@ public class Controller implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
 
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -4621,11 +4633,11 @@ public class Controller implements Initializable {
                                     int age = 0;
                                     age = Integer.parseInt(array.get(caseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            caseUpdateDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            caseUpdateDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCases.getItems().addAll(observableList);
                                     caseCount++;
@@ -4650,11 +4662,11 @@ public class Controller implements Initializable {
                                     int age = 0;
                                     age = Integer.parseInt(array.get(caseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            caseUpdateDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            caseUpdateDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCases.getItems().addAll(observableList);
                                     caseCount++;
@@ -4679,11 +4691,11 @@ public class Controller implements Initializable {
                                 int age = 0;
                                 age = Integer.parseInt(array.get(caseAgeRefCell));
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), age,
-                                        caseUpdateDate, array.get(7), array.get(8),
-                                        array.get(9), array.get(10), array.get(11),
-                                        array.get(12), array.get(13), array.get(14),
-                                        array.get(15), array.get(16)));
+                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        caseUpdateDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
 
                                 tableCases.getItems().addAll(observableList);
                                 caseCount++;
@@ -4775,11 +4787,180 @@ public class Controller implements Initializable {
     }
 
 
+    private void createMyCoOwnerQueueCaseView(){
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+
+                if (filterColName.equals("Co-Owner")){
+                    myCoOwnCaseRefCell = i;
+                }
+                if (filterColName.equals("Co-Owner Queue")){
+                    myCoOwnQueueRefCell = i;
+                }
+
+                if (filterColName.equals("Age (Days)")) {
+                    mycaseAgeRefCell = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+            }
+
+            if (!txQueues.getText().isEmpty()) {
+
+                String queueFilter = txQueues.getText();
+                ArrayList<String> setQueue = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
+                int queuefiltnum = setQueue.size();
+
+                if ((!queueFilter.equals(""))) {
+
+                    for (int j = 0; j < queuefiltnum; j++) {
+
+                        for (int k = 1; k < lastRow + 1; k++) {
+
+                            cellVal = filtersheet.getRow(k).getCell(myCoOwnCaseRefCell);
+                            String cellValToCompare = cellVal.getStringCellValue();
+
+                            cellVal2 = filtersheet.getRow(k).getCell(myCoOwnQueueRefCell);
+                            String cellValToCompare2 = cellVal2.getStringCellValue();
+
+                            if (cellValToCompare2.equals(setQueue.get(j)) && cellValToCompare.equals("NotSet")) {
+
+                                ArrayList<String> array = new ArrayList<>();
+                                ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                while (iterCells.hasNext()) {
+                                    HSSFCell cell = (HSSFCell) iterCells.next();
+                                    array.add(cell.getStringCellValue());
+                                }
+
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                LocalDate localDate = null;
+
+                                if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                    localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                }
+
+                                int age;
+                                age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        localDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
+
+                                tableCases.getItems().addAll(observableList);
+                                caseCount++;
+                                if (tableCases.getItems().size() >= caseCount + 1) {
+                                    tableCases.getItems().removeAll(observableList);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            btnToExcel.setVisible(true);
+            apnTableView.toFront();
+
+            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    exportExcelAction(tableCases);
+                }
+            });
+
+            menu = new ContextMenu();
+            String caseno = "";
+            menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
+            menu.getItems().add(openCaseComments);
+            tableCases.setContextMenu(menu);
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newCaseNote();
+
+                }});
+
+            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+
+                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                        URL caseSearch = new URL(search);
+                        Desktop.getDesktop().browse(caseSearch.toURI());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+
+            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    viewCaseComments();
+                }
+            });
+
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            btnBack.setVisible(true);
+            btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    apnMyCases.toFront();
+                    lblStatus.setText("MY CASES");
+                    btnBack.setVisible(false);
+                    btnToExcel.setVisible(false);
+                    tableCases.getItems().clear();
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+    }
+
+
     private void createMyQueueCaseView(String columnSelect, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -4838,11 +5019,11 @@ public class Controller implements Initializable {
                                 int age;
                                 age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), age,
-                                        localDate, array.get(7), array.get(8),
-                                        array.get(9), array.get(10), array.get(11),
-                                        array.get(12), array.get(13), array.get(14),
-                                        array.get(15), array.get(16)));
+                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        localDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
 
                                 tableCases.getItems().addAll(observableList);
                                 caseCount++;
@@ -4935,7 +5116,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -4943,6 +5124,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal1;
             HSSFCell cellVal2;
             HSSFCell cellVal3;
+            HSSFCell cellVal4;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -4962,18 +5144,21 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Co-Owwer")){
+                    myCoOwnCaseRefCell = i;
+                }
             }
 
-            if ((!txUsers.getText().isEmpty()) || !(txQueues.getText().isEmpty())) {
+            if ((!txUsers.getText().isEmpty())) {
 
                 ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
-                ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
-                ArrayList<String> mergedOwner = new ArrayList<>();
+                //ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
+                //ArrayList<String> mergedOwner = new ArrayList<>();
 
                 int userfiltnum = setUser.size();
-                int userqueuenum = setQueu.size();
+                //int userqueuenum = setQueu.size();
 
-                if (!setUser.isEmpty()) {
+                /*if (!setUser.isEmpty()) {
                     for (int i = 0; i < userfiltnum; i++) {
 
                         mergedOwner.add(setUser.get(i));
@@ -4984,14 +5169,14 @@ public class Controller implements Initializable {
                     for (int i = 0; i < userqueuenum; i++) {
                         mergedOwner.add(setQueu.get(i));
                     }
-                }
+                }*/
 
-                int mergedUserNum = mergedOwner.size();
+                //int mergedUserNum = mergedOwner.size();
 
 
-                if ((!mergedOwner.isEmpty())) {
+                if ((!setUser.isEmpty())) {
 
-                    for (int j = 0; j < mergedUserNum; j++) {
+                    for (int j = 0; j < userfiltnum; j++) {
 
                         for (int i = 1; i < lastRow + 1; i++) {
 
@@ -5001,9 +5186,11 @@ public class Controller implements Initializable {
                             String caseStatus = cellVal3.getStringCellValue();
                             cellVal2 = filtersheet.getRow(i).getCell(myCaseCellRef1);
                             String cellValToCompare = cellVal2.getStringCellValue();
+                            cellVal4 = filtersheet.getRow(i).getCell(myCoOwnCaseRefCell);
+                            String coOwner = cellVal4.getStringCellValue();
 
                             if (b) {
-                                if ((caseUser.equals(mergedOwner.get(j)) && cellValToCompare.equals(filter)) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
+                                if (((caseUser.equals(setUser.get(j)) || (coOwner.equals(setUser.get(j)))) && cellValToCompare.equals(filter)) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
 
                                     ArrayList<String> array = new ArrayList<>();
                                     ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
@@ -5026,11 +5213,11 @@ public class Controller implements Initializable {
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            localDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCases.getItems().addAll(observableList);
                                     caseCount++;
@@ -5039,7 +5226,7 @@ public class Controller implements Initializable {
                                     }
                                 }
                             } else {
-                                if ((caseUser.equals(mergedOwner.get(j)) && !cellValToCompare.equals(filter)) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
+                                if (((caseUser.equals(setUser.get(j)) || coOwner.equals(setUser.get(j)))&& !cellValToCompare.equals(filter)) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
 
                                     ArrayList<String> array = new ArrayList<>();
                                     ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
@@ -5062,11 +5249,11 @@ public class Controller implements Initializable {
                                     int age;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            localDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCases.getItems().addAll(observableList);
                                     caseCount++;
@@ -5160,7 +5347,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -5184,18 +5371,21 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Co-Owner")){
+                    myCoOwnCaseRefCell = i;
+                }
             }
 
-            if ((!txUsers.getText().isEmpty()) || !(txQueues.getText().isEmpty())) {
+            if ((!txUsers.getText().isEmpty())) {
 
                 ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
-                ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
-                ArrayList<String> mergedOwner = new ArrayList<>();
+                //ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
+                //ArrayList<String> mergedOwner = new ArrayList<>();
 
                 int userfiltnum = setUser.size();
-                int userqueuenum = setQueu.size();
+                //int userqueuenum = setQueu.size();
 
-                if (!setUser.isEmpty()) {
+                /*if (!setUser.isEmpty()) {
                     for (int i = 0; i < userfiltnum; i++) {
 
                         mergedOwner.add(setUser.get(i));
@@ -5209,10 +5399,11 @@ public class Controller implements Initializable {
                 }
 
                 int mergedUserNum = mergedOwner.size();
+                */
 
-                if ((!mergedOwner.isEmpty())) {
+                if ((!setUser.isEmpty())) {
 
-                    for (int j = 0; j < mergedUserNum; j++) {
+                    for (int j = 0; j < userfiltnum; j++) {
 
                         for (int i = 1; i < lastRow + 1; i++) {
 
@@ -5220,9 +5411,11 @@ public class Controller implements Initializable {
                             String caseUser = cellVal1.getStringCellValue();
                             cellVal3 = filtersheet.getRow(i).getCell(caseStatRefCell);
                             String caseStatus = cellVal3.getStringCellValue();
+                            cellVal2 = filtersheet.getRow(i).getCell(myCoOwnCaseRefCell);
+                            String coOwner = cellVal2.getStringCellValue();
 
                             if (b) {
-                                if (caseUser.equals(mergedOwner.get(j)) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
+                                if ((caseUser.equals(setUser.get(j)) || coOwner.equals(setUser.get(j))) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
 
                                     ArrayList<String> array = new ArrayList<>();
                                     ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
@@ -5245,11 +5438,11 @@ public class Controller implements Initializable {
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            localDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCases.getItems().addAll(observableList);
                                     caseCount++;
@@ -5258,7 +5451,7 @@ public class Controller implements Initializable {
                                     }
                                 }
                             } else {
-                                if (caseUser.equals(mergedOwner.get(j)) && (caseStatus.equals("Pending Closure") || (caseStatus.equals("Future Availability")))) {
+                                if ((caseUser.equals(setUser.get(j)) || coOwner.equals(setUser.get(j))) && (caseStatus.equals("Pending Closure") || (caseStatus.equals("Future Availability")))) {
 
                                     ArrayList<String> array = new ArrayList<>();
                                     ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
@@ -5281,11 +5474,11 @@ public class Controller implements Initializable {
                                     int age;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), age,
-                                            localDate, array.get(7), array.get(8),
-                                            array.get(9), array.get(10), array.get(11),
-                                            array.get(12), array.get(13), array.get(14),
-                                            array.get(15), array.get(16)));
+                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
                                     tableCases.getItems().addAll(observableList);
                                     caseCount++;
@@ -5441,6 +5634,7 @@ public class Controller implements Initializable {
 
                 txtShowCaseNotes.appendText("===============" + "\n" + caseCommentArray.get(i)+ "\n" + "\n" + caseCommentArray.get(i+1) + "\n");
             }
+            txtShowCaseNotes.positionCaret(0);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -5474,7 +5668,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -5482,6 +5676,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal1;
             HSSFCell cellVal2;
             HSSFCell cellVal3;
+            HSSFCell cellVal4;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -5501,18 +5696,21 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Co-Owner")){
+                    myCoOwnCaseRefCell = i;
+                }
             }
 
-            if ((!txUsers.getText().isEmpty()) || !(txQueues.getText().isEmpty())) {
+            if ((!txUsers.getText().isEmpty())) {
 
                 ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
-                ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
-                ArrayList<String> mergedOwner = new ArrayList<>();
+                //ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
+                //ArrayList<String> mergedOwner = new ArrayList<>();
 
                 int userfiltnum = setUser.size();
-                int userqueuenum = setQueu.size();
+                //int userqueuenum = setQueu.size();
 
-                if (!setUser.isEmpty()) {
+                /*if (!setUser.isEmpty()) {
                     for (int i = 0; i < userfiltnum; i++) {
 
                         mergedOwner.add(setUser.get(i));
@@ -5526,11 +5724,11 @@ public class Controller implements Initializable {
                 }
 
                 int mergedUserNum = mergedOwner.size();
+                   */
 
+                if ((!setUser.isEmpty())) {
 
-                if ((!mergedOwner.isEmpty())) {
-
-                    for (int j = 0; j < mergedUserNum; j++) {
+                    for (int j = 0; j < userfiltnum; j++) {
 
                         for (int i = 1; i < lastRow + 1; i++) {
 
@@ -5540,8 +5738,10 @@ public class Controller implements Initializable {
                             String cellToCompare = cellVal2.getStringCellValue();
                             cellVal3 = filtersheet.getRow(i).getCell(caseStatRefCell);
                             String caseStatus = cellVal3.getStringCellValue();
+                            cellVal4 = filtersheet.getRow(i).getCell(myCoOwnCaseRefCell);
+                            String coOwner = cellVal4.getStringCellValue();
 
-                            if (caseUser.equals(mergedOwner.get(j)) && cellToCompare.equals(filter) && (caseStatus.equals("Open / Assign") || (caseStatus.equals("Isolate Fault")))) {
+                            if ((caseUser.equals(setUser.get(j)) || coOwner.equals(setUser.get(j))) && cellToCompare.equals(filter) && (caseStatus.equals("Open / Assign") || (caseStatus.equals("Isolate Fault")))) {
 
                                 ArrayList<String> array = new ArrayList<>();
                                 ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
@@ -5564,11 +5764,11 @@ public class Controller implements Initializable {
                                 int age = 0;
                                 age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), age,
-                                        localDate, array.get(7), array.get(8),
-                                        array.get(9), array.get(10), array.get(11),
-                                        array.get(12), array.get(13), array.get(14),
-                                        array.get(15), array.get(16)));
+                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        localDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
 
                                 tableCases.getItems().addAll(observableList);
                                 caseCount++;
@@ -5658,7 +5858,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -5667,6 +5867,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal2;
             HSSFCell cellVal3;
             HSSFCell cellVal4;
+            HSSFCell cellVal5;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -5689,18 +5890,21 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Co-Owner")){
+                    myCoOwnCaseRefCell = i;
+                }
             }
 
-            if ((!txUsers.getText().isEmpty()) || !(txQueues.getText().isEmpty())) {
+            if ((!txUsers.getText().isEmpty())) {
 
                 ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
-                ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
-                ArrayList<String> mergedOwner = new ArrayList<>();
+                //ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
+                //ArrayList<String> mergedOwner = new ArrayList<>();
 
                 int userfiltnum = setUser.size();
-                int userqueuenum = setQueu.size();
+                //int userqueuenum = setQueu.size();
 
-                if (!setUser.isEmpty()) {
+                /*if (!setUser.isEmpty()) {
                     for (int i = 0; i < userfiltnum; i++) {
 
                         mergedOwner.add(setUser.get(i));
@@ -5714,11 +5918,12 @@ public class Controller implements Initializable {
                 }
 
                 int mergedUserNum = mergedOwner.size();
+                */
 
 
-                if ((!mergedOwner.isEmpty())) {
+                if ((!setUser.isEmpty())) {
 
-                    for (int j = 0; j < mergedUserNum; j++) {
+                    for (int j = 0; j < userfiltnum; j++) {
 
                         for (int i = 1; i < lastRow + 1; i++) {
 
@@ -5730,9 +5935,11 @@ public class Controller implements Initializable {
                             String caseStatus = cellVal3.getStringCellValue();
                             cellVal4 = filtersheet.getRow(i).getCell(caseCellRef2);
                             String responsible = cellVal4.getStringCellValue();
+                            cellVal5 = filtersheet.getRow(i).getCell(myCoOwnCaseRefCell);
+                            String coOwner = cellVal5.getStringCellValue();
 
 
-                            if (caseUser.equals(mergedOwner.get(j)) && cellToCompare.equals(filter1) && responsible.equals(filter2) &&
+                            if ((caseUser.equals(setUser.get(j)) || coOwner.equals(setUser.get(j))) && cellToCompare.equals(filter1) && responsible.equals(filter2) &&
                                     (!caseStatus.equals("Pending Closure") || (!caseStatus.equals("Future Availability")))) {
 
                                 ArrayList<String> array = new ArrayList<>();
@@ -5756,11 +5963,11 @@ public class Controller implements Initializable {
                                 int age = 0;
                                 age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), age,
-                                        localDate, array.get(7), array.get(8),
-                                        array.get(9), array.get(10), array.get(11),
-                                        array.get(12), array.get(13), array.get(14),
-                                        array.get(15), array.get(16)));
+                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        localDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
 
                                 tableCases.getItems().addAll(observableList);
                                 caseCount++;
@@ -5850,7 +6057,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -5858,6 +6065,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal1;
             HSSFCell cellVal2;
             HSSFCell cellVal3;
+            HSSFCell cellVal4;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -5879,16 +6087,16 @@ public class Controller implements Initializable {
                 }
             }
 
-            if ((!txUsers.getText().isEmpty()) || !(txQueues.getText().isEmpty())) {
+            if ((!txUsers.getText().isEmpty())) {
 
                 ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
-                ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
-                ArrayList<String> mergedOwner = new ArrayList<>();
+                //ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
+                //ArrayList<String> mergedOwner = new ArrayList<>();
 
                 int userfiltnum = setUser.size();
-                int userqueuenum = setQueu.size();
+                //int userqueuenum = setQueu.size();
 
-                if (!setUser.isEmpty()) {
+                /*if (!setUser.isEmpty()) {
                     for (int i = 0; i < userfiltnum; i++) {
 
                         mergedOwner.add(setUser.get(i));
@@ -5902,11 +6110,11 @@ public class Controller implements Initializable {
                 }
 
                 int mergedUserNum = mergedOwner.size();
+                */
 
+                if ((!setUser.isEmpty())) {
 
-                if ((!mergedOwner.isEmpty())) {
-
-                    for (int j = 0; j < mergedUserNum; j++) {
+                    for (int j = 0; j < userfiltnum; j++) {
 
                         for (int i = 1; i < lastRow + 1; i++) {
 
@@ -5916,8 +6124,10 @@ public class Controller implements Initializable {
                             String cellToCompare = cellVal2.getStringCellValue();
                             cellVal3 = filtersheet.getRow(i).getCell(caseStatRefCell);
                             String caseStatus = cellVal3.getStringCellValue();
+                            cellVal4 = filtersheet.getRow(i).getCell(myCoOwnCaseRefCell);
+                            String coOwner = cellVal4.getStringCellValue();
 
-                            if (caseUser.equals(mergedOwner.get(j)) && cellToCompare.equals(filter) &&
+                            if ((caseUser.equals(setUser.get(j)) || coOwner.equals(setUser.get(j))) && cellToCompare.equals(filter) &&
                                     (caseStatus.equals("Pending Closure") || caseStatus.equals("Future Availability"))) {
 
                                 ArrayList<String> array = new ArrayList<>();
@@ -5941,11 +6151,11 @@ public class Controller implements Initializable {
                                 int age = 0;
                                 age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), age,
-                                        localDate, array.get(7), array.get(8),
-                                        array.get(9), array.get(10), array.get(11),
-                                        array.get(12), array.get(13), array.get(14),
-                                        array.get(15), array.get(16)));
+                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        localDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
 
                                 tableCases.getItems().addAll(observableList);
                                 caseCount++;
@@ -6037,7 +6247,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -6134,11 +6344,11 @@ public class Controller implements Initializable {
                                         int age = 0;
                                         age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                                array.get(3), array.get(4), age,
-                                                localDate, array.get(7), array.get(8),
-                                                array.get(9), array.get(10), array.get(11),
-                                                array.get(12), array.get(13), array.get(14),
-                                                array.get(15), array.get(16)));
+                                                array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                                localDate, array.get(9), array.get(10),
+                                                array.get(11), array.get(12), array.get(13),
+                                                array.get(14), array.get(15), array.get(16),
+                                                array.get(17)));
 
                                         tableCases.getItems().addAll(observableList);
                                         caseCount++;
@@ -6171,11 +6381,11 @@ public class Controller implements Initializable {
                                         int age;
                                         age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                                array.get(3), array.get(4), age,
-                                                localDate, array.get(7), array.get(8),
-                                                array.get(9), array.get(10), array.get(11),
-                                                array.get(12), array.get(13), array.get(14),
-                                                array.get(15), array.get(16)));
+                                                array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                                localDate, array.get(9), array.get(10),
+                                                array.get(11), array.get(12), array.get(13),
+                                                array.get(14), array.get(15), array.get(16),
+                                                array.get(17)));
 
                                         tableCases.getItems().addAll(observableList);
                                         caseCount++;
@@ -6268,7 +6478,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -6321,11 +6531,11 @@ public class Controller implements Initializable {
                         int age = 0;
                         age = Integer.parseInt(array.get(caseAgeRefCell));
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), age,
-                                localDate, array.get(7), array.get(8),
-                                array.get(9), array.get(10), array.get(11),
-                                array.get(12), array.get(13), array.get(14),
-                                array.get(15), array.get(16)));
+                                array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                localDate, array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16),
+                                array.get(17)));
 
                         tableCases.getItems().addAll(observableList);
                         caseCount++;
@@ -6356,11 +6566,11 @@ public class Controller implements Initializable {
                         int age = 0;
                         age = Integer.parseInt(array.get(caseAgeRefCell));
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), age,
-                                localDate, array.get(7), array.get(8),
-                                array.get(9), array.get(10), array.get(11),
-                                array.get(12), array.get(13), array.get(14),
-                                array.get(15), array.get(16)));
+                                array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                localDate, array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16),
+                                array.get(17)));
 
                         tableCases.getItems().addAll(observableList);
                         caseCount++;
@@ -6435,7 +6645,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -6493,11 +6703,11 @@ public class Controller implements Initializable {
                     int age = 0;
                     age = Integer.parseInt(array.get(caseAgeRefCell));
                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                            array.get(3), array.get(4), age,
-                            localDate, array.get(7), array.get(8),
-                            array.get(9), array.get(10), array.get(11),
-                            array.get(12), array.get(13), array.get(14),
-                            array.get(15), array.get(16)));
+                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                            localDate, array.get(9), array.get(10),
+                            array.get(11), array.get(12), array.get(13),
+                            array.get(14), array.get(15), array.get(16),
+                            array.get(17)));
 
                     tableCases.getItems().addAll(observableList);
                     caseCount++;
@@ -6571,7 +6781,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -6624,11 +6834,11 @@ public class Controller implements Initializable {
                     int age = 0;
                     age = Integer.parseInt(array.get(caseAgeRefCell));
                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                            array.get(3), array.get(4), age,
-                            localDate, array.get(7), array.get(8),
-                            array.get(9), array.get(10), array.get(11),
-                            array.get(12), array.get(13), array.get(14),
-                            array.get(15), array.get(16)));
+                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                            localDate, array.get(9), array.get(10),
+                            array.get(11), array.get(12), array.get(13),
+                            array.get(14), array.get(15), array.get(16),
+                            array.get(17)));
 
                     tableCases.getItems().addAll(observableList);
                     caseCount++;
@@ -6702,7 +6912,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -6755,11 +6965,11 @@ public class Controller implements Initializable {
                     int age = 0;
                     age = Integer.parseInt(array.get(caseAgeRefCell));
                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                            array.get(3), array.get(4), age,
-                            localDate, array.get(7), array.get(8),
-                            array.get(9), array.get(10), array.get(11),
-                            array.get(12), array.get(13), array.get(14),
-                            array.get(15), array.get(16)));
+                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                            localDate, array.get(9), array.get(10),
+                            array.get(11), array.get(12), array.get(13),
+                            array.get(14), array.get(15), array.get(16),
+                            array.get(17)));
 
                     tableCases.getItems().addAll(observableList);
                     caseCount++;
@@ -6833,7 +7043,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -6888,11 +7098,11 @@ public class Controller implements Initializable {
                     int age = 0;
                     age = Integer.parseInt(array.get(caseAgeRefCell));
                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                            array.get(3), array.get(4), age,
-                            localDate, array.get(7), array.get(8),
-                            array.get(9), array.get(10), array.get(11),
-                            array.get(12), array.get(13), array.get(14),
-                            array.get(15), array.get(16)));
+                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                            localDate, array.get(9), array.get(10),
+                            array.get(11), array.get(12), array.get(13),
+                            array.get(14), array.get(15), array.get(16),
+                            array.get(17)));
 
                     tableCases.getItems().addAll(observableList);
                     caseCount++;
@@ -6968,7 +7178,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -7020,11 +7230,11 @@ public class Controller implements Initializable {
                         int age = 0;
                         age = Integer.parseInt(array.get(caseAgeRefCell));
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), age,
-                                localDate, array.get(7), array.get(8),
-                                array.get(9), array.get(10), array.get(11),
-                                array.get(12), array.get(13), array.get(14),
-                                array.get(15), array.get(16)));
+                                array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                localDate, array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16),
+                                array.get(17)));
 
                         tableCases.getItems().addAll(observableList);
                         caseCount++;
@@ -7057,11 +7267,11 @@ public class Controller implements Initializable {
                         int age = 0;
                         age = Integer.parseInt(array.get(caseAgeRefCell));
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), age,
-                                localDate, array.get(7), array.get(8),
-                                array.get(9), array.get(10), array.get(11),
-                                array.get(12), array.get(13), array.get(14),
-                                array.get(15), array.get(16)));
+                                array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                localDate, array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16),
+                                array.get(17)));
 
                         tableCases.getItems().addAll(observableList);
                         caseCount++;
@@ -7136,7 +7346,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -7185,11 +7395,11 @@ public class Controller implements Initializable {
                     age = Integer.parseInt(array.get(caseCellRef2));
 
                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                            array.get(3), array.get(4), age,
-                            localDate, array.get(7), array.get(8),
-                            array.get(9), array.get(10), array.get(11),
-                            array.get(12), array.get(13), array.get(14),
-                            array.get(15), array.get(16)));
+                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                            localDate, array.get(9), array.get(10),
+                            array.get(11), array.get(12), array.get(13),
+                            array.get(14), array.get(15), array.get(16),
+                            array.get(17)));
 
                     tableView.getItems().addAll(observableList);
                     caseCount++;
@@ -7262,7 +7472,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -7319,11 +7529,11 @@ public class Controller implements Initializable {
 
                         }
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), ageCase,
-                                localDate, array.get(7), array.get(8),
-                                array.get(9), array.get(10), array.get(11),
-                                array.get(12), array.get(13), array.get(14),
-                                array.get(15), array.get(16)));
+                                array.get(3), array.get(4), array.get(5), array.get(6),ageCase,
+                                localDate, array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16),
+                                array.get(17)));
 
                         tableCases.getItems().addAll(observableList);
                         caseCount++;
@@ -7353,11 +7563,11 @@ public class Controller implements Initializable {
 
                         }
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), ageCase,
-                                localDate, array.get(7), array.get(8),
-                                array.get(9), array.get(10), array.get(11),
-                                array.get(12), array.get(13), array.get(14),
-                                array.get(15), array.get(16)));
+                                array.get(3), array.get(4), array.get(5), array.get(6),ageCase,
+                                localDate, array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16),
+                                array.get(17)));
 
                         tableCases.getItems().addAll(observableList);
                         caseCount++;
@@ -7444,6 +7654,8 @@ public class Controller implements Initializable {
         headerArray.add("Severity");
         headerArray.add("Status");
         headerArray.add("Owner");
+        headerArray.add("Co-Owner");
+        headerArray.add("Co-Owner Queue");
         headerArray.add("Responsible");
         headerArray.add("Age");
         headerArray.add("Next Update Date");
@@ -7456,7 +7668,6 @@ public class Controller implements Initializable {
         headerArray.add("Account");
         headerArray.add("Region");
         headerArray.add("Security");
-        headerArray.add("Date Opened");
 
         for (int k = 0; k < tableView.getColumns().size(); k++) {
             row.createCell(k).setCellValue(headerArray.get(k).toString());
@@ -7486,11 +7697,11 @@ public class Controller implements Initializable {
     private void parseData() {
 
         try {
-            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.csv");
+            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V2.csv");
 
             HSSFWorkbook workBook = new HSSFWorkbook();
 
-            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls";
+            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V2.xls";
             HSSFSheet sheet = workBook.createSheet("Data");
 
             BufferedReader br = new BufferedReader(new FileReader(csvfile));
@@ -7519,11 +7730,49 @@ public class Controller implements Initializable {
             for (int i = 0; i < 7; i++) {
                 sheet.removeRow(sheet.getRow(lastRow - i));
             }
+
             FileOutputStream fileOutputStream = new FileOutputStream(xlsFileAddress);
             workBook.write(fileOutputStream);
             fileOutputStream.close();
-
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void rectifyAccountNames(){
+
+        HSSFCell account;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V2.xls")))) {
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+
+            for (int i = 0; i < cellnum; i++) {
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+
+                switch (filterColName) {
+                    case ("Account Name"):
+                        caseNumCellRef = i;
+                        break;
+                }
+            }
+
+            for (int i = 1; i < lastRow + 1; i++) {
+
+                account = filtersheet.getRow(i).getCell(caseNumCellRef);
+                String caseStatus = account.getStringCellValue();
+                caseStatus = caseStatus.replace(",", "");
+                account.setCellValue(caseStatus);
+            }
+
+            FileOutputStream output_file =new FileOutputStream(new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls"));
+            workbook.write(output_file);
+            output_file.close();
+
+
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
@@ -7638,7 +7887,7 @@ public class Controller implements Initializable {
         HSSFCell caseOwner;
         HSSFCell caseUpdate;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
             HSSFSheet filtersheet = workbook.getSheetAt(0);
 
             hotlist = 0;
@@ -7922,7 +8171,7 @@ public class Controller implements Initializable {
         HSSFCell mycaseUpdate;
 
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
@@ -8218,6 +8467,335 @@ public class Controller implements Initializable {
         }
     }
 
+    private void myCasesPage2() {
+
+        HSSFCell caseUser;
+        HSSFCell myfiltHotList;
+        HSSFCell myoutFollow;
+        HSSFCell myescCases;
+        HSSFCell mycaseSev;
+        HSSFCell mycaseStat;
+        HSSFCell myageCase;
+        HSSFCell mycurResp;
+        HSSFCell caseQueue;
+        HSSFCell mycaseUpdate;
+        HSSFCell myCoOwnedCase;
+        HSSFCell myCoOwnerQueue;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int lastRow = filtersheet.getLastRowNum();
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            myHotList = 0;
+            myOutFollow = 0;
+            myEscCases = 0;
+            myBCCases = 0;
+            myInactiveCases = 0;
+            myBCDueCases = 0;
+            myBCMissedCases = 0;
+            myBCDSCases = 0;
+            myBCInactiveCases = 0;
+            myBCWIP = 0;
+            myMJDueCases = 0;
+            myMJMissedCases = 0;
+            myMJUpdated = 0;
+            myMJDSCases = 0;
+            myMJWIP = 0;
+            myQueuedCases = 0;
+            myCoOwnerQueueCases = 0;
+            myCoOwnerQueueCasesAssigned = 0;
+            myE1Case = 0;
+            myE2Cases = 0;
+            myBCupdated = 0;
+            myBCWac = 0;
+            myMJWAC = 0;
+            myMJInactiveCases = 0;
+            myWOHCases = 0;
+            myUpdateToday = 0;
+            myUpdateMissed = 0;
+            myUpdateNull = 0;
+            myCoOwnCase = 0;
+            myCoOwnQueue = 0;
+
+            for (int i = 0; i < cellnum; i++) {
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+
+                switch (filterColName) {
+                    case ("Case Number"):
+                        mycaseNumCellRef = i;
+                        break;
+                    case ("Support Type"):
+                        mycaseSupTypeRefCell = i;
+                        break;
+                    case ("Status"):
+                        mycaseStatRefCell = i;
+                        break;
+                    case ("Severity"):
+                        mycaseSevRefCell = i;
+                        break;
+                    case ("Currently Responsible"):
+                        mycaseRespRefCell = i;
+                        break;
+                    case ("Case Owner"):
+                        mycaseOwnerRefCell = i;
+                        break;
+                    case ("Escalated By"):
+                        mycaseEscalatedRefCell = i;
+                        break;
+                    case ("Support Hotlist Level"):
+                        mycaseHotListRefCell = i;
+                        break;
+                    case ("Outage Follow-Up"):
+                        mycaseOutFolRefCell = i;
+                        break;
+                    case ("Age (Days)"):
+                        mycaseAgeRefCell = i;
+                        break;
+                    case ("Next Case Update"):
+                        mycaseUpdateCell = i;
+                        break;
+                    case ("Co-Owner"):
+                        myCoOwnCaseRefCell = i;
+                        break;
+                    case ("Co-Owner Queue"):
+                        myCoOwnQueueRefCell = i;
+                        break;
+                }
+            }
+
+            /* Creating Input Data Arrays from Setttings Page */
+
+            if (!txUsers.getText().isEmpty()) {
+
+                String userFilter = txUsers.getText();
+
+                ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
+                int userfiltnum = setUser.size();
+
+
+
+                if ((!setUser.isEmpty())) {
+
+                    for (int j = 0; j < userfiltnum; j++) {
+
+                        for (int i = 1; i < lastRow + 1; i++) {
+
+                            caseUser = filtersheet.getRow(i).getCell(mycaseOwnerRefCell);
+                            String caseuser = caseUser.getStringCellValue();
+
+                            myCoOwnedCase = filtersheet.getRow(i).getCell(myCoOwnCaseRefCell);
+                            String coOwner = myCoOwnedCase.getStringCellValue();
+
+                            mycaseStat = filtersheet.getRow(i).getCell(mycaseStatRefCell);
+                            String mycaseStatus = mycaseStat.getStringCellValue();
+
+                            mycaseSev = filtersheet.getRow(i).getCell(mycaseSevRefCell);
+                            String mycaseSever = mycaseSev.getStringCellValue();
+
+                            mycurResp = filtersheet.getRow(i).getCell(mycaseRespRefCell);
+                            String myresponsible = mycurResp.getStringCellValue();
+
+                            myescCases = filtersheet.getRow(i).getCell(mycaseEscalatedRefCell);
+                            String myescalatedCases = myescCases.getStringCellValue();
+
+                            myfiltHotList = filtersheet.getRow(i).getCell(mycaseHotListRefCell);
+                            String mystrFltStatus = myfiltHotList.getStringCellValue();
+
+                            myoutFollow = filtersheet.getRow(i).getCell(mycaseOutFolRefCell);
+                            String myfollowOut = myoutFollow.getStringCellValue();
+
+                            mycaseUpdate = filtersheet.getRow(i).getCell(mycaseUpdateCell);
+                            String myCaseUpdate = mycaseUpdate.getStringCellValue();
+
+                            LocalDate dateToday = LocalDate.now();
+                            LocalDate caseUpdateDate = null;
+
+                            if (!myCaseUpdate.equals("NotSet")) {
+
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                caseUpdateDate = LocalDate.parse(myCaseUpdate, formatter);
+                            }
+
+                            myageCase = filtersheet.getRow(i).getCell(mycaseAgeRefCell);
+                            String mycaseAge = myageCase.getStringCellValue();
+                            String myagenum = mycaseAge.replace(".0000000000", "");
+                            int ageCaseNum = Integer.parseInt(myagenum);
+
+                            if (caseuser.equals(setUser.get(j)) || coOwner.equals(setUser.get(j))) {
+
+                                if (!mystrFltStatus.equals("NotSet") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                    myHotList++;
+                                }
+                                if (myfollowOut.equals("1") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                    myOutFollow++;
+                                }
+                                if (!myescalatedCases.equals("NotSet") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                    myEscCases++;
+                                }
+                                if (mycaseSever.equals("Critical") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                    myE1Case++;
+                                }
+                                if (mycaseSever.equals("E2") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                    myE2Cases++;
+                                }
+
+                                if (mycaseSever.equals("Business Critical")) {
+                                    if (!mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+
+                                        myBCCases++;
+                                    }
+
+                                    if (mycaseStatus.equals("Open / Assign") || mycaseStatus.equals("Isolate Fault")) {
+                                        myBCWIP++;
+                                    }
+
+                                    if (myresponsible.equals("Customer action")) {
+                                        myBCWac++;
+                                    }
+
+                                    if (myresponsible.equals("Customer updated")) {
+                                        myBCupdated++;
+                                    }
+
+                                    if ((mycaseStatus.equals("Open / Assign")) || (mycaseStatus.equals("Isolate Fault"))) {
+                                        if (ageCaseNum <= 15) {
+                                            myBCDueCases++;
+                                        }
+                                        if (ageCaseNum > 15) {
+                                            myBCMissedCases++;
+                                        }
+                                    }
+
+                                    if (mycaseStatus.equals("Develop Solution")) {
+                                        myBCDSCases++;
+                                    }
+
+                                    if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                                        myBCInactiveCases++;
+                                    }
+                                }
+                                if (mycaseSever.equals("Major")) {
+
+                                    if (mycaseStatus.equals("Develop Solution")) {
+                                        myMJDSCases++;
+                                    }
+
+                                    if ((mycaseStatus.equals("Open / Assign")) || (mycaseStatus.equals("Isolate Fault"))) {
+                                        if (ageCaseNum <= 30) {
+                                            myMJDueCases++;
+                                        }
+                                        if (ageCaseNum > 30) {
+                                            myMJMissedCases++;
+                                        }
+                                    }
+                                    if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                                        myMJInactiveCases++;
+                                    }
+                                    if (myresponsible.equals("Customer action")) {
+                                        myMJWAC++;
+                                    }
+                                    if (myresponsible.equals("Customer updated")) {
+                                        myMJUpdated++;
+                                    }
+                                    if (mycaseStatus.equals("Open / Assign") || (mycaseStatus.equals("Isolate Fault"))) {
+                                        myMJWIP++;
+                                    }
+                                }
+                                if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                                    myInactiveCases++;
+                                } else {
+                                    myWOHCases++;
+                                }
+                                if ((caseUpdateDate != null)) {
+                                    if (caseUpdateDate.compareTo(dateToday) == 0) {
+                                        myUpdateToday++;
+                                    }
+                                    if (caseUpdateDate.compareTo(dateToday) < 0) {
+                                        myUpdateMissed++;
+                                    }
+                                }
+
+                                if (myCaseUpdate.equals("NotSet") && !mycaseStatus.equals("Pending Closure")) {
+                                    myUpdateNull++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (!txQueues.getText().isEmpty()) {
+
+                ArrayList<String> setQueue = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
+                int queuefiltnum = setQueue.size();
+
+                if (!setQueue.isEmpty()) {
+
+                    for (int k = 0; k < queuefiltnum; k++) {
+
+                        for (int l = 0; l < lastRow + 1; l++) {
+
+                            caseQueue = workbook.getSheetAt(0).getRow(l).getCell(mycaseOwnerRefCell);
+                            String casequeue = caseQueue.getStringCellValue();
+
+                            myCoOwnerQueue = workbook.getSheetAt(0).getRow(l).getCell(myCoOwnQueueRefCell);
+                            String coOwnQueue = myCoOwnerQueue.getStringCellValue();
+
+
+                            myCoOwnedCase = workbook.getSheetAt(0).getRow(l).getCell(myCoOwnCaseRefCell);
+                            String coOwn = myCoOwnedCase.getStringCellValue();
+
+                            if (casequeue.equals(setQueue.get(k))){
+                                myQueuedCases++;
+                            }
+
+                            if (coOwnQueue.equals(setQueue.get(k)) && coOwn.equals("NotSet")){
+                                myCoOwnerQueueCases++;
+
+                            }
+                            if (coOwnQueue.equals(setQueue.get(k)) && !coOwn.equals("NotSet")){
+                                myCoOwnerQueueCasesAssigned++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            btnMyE1Cases.setText(String.valueOf(myE1Case));
+            btnMyE2Cases.setText(String.valueOf(myE2Cases));
+            btnMyOutFollow.setText(String.valueOf(myOutFollow));
+            btnMyEscalated.setText(String.valueOf(myEscCases));
+            btnMyBCCases.setText(String.valueOf(myBCCases));
+            btnMyHotIssues.setText(String.valueOf(myHotList));
+            btnMyInactive.setText(String.valueOf(myInactiveCases));
+            btnMyBCWIP.setText(String.valueOf(myBCWIP));
+            btnMyBCWac.setText(String.valueOf(myBCWac));
+            btnMyBCupdated.setText(String.valueOf(myBCupdated));
+            btnMyBCEngineering.setText(String.valueOf(myBCDSCases));
+            btnMyBCINACT.setText(String.valueOf(myBCInactiveCases));
+            btnMyMJWIP.setText(String.valueOf(myMJWIP));
+            btnMyMJWac.setText(String.valueOf(myMJWAC));
+            btnMyMJupdated.setText(String.valueOf(myMJUpdated));
+            btnMyMJEngineering.setText(String.valueOf(myMJDSCases));
+            btnMyMJINACT.setText(String.valueOf(myMJInactiveCases));
+            btnMyBCDue.setText(String.valueOf(myBCDueCases));
+            btnMyBCMissed.setText(String.valueOf(myBCMissedCases));
+            btnMyMJDue.setText(String.valueOf(myMJDueCases));
+            btnMyMJMissed.setText(String.valueOf(myMJMissedCases));
+            btnMyQueue.setText(String.valueOf(myQueuedCases));
+            btnMyWOH.setText(String.valueOf(myWOHCases));
+            btnMyUpdateToday.setText(String.valueOf(myUpdateToday));
+            btnMyUpdateMissed.setText(String.valueOf(myUpdateMissed));
+            btnMyUpdateNull.setText(String.valueOf(myUpdateNull));
+            btnMyCoOwnQueue.setText(String.valueOf(myCoOwnerQueueCases));
+            btnMyCoQueueAssigned.setText(String.valueOf(myCoOwnerQueueCasesAssigned));
+
+        } catch (Exception e) {
+            System.out.println("No Data Downloaded");
+        }
+    }
+
     private void myProductsPage() {
 
         HSSFCell caseUser;
@@ -8232,7 +8810,7 @@ public class Controller implements Initializable {
         HSSFCell mycaseUpdate;
         HSSFCell productName;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
@@ -8553,19 +9131,11 @@ public class Controller implements Initializable {
 
         }
 
-        if (event.getSource() == btnSurvey) {
+        if (event.getSource() == btnMyNotes) {
 
             Tooltip surveyTooltip = new Tooltip();
             surveyTooltip.setText("PERSONAL NOTES...");
-            btnSurvey.setTooltip(surveyTooltip);
-
-        }
-
-        if (event.getSource() == btnProjects) {
-
-            Tooltip projectTooltip = new Tooltip();
-            projectTooltip.setText("VERY SOON");
-            btnProjects.setTooltip(projectTooltip);
+            btnMyNotes.setTooltip(surveyTooltip);
 
         }
 
@@ -8607,6 +9177,8 @@ public class Controller implements Initializable {
             SeverityCol.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseSeverity"));
             StatusCol.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseStatus"));
             OwnerCol.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseOwner"));
+            CoOwnerCol.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseCoOwner"));
+            CoOwnerQueueCol.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseCoOwnerQueue"));
             ResponsibleCol.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseResponsible"));
             AgeCol.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseAge"));
             NextUpdateCol.setCellValueFactory(new PropertyValueFactory<CaseTableView, LocalDate>("nextCaseUpdate"));
@@ -8619,7 +9191,6 @@ public class Controller implements Initializable {
             AccountCol.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseAccount"));
             RegionCol.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseRegion"));
             SecurityCol.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseSecurity"));
-            DateTimeOpenedCol.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseDateTimeOpened"));
         }
         if (table == tableCustomers) {
 
@@ -8627,6 +9198,8 @@ public class Controller implements Initializable {
             SeverityColCust.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseSeverity"));
             StatusColCust.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseStatus"));
             OwnerColCust.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseOwner"));
+            CoOwnerColCust.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseCoOwner"));
+            CoOwnerQueuColCust.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseCoOwnerQueue"));
             ResponsibleColCust.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseResponsible"));
             AgeColCust.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseAge"));
             NextUpdateColCust.setCellValueFactory(new PropertyValueFactory<CaseTableView, LocalDate>("nextCaseUpdate"));
@@ -8639,7 +9212,6 @@ public class Controller implements Initializable {
             AccountColCust.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseAccount"));
             RegionColCust.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseRegion"));
             SecurityColCust.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseSecurity"));
-            DateTimeOpenedColCust.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseDateTimeOpened"));
 
         }
     }
@@ -8737,7 +9309,7 @@ public class Controller implements Initializable {
         HSSFCell status;
         HSSFCell outFollow;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
@@ -8889,6 +9461,7 @@ public class Controller implements Initializable {
     private void userSelectArray() {
 
         HSSFCell userCell;
+        HSSFCell userCoOwnerCell;
 
         tableUsers.setVisible(true);
         userCol.setCellValueFactory(new PropertyValueFactory<UserTableView, String>("userName"));
@@ -8907,6 +9480,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Case Owner")) {
                     caseOwnerRefCell = i;
                 }
+                if (filterColName.equals("Co-Owner")){
+                    caseCoOwnerRefCell = i;
+                }
             }
 
             ArrayList<String> userArray = new ArrayList<>();
@@ -8915,9 +9491,14 @@ public class Controller implements Initializable {
 
                 userCell = filtersheet.getRow(i).getCell(caseOwnerRefCell);
                 String userName = userCell.getStringCellValue();
+                userCoOwnerCell = filtersheet.getRow(i).getCell(caseCoOwnerRefCell);
+                String userCoOwner = userCoOwnerCell.getStringCellValue();
 
                 if (!userName.startsWith("PS ") && !userName.startsWith("TS ") && !userName.startsWith("Tech-Ops ")) {
                     userArray.add(userName);
+                }
+                if (!userCoOwner.equals("")){
+                    userArray.add(userCoOwner);
                 }
 
             }
@@ -9350,7 +9931,7 @@ public class Controller implements Initializable {
         customerCol.setCellValueFactory(new PropertyValueFactory<AccountTableView, String>("accountName"));
         customerSelectedCol.setCellValueFactory(new PropertyValueFactory<AccountTableView, String>("accountName"));
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
@@ -9468,7 +10049,6 @@ public class Controller implements Initializable {
 
                             AccountTableView addCust = tableAccountsSelected.getItems().get(i);
                             filteredAccounts.add(addCust.getAccountName());
-
                         }
 
                         filteredAccounts = (ArrayList) filteredAccounts.stream().distinct().collect(Collectors.toList());
@@ -9522,6 +10102,12 @@ public class Controller implements Initializable {
             pnUsersSelect.setVisible(true);
             pnProductSelect.setVisible(false);
             pnQueueSelect.setVisible(false);
+            pnQueuesSave.setVisible(false);
+            pnQueuesLoad.setVisible(false);
+            pnUsersLoad.setVisible(false);
+            pnUsersSave.setVisible(false);
+            pnProductsSave.setVisible(false);
+            pnProductsLoad.setVisible(false);
             userSelectArray();
             txtUserSelect.requestFocus();
         }
@@ -9530,12 +10116,24 @@ public class Controller implements Initializable {
             pnUsersSelect.setVisible(false);
             pnProductSelect.setVisible(false);
             pnQueueSelect.setVisible(false);
+            pnQueuesSave.setVisible(false);
+            pnQueuesLoad.setVisible(false);
+            pnProductsLoad.setVisible(false);
+            pnProductsSave.setVisible(false);
+            pnUsersSave.setVisible(false);
+            pnUsersLoad.setVisible(false);
 
         }
         if (event.getSource() == txProducts) {
             pnUsersSelect.setVisible(false);
             pnProductSelect.setVisible(true);
             pnQueueSelect.setVisible(false);
+            pnQueuesSave.setVisible(false);
+            pnQueuesLoad.setVisible(false);
+            pnUsersLoad.setVisible(false);
+            pnUsersSave.setVisible(false);
+            pnProductsSave.setVisible(false);
+            pnProductsLoad.setVisible(false);
             productSelectArray();
             txtProductSelect.requestFocus();
         }
@@ -9544,6 +10142,13 @@ public class Controller implements Initializable {
             pnUsersSelect.setVisible(false);
             pnProductSelect.setVisible(false);
             pnQueueSelect.setVisible(true);
+            pnQueuesSave.setVisible(false);
+            pnQueuesLoad.setVisible(false);
+            pnUsersLoad.setVisible(false);
+            pnUsersSave.setVisible(false);
+            pnProductsSave.setVisible(false);
+            pnProductsLoad.setVisible(false);
+            queueSelectArray();
             txtQueueSelect.requestFocus();
         }
         if (event.getSource() == btnUsersClear) {
@@ -9570,9 +10175,6 @@ public class Controller implements Initializable {
             btnToExcel.setVisible(false);
             initCustomerNumbers();
             pnAccountSelect.setVisible(false);
-        }
-        if (event.getSource() == txQueues) {
-            queueSelectArray();
         }
         if (event.getSource() == btnClearAll) {
             txUsers.clear();
@@ -9604,14 +10206,18 @@ public class Controller implements Initializable {
             alert.showAndWait();
         }
         if (event.getSource() == btnUsersSaveAs){
-            pnUsersSave.toFront();
-            pnUsersSave.setVisible(true);
-            saveUserProfile();
             pnProductsSave.setVisible(false);
             pnQueuesSave.setVisible(false);
             pnUsersLoad.setVisible(false);
             pnQueuesLoad.setVisible(false);
             pnProductsLoad.setVisible(false);
+            pnQueueSelect.setVisible(false);
+            pnUsersSelect.setVisible(false);
+            pnProductSelect.setVisible(false);
+            pnUsersSave.toFront();
+            pnUsersSave.setVisible(true);
+            saveUserProfile();
+
         }
         if (event.getSource() == btnUsersSaveClose){
             pnUsersSave.toBack();
@@ -9620,12 +10226,16 @@ public class Controller implements Initializable {
         if (event.getSource() == btnProductsSaveAs){
             pnProductsSave.toFront();
             pnProductsSave.setVisible(true);
-            saveProductProfile();
             pnUsersSave.setVisible(false);
             pnQueuesSave.setVisible(false);
             pnUsersLoad.setVisible(false);
             pnQueuesLoad.setVisible(false);
             pnProductsLoad.setVisible(false);
+            pnQueueSelect.setVisible(false);
+            pnUsersSelect.setVisible(false);
+            pnProductSelect.setVisible(false);
+            saveProductProfile();
+
 
         }
         if (event.getSource() == btnProductsSaveClose){
@@ -9635,12 +10245,16 @@ public class Controller implements Initializable {
         if (event.getSource() == btnQueuesSaveAs){
             pnQueuesSave.toFront();
             pnQueuesSave.setVisible(true);
-            saveQueueProfile();
             pnUsersSave.setVisible(false);
             pnProductsSave.setVisible(false);
             pnUsersLoad.setVisible(false);
             pnQueuesLoad.setVisible(false);
             pnProductsLoad.setVisible(false);
+            pnQueueSelect.setVisible(false);
+            pnUsersSelect.setVisible(false);
+            pnProductSelect.setVisible(false);
+            saveQueueProfile();
+
 
         }
         if (event.getSource() == btnQueuesSaveClose){
@@ -9651,12 +10265,17 @@ public class Controller implements Initializable {
 
             pnUsersLoad.toFront();
             pnUsersLoad.setVisible(true);
-            loadUserProfile();
+            pnQueueSelect.setVisible(false);
+            pnUsersSelect.setVisible(false);
+            pnProductSelect.setVisible(false);
             pnProductsLoad.setVisible(false);
             pnQueuesLoad.setVisible(false);
             pnUsersSave.setVisible(false);
             pnProductsSave.setVisible(false);
             pnQueuesSave.setVisible(false);
+            loadUserProfile();
+
+
         }
         if (event.getSource() == btnUsersLoadClose){
             pnUsersLoad.toBack();
@@ -9667,10 +10286,14 @@ public class Controller implements Initializable {
             pnProductsLoad.setVisible(true);
             pnUsersLoad.setVisible(false);
             pnQueuesLoad.setVisible(false);
-            loadProductProfile();
             pnUsersSave.setVisible(false);
             pnProductsSave.setVisible(false);
             pnQueuesSave.setVisible(false);
+            pnQueueSelect.setVisible(false);
+            pnUsersSelect.setVisible(false);
+            pnProductSelect.setVisible(false);
+            loadProductProfile();
+
 
         }
         if (event.getSource() == btnProductsLoadClose){
@@ -9683,10 +10306,14 @@ public class Controller implements Initializable {
             pnQueuesLoad.setVisible(true);
             pnUsersLoad.setVisible(false);
             pnProductsLoad.setVisible(false);
-            loadQueueProfile();
             pnUsersSave.setVisible(false);
             pnProductsSave.setVisible(false);
             pnQueuesSave.setVisible(false);
+            pnQueueSelect.setVisible(false);
+            pnUsersSelect.setVisible(false);
+            pnProductSelect.setVisible(false);
+            loadQueueProfile();
+
         }
         if (event.getSource() == btnQueueLoadClose){
             pnQueuesLoad.toBack();
@@ -10174,6 +10801,6 @@ public class Controller implements Initializable {
         readTimeStamp();
         myProductsPage();
         overviewPage();
-        myCasesPage();
+        myCasesPage2();
     }
 }

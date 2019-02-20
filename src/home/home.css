@@ -83,8 +83,6 @@
 
  }
 
-
-
  .progress-bar .bar {
      -fx-background-color:
          -fx-box-border,
@@ -94,14 +92,12 @@
      -fx-padding: 0.416667em; /* 5 */
  }
 
-
 /* scroll bar starts here */
 
 /* The increment and decrement button CSS class of scrollbar */
 .table-view .increment-button ,.table-view .decrement-button {
     -fx-background-color:transparent;
 	-fx-background-radius: 2em;
-
 }
 
 /* The main scrollbar **track** CSS class  */
@@ -119,7 +115,6 @@
     -fx-background-color:derive( #2D75E8,90%);
 	-fx-background-insets: 2, 0, 0;
 	-fx-background-radius: 2em;
-
 }
 
 /* chart properties */
