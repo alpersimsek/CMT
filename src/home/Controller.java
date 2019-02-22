@@ -48,8 +48,10 @@ import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import java.awt.*;
 import javafx.scene.control.TextArea;
+import sun.net.www.protocol.https.HttpsURLConnectionImpl;
+
 import java.io.*;
-import java.net.URL;
+import java.net.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -4097,8 +4099,70 @@ public class Controller implements Initializable {
 
             browserLoginPane.getChildren().remove(browserLogin);
             WebEngine webEngine = browserLogin.getEngine();
+            System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
+            browserLogin.setContextMenuEnabled(true);
+            com.sun.javafx.webkit.WebConsoleListener.setDefaultListener(
+                    (webView, message, lineNumber, sourceId)-> System.out.println("Console: [" + sourceId + ":" + lineNumber + "] " + message)
+            );
+
+            try {
+                URL.setURLStreamHandlerFactory(new URLStreamHandlerFactory() {
+                    @Override
+                    public URLStreamHandler createURLStreamHandler(String protocol) {
+                        if ("https".equals(protocol)) {
+                            return new sun.net.www.protocol.https.Handler() {
+                                @Override
+                                protected URLConnection openConnection(URL url, Proxy proxy) throws IOException {
+                                    System.out.println("openConnection " + url);
+
+                                    final HttpsURLConnectionImpl httpsURLConnection = (HttpsURLConnectionImpl) super.openConnection(url, proxy);
+                                    System.out.println(url.getHost());
+                                    if ("sonus.okta.com".equals(url.getHost()) && "/".equals(url.getPath())) {
+
+                                        System.out.println("INNNN");
+                                        return new URLConnection(url) {
+                                            @Override
+                                            public void connect() throws IOException {
+                                                httpsURLConnection.connect();
+                                            }
+
+                                            public InputStream getInputStream() throws IOException {
+                                                DataInputStream data = new DataInputStream(httpsURLConnection.getInputStream());
+                                                int length = data.readInt();
+                                                System.out.println(length);
+                                                byte[] content = new byte[length];
+                                                data.read(content);
+                                                String contentAsString = new String(content, "UTF-8");
+                                                System.out.println("2");
+                                                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                                baos.write(contentAsString.replaceAll("integrity", "integrity.disabled").getBytes("UTF-8"));
+                                                return new ByteArrayInputStream(baos.toByteArray());
+                                            }
+
+                                            public OutputStream getOutputStream() throws IOException {
+                                                System.out.println("OUT1");
+                                                return httpsURLConnection.getOutputStream();
+                                            }
+
+                                        };
+
+                                    } else {
+                                        System.out.println("OUT2");
+                                        return httpsURLConnection;
+                                    }
+                                }
+
+                            };
+                        }
+                        return null;
+                    }
+                });
+            } catch (Throwable t) {
+                t.printStackTrace();
+            }
+
             webEngine.load("https://sonus.okta.com");
-            //browserLogin.setPrefSize(1024, 768);
+
             browserLoginPane.getChildren().add(browserLogin);
             browserLoginPane.toFront();
             apnBrowser.toFront();
@@ -10802,5 +10866,6 @@ public class Controller implements Initializable {
         myProductsPage();
         overviewPage();
         myCasesPage2();
+        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
     }
 }
