@@ -44,8 +44,6 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
-        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
-
-        launch(args);
+       launch(args);
     }
 }

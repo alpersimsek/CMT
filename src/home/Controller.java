@@ -1,5 +1,12 @@
 package home;
 
+import com.okta.sdk.authc.credentials.TokenClientCredentials;
+import com.okta.sdk.client.Client;
+import com.okta.sdk.client.Clients;
+import com.okta.sdk.resource.application.Application;
+import com.okta.sdk.resource.application.ApplicationList;
+import com.okta.sdk.resource.policy.OktaSignOnPolicy;
+import com.okta.sdk.resource.user.UserList;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -48,8 +55,6 @@ import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import java.awt.*;
 import javafx.scene.control.TextArea;
-import sun.net.www.protocol.https.HttpsURLConnectionImpl;
-
 import java.io.*;
 import java.net.*;
 import java.time.LocalDate;
@@ -562,6 +567,8 @@ public class Controller implements Initializable {
     private ListView queueProfileList;
     @FXML
     private TextArea txtShowCaseNotes;
+    @FXML
+    private WebView webviewTest;
 
     Timeline time = new Timeline();
 
@@ -580,6 +587,7 @@ public class Controller implements Initializable {
     MenuItem openCaseSFDC = new MenuItem("Search This Case in SalesForce...");
     MenuItem casePersonalNote = new MenuItem("Add Personal Note To This Case...");
     MenuItem openCaseComments = new MenuItem("Open Comments for this case...");
+
 
     //Case Ref Cells
     int caseAccountRef = 0;
@@ -4097,74 +4105,32 @@ public class Controller implements Initializable {
         if (!btnLogin.getText().equals("Logged!")) {
 
 
-            browserLoginPane.getChildren().remove(browserLogin);
-            WebEngine webEngine = browserLogin.getEngine();
+            WebEngine webEngine = webviewTest.getEngine();
             System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
-            browserLogin.setContextMenuEnabled(true);
+
+            Client client = Clients.builder()
+                    .setOrgUrl("https://dev-595242.oktapreview.com")
+                    .setClientCredentials(new TokenClientCredentials("00G1rJSpdbBQ9xYwVFXtXfENnzTk4BaOoOIe8UdUma"))
+                    .build();
+
+            UserList users = client.listUsers();
+            System.out.println(users);
+
+            ApplicationList applications = client.listApplications();
+            System.out.println(applications);
+
+            Application app = client.getApplication("0oahhbtnnyXxx6rdE0h7");
+            System.out.println(app);
+
+            webviewTest.setContextMenuEnabled(true);
             com.sun.javafx.webkit.WebConsoleListener.setDefaultListener(
                     (webView, message, lineNumber, sourceId)-> System.out.println("Console: [" + sourceId + ":" + lineNumber + "] " + message)
             );
-
-            try {
-                URL.setURLStreamHandlerFactory(new URLStreamHandlerFactory() {
-                    @Override
-                    public URLStreamHandler createURLStreamHandler(String protocol) {
-                        if ("https".equals(protocol)) {
-                            return new sun.net.www.protocol.https.Handler() {
-                                @Override
-                                protected URLConnection openConnection(URL url, Proxy proxy) throws IOException {
-                                    System.out.println("openConnection " + url);
-
-                                    final HttpsURLConnectionImpl httpsURLConnection = (HttpsURLConnectionImpl) super.openConnection(url, proxy);
-                                    System.out.println(url.getHost());
-                                    if ("sonus.okta.com".equals(url.getHost()) && "/".equals(url.getPath())) {
-
-                                        System.out.println("INNNN");
-                                        return new URLConnection(url) {
-                                            @Override
-                                            public void connect() throws IOException {
-                                                httpsURLConnection.connect();
-                                            }
-
-                                            public InputStream getInputStream() throws IOException {
-                                                DataInputStream data = new DataInputStream(httpsURLConnection.getInputStream());
-                                                int length = data.readInt();
-                                                System.out.println(length);
-                                                byte[] content = new byte[length];
-                                                data.read(content);
-                                                String contentAsString = new String(content, "UTF-8");
-                                                System.out.println("2");
-                                                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                                                baos.write(contentAsString.replaceAll("integrity", "integrity.disabled").getBytes("UTF-8"));
-                                                return new ByteArrayInputStream(baos.toByteArray());
-                                            }
-
-                                            public OutputStream getOutputStream() throws IOException {
-                                                System.out.println("OUT1");
-                                                return httpsURLConnection.getOutputStream();
-                                            }
-
-                                        };
-
-                                    } else {
-                                        System.out.println("OUT2");
-                                        return httpsURLConnection;
-                                    }
-                                }
-
-                            };
-                        }
-                        return null;
-                    }
-                });
-            } catch (Throwable t) {
-                t.printStackTrace();
-            }
-
+            
+            webEngine.setJavaScriptEnabled(true);
             webEngine.load("https://sonus.okta.com");
 
-            browserLoginPane.getChildren().add(browserLogin);
-            browserLoginPane.toFront();
+            /*browserLoginPane.toFront();
             apnBrowser.toFront();
             progressBar.setVisible(true);
             progressBar.toFront();
@@ -4194,7 +4160,7 @@ public class Controller implements Initializable {
                         }
                     }
                 }
-            });
+            });*/
         }
     }
 
@@ -8209,9 +8175,8 @@ public class Controller implements Initializable {
 
             /* Updating completed for overview page */
 
-            workbook.close();
         } catch (Exception e) {
-            System.out.println("No Data Downloaded");
+            System.out.println("No Data Downloaded1");
         }
 
     }
@@ -8527,7 +8492,7 @@ public class Controller implements Initializable {
             btnMyUpdateNull.setText(String.valueOf(myUpdateNull));
 
         } catch (Exception e) {
-            System.out.println("No Data Downloaded");
+            System.out.println("No Data Downloaded2");
         }
     }
 
@@ -8856,7 +8821,7 @@ public class Controller implements Initializable {
             btnMyCoQueueAssigned.setText(String.valueOf(myCoOwnerQueueCasesAssigned));
 
         } catch (Exception e) {
-            System.out.println("No Data Downloaded");
+            System.out.println("No Data Downloaded4");
         }
     }
 
@@ -9164,7 +9129,7 @@ public class Controller implements Initializable {
             //btnMyUpdateNull.setText(String.valueOf(myUpdateNull));
 
         } catch (Exception e) {
-            System.out.println("No Data Downloaded");
+            System.out.println("No Data Downloaded5");
         }
     }
 
