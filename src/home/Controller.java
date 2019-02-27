@@ -1,12 +1,5 @@
 package home;
 
-import com.okta.sdk.authc.credentials.TokenClientCredentials;
-import com.okta.sdk.client.Client;
-import com.okta.sdk.client.Clients;
-import com.okta.sdk.resource.application.Application;
-import com.okta.sdk.resource.application.ApplicationList;
-import com.okta.sdk.resource.policy.OktaSignOnPolicy;
-import com.okta.sdk.resource.user.UserList;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -743,7 +736,7 @@ public class Controller implements Initializable {
             lblStatus.setText("MY CASES");
             btnToExcel.setVisible(false);
             btnBack.setVisible(false);
-            myCasesPage2();
+            myCasesPage();
             apnMyCases.toFront();
         }
 
@@ -1567,17 +1560,28 @@ public class Controller implements Initializable {
         }
         if (event.getSource() == btnMyCoOwnQueue) {
 
-            if (myQueuedCases != 0) {
-                lblStatus.setText("CASES IN MY QUEUE(S)");
+            if (myCoOwnerQueueCases != 0) {
+                lblStatus.setText("CASES IN MY CO-OWNER QUEUE(S)");
                 tableCases.getItems().clear();
                 initTableView(tableCases);
-                createMyCoOwnerQueueCaseView();
+                createMyCoOwnerQueueCaseView(false);
             }
-            if (myQueuedCases == 0) {
+            if (myCoOwnerQueueCases == 0) {
                 alertUser(strAlert);
             }
         }
 
+        if (event.getSource() == btnMyCoQueueAssigned){
+            if (myCoOwnerQueueCasesAssigned != 0) {
+                lblStatus.setText("CASES ASSIGNED FROM MY CO-OWNER QUEUE(S)");
+                tableCases.getItems().clear();
+                initTableView(tableCases);
+                createMyCoOwnerQueueCaseView(true);
+            }
+            if (myCoOwnerQueueCasesAssigned == 0){
+                alertUser(strAlert);
+            }
+        }
 
         if (event.getSource() == btnMyUpdateToday) {
 
@@ -4085,7 +4089,7 @@ public class Controller implements Initializable {
         parseData();
         rectifyAccountNames();
         parseUserData();
-        myCasesPage2();
+        myCasesPage();
         parseComments();
 
         time = new Timeline();
@@ -4108,7 +4112,7 @@ public class Controller implements Initializable {
             WebEngine webEngine = webviewTest.getEngine();
             System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
 
-            Client client = Clients.builder()
+            /*Client client = Clients.builder()
                     .setOrgUrl("https://dev-595242.oktapreview.com")
                     .setClientCredentials(new TokenClientCredentials("00G1rJSpdbBQ9xYwVFXtXfENnzTk4BaOoOIe8UdUma"))
                     .build();
@@ -4125,12 +4129,12 @@ public class Controller implements Initializable {
             webviewTest.setContextMenuEnabled(true);
             com.sun.javafx.webkit.WebConsoleListener.setDefaultListener(
                     (webView, message, lineNumber, sourceId)-> System.out.println("Console: [" + sourceId + ":" + lineNumber + "] " + message)
-            );
-            
+            );*/
+
             webEngine.setJavaScriptEnabled(true);
             webEngine.load("https://sonus.okta.com");
 
-            /*browserLoginPane.toFront();
+            browserLoginPane.toFront();
             apnBrowser.toFront();
             progressBar.setVisible(true);
             progressBar.toFront();
@@ -4160,7 +4164,7 @@ public class Controller implements Initializable {
                         }
                     }
                 }
-            });*/
+            });
         }
     }
 
@@ -4581,6 +4585,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal;
             HSSFCell cellValStat;
             HSSFCell cellValUser;
+            HSSFCell cellVal2;
 
 
             for (int i = 0; i < cellnum; i++) {
@@ -4601,33 +4606,18 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Next Case Update")) {
                     mycaseUpdateCell = i;
                 }
+                if (filterColName.equals("Co-Owner")){
+                    myCoOwnCaseRefCell = i;
+                }
             }
 
-            if ((!txUsers.getText().isEmpty()) || !(txQueues.getText().isEmpty())) {
+            if ((!txUsers.getText().isEmpty())) {
 
                 ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
-                ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
-                ArrayList<String> mergedOwner = new ArrayList<>();
 
                 int userfiltnum = setUser.size();
-                int userqueuenum = setQueu.size();
 
-                if (!setUser.isEmpty()) {
-                    for (int i = 0; i < userfiltnum; i++) {
-
-                        mergedOwner.add(setUser.get(i));
-                    }
-                }
-
-                if (!setQueu.isEmpty()) {
-                    for (int i = 0; i < userqueuenum; i++) {
-                        mergedOwner.add(setQueu.get(i));
-                    }
-                }
-
-                int mergedUserNum = mergedOwner.size();
-
-                for (int i = 0; i < mergedUserNum; i++) {
+                for (int i = 0; i < userfiltnum; i++) {
 
                     for (int k = 1; k < lastRow + 1; k++) {
 
@@ -4640,6 +4630,9 @@ public class Controller implements Initializable {
                         cellValUser = filtersheet.getRow(k).getCell(mycaseOwnerRefCell);
                         String caseUser = cellValUser.getStringCellValue();
 
+                        cellVal2 = filtersheet.getRow(k).getCell(myCoOwnCaseRefCell);
+                        String coOwner = cellVal2.getStringCellValue();
+
                         ArrayList<String> array = new ArrayList<>();
                         ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
@@ -4650,7 +4643,7 @@ public class Controller implements Initializable {
 
                         if ((b) && (bool)) {
 
-                            if ((caseUser.equals(mergedOwner.get(i)) && caseUpdateDate != null)) {
+                            if (((caseUser.equals(setUser.get(i)) || coOwner.equals(setUser.get(i)))&& caseUpdateDate != null && !cellStat.equals("Pending Closure"))) {
 
                                 if (caseUpdateDate.compareTo(dateToday) == 0) {
 
@@ -4679,7 +4672,7 @@ public class Controller implements Initializable {
                         }
                         if ((!b) && (bool)) {
 
-                            if ((caseUser.equals(mergedOwner.get(i)) && caseUpdateDate != null)) {
+                            if (((caseUser.equals(setUser.get(i)) || coOwner.equals(setUser.get(i)))&& caseUpdateDate != null && !cellStat.equals("Pending Closure"))) {
 
                                 if (caseUpdateDate.compareTo(dateToday) < 0) {
 
@@ -4708,7 +4701,7 @@ public class Controller implements Initializable {
                         }
                         if (!b && !bool) {
 
-                            if ((caseUser.equals(mergedOwner.get(i)) && cellValToCompare.equals("NotSet")) && !cellStat.equals("Pending Closure")) {
+                            if (((caseUser.equals(setUser.get(i)) || coOwner.equals(setUser.get(i))) && cellValToCompare.equals("NotSet")) && !cellStat.equals("Pending Closure")) {
 
                                 Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
                                 while (iterCells.hasNext()) {
@@ -4817,7 +4810,7 @@ public class Controller implements Initializable {
     }
 
 
-    private void createMyCoOwnerQueueCaseView(){
+    private void createMyCoOwnerQueueCaseView(Boolean assigned){
 
         int caseCount = 0;
 
@@ -4866,39 +4859,78 @@ public class Controller implements Initializable {
                             cellVal2 = filtersheet.getRow(k).getCell(myCoOwnQueueRefCell);
                             String cellValToCompare2 = cellVal2.getStringCellValue();
 
-                            if (cellValToCompare2.equals(setQueue.get(j)) && cellValToCompare.equals("NotSet")) {
+                            if (!assigned) {
 
-                                ArrayList<String> array = new ArrayList<>();
-                                ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+                                if (cellValToCompare2.equals(setQueue.get(j)) && cellValToCompare.equals("NotSet")) {
 
-                                Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
-                                while (iterCells.hasNext()) {
-                                    HSSFCell cell = (HSSFCell) iterCells.next();
-                                    array.add(cell.getStringCellValue());
+                                    ArrayList<String> array = new ArrayList<>();
+                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                    while (iterCells.hasNext()) {
+                                        HSSFCell cell = (HSSFCell) iterCells.next();
+                                        array.add(cell.getStringCellValue());
+                                    }
+
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                    LocalDate localDate = null;
+
+                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                    }
+
+                                    int age;
+                                    age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                            array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
+
+                                    tableCases.getItems().addAll(observableList);
+                                    caseCount++;
+                                    if (tableCases.getItems().size() >= caseCount + 1) {
+                                        tableCases.getItems().removeAll(observableList);
+                                    }
                                 }
+                            }if (assigned){
+                                if (cellValToCompare2.equals(setQueue.get(j)) && !cellValToCompare.equals("NotSet")) {
 
-                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                                LocalDate localDate = null;
+                                    ArrayList<String> array = new ArrayList<>();
+                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                    while (iterCells.hasNext()) {
+                                        HSSFCell cell = (HSSFCell) iterCells.next();
+                                        array.add(cell.getStringCellValue());
+                                    }
 
-                                    localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                    LocalDate localDate = null;
 
-                                }
+                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
 
-                                int age;
-                                age = Integer.parseInt(array.get(mycaseAgeRefCell));
-                                observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
-                                        localDate, array.get(9), array.get(10),
-                                        array.get(11), array.get(12), array.get(13),
-                                        array.get(14), array.get(15), array.get(16),
-                                        array.get(17)));
+                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
 
-                                tableCases.getItems().addAll(observableList);
-                                caseCount++;
-                                if (tableCases.getItems().size() >= caseCount + 1) {
-                                    tableCases.getItems().removeAll(observableList);
+                                    }
+
+                                    int age;
+                                    age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                            array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
+
+                                    tableCases.getItems().addAll(observableList);
+                                    caseCount++;
+                                    if (tableCases.getItems().size() >= caseCount + 1) {
+                                        tableCases.getItems().removeAll(observableList);
+                                    }
                                 }
                             }
                         }
@@ -6286,6 +6318,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal2;
             HSSFCell cellVal3;
             HSSFCell cellVal4;
+            HSSFCell cellVal5;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -6305,35 +6338,20 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Co-Owner")){
+                    myCoOwnCaseRefCell = i;
+                }
             }
 
-            if ((!txUsers.getText().isEmpty()) || !(txQueues.getText().isEmpty())) {
+            if ((!txUsers.getText().isEmpty())) {
 
                 ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
-                ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
-                ArrayList<String> mergedOwner = new ArrayList<>();
 
                 int userfiltnum = setUser.size();
-                int userqueuenum = setQueu.size();
 
-                if (!setUser.isEmpty()) {
-                    for (int i = 0; i < userfiltnum; i++) {
+                if ((!setUser.isEmpty())) {
 
-                        mergedOwner.add(setUser.get(i));
-                    }
-                }
-
-                if (!setQueu.isEmpty()) {
-                    for (int i = 0; i < userqueuenum; i++) {
-                        mergedOwner.add(setQueu.get(i));
-                    }
-                }
-
-                int mergedUserNum = mergedOwner.size();
-
-                if ((!mergedOwner.isEmpty())) {
-
-                    for (int j = 0; j < mergedUserNum; j++) {
+                    for (int j = 0; j < userfiltnum; j++) {
 
                         for (int i = 1; i < lastRow + 1; i++) {
 
@@ -6345,12 +6363,14 @@ public class Controller implements Initializable {
                             String caseStatus = cellVal3.getStringCellValue();
                             cellVal4 = filtersheet.getRow(i).getCell(mycaseAgeRefCell);
                             int compAge = Integer.parseInt(cellVal4.getStringCellValue());
+                            cellVal5 = filtersheet.getRow(i).getCell(myCoOwnCaseRefCell);
+                            String coOwner = cellVal5.getStringCellValue();
 
                             if ((cellToCompare.equals(filter))) {
 
                                 if (b) {
 
-                                    if ((caseUser.equals(mergedOwner.get(j)) && (compAge <= dueDay)) && ((caseStatus.equals("Open / Assign") ||
+                                    if (((caseUser.equals(setUser.get(j))  || coOwner.equals(setUser.get(j))) && compAge <= dueDay) && ((caseStatus.equals("Open / Assign") ||
                                             (caseStatus.equals("Isolate Fault"))))) {
 
                                         ArrayList<String> array = new ArrayList<>();
@@ -6387,7 +6407,7 @@ public class Controller implements Initializable {
                                         }
                                     }
                                 } else {
-                                    if ((caseUser.equals(mergedOwner.get(j)) && (compAge > dueDay)) && ((caseStatus.equals("Open / Assign") ||
+                                    if (((caseUser.equals(setUser.get(j))  || coOwner.equals(setUser.get(j))) && compAge > dueDay) && ((caseStatus.equals("Open / Assign") ||
                                             (caseStatus.equals("Isolate Fault"))))) {
 
                                         ArrayList<String> array = new ArrayList<>();
@@ -8181,322 +8201,7 @@ public class Controller implements Initializable {
 
     }
 
-    private void surveyPage() {
-
-        //TODO: Download the survey report and work on it
-    }
-
     private void myCasesPage() {
-
-        HSSFCell caseUser;
-        HSSFCell myfiltHotList;
-        HSSFCell myoutFollow;
-        HSSFCell myescCases;
-        HSSFCell mycaseSev;
-        HSSFCell mycaseStat;
-        HSSFCell myageCase;
-        HSSFCell mycurResp;
-        HSSFCell caseQueue;
-        HSSFCell mycaseUpdate;
-
-
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
-
-            HSSFSheet filtersheet = workbook.getSheetAt(0);
-            int lastRow = filtersheet.getLastRowNum();
-            int cellnum = filtersheet.getRow(0).getLastCellNum();
-            myHotList = 0;
-            myOutFollow = 0;
-            myEscCases = 0;
-            myBCCases = 0;
-            myInactiveCases = 0;
-            myBCDueCases = 0;
-            myBCMissedCases = 0;
-            myBCDSCases = 0;
-            myBCInactiveCases = 0;
-            myBCWIP = 0;
-            myMJDueCases = 0;
-            myMJMissedCases = 0;
-            myMJUpdated = 0;
-            myMJDSCases = 0;
-            myMJWIP = 0;
-            myQueuedCases = 0;
-            myE1Case = 0;
-            myE2Cases = 0;
-            myBCupdated = 0;
-            myBCWac = 0;
-            myMJWAC = 0;
-            myMJInactiveCases = 0;
-            myWOHCases = 0;
-            myUpdateToday = 0;
-            myUpdateMissed = 0;
-            myUpdateNull = 0;
-
-            for (int i = 0; i < cellnum; i++) {
-                String filterColName = filtersheet.getRow(0).getCell(i).toString();
-
-                switch (filterColName) {
-                    case ("Case Number"):
-                        mycaseNumCellRef = i;
-                        break;
-                    case ("Support Type"):
-                        mycaseSupTypeRefCell = i;
-                        break;
-                    case ("Status"):
-                        mycaseStatRefCell = i;
-                        break;
-                    case ("Severity"):
-                        mycaseSevRefCell = i;
-                        break;
-                    case ("Currently Responsible"):
-                        mycaseRespRefCell = i;
-                        break;
-                    case ("Case Owner"):
-                        mycaseOwnerRefCell = i;
-                        break;
-                    case ("Escalated By"):
-                        mycaseEscalatedRefCell = i;
-                        break;
-                    case ("Support Hotlist Level"):
-                        mycaseHotListRefCell = i;
-                        break;
-                    case ("Outage Follow-Up"):
-                        mycaseOutFolRefCell = i;
-                        break;
-                    case ("Age (Days)"):
-                        mycaseAgeRefCell = i;
-                        break;
-                    case ("Next Case Update"):
-                        mycaseUpdateCell = i;
-                        break;
-                }
-            }
-
-            /* Creating Input Data Arrays from Setttings Page */
-
-            if (!txUsers.getText().isEmpty() || !txQueues.getText().isEmpty()) {
-
-                String userFilter = txUsers.getText();
-
-                ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
-                ArrayList<String> setQueue = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
-                int userfiltnum = setUser.size();
-                int userqueue = setQueue.size();
-                ArrayList<String> mergedUsers = new ArrayList<>();
-
-                for (int i = 0; i < userfiltnum; i++) {
-                    mergedUsers.add(setUser.get(i));
-                }
-
-                for (int i = 0; i < userqueue; i++) {
-                    mergedUsers.add(setQueue.get(i));
-
-                }
-
-                int mergedUsersCount = mergedUsers.size();
-
-                if ((!mergedUsers.isEmpty())) {
-
-                    for (int j = 0; j < mergedUsersCount; j++) {
-
-                        for (int i = 1; i < lastRow + 1; i++) {
-
-                            caseUser = filtersheet.getRow(i).getCell(mycaseOwnerRefCell);
-                            String caseuser = caseUser.getStringCellValue();
-
-                            mycaseStat = filtersheet.getRow(i).getCell(mycaseStatRefCell);
-                            String mycaseStatus = mycaseStat.getStringCellValue();
-
-                            mycaseSev = filtersheet.getRow(i).getCell(mycaseSevRefCell);
-                            String mycaseSever = mycaseSev.getStringCellValue();
-
-                            mycurResp = filtersheet.getRow(i).getCell(mycaseRespRefCell);
-                            String myresponsible = mycurResp.getStringCellValue();
-
-                            myescCases = filtersheet.getRow(i).getCell(mycaseEscalatedRefCell);
-                            String myescalatedCases = myescCases.getStringCellValue();
-
-                            myfiltHotList = filtersheet.getRow(i).getCell(mycaseHotListRefCell);
-                            String mystrFltStatus = myfiltHotList.getStringCellValue();
-
-                            myoutFollow = filtersheet.getRow(i).getCell(mycaseOutFolRefCell);
-                            String myfollowOut = myoutFollow.getStringCellValue();
-
-                            mycaseUpdate = filtersheet.getRow(i).getCell(mycaseUpdateCell);
-                            String myCaseUpdate = mycaseUpdate.getStringCellValue();
-
-                            LocalDate dateToday = LocalDate.now();
-                            LocalDate caseUpdateDate = null;
-
-                            if (!myCaseUpdate.equals("NotSet")) {
-
-                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                                caseUpdateDate = LocalDate.parse(myCaseUpdate, formatter);
-                            }
-
-                            myageCase = filtersheet.getRow(i).getCell(mycaseAgeRefCell);
-                            String mycaseAge = myageCase.getStringCellValue();
-                            String myagenum = mycaseAge.replace(".0000000000", "");
-                            int ageCaseNum = Integer.parseInt(myagenum);
-
-                            if (caseuser.equals(mergedUsers.get(j))) {
-
-                                if (!mystrFltStatus.equals("NotSet") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
-                                    myHotList++;
-                                }
-                                if (myfollowOut.equals("1") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
-                                    myOutFollow++;
-                                }
-                                if (!myescalatedCases.equals("NotSet") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
-                                    myEscCases++;
-                                }
-                                if (mycaseSever.equals("Critical") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
-                                    myE1Case++;
-                                }
-                                if (mycaseSever.equals("E2") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
-                                    myE2Cases++;
-                                }
-
-                                if (mycaseSever.equals("Business Critical")) {
-                                    if (!mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
-
-                                        myBCCases++;
-                                    }
-
-                                    if (mycaseStatus.equals("Open / Assign") || mycaseStatus.equals("Isolate Fault")) {
-                                        myBCWIP++;
-                                    }
-
-                                    if (myresponsible.equals("Customer action")) {
-                                        myBCWac++;
-                                    }
-
-                                    if (myresponsible.equals("Customer updated")) {
-                                        myBCupdated++;
-                                    }
-
-                                    if ((mycaseStatus.equals("Open / Assign")) || (mycaseStatus.equals("Isolate Fault"))) {
-                                        if (ageCaseNum <= 15) {
-                                            myBCDueCases++;
-                                        }
-                                        if (ageCaseNum > 15) {
-                                            myBCMissedCases++;
-                                        }
-                                    }
-
-                                    if (mycaseStatus.equals("Develop Solution")) {
-                                        myBCDSCases++;
-                                    }
-
-                                    if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
-                                        myBCInactiveCases++;
-                                    }
-                                }
-                                if (mycaseSever.equals("Major")) {
-
-                                    if (mycaseStatus.equals("Develop Solution")) {
-                                        myMJDSCases++;
-                                    }
-
-                                    if ((mycaseStatus.equals("Open / Assign")) || (mycaseStatus.equals("Isolate Fault"))) {
-                                        if (ageCaseNum <= 30) {
-                                            myMJDueCases++;
-                                        }
-                                        if (ageCaseNum > 30) {
-                                            myMJMissedCases++;
-                                        }
-                                    }
-                                    if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
-                                        myMJInactiveCases++;
-                                    }
-                                    if (myresponsible.equals("Customer action")) {
-                                        myMJWAC++;
-                                    }
-                                    if (myresponsible.equals("Customer updated")) {
-                                        myMJUpdated++;
-                                    }
-                                    if (mycaseStatus.equals("Open / Assign") || (mycaseStatus.equals("Isolate Fault"))) {
-                                        myMJWIP++;
-                                    }
-                                }
-                                if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
-                                    myInactiveCases++;
-                                } else {
-                                    myWOHCases++;
-                                }
-                                if ((caseUpdateDate != null)) {
-                                    if (caseUpdateDate.compareTo(dateToday) == 0) {
-                                        myUpdateToday++;
-                                    }
-                                    if (caseUpdateDate.compareTo(dateToday) < 0) {
-                                        myUpdateMissed++;
-                                    }
-                                }
-
-                                if (myCaseUpdate.equals("NotSet") && !mycaseStatus.equals("Pending Closure")) {
-                                    myUpdateNull++;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (!txQueues.getText().isEmpty()) {
-
-                ArrayList<String> setQueue = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
-                int queuefiltnum = setQueue.size();
-
-                if (!setQueue.isEmpty()) {
-
-                    for (int k = 0; k < queuefiltnum; k++) {
-
-                        for (int l = 0; l < lastRow + 1; l++) {
-
-                            caseQueue = workbook.getSheetAt(0).getRow(l).getCell(mycaseOwnerRefCell);
-                            String casequeue = caseQueue.getStringCellValue();
-
-                            if (casequeue.equals(setQueue.get(k))) {
-                                myQueuedCases++;
-                            }
-                        }
-                    }
-                }
-            }
-
-            btnMyE1Cases.setText(String.valueOf(myE1Case));
-            btnMyE2Cases.setText(String.valueOf(myE2Cases));
-            btnMyOutFollow.setText(String.valueOf(myOutFollow));
-            btnMyEscalated.setText(String.valueOf(myEscCases));
-            btnMyBCCases.setText(String.valueOf(myBCCases));
-            btnMyHotIssues.setText(String.valueOf(myHotList));
-            btnMyInactive.setText(String.valueOf(myInactiveCases));
-            btnMyBCWIP.setText(String.valueOf(myBCWIP));
-            btnMyBCWac.setText(String.valueOf(myBCWac));
-            btnMyBCupdated.setText(String.valueOf(myBCupdated));
-            btnMyBCEngineering.setText(String.valueOf(myBCDSCases));
-            btnMyBCINACT.setText(String.valueOf(myBCInactiveCases));
-            btnMyMJWIP.setText(String.valueOf(myMJWIP));
-            btnMyMJWac.setText(String.valueOf(myMJWAC));
-            btnMyMJupdated.setText(String.valueOf(myMJUpdated));
-            btnMyMJEngineering.setText(String.valueOf(myMJDSCases));
-            btnMyMJINACT.setText(String.valueOf(myMJInactiveCases));
-            btnMyBCDue.setText(String.valueOf(myBCDueCases));
-            btnMyBCMissed.setText(String.valueOf(myBCMissedCases));
-            btnMyMJDue.setText(String.valueOf(myMJDueCases));
-            btnMyMJMissed.setText(String.valueOf(myMJMissedCases));
-            btnMyQueue.setText(String.valueOf(myQueuedCases));
-            btnMyWOH.setText(String.valueOf(myWOHCases));
-            btnMyUpdateToday.setText(String.valueOf(myUpdateToday));
-            btnMyUpdateMissed.setText(String.valueOf(myUpdateMissed));
-            btnMyUpdateNull.setText(String.valueOf(myUpdateNull));
-
-        } catch (Exception e) {
-            System.out.println("No Data Downloaded2");
-        }
-    }
-
-    private void myCasesPage2() {
 
         HSSFCell caseUser;
         HSSFCell myfiltHotList;
@@ -8597,12 +8302,8 @@ public class Controller implements Initializable {
 
             if (!txUsers.getText().isEmpty()) {
 
-                String userFilter = txUsers.getText();
-
                 ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
                 int userfiltnum = setUser.size();
-
-
 
                 if ((!setUser.isEmpty())) {
 
@@ -8671,22 +8372,17 @@ public class Controller implements Initializable {
 
                                 if (mycaseSever.equals("Business Critical")) {
                                     if (!mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
-
                                         myBCCases++;
                                     }
-
                                     if (mycaseStatus.equals("Open / Assign") || mycaseStatus.equals("Isolate Fault")) {
                                         myBCWIP++;
                                     }
-
                                     if (myresponsible.equals("Customer action")) {
                                         myBCWac++;
                                     }
-
                                     if (myresponsible.equals("Customer updated")) {
                                         myBCupdated++;
                                     }
-
                                     if ((mycaseStatus.equals("Open / Assign")) || (mycaseStatus.equals("Isolate Fault"))) {
                                         if (ageCaseNum <= 15) {
                                             myBCDueCases++;
@@ -8699,7 +8395,6 @@ public class Controller implements Initializable {
                                     if (mycaseStatus.equals("Develop Solution")) {
                                         myBCDSCases++;
                                     }
-
                                     if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
                                         myBCInactiveCases++;
                                     }
@@ -8709,7 +8404,6 @@ public class Controller implements Initializable {
                                     if (mycaseStatus.equals("Develop Solution")) {
                                         myMJDSCases++;
                                     }
-
                                     if ((mycaseStatus.equals("Open / Assign")) || (mycaseStatus.equals("Isolate Fault"))) {
                                         if (ageCaseNum <= 30) {
                                             myMJDueCases++;
@@ -8736,15 +8430,19 @@ public class Controller implements Initializable {
                                 } else {
                                     myWOHCases++;
                                 }
+
                                 if ((caseUpdateDate != null)) {
-                                    if (caseUpdateDate.compareTo(dateToday) == 0) {
-                                        myUpdateToday++;
-                                    }
-                                    if (caseUpdateDate.compareTo(dateToday) < 0) {
-                                        myUpdateMissed++;
+
+                                    if(!myCaseUpdate.equals("NotSet") && !mycaseStatus.equals("Pending Closure")) {
+
+                                        if (caseUpdateDate.compareTo(dateToday) == 0) {
+                                            myUpdateToday++;
+                                        }
+                                        if (caseUpdateDate.compareTo(dateToday) < 0) {
+                                            myUpdateMissed++;
+                                        }
                                     }
                                 }
-
                                 if (myCaseUpdate.equals("NotSet") && !mycaseStatus.equals("Pending Closure")) {
                                     myUpdateNull++;
                                 }
@@ -10830,7 +10528,7 @@ public class Controller implements Initializable {
         readTimeStamp();
         myProductsPage();
         overviewPage();
-        myCasesPage2();
+        myCasesPage();
         System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
     }
 }
