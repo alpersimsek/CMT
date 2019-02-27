@@ -22,6 +22,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.web.WebView?>
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1000.0" stylesheets="@home.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.Controller">
    <children>
@@ -135,6 +136,24 @@
       </AnchorPane>
       <StackPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
          <children>
+            <AnchorPane fx:id="apnBrowser" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <GridPane AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="8550.0" minWidth="850.0" prefWidth="850.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="610.0" minHeight="610.0" prefHeight="610.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Pane fx:id="browserLoginPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="610.0" prefWidth="850.0">
+                           <children>
+                              <WebView fx:id="webviewTest" prefHeight="610.0" prefWidth="850.0" />
+                           </children></Pane>
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
             <AnchorPane fx:id="apnNotes" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <Pane layoutX="14.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="250.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
@@ -739,6 +758,8 @@
                         <TableColumn fx:id="SeverityColCust" prefWidth="75.0" text="Severity" />
                         <TableColumn fx:id="StatusColCust" prefWidth="75.0" text="Status" />
                         <TableColumn fx:id="OwnerColCust" prefWidth="75.0" text="Owner" />
+                        <TableColumn fx:id="CoOwnerColCust" prefWidth="75.0" text="Co-Owner" />
+                        <TableColumn fx:id="CoOwnerQueuColCust" prefWidth="75.0" text="Co-Owner Queue" />
                         <TableColumn fx:id="ResponsibleColCust" prefWidth="75.0" text="Responsible" visible="false" />
                         <TableColumn fx:id="AgeColCust" prefWidth="75.0" text="Age" />
                         <TableColumn fx:id="NextUpdateColCust" prefWidth="75.0" text="Next Update" visible="false" />
@@ -751,7 +772,6 @@
                         <TableColumn fx:id="AccountColCust" prefWidth="75.0" text="Account" />
                         <TableColumn fx:id="RegionColCust" prefWidth="75.0" text="Region" />
                         <TableColumn fx:id="SecurityColCust" prefWidth="75.0" text="Security" visible="false" />
-                        <TableColumn fx:id="DateTimeOpenedColCust" prefWidth="75.0" text="Date Opened" visible="false" />
                      </columns>
                   </TableView>
                   <GridPane prefHeight="73.0" prefWidth="850.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="0.0">
@@ -1557,6 +1577,8 @@
                         <TableColumn fx:id="SeverityCol" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" resizable="false" text="Severity" />
                         <TableColumn fx:id="StatusCol" maxWidth="150.0" minWidth="80.0" text="Status" />
                         <TableColumn fx:id="OwnerCol" maxWidth="150.0" minWidth="80.0" text="Owner" />
+                        <TableColumn fx:id="CoOwnerCol" maxWidth="150.0" minWidth="80.0" text="Co-Owner" />
+                        <TableColumn fx:id="CoOwnerQueueCol" maxWidth="150.0" minWidth="80.0" text="Co-Owner Queue" />
                         <TableColumn fx:id="ResponsibleCol" maxWidth="150.0" minWidth="100.0" prefWidth="100.0" text="Responsible" />
                         <TableColumn fx:id="AgeCol" maxWidth="45.0" minWidth="45.0" prefWidth="45.0" resizable="false" text="Age" />
                         <TableColumn fx:id="NextUpdateCol" maxWidth="80.0" minWidth="80.0" resizable="false" text="Update" />
@@ -1569,25 +1591,8 @@
                         <TableColumn fx:id="AccountCol" maxWidth="200.0" minWidth="100.0" prefWidth="100.0" text="Account" />
                         <TableColumn fx:id="RegionCol" maxWidth="150.0" minWidth="100.0" prefWidth="100.0" text="Region" />
                         <TableColumn fx:id="SecurityCol" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="Security" />
-                        <TableColumn fx:id="DateTimeOpenedCol" prefWidth="75.0" resizable="false" text="Date Opened" visible="false" />
                      </columns>
                   </TableView>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="apnBrowser" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
-               <children>
-                  <GridPane AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="8550.0" minWidth="850.0" prefWidth="850.0" />
-                     </columnConstraints>
-                     <rowConstraints>
-                        <RowConstraints maxHeight="610.0" minHeight="610.0" prefHeight="610.0" vgrow="SOMETIMES" />
-                     </rowConstraints>
-                     <children>
-                        <Pane fx:id="browserLoginPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="610.0" prefWidth="850.0" />
-                        <Pane fx:id="browserDownloadPane" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="610.0" prefWidth="850.0" />
-                     </children>
-                  </GridPane>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="apnHome" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">

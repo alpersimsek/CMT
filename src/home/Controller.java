@@ -560,6 +560,7 @@ public class Controller implements Initializable {
     private ListView queueProfileList;
     @FXML
     private TextArea txtShowCaseNotes;
+
     @FXML
     private WebView webviewTest;
 
@@ -4110,7 +4111,6 @@ public class Controller implements Initializable {
 
 
             WebEngine webEngine = webviewTest.getEngine();
-            System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
 
             /*Client client = Clients.builder()
                     .setOrgUrl("https://dev-595242.oktapreview.com")
