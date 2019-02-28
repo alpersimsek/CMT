@@ -593,6 +593,13 @@ public class Controller implements Initializable {
     int caseOwnerRefCell = 0;
     int caseCoOwnerRefCell = 0;
     int caseEscalatedRefCell = 0;
+    int caseSupHotListRRef;
+    int caseSupHotListLRef;
+    int caseSupHotListCRef;
+    int caseSupHotListBRef;
+    int caseSupHotListDRef;
+    int projGateDateRef;
+    int caseRegionRef;
     int caseHotListRefCell = 0;
     int caseOutFolRefCell = 0;
     int caseAgeRefCell = 0;
@@ -818,6 +825,7 @@ public class Controller implements Initializable {
                 String filter1 = "Critical";
                 initTableView(tableCases);
                 oneFilterTableView(columnSelect, filter1, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (e1Cases == 0) {
                 alertUser(strAlert);
@@ -832,6 +840,7 @@ public class Controller implements Initializable {
                 String filter1 = "E2";
                 initTableView(tableCases);
                 oneFilterTableView(columnSelect, filter1, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (e2Cases == 0) {
                 alertUser(strAlert);
@@ -846,6 +855,7 @@ public class Controller implements Initializable {
                 String filter1 = "1";
                 initTableView(tableCases);
                 oneFilterTableView(columnSelect, filter1, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (outFollow == 0) {
                 alertUser(strAlert);
@@ -861,6 +871,7 @@ public class Controller implements Initializable {
                 String filter1 = "NotSet";
                 initTableView(tableCases);
                 oneFilterTableView(columnSelect, filter1, tableCases, apnTableView, false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (escCase == 0) {
                 alertUser(strAlert);
@@ -875,6 +886,7 @@ public class Controller implements Initializable {
                 String filter1 = "Business Critical";
                 initTableView(tableCases);
                 oneFilterTableView(columnSelect, filter1, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (bcCases == 0) {
                 alertUser(strAlert);
@@ -889,6 +901,7 @@ public class Controller implements Initializable {
                 String filter1 = "NotSet";
                 initTableView(tableCases);
                 oneFilterTableView(columnSelect, filter1, tableCases, apnTableView, false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (hotlist == 0) {
                 alertUser(strAlert);
@@ -901,6 +914,7 @@ public class Controller implements Initializable {
                 tableCases.getItems().clear();
                 initTableView(tableCases);
                 overviewWOHView(true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (wohCases == 0) {
                 alertUser(strAlert);
@@ -913,6 +927,7 @@ public class Controller implements Initializable {
                 tableCases.getItems().clear();
                 initTableView(tableCases);
                 overviewWOHView(false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (inactiveCases == 0) {
                 alertUser(strAlert);
@@ -927,6 +942,7 @@ public class Controller implements Initializable {
                 String filter = "Business Critical";
                 initTableView(tableCases);
                 overviewWIPCaseTableView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (BCwip == 0) {
                 alertUser(strAlert);
@@ -943,6 +959,7 @@ public class Controller implements Initializable {
                 String filter2 = "Customer action";
                 initTableView(tableCases);
                 twoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (custActBC == 0) {
                 alertUser(strAlert);
@@ -959,6 +976,7 @@ public class Controller implements Initializable {
                 String filter2 = "Customer updated";
                 initTableView(tableCases);
                 twoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (custRpdBC == 0) {
                 alertUser(strAlert);
@@ -973,6 +991,7 @@ public class Controller implements Initializable {
                 String filter1 = "Business Critical";
                 initTableView(tableCases);
                 overviewEngineeringTableView(columSelect, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (BCds == 0) {
                 alertUser(strAlert);
@@ -987,6 +1006,7 @@ public class Controller implements Initializable {
                 String filter1 = "Business Critical";
                 initTableView(tableCases);
                 overViewInactiveTable(columnSelect1, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (BCpc == 0) {
                 alertUser(strAlert);
@@ -1003,6 +1023,7 @@ public class Controller implements Initializable {
                 String filter = "Major";
                 initTableView(tableCases);
                 overviewWIPCaseTableView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (MJwip == 0) {
                 alertUser(strAlert);
@@ -1019,6 +1040,7 @@ public class Controller implements Initializable {
                 String filter2 = "Customer action";
                 initTableView(tableCases);
                 twoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (custActMJ == 0) {
                 alertUser(strAlert);
@@ -1035,6 +1057,7 @@ public class Controller implements Initializable {
                 String filter2 = "Customer updated";
                 initTableView(tableCases);
                 twoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (custRpdMJ == 0) {
                 alertUser(strAlert);
@@ -1050,6 +1073,7 @@ public class Controller implements Initializable {
                 String filter1 = "Major";
                 initTableView(tableCases);
                 overviewEngineeringTableView(columSelect, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (MJds == 0) {
                 alertUser(strAlert);
@@ -1064,6 +1088,7 @@ public class Controller implements Initializable {
                 String filter1 = "Major";
                 initTableView(tableCases);
                 overViewInactiveTable(columnSelect1, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (MJpc == 0) {
                 alertUser(strAlert);
@@ -1078,6 +1103,7 @@ public class Controller implements Initializable {
                 String filter = "Business Critical";
                 initTableView(tableCases);
                 overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (bcDue == 0) {
                 alertUser(strAlert);
@@ -1092,6 +1118,7 @@ public class Controller implements Initializable {
                 String filter = "Business Critical";
                 initTableView(tableCases);
                 overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (misBCdue == 0) {
                 alertUser(strAlert);
@@ -1106,6 +1133,7 @@ public class Controller implements Initializable {
                 String filter = "Major";
                 initTableView(tableCases);
                 overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (dueMJday == 0) {
                 alertUser(strAlert);
@@ -1120,6 +1148,7 @@ public class Controller implements Initializable {
                 String filter = "Major";
                 initTableView(tableCases);
                 overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (misMJdue == 0) {
                 alertUser(strAlert);
@@ -1134,6 +1163,7 @@ public class Controller implements Initializable {
                 String filter = "Minor";
                 initTableView(tableCases);
                 overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 180, false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (misMNdue == 0) {
                 alertUser(strAlert);
@@ -1148,6 +1178,7 @@ public class Controller implements Initializable {
                 String filter = "TS";
                 initTableView(tableCases);
                 overviewQueueView(columnselect, filter, tableCases, apnTableView, "GPS QUEUE");
+                tableCases.scrollToColumnIndex(0);
             }
             if (queueTS == 0) {
                 alertUser(strAlert);
@@ -1162,6 +1193,7 @@ public class Controller implements Initializable {
                 String e2TableSelect2 = "PS";
                 initTableView(tableCases);
                 overviewQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "RTS QUEUE");
+                tableCases.scrollToColumnIndex(0);
             }
             if (queuePS == 0) {
                 alertUser(strAlert);
@@ -1175,6 +1207,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Next Case Update";
                 initTableView(tableCases);
                 caseUpdateTableView(columnSelect, tableCases, apnTableView, true, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (updateToday == 0) {
                 alertUser(strAlert);
@@ -1188,6 +1221,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Next Case Update";
                 initTableView(tableCases);
                 caseUpdateTableView(columnSelect, tableCases, apnTableView, false, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (updateMissed == 0) {
                 alertUser(strAlert);
@@ -1201,6 +1235,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Next Case Update";
                 initTableView(tableCases);
                 caseUpdateTableView(columnSelect, tableCases, apnTableView, false, false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (updateNull == 0) {
                 alertUser(strAlert);
@@ -1215,6 +1250,7 @@ public class Controller implements Initializable {
                 String filter = "Critical";
                 initTableView(tableCases);
                 oneFilterMyTableView(columnSelect, filter, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myE1Case == 0) {
                 alertUser(strAlert);
@@ -1229,6 +1265,7 @@ public class Controller implements Initializable {
                 String filter = "E2";
                 initTableView(tableCases);
                 oneFilterMyTableView(columnSelect, filter, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myE2Cases == 0) {
                 alertUser(strAlert);
@@ -1244,6 +1281,7 @@ public class Controller implements Initializable {
                 String filter = "1";
                 initTableView(tableCases);
                 oneFilterMyTableView(columnSelect, filter, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myOutFollow == 0) {
                 alertUser(strAlert);
@@ -1258,6 +1296,7 @@ public class Controller implements Initializable {
                 String filter = "NotSet";
                 initTableView(tableCases);
                 oneFilterMyTableView(columnSelect, filter, tableCases, apnTableView, false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myEscCases == 0) {
                 alertUser(strAlert);
@@ -1272,6 +1311,7 @@ public class Controller implements Initializable {
                 String filter = "Business Critical";
                 initTableView(tableCases);
                 oneFilterMyTableView(columnSelect, filter, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myBCCases == 0) {
                 alertUser(strAlert);
@@ -1286,6 +1326,7 @@ public class Controller implements Initializable {
                 String filter = "NotSet";
                 initTableView(tableCases);
                 oneFilterMyTableView(columnSelect, filter, tableCases, apnTableView, false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myHotList == 0) {
                 alertUser(strAlert);
@@ -1298,6 +1339,7 @@ public class Controller implements Initializable {
                 tableCases.getItems().clear();
                 initTableView(tableCases);
                 myWOHTableView(tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myWOHCases == 0) {
                 alertUser(strAlert);
@@ -1310,6 +1352,7 @@ public class Controller implements Initializable {
                 tableCases.getItems().clear();
                 initTableView(tableCases);
                 myWOHTableView(tableCases, apnTableView, false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myInactiveCases == 0) {
                 alertUser(strAlert);
@@ -1326,6 +1369,7 @@ public class Controller implements Initializable {
                 String filter = "Business Critical";
                 initTableView(tableCases);
                 overviewMyWIPCaseTableView(columFilter, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myBCWIP == 0) {
                 alertUser(strAlert);
@@ -1343,6 +1387,7 @@ public class Controller implements Initializable {
                 String filter2 = "Customer action";
                 initTableView(tableCases);
                 twoFilterMyTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myBCWac == 0) {
                 alertUser(strAlert);
@@ -1360,6 +1405,7 @@ public class Controller implements Initializable {
                 String filter2 = "Customer updated";
                 initTableView(tableCases);
                 twoFilterMyTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myBCupdated == 0) {
                 alertUser(strAlert);
@@ -1377,6 +1423,7 @@ public class Controller implements Initializable {
                 String filter2 = "Develop Solution";
                 initTableView(tableCases);
                 twoFilterMyTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myBCDSCases == 0) {
                 alertUser(strAlert);
@@ -1393,6 +1440,7 @@ public class Controller implements Initializable {
                 String filter = "Business Critical";
                 initTableView(tableCases);
                 inactiveCasesMyTableView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myBCInactiveCases == 0) {
                 alertUser(strAlert);
@@ -1409,6 +1457,7 @@ public class Controller implements Initializable {
                 String filter = "Major";
                 initTableView(tableCases);
                 overviewMyWIPCaseTableView(columFilter, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myMJWIP == 0) {
                 alertUser(strAlert);
@@ -1426,6 +1475,7 @@ public class Controller implements Initializable {
                 String filter2 = "Customer action";
                 initTableView(tableCases);
                 twoFilterMyTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myMJWAC == 0) {
                 alertUser(strAlert);
@@ -1436,12 +1486,14 @@ public class Controller implements Initializable {
 
             if (myMJUpdated != 0) {
                 lblStatus.setText("MY MAJOR CASES CUSTOMER PROVIDED UPDATE");
+                tableCases.getItems().clear();
                 String columSelect1 = "Severity";
                 String filter1 = "Major";
                 String columSelect2 = "Currently Responsible";
                 String filter2 = "Customer updated";
                 initTableView(tableCases);
                 twoFilterMyTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myMJUpdated == 0) {
                 alertUser(strAlert);
@@ -1461,6 +1513,7 @@ public class Controller implements Initializable {
                 String filter2 = "Develop Solution";
                 initTableView(tableCases);
                 twoFilterMyTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
 
             if (myMJDSCases == 0) {
@@ -1477,6 +1530,7 @@ public class Controller implements Initializable {
                 String filter = "Major";
                 initTableView(tableCases);
                 inactiveCasesMyTableView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myMJInactiveCases == 0) {
                 alertUser(strAlert);
@@ -1492,6 +1546,7 @@ public class Controller implements Initializable {
                 String filter = "Business Critical";
                 initTableView(tableCases);
                 myDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myBCDueCases == 0) {
                 alertUser(strAlert);
@@ -1507,6 +1562,7 @@ public class Controller implements Initializable {
                 String filter = "Business Critical";
                 initTableView(tableCases);
                 myDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
+                tableCases.scrollToColumnIndex(0);
             }
 
             if (myBCMissedCases == 0) {
@@ -1523,6 +1579,7 @@ public class Controller implements Initializable {
                 String filter = "Major";
                 initTableView(tableCases);
                 myDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, true);
+                tableCases.scrollToColumnIndex(0);
             }
 
             if (myMJDueCases == 0) {
@@ -1539,6 +1596,7 @@ public class Controller implements Initializable {
                 String filter = "Major";
                 initTableView(tableCases);
                 myDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
+                tableCases.scrollToColumnIndex(0);
             }
 
             if (myMJMissedCases == 0) {
@@ -1554,6 +1612,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Case Owner";
                 initTableView(tableCases);
                 createMyQueueCaseView(columnSelect, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myQueuedCases == 0) {
                 alertUser(strAlert);
@@ -1566,6 +1625,7 @@ public class Controller implements Initializable {
                 tableCases.getItems().clear();
                 initTableView(tableCases);
                 createMyCoOwnerQueueCaseView(false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myCoOwnerQueueCases == 0) {
                 alertUser(strAlert);
@@ -1578,6 +1638,7 @@ public class Controller implements Initializable {
                 tableCases.getItems().clear();
                 initTableView(tableCases);
                 createMyCoOwnerQueueCaseView(true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myCoOwnerQueueCasesAssigned == 0){
                 alertUser(strAlert);
@@ -1593,6 +1654,7 @@ public class Controller implements Initializable {
                 String caseTableSelect = "Next Case Update";
                 initTableView(tableCases);
                 mycaseUpdateTableView(caseTableSelect, tableCases, apnTableView, true, true);
+                tableCases.scrollToColumnIndex(0);
             }
 
             if (myUpdateToday == 0) {
@@ -1610,6 +1672,7 @@ public class Controller implements Initializable {
                 String caseTableSelect = "Next Case Update";
                 initTableView(tableCases);
                 mycaseUpdateTableView(caseTableSelect, tableCases, apnTableView, false, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myUpdateMissed == 0) {
                 alertUser(strAlert);
@@ -1624,6 +1687,7 @@ public class Controller implements Initializable {
                 String caseTableSelect = "Next Case Update";
                 initTableView(tableCases);
                 mycaseUpdateTableView(caseTableSelect, tableCases, apnTableView, false, false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (myUpdateNull == 0) {
                 alertUser(strAlert);
@@ -1637,6 +1701,7 @@ public class Controller implements Initializable {
                 String filter = "Critical";
                 initTableView(tableCases);
                 productOneFilterView(columnSelect, filter, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
             }
 
             if (prodE1Case == 0) {
@@ -1651,6 +1716,7 @@ public class Controller implements Initializable {
                 String filter = "E2";
                 initTableView(tableCases);
                 productOneFilterView(columnSelect, filter, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodE2Cases == 0) {
                 alertUser(strAlert);
@@ -1664,6 +1730,7 @@ public class Controller implements Initializable {
                 String filter = "1";
                 initTableView(tableCases);
                 productOneFilterView(columnSelect, filter, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodOutFollow == 0) {
                 alertUser(strAlert);
@@ -1677,6 +1744,7 @@ public class Controller implements Initializable {
                 String filter = "NotSet";
                 initTableView(tableCases);
                 productOneFilterView(columnSelect, filter, tableCases, apnTableView, false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodEscCases == 0) {
                 alertUser(strAlert);
@@ -1690,6 +1758,7 @@ public class Controller implements Initializable {
                 String filter = "Business Critical";
                 initTableView(tableCases);
                 productOneFilterView(columnSelect, filter, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodBCCases == 0) {
                 alertUser(strAlert);
@@ -1703,6 +1772,7 @@ public class Controller implements Initializable {
                 String filter = "NotSet";
                 initTableView(tableCases);
                 productOneFilterView(columnSelect, filter, tableCases, apnTableView, false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodHotList == 0) {
                 alertUser(strAlert);
@@ -1714,6 +1784,7 @@ public class Controller implements Initializable {
                 tableCases.getItems().clear();
                 initTableView(tableCases);
                 prodWOHTable(tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodWOHCases == 0) {
                 alertUser(strAlert);
@@ -1725,6 +1796,7 @@ public class Controller implements Initializable {
                 tableCases.getItems().clear();
                 initTableView(tableCases);
                 prodWOHTable(tableCases, apnTableView, false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodInactiveCases == 0) {
                 alertUser(strAlert);
@@ -1738,6 +1810,7 @@ public class Controller implements Initializable {
                 String filter = "Business Critical";
                 initTableView(tableCases);
                 productWIPCaseView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodBCWIP == 0) {
                 alertUser(strAlert);
@@ -1754,6 +1827,7 @@ public class Controller implements Initializable {
                 String filter2 = "Customer action";
                 initTableView(tableCases);
                 twoFilterProductTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodBCWac == 0) {
                 alertUser(strAlert);
@@ -1770,6 +1844,7 @@ public class Controller implements Initializable {
                 String filter2 = "Customer updated";
                 initTableView(tableCases);
                 twoFilterProductTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodBCupdated == 0) {
                 alertUser(strAlert);
@@ -1786,6 +1861,7 @@ public class Controller implements Initializable {
                 String filter2 = "Develop Solution";
                 initTableView(tableCases);
                 twoFilterProductTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodBCDSCases == 0) {
                 alertUser(strAlert);
@@ -1800,6 +1876,7 @@ public class Controller implements Initializable {
                 String filter = "Business Critical";
                 initTableView(tableCases);
                 inactiveCasesProductTableView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodBCInactiveCases == 0) {
                 alertUser(strAlert);
@@ -1814,6 +1891,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Major";
                 productWIPCaseView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodMJWIP == 0) {
                 alertUser(strAlert);
@@ -1830,6 +1908,7 @@ public class Controller implements Initializable {
                 String filter2 = "Customer action";
                 initTableView(tableCases);
                 twoFilterProductTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodMJWAC == 0) {
                 alertUser(strAlert);
@@ -1846,6 +1925,7 @@ public class Controller implements Initializable {
                 String filter2 = "Customer updated";
                 initTableView(tableCases);
                 twoFilterProductTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodMJUpdated == 0) {
                 alertUser(strAlert);
@@ -1863,6 +1943,7 @@ public class Controller implements Initializable {
                 String filter2 = "Develop Solution";
                 initTableView(tableCases);
                 twoFilterProductTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodMJDSCases == 0) {
                 alertUser(strAlert);
@@ -1878,6 +1959,7 @@ public class Controller implements Initializable {
                 String filter = "Major";
                 initTableView(tableCases);
                 inactiveCasesProductTableView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodMJInactiveCases == 0) {
                 alertUser(strAlert);
@@ -1893,6 +1975,7 @@ public class Controller implements Initializable {
                 String filter = "Business Critical";
                 initTableView(tableCases);
                 productDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodBCDueCases == 0) {
                 alertUser(strAlert);
@@ -1908,6 +1991,7 @@ public class Controller implements Initializable {
                 String filter = "Business Critical";
                 initTableView(tableCases);
                 productDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodBCMissedCases == 0) {
                 alertUser(strAlert);
@@ -1923,6 +2007,7 @@ public class Controller implements Initializable {
                 String filter = "Major";
                 initTableView(tableCases);
                 productDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodMJDueCases == 0) {
                 alertUser(strAlert);
@@ -1938,6 +2023,7 @@ public class Controller implements Initializable {
                 String filter = "Major";
                 initTableView(tableCases);
                 productDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodMJMissedCases == 0) {
                 alertUser(strAlert);
@@ -1949,6 +2035,7 @@ public class Controller implements Initializable {
                 tableCases.getItems().clear();
                 initTableView(tableCases);
                 productViewCasesQueued(tableCases, apnTableView, false);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodQueueTS == 0) {
                 alertUser(strAlert);
@@ -1961,6 +2048,7 @@ public class Controller implements Initializable {
                 tableCases.getItems().clear();
                 initTableView(tableCases);
                 productViewCasesQueued(tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
             }
             if (prodQueuePS == 0) {
                 alertUser(strAlert);
@@ -1973,6 +2061,7 @@ public class Controller implements Initializable {
                 String filter = "Critical";
                 initTableView(tableCustomers);
                 customerTable(columnSelect, filter, tableCustomers, true);
+                tableCustomers.scrollToColumnIndex(0);
             }
             if (customerE1 == 0) {
                 alertUser(strAlert);
@@ -1985,6 +2074,7 @@ public class Controller implements Initializable {
                 String filter = "E2";
                 initTableView(tableCustomers);
                 customerTable(columnSelect, filter, tableCustomers, true);
+                tableCustomers.scrollToColumnIndex(0);
             }
             if (customerE2 == 0) {
                 alertUser(strAlert);
@@ -1997,6 +2087,7 @@ public class Controller implements Initializable {
                 String filter = "1";
                 initTableView(tableCustomers);
                 customerTable(columnSelect, filter, tableCustomers, true);
+                tableCustomers.scrollToColumnIndex(0);
             }
             if (customerOutFol == 0) {
                 alertUser(strAlert);
@@ -2009,6 +2100,7 @@ public class Controller implements Initializable {
                 String filter = "NotSet";
                 initTableView(tableCustomers);
                 customerTable(columnSelect, filter, tableCustomers, false);
+                tableCustomers.scrollToColumnIndex(0);
             }
             if (customerEsc == 0) {
                 alertUser(strAlert);
@@ -2021,6 +2113,7 @@ public class Controller implements Initializable {
                 String filter = "NotSet";
                 initTableView(tableCustomers);
                 customerTable(columnSelect, filter, tableCustomers, false);
+                tableCustomers.scrollToColumnIndex(0);
             }
             if (customerHot == 0) {
                 alertUser(strAlert);
@@ -2033,6 +2126,7 @@ public class Controller implements Initializable {
                 String filter = "Business Critical";
                 initTableView(tableCustomers);
                 customerTable(columnSelect, filter, tableCustomers, true);
+                tableCustomers.scrollToColumnIndex(0);
             }
             if (customerBC == 0) {
                 alertUser(strAlert);
@@ -2043,6 +2137,7 @@ public class Controller implements Initializable {
                 tableCustomers.getItems().clear();
                 initTableView(tableCustomers);
                 customerWOHTable(tableCustomers, true);
+                tableCustomers.scrollToColumnIndex(0);
             }
             if (customerWoh == 0) {
                 alertUser(strAlert);
@@ -3791,7 +3886,6 @@ public class Controller implements Initializable {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
-
                 }
             });
 
@@ -3899,9 +3993,7 @@ public class Controller implements Initializable {
                                     LocalDate localDate = null;
 
                                     if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
-
                                         localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
-
                                     }
 
                                     int age = 0;
@@ -3935,9 +4027,7 @@ public class Controller implements Initializable {
                                     LocalDate localDate = null;
 
                                     if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
-
                                         localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
-
                                     }
 
                                     int age;
@@ -3996,7 +4086,6 @@ public class Controller implements Initializable {
                     }catch (Exception e){
                         e.printStackTrace();
                     }
-
                 }
             });
 
@@ -4037,17 +4126,25 @@ public class Controller implements Initializable {
 
     private void downloadCSV() {
 
-        String filename = "cmt_case_data.csv";
         String filename2 = "cmt_user_prod.csv";
         String filename3 = "cmt_case_data_V2.csv";
         String filename4 = "cmt_comments.csv";
-        String newLoc = "https://na8.salesforce.com/00OC0000006r1EX?export=1&enc=UTF-8&xf=csv?filename=" + filename;
         String newLoc2 = "https://na8.salesforce.com/00OC0000006r1xS?export=1&enc=UTF-8&xf=csv?filename=" + filename2;
-        String newLoc3 = "https://na8.salesforce.com/00OC00000076uIg?export=1&enc=UTF-8&xf=csv?filename=" + filename2;
+        //String newLoc3 = "https://na8.salesforce.com/00OC0000007MwqU?export=1&enc=UTF-8&xf=csv?filename=" + filename3;
+        String newLoc3 = "https://na8.salesforce.com/00OC00000076uIg?export=1&enc=UTF-8&xf=csv?filename=" + filename3;
         String newLoc4 = "https://na8.salesforce.com/00OC0000006r5ig?export=1&enc=UTF-8&xf=csv?filename=" + filename4;
 
         try {
-            FileUtils.copyURLToFile(new URL(newLoc), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data.csv"));
+
+            FileUtils.copyURLToFile(new URL(newLoc2), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_user_prod.csv"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try{
+
+            FileUtils.copyURLToFile(new URL(newLoc3), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V2.csv"));
             LocalDate refreshDate = LocalDate.now();
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
             lblRefreshText.setVisible(true);
@@ -4057,23 +4154,6 @@ public class Controller implements Initializable {
             FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_data_Date.txt"));
             writer.write(dataDate);
             writer.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-
-            FileUtils.copyURLToFile(new URL(newLoc2), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_user_prod.csv"));
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try{
-
-            FileUtils.copyURLToFile(new URL(newLoc3), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V2.csv"));
 
         }catch (Exception e){
             e.printStackTrace();
@@ -4211,7 +4291,6 @@ public class Controller implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         ArrayList<String> setqueue = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
         ArrayList<String> setqueue2 = new ArrayList();
@@ -7747,6 +7826,49 @@ public class Controller implements Initializable {
     private void parseData() {
 
         try {
+
+            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V2.csv");
+
+            HSSFWorkbook workBook = new HSSFWorkbook();
+            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V2.xls";
+            HSSFSheet sheet = workBook.createSheet("Data");
+            CreationHelper helper = workBook.getCreationHelper();
+
+            int r = 0;
+
+            CsvParserSettings settings = new CsvParserSettings();
+            settings.setMaxCharsPerColumn(100000);
+            settings.getFormat().setLineSeparator("\n");
+
+            CsvParser parser = new CsvParser(settings);
+            parser.beginParsing(csvfile);
+
+            String[] row;
+
+            while ((row = parser.parseNext()) != null) {
+
+                Row frow = sheet.createRow((short) r++);
+                for (int i = 0; i <row.length ; i++) {
+                    frow.createCell(i).setCellValue(helper.createRichTextString(row[i]));
+                }
+            }
+
+            parser.stopParsing();
+
+            int lastRow = sheet.getLastRowNum();
+            for (int i = 0; i < 7; i++) {
+                sheet.removeRow(sheet.getRow(lastRow - i));
+            }
+
+            FileOutputStream fileOutputStream = new FileOutputStream(xlsFileAddress);
+            workBook.write(fileOutputStream);
+            fileOutputStream.close();
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        /*try {
             File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V2.csv");
 
             HSSFWorkbook workBook = new HSSFWorkbook();
@@ -7786,12 +7908,14 @@ public class Controller implements Initializable {
             fileOutputStream.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     private void rectifyAccountNames(){
 
         HSSFCell account;
+        HSSFCell cellVal;
+        HSSFCell age;
 
         try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V2.xls")))) {
             HSSFSheet filtersheet = workbook.getSheetAt(0);
@@ -7799,12 +7923,18 @@ public class Controller implements Initializable {
             int cellnum = filtersheet.getRow(0).getLastCellNum();
             int lastRow = filtersheet.getLastRowNum();
 
+            int row = 0;
+
             for (int i = 0; i < cellnum; i++) {
+
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
 
                 switch (filterColName) {
                     case ("Account Name"):
                         caseNumCellRef = i;
+                        break;
+                    case ("Age (Days)"):
+                        mycaseAgeRefCell = i;
                         break;
                 }
             }
@@ -7815,7 +7945,27 @@ public class Controller implements Initializable {
                 String caseStatus = account.getStringCellValue();
                 caseStatus = caseStatus.replace(",", "");
                 account.setCellValue(caseStatus);
+
+                age = filtersheet.getRow(i).getCell(mycaseAgeRefCell);
+                String ageVal = age.getStringCellValue();
+                ageVal = ageVal.replace(".0000000000", "");
+                age.setCellValue(ageVal);
+
+                for (int j = 0; j < cellnum; j ++){
+
+                    cellVal = filtersheet.getRow(i).getCell(j);
+                    String cellValue = cellVal.getStringCellValue();
+
+                    if (cellValue.equals("")){
+                        cellValue = "NotSet";
+                        cellVal.setCellValue(cellValue);
+                    }
+                    if (row == 5717){
+                        System.out.println(cellValue);
+                    }
+                }
             }
+
 
             FileOutputStream output_file =new FileOutputStream(new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls"));
             workbook.write(output_file);
@@ -8338,11 +8488,12 @@ public class Controller implements Initializable {
                             mycaseUpdate = filtersheet.getRow(i).getCell(mycaseUpdateCell);
                             String myCaseUpdate = mycaseUpdate.getStringCellValue();
 
+
+
                             LocalDate dateToday = LocalDate.now();
                             LocalDate caseUpdateDate = null;
 
                             if (!myCaseUpdate.equals("NotSet")) {
-
                                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
                                 caseUpdateDate = LocalDate.parse(myCaseUpdate, formatter);
                             }
@@ -8519,8 +8670,7 @@ public class Controller implements Initializable {
             btnMyCoQueueAssigned.setText(String.valueOf(myCoOwnerQueueCasesAssigned));
 
         } catch (Exception e) {
-            System.out.println("No Data Downloaded4");
-        }
+            e.printStackTrace();        }
     }
 
     private void myProductsPage() {
@@ -9929,7 +10079,7 @@ public class Controller implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("For any issues/requests please inform us:" + "\n" + "\n" +
                     "Alper Simsek"+ "    " + "asimsek@rbbn.com" + "\n" + "\n" +
-                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.07");
+                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.08");
             alert.showAndWait();
         }
         if (event.getSource() == btnUsersSaveAs){
@@ -10529,6 +10679,5 @@ public class Controller implements Initializable {
         myProductsPage();
         overviewPage();
         myCasesPage();
-        System.setProperty("sun.net.http.allowRestrictedHeaders", "true");
     }
 }
