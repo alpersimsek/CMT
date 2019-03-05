@@ -127,6 +127,8 @@ public class Controller implements Initializable {
     @FXML
     private AnchorPane apnProduct;
     @FXML
+    private AnchorPane apnProjects;
+    @FXML
     private AnchorPane apnCustomers;
     @FXML
     private AnchorPane apnBrowser;
@@ -375,6 +377,20 @@ public class Controller implements Initializable {
     @FXML
     private Button btnCustomerActWOH;
     @FXML
+    private Button btnAmericas;
+    @FXML
+    private Button btnEmea;
+    @FXML
+    private Button btnApac;
+    @FXML
+    private Button btnJapan;
+    @FXML
+    private Button btnGatingNow;
+    @FXML
+    private Button btnGatingDate;
+    @FXML
+    private Button btnGatingPrevious;
+    @FXML
     private FontAwesomeIconView btnBack;
     @FXML
     private FontAwesomeIconView btnInfo;
@@ -521,6 +537,42 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn<QueueTableView, String> queueColSelected;
     @FXML
+    private TableView<ProjectTableView> tableProjects;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjNumCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjSevCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjStatCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjOwnCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjAgeCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjPrdCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjHLCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjHRCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjHCCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjHBCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjHDCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjPDCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjAccCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjRegCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjESBCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjSubCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjTypeCol;
+    @FXML
     private Button btnQueueUpdate;
     @FXML
     private Button btnQueueSelectClose;
@@ -560,7 +612,18 @@ public class Controller implements Initializable {
     private ListView queueProfileList;
     @FXML
     private TextArea txtShowCaseNotes;
-
+    @FXML
+    private Button btnPrjMyNotes;
+    @FXML
+    private Button btnPrjNewNote;
+    @FXML
+    private Button btnPrjDelNote;
+    @FXML
+    private Pane pnPrjNotes;
+    @FXML
+    private ListView lstPrjNotes;
+    @FXML
+    private TextArea txtPrjNoteView;
     @FXML
     private WebView webviewTest;
 
@@ -581,7 +644,7 @@ public class Controller implements Initializable {
     MenuItem openCaseSFDC = new MenuItem("Search This Case in SalesForce...");
     MenuItem casePersonalNote = new MenuItem("Add Personal Note To This Case...");
     MenuItem openCaseComments = new MenuItem("Open Comments for this case...");
-
+    MenuItem openCaseDetails = new MenuItem("View Details...");
 
     //Case Ref Cells
     int caseAccountRef = 0;
@@ -593,8 +656,8 @@ public class Controller implements Initializable {
     int caseOwnerRefCell = 0;
     int caseCoOwnerRefCell = 0;
     int caseEscalatedRefCell = 0;
-    int caseSupHotListRRef;
-    int caseSupHotListLRef;
+    int caseSupHotListRRef = 0;
+    int caseSupHotListLRef = 0;
     int caseSupHotListCRef;
     int caseSupHotListBRef;
     int caseSupHotListDRef;
@@ -723,6 +786,17 @@ public class Controller implements Initializable {
     int prodQueuePS = 0;
     int prodQueueTS = 0;
 
+    //Project Page Variables
+
+    int prjAmericas = 0;
+    int prjEmea = 0;
+    int prjApac = 0;
+    int prjJapan = 0;
+    int prjGatingNow = 0;
+    int prjGatingDate = 0;
+    int prjGatingPrev = 0;
+
+
     //Alert Strings
     String strAlert = "NO RECORD FOUND..." + "\n" + "\n" + "PLEASE RELOAD DATA FOR RECENT DATA!" + "\n" + "\n" + "IF NOT ALREADY, PLEASE LOGIN!";
     String strNoNote = "THERE IS NO PERSONAL NOTE..." + "\n" + "\n" + "PLEASE CREATE PERSONAL NOTE FIRST!";
@@ -758,7 +832,16 @@ public class Controller implements Initializable {
 
         if (event.getSource() == btnProjects) {
 
-            //projectionLoginPage();
+            apnProjects.toFront();
+            lblStatus.setText("PROJECTS VIEW");
+            tableProjects.setVisible(false);
+            btnToExcel.setVisible(false);
+            btnBack.setVisible(false);
+            pnPrjNotes.setVisible(false);
+            btnPrjNewNote.setVisible(false);
+            btnPrjDelNote.setVisible(false);
+            txtPrjNoteView.setVisible(false);
+            projectsPage();
 
          }
 
@@ -2147,6 +2230,7 @@ public class Controller implements Initializable {
     }
 
     private void caseNoteTable(){
+
         caseNoteList.getItems().clear();
         ObservableList<String> Notes = FXCollections.observableArrayList();
 
@@ -2600,8 +2684,6 @@ public class Controller implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     private void customerTable(String columnSelect, String filter, TableView<CaseTableView> tableCustomers, Boolean bool) {
@@ -4129,14 +4211,23 @@ public class Controller implements Initializable {
         String filename2 = "cmt_user_prod.csv";
         String filename3 = "cmt_case_data_V2.csv";
         String filename4 = "cmt_comments.csv";
+        String filename1 = "cmt_projects.csv";
         String newLoc2 = "https://na8.salesforce.com/00OC0000006r1xS?export=1&enc=UTF-8&xf=csv?filename=" + filename2;
-        //String newLoc3 = "https://na8.salesforce.com/00OC0000007MwqU?export=1&enc=UTF-8&xf=csv?filename=" + filename3;
+        String newLoc = "https://na8.salesforce.com/00OC0000007My3o?export=1&enc=UTF-8&xf=csv?filename=" + filename1;
         String newLoc3 = "https://na8.salesforce.com/00OC00000076uIg?export=1&enc=UTF-8&xf=csv?filename=" + filename3;
         String newLoc4 = "https://na8.salesforce.com/00OC0000006r5ig?export=1&enc=UTF-8&xf=csv?filename=" + filename4;
 
         try {
 
             FileUtils.copyURLToFile(new URL(newLoc2), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_user_prod.csv"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+
+            FileUtils.copyURLToFile(new URL(newLoc), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_projects.csv"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -4170,6 +4261,7 @@ public class Controller implements Initializable {
         parseData();
         rectifyAccountNames();
         parseUserData();
+        parseProjectData();
         myCasesPage();
         parseComments();
 
@@ -4250,8 +4342,548 @@ public class Controller implements Initializable {
 
     private void projectsPage() {
 
-        //TODO: Project View
+        HSSFCell theater;
+        HSSFCell supHotLevel;
+        HSSFCell supHotReason;
 
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_projects.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int lastRow = filtersheet.getLastRowNum();
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+
+            prjAmericas = 0;
+            prjEmea = 0;
+            prjApac = 0;
+            prjJapan = 0;
+            prjGatingNow = 0;
+            prjGatingDate = 0;
+            prjGatingPrev = 0;
+
+            for (int i = 0; i < cellnum; i++) {
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+
+                switch (filterColName) {
+                    case ("Support Theater"):
+                        caseRegionRef = i;
+                        break;
+                    case("Support Hotlist Level"):
+                        caseSupHotListLRef = i;
+                        break;
+                    case ("Support Hotlist Reason"):
+                        caseSupHotListRRef = i;
+                }
+            }
+
+            for (int i = 1; i < lastRow + 1; i++) {
+
+                theater = filtersheet.getRow(i).getCell(caseRegionRef);
+                String region = theater.getStringCellValue();
+
+                supHotLevel = filtersheet.getRow(i).getCell(caseSupHotListLRef);
+                String hotLevel = supHotLevel.getStringCellValue();
+
+                supHotReason = filtersheet.getRow(i).getCell(caseSupHotListRRef);
+                String hotReason = supHotReason.getStringCellValue();
+
+                if (hotLevel.equals("Project")){
+
+                    if (region.equals("AMERICAS") || region.equals("NA")) {
+                        prjAmericas++;
+                    }
+                    if (region.equals("EMEA")) {
+                        prjEmea++;
+                    }
+                    if (region.equals("ASIAPAC")) {
+                        prjApac++;
+                    }
+                    if (region.equals("JAPAN")) {
+                        prjJapan++;
+                    }
+                    if (hotReason.equals("Project Gating - Now") || hotReason.equals("Gating Now")){
+                        prjGatingNow++;
+                    }
+                    if (hotReason.equals("Project Gating - Date")){
+                        prjGatingDate++;
+                    }
+                    if (hotReason.equals("Project Gating - Previously") || hotReason.equals("Previously Gating")){
+                        prjGatingPrev++;
+                    }
+                }
+            }
+            btnAmericas.setText(String.valueOf(prjAmericas));
+            btnEmea.setText(String.valueOf(prjEmea));
+            btnApac.setText(String.valueOf(prjApac));
+            btnJapan.setText(String.valueOf(prjJapan));
+            btnGatingNow.setText(String.valueOf(prjGatingNow));
+            btnGatingDate.setText(String.valueOf(prjGatingDate));
+            btnGatingPrevious.setText(String.valueOf(prjGatingPrev));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    private void handleProjectClicks(MouseEvent event) throws IOException, InvalidFormatException{
+
+        if (event.getSource() == btnAmericas){
+
+            if (prjAmericas != 0) {
+                initProjectTable();
+                tableProjects.getItems().clear();
+                tableProjects.setVisible(true);
+                tableProjects.toFront();
+                buildTableProjects(tableProjects, "NA");
+            }
+            if (prjAmericas == 0){
+                alertUser(strAlert);
+            }
+        }
+        if (event.getSource() == btnEmea){
+
+            if (prjEmea != 0) {
+                initProjectTable();
+                tableProjects.getItems().clear();
+                tableProjects.setVisible(true);
+                tableProjects.toFront();
+                buildTableProjects(tableProjects, "EMEA");
+            }
+            if (prjEmea == 0){
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnApac){
+
+            if (prjApac != 0) {
+                initProjectTable();
+                tableProjects.getItems().clear();
+                tableProjects.setVisible(true);
+                tableProjects.toFront();
+                buildTableProjects(tableProjects, "APAC");
+            }
+            if (prjApac == 0){
+                alertUser(strAlert);
+            }
+        }
+        if (event.getSource() == btnJapan){
+            if (prjJapan != 0) {
+                initProjectTable();
+                tableProjects.getItems().clear();
+                tableProjects.setVisible(true);
+                tableProjects.toFront();
+                buildTableProjects(tableProjects, "JAPAN");
+            }
+            if (prjJapan == 0){
+                alertUser(strAlert);
+            }
+        }
+        if (event.getSource() == btnGatingNow){
+            if (prjGatingNow != 0) {
+                initProjectTable();
+                tableProjects.getItems().clear();
+                tableProjects.setVisible(true);
+                tableProjects.toFront();
+                buildTableProjects(tableProjects, "NOW");
+            }
+            if (prjGatingNow == 0){
+                alertUser(strAlert);
+            }
+        }
+        if (event.getSource() == btnGatingPrevious){
+            if (prjGatingPrev != 0) {
+                initProjectTable();
+                tableProjects.getItems().clear();
+                tableProjects.setVisible(true);
+                tableProjects.toFront();
+                buildTableProjects(tableProjects, "PREV");
+            }
+            if (prjGatingPrev == 0){
+                alertUser(strAlert);
+            }
+        }
+        if (event.getSource() == btnGatingDate){
+            if (prjGatingDate != 0) {
+                initProjectTable();
+                tableProjects.getItems().clear();
+                tableProjects.setVisible(true);
+                tableProjects.toFront();
+                buildTableProjects(tableProjects, "DATE");
+            }
+            if (prjGatingDate == 0){
+                alertUser(strAlert);
+            }
+        }
+        if (event.getSource() == btnPrjMyNotes){
+            pnPrjNotes.setVisible(true);
+            getNotesList();
+        }
+    }
+
+    private void getNotesList(){
+
+        lstPrjNotes.getItems().clear();
+        ObservableList<String> caseNotes = FXCollections.observableArrayList();
+
+        File rep = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes");
+
+        if (!rep.exists()){
+            //alertNoNoteUser();
+            String strNoNote = "THERE IS NO PERSONAL NOTE..." + "\n" + "\n" + "PLEASE CREATE PERSONAL NOTE FIRST!";
+            alertUser(strNoNote);
+        }else {
+            File[] fileList = rep.listFiles();
+
+            for (int i = 0; i < fileList.length; i++) {
+                caseNotes.addAll(fileList[i].getName());
+            }
+
+            lstPrjNotes.getItems().addAll(caseNotes);
+            lstPrjNotes.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        }
+    }
+
+    private void buildTableProjects(TableView<ProjectTableView> tableView, String str1){
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_projects.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+            HSSFCell ageCell;
+            HSSFCell reason;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+
+                if (filterColName.equals("Support Theater")) {
+                    caseRegionRef = i;
+                }
+                if (filterColName.equals("Support Hotlist Level")) {
+                    caseSupHotListLRef = i;
+                }
+                if (filterColName.equals("Age (Days)")){
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Support Hotlist Reason")){
+                    caseSupHotListRRef = i;
+                }
+            }
+
+            for (int k = 1; k < lastRow + 1; k++) {
+
+                cellVal = filtersheet.getRow(k).getCell(caseRegionRef);
+                String cellValToCompare = cellVal.getStringCellValue();
+                cellVal2 = filtersheet.getRow(k).getCell(caseSupHotListLRef);
+                String cellValToCompare2 = cellVal2.getStringCellValue();
+                ageCell = filtersheet.getRow(k).getCell(caseAgeRefCell);
+                String ageString = ageCell.getStringCellValue();
+                reason = filtersheet.getRow(k).getCell(caseSupHotListRRef);
+                String hotReason = reason.getStringCellValue();
+
+
+                ageString = ageString.replace(".0000000000", "");
+                ageCell.setCellValue(ageString);
+
+                if (str1 == "NA") {
+
+                    if ((cellValToCompare.equals("AMERICAS") || cellValToCompare.equals("NA")) && cellValToCompare2.equals("Project")) {
+
+                        ArrayList<String> array = new ArrayList<>();
+                        ObservableList<ProjectTableView> observableList = FXCollections.observableArrayList();
+
+                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                        while (iterCells.hasNext()) {
+                            HSSFCell cell = (HSSFCell) iterCells.next();
+                            array.add(cell.getStringCellValue());
+                        }
+
+                        int age = 0;
+
+                        age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                        observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
+                                array.get(3), age, array.get(5), array.get(6), array.get(7),
+                                array.get(8), array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16)));
+
+                        tableView.getItems().addAll(observableList);
+                        caseCount++;
+
+                        if (tableView.getItems().size() >= caseCount + 1) {
+                            tableView.getItems().removeAll(observableList);
+                        }
+                    }
+                }
+                if (str1 == "EMEA") {
+
+                    if (cellValToCompare.equals("EMEA") && cellValToCompare2.equals("Project")) {
+
+                        ArrayList<String> array = new ArrayList<>();
+                        ObservableList<ProjectTableView> observableList = FXCollections.observableArrayList();
+
+                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                        while (iterCells.hasNext()) {
+                            HSSFCell cell = (HSSFCell) iterCells.next();
+                            array.add(cell.getStringCellValue());
+                        }
+
+                        int age = 0;
+
+                        age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                        observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
+                                array.get(3), age, array.get(5), array.get(6), array.get(7),
+                                array.get(8), array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16)));
+
+                        tableView.getItems().addAll(observableList);
+                        caseCount++;
+
+                        if (tableView.getItems().size() >= caseCount + 1) {
+                            tableView.getItems().removeAll(observableList);
+                        }
+                    }
+                }
+                if (str1 == "APAC") {
+
+                    if (cellValToCompare.equals("ASIAPAC") && cellValToCompare2.equals("Project")) {
+
+                        ArrayList<String> array = new ArrayList<>();
+                        ObservableList<ProjectTableView> observableList = FXCollections.observableArrayList();
+
+                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                        while (iterCells.hasNext()) {
+                            HSSFCell cell = (HSSFCell) iterCells.next();
+                            array.add(cell.getStringCellValue());
+                        }
+
+                        int age = 0;
+
+                        age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                        observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
+                                array.get(3), age, array.get(5), array.get(6), array.get(7),
+                                array.get(8), array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16)));
+
+                        tableView.getItems().addAll(observableList);
+                        caseCount++;
+
+                        if (tableView.getItems().size() >= caseCount + 1) {
+                            tableView.getItems().removeAll(observableList);
+                        }
+                    }
+                }
+                if (str1 == "JAPAN") {
+
+                    if (cellValToCompare.equals("JAPAN") && cellValToCompare2.equals("Project")) {
+
+                        ArrayList<String> array = new ArrayList<>();
+                        ObservableList<ProjectTableView> observableList = FXCollections.observableArrayList();
+
+                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                        while (iterCells.hasNext()) {
+                            HSSFCell cell = (HSSFCell) iterCells.next();
+                            array.add(cell.getStringCellValue());
+                        }
+
+                        int age = 0;
+
+                        age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                        observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
+                                array.get(3), age, array.get(5), array.get(6), array.get(7),
+                                array.get(8), array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16)));
+
+                        tableView.getItems().addAll(observableList);
+                        caseCount++;
+
+                        if (tableView.getItems().size() >= caseCount + 1) {
+                            tableView.getItems().removeAll(observableList);
+                        }
+                    }
+                }
+                if (str1 == "NOW") {
+
+                    if ((hotReason.equals("Project Gating - Now") || hotReason.equals("Gating Now")) && cellValToCompare2.equals("Project")) {
+
+                        ArrayList<String> array = new ArrayList<>();
+                        ObservableList<ProjectTableView> observableList = FXCollections.observableArrayList();
+
+                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                        while (iterCells.hasNext()) {
+                            HSSFCell cell = (HSSFCell) iterCells.next();
+                            array.add(cell.getStringCellValue());
+                        }
+
+                        int age = 0;
+
+                        age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                        observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
+                                array.get(3), age, array.get(5), array.get(6), array.get(7),
+                                array.get(8), array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16)));
+
+                        tableView.getItems().addAll(observableList);
+                        caseCount++;
+
+                        if (tableView.getItems().size() >= caseCount + 1) {
+                            tableView.getItems().removeAll(observableList);
+                        }
+                    }
+                }
+                if (str1 == "PREV") {
+
+                    if ((hotReason.equals("Project Gating - Previously") || hotReason.equals("Previously Gating")) && cellValToCompare2.equals("Project")) {
+
+                        ArrayList<String> array = new ArrayList<>();
+                        ObservableList<ProjectTableView> observableList = FXCollections.observableArrayList();
+
+                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                        while (iterCells.hasNext()) {
+                            HSSFCell cell = (HSSFCell) iterCells.next();
+                            array.add(cell.getStringCellValue());
+                        }
+
+                        int age = 0;
+
+                        age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                        observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
+                                array.get(3), age, array.get(5), array.get(6), array.get(7),
+                                array.get(8), array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16)));
+
+                        tableView.getItems().addAll(observableList);
+                        caseCount++;
+
+                        if (tableView.getItems().size() >= caseCount + 1) {
+                            tableView.getItems().removeAll(observableList);
+                        }
+                    }
+                }
+                if (str1 == "DATE") {
+
+                    if (hotReason.equals("Project Gating - Date")  && cellValToCompare2.equals("Project")) {
+
+                        ArrayList<String> array = new ArrayList<>();
+                        ObservableList<ProjectTableView> observableList = FXCollections.observableArrayList();
+
+                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                        while (iterCells.hasNext()) {
+                            HSSFCell cell = (HSSFCell) iterCells.next();
+                            array.add(cell.getStringCellValue());
+                        }
+
+                        int age = 0;
+
+                        age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                        observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
+                                array.get(3), age, array.get(5), array.get(6), array.get(7),
+                                array.get(8), array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16)));
+
+                        tableView.getItems().addAll(observableList);
+                        caseCount++;
+
+                        if (tableView.getItems().size() >= caseCount + 1) {
+                            tableView.getItems().removeAll(observableList);
+                        }
+                    }
+                }
+            }
+
+            btnToExcel.setVisible(true);
+            apnProjects.toFront();
+            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    exportExcelActionProjects(tableView);
+                }
+            });
+
+            menu = new ContextMenu();
+            String caseno = "";
+            menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
+            tableView.setContextMenu(menu);
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    projectCaseDetails();
+                }
+            });
+
+            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+
+                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumberProjects(tableView, caseno);
+
+                        URL caseSearch = new URL(search);
+                        Desktop.getDesktop().browse(caseSearch.toURI());
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+            // Selecting and Copy the Case Number to Clipboard
+            tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboardProjects(tableView);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void projectCaseDetails(){
+        Parent root;
+
+        try {
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("home/CaseDetails.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("CASE DETAILS WINDOW");
+            stage.getIcons().add(new Image("home/image/rbbicon.png"));
+            stage.setScene(new Scene(root, 620, 800));
+            stage.show();
+            stage.setMinWidth(620);
+            stage.setMinHeight(800);
+            stage.setMaxWidth(620);
+            stage.setMaxHeight(800);
+
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void writeDefaultSettingsToFile(String userFilter, String queueFilter, String productFilter) {
@@ -4447,7 +5079,6 @@ public class Controller implements Initializable {
             s.close();
 
             txProducts.setText(readProductList.stream().collect(Collectors.joining(", ")));
-
         }
     }
 
@@ -4722,9 +5353,9 @@ public class Controller implements Initializable {
 
                         if ((b) && (bool)) {
 
-                            if (((caseUser.equals(setUser.get(i)) || coOwner.equals(setUser.get(i)))&& caseUpdateDate != null && !cellStat.equals("Pending Closure"))) {
+                            if (((caseUser.equals(setUser.get(i)) || coOwner.equals(setUser.get(i)))&& !cellValToCompare.equals("NotSet"))) {
 
-                                if (caseUpdateDate.compareTo(dateToday) == 0) {
+                                if ( caseUpdateDate.compareTo(dateToday) == 0) {
 
                                     Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
                                     while (iterCells.hasNext()) {
@@ -4751,7 +5382,7 @@ public class Controller implements Initializable {
                         }
                         if ((!b) && (bool)) {
 
-                            if (((caseUser.equals(setUser.get(i)) || coOwner.equals(setUser.get(i)))&& caseUpdateDate != null && !cellStat.equals("Pending Closure"))) {
+                            if (((caseUser.equals(setUser.get(i)) || coOwner.equals(setUser.get(i)))&& !cellValToCompare.equals("NotSet"))) {
 
                                 if (caseUpdateDate.compareTo(dateToday) < 0) {
 
@@ -4780,7 +5411,7 @@ public class Controller implements Initializable {
                         }
                         if (!b && !bool) {
 
-                            if (((caseUser.equals(setUser.get(i)) || coOwner.equals(setUser.get(i))) && cellValToCompare.equals("NotSet")) && !cellStat.equals("Pending Closure")) {
+                            if (((caseUser.equals(setUser.get(i)) || coOwner.equals(setUser.get(i))) && cellValToCompare.equals("NotSet"))) {
 
                                 Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
                                 while (iterCells.hasNext()) {
@@ -5785,6 +6416,7 @@ public class Controller implements Initializable {
 
     private void viewCaseComments() {
         Parent root;
+
         try {
             root = FXMLLoader.load(getClass().getClassLoader().getResource("home/CaseComment.fxml"));
             Stage stage = new Stage();
@@ -7977,6 +8609,56 @@ public class Controller implements Initializable {
         }
     }
 
+    private void parseProjectData(){
+
+        try {
+
+            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_projects.csv");
+
+            HSSFWorkbook workBook = new HSSFWorkbook();
+            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\cmt_projects.xls";
+            HSSFSheet sheet = workBook.createSheet("Projects");
+            CreationHelper helper = workBook.getCreationHelper();
+
+            int r = 0;
+
+            CsvParserSettings settings = new CsvParserSettings();
+            settings.setMaxCharsPerColumn(100000);
+            settings.getFormat().setLineSeparator("\n");
+
+            CsvParser parser = new CsvParser(settings);
+            parser.beginParsing(csvfile);
+
+            String[] row;
+            while ((row = parser.parseNext()) != null) {
+
+                Row frow = sheet.createRow((short) r++);
+                for (int i = 0; i <row.length ; i++) {
+                    frow.createCell(i).setCellValue(helper.createRichTextString(row[i]));
+                }
+            }
+
+            parser.stopParsing();
+
+            int lastRow = sheet.getLastRowNum();
+
+            System.out.println(lastRow);
+
+            for (int i = 0; i < 5; i++) {
+                sheet.removeRow(sheet.getRow(lastRow - i));
+            }
+
+            FileOutputStream fileOutputStream = new FileOutputStream(xlsFileAddress);
+            workBook.write(fileOutputStream);
+            fileOutputStream.close();
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
     private void parseUserData() {
         try {
             File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_user_prod.csv");
@@ -8584,7 +9266,7 @@ public class Controller implements Initializable {
 
                                 if ((caseUpdateDate != null)) {
 
-                                    if(!myCaseUpdate.equals("NotSet") && !mycaseStatus.equals("Pending Closure")) {
+                                    if(!myCaseUpdate.equals("NotSet")) {
 
                                         if (caseUpdateDate.compareTo(dateToday) == 0) {
                                             myUpdateToday++;
@@ -8594,7 +9276,7 @@ public class Controller implements Initializable {
                                         }
                                     }
                                 }
-                                if (myCaseUpdate.equals("NotSet") && !mycaseStatus.equals("Pending Closure")) {
+                                if (myCaseUpdate.equals("NotSet")) {
                                     myUpdateNull++;
                                 }
                             }
@@ -9091,7 +9773,30 @@ public class Controller implements Initializable {
             SecurityColCust.setCellValueFactory(new PropertyValueFactory<CaseTableView, String>("caseSecurity"));
 
         }
+
     }
+
+    private void initProjectTable(){
+
+        prjNumCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseNumber"));
+        prjSevCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseStatus"));
+        prjStatCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseSeverity"));
+        prjOwnCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseOwner"));
+        prjAgeCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseAge"));
+        prjPrdCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseProduct"));
+        prjHLCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseHotListLevel"));
+        prjHRCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseHotListReason"));
+        prjHCCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseHotListComment"));
+        prjHBCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseHotListBy"));
+        prjHDCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseHotListDate"));
+        prjPDCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjGatingDate"));
+        prjAccCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseAccount"));
+        prjRegCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseRegion"));
+        prjESBCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseEscalatedBy"));
+        prjSubCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseSubject"));
+        prjTypeCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseSupportType"));
+    }
+
 
     private void copyCaseNumberToClipboard(TableView<CaseTableView> tableCases) {
 
@@ -9138,6 +9843,69 @@ public class Controller implements Initializable {
         }
 
     }
+    private void copyCaseNumberToClipboardProjects(TableView<ProjectTableView> tableCases) {
+
+        TablePosition tablePosition = (TablePosition) tableCases.getSelectionModel().getSelectedCells().get(0);
+        int row = tablePosition.getRow();
+        ProjectTableView caseview = (ProjectTableView) tableCases.getItems().get(row);
+        TableColumn tableColumn = tablePosition.getTableColumn();
+        String data1 = caseview.getPrjCaseNumber();
+        ClipboardContent content = new ClipboardContent();
+        content.putString(data1);
+        Clipboard.getSystemClipboard().setContent(content);
+
+        selectedCase = new ArrayList<>();
+        selectedCase.add(caseview.getPrjCaseNumber());
+        selectedCase.add(caseview.getPrjCaseSeverity());
+        selectedCase.add(caseview.getPrjCaseStatus());
+        selectedCase.add(caseview.getPrjCaseOwner());
+        selectedCase.add(caseview.getPrjCaseAge().toString());
+        selectedCase.add(caseview.getPrjCaseProduct());
+        selectedCase.add(caseview.getPrjCaseHotListLevel());
+        selectedCase.add(caseview.getPrjCaseHotListReason());
+        selectedCase.add(caseview.getPrjCaseHotListComment());
+        selectedCase.add(caseview.getPrjCaseHotListBy());
+        selectedCase.add(caseview.getPrjCaseHotListDate());
+        selectedCase.add(caseview.getPrjGatingDate());
+        selectedCase.add(caseview.getPrjCaseAccount());
+        selectedCase.add(caseview.getPrjCaseRegion());
+        selectedCase.add(caseview.getPrjCaseEscalatedBy());
+        selectedCase.add(caseview.getPrjCaseSubject());
+        selectedCase.add(caseview.getPrjCaseSupportType());
+
+        int selectedsize= selectedCase.size();
+
+        try {
+
+            File caseSelFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\" + "caseSelProject");
+            BufferedWriter br = new BufferedWriter(new FileWriter(caseSelFile));
+            StringBuilder sb = new StringBuilder();
+
+            // Append strings from array
+            for (String element : selectedCase) {
+                sb.append(element);
+                sb.append("\",\"");
+            }
+            br.write(sb.toString());
+            br.close();
+
+            /*File caseSelFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\" + "caseSelProject");
+
+            FileWriter writer = new FileWriter(caseSelFile);
+
+            writer.write(String.valueOf(selectedCase));
+
+            for (int i = 0; i <selectedsize ; i++) {
+
+                writer.write(selectedCase.get(i) + "\n");
+            }
+
+            writer.close();*/
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     private String getCaseNumber(TableView<CaseTableView> tableCases, String caseNumber){
 
@@ -9146,6 +9914,16 @@ public class Controller implements Initializable {
         CaseTableView caseview = (CaseTableView) tableCases.getItems().get(row);
         TableColumn tableColumn = tablePosition.getTableColumn();
         caseNumber = caseview.getCaseNumber();
+        return caseNumber;
+    }
+
+    private String getCaseNumberProjects(TableView<ProjectTableView> tableCases, String caseNumber){
+
+        TablePosition tablePosition = (TablePosition) tableCases.getSelectionModel().getSelectedCells().get(0);
+        int row = tablePosition.getRow();
+        ProjectTableView caseview = (ProjectTableView) tableCases.getItems().get(row);
+        TableColumn tableColumn = tablePosition.getTableColumn();
+        caseNumber = caseview.getPrjCaseNumber();
         return caseNumber;
     }
 
@@ -9173,6 +9951,29 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
 
+    }
+    private void exportExcelActionProjects(TableView<ProjectTableView> table) {
+
+        try {
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XLS files (*.xls)", "*.xls");
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Desktop"));
+
+            fileChooser.getExtensionFilters().add(extFilter);
+
+            Stage primaryStage = new Stage();
+
+            File file = fileChooser.showSaveDialog(primaryStage);
+            primaryStage.show();
+
+            if (file != null) {
+
+                extractToExcel(table, "testData", file);
+            }
+            primaryStage.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void customerViewPage() {
