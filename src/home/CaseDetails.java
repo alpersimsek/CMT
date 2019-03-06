@@ -1,7 +1,10 @@
 package home;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -81,6 +84,7 @@ public class CaseDetails implements Initializable {
     File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\caseSelProject");
     ArrayList<String> prjCaseDetails = new ArrayList<String>();
     ArrayList<String> caseCommentArray;
+    String[] contentArray;
 
     private void readDetails() {
 
@@ -108,7 +112,7 @@ public class CaseDetails implements Initializable {
         }
         String contents = sb.toString();
         //contents = contents.replace("\n", "");
-        String[] contentArray = contents.split("\",\"");
+       contentArray = contents.split("\",\"");
 
         txtPrjCaseNum.setText(contentArray[0]);
         txtPrjCaseStat.setText(contentArray[1]);
@@ -126,6 +130,7 @@ public class CaseDetails implements Initializable {
         txtPrjCaseSub.setText(contentArray[15]);
 
         projectCaseComments();
+        readNotes();
     }
 
 
@@ -136,14 +141,30 @@ public class CaseDetails implements Initializable {
             ((Stage)(btnPrjClose).getScene().getWindow()).close();
         }
         if (event.getSource() == btnPrjAddNote){
+            ((Stage)(btnPrjClose).getScene().getWindow()).close();
             addNewNote();
         }
     }
 
     private void addNewNote(){
 
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("home/CaseNoteProjects.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("ADD PERSONAL CASE NOTE");
+            stage.getIcons().add(new Image("home/image/rbbicon.png"));
+            stage.setScene(new Scene(root, 650, 400));
+            stage.show();
+            stage.setMinWidth(650);
+            stage.setMinHeight(420);
+            stage.setMaxWidth(650);
+            stage.setMaxHeight(420);
 
-
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void projectCaseComments(){
@@ -215,14 +236,30 @@ public class CaseDetails implements Initializable {
         }
 
         caseCommentArray.clear();
+    }
 
+    private void readNotes(){
 
+        txtPrjNote.clear();
+        File prjCase = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\Project\\" + contentArray[0]);
+
+        if (prjCase.isFile()) {
+            Scanner s = null;
+            try {
+                s = new Scanner(prjCase);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            while (s.hasNextLine()) {
+                txtPrjNote.appendText(s.nextLine() + "\n");
+            }
+            s.close();
+        }
     }
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         readDetails();
-
     }
 }

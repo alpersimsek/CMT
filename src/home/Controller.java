@@ -865,6 +865,8 @@ public class Controller implements Initializable {
 
         if (event.getSource() == btnMyNotes) {
 
+            pnCaseDetailsNote.setVisible(false);
+
             caseNoteTable();
 
             if (caseNoteList.getItems().size()> 0) {
@@ -2361,6 +2363,7 @@ public class Controller implements Initializable {
 
                                     caseNoteFile.delete();
                                     caseDetail.delete();
+                                    pnCaseDetailsNote.setVisible(false);
                                     caseNoteList.getItems().remove(selectedCase);
                                     if (caseNoteList.getItems().size() == 0) {
                                         apnMyCases.toFront();
@@ -4517,31 +4520,111 @@ public class Controller implements Initializable {
             }
         }
         if (event.getSource() == btnPrjMyNotes){
-            pnPrjNotes.setVisible(true);
-            getNotesList();
+            getPrjNotesList();
         }
     }
 
-    private void getNotesList(){
+    private void getPrjNotesList(){
 
         lstPrjNotes.getItems().clear();
+        ArrayList<String> details = new ArrayList<String>();
         ObservableList<String> caseNotes = FXCollections.observableArrayList();
 
-        File rep = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes");
+        File rep = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\Project");
 
         if (!rep.exists()){
-            //alertNoNoteUser();
-            String strNoNote = "THERE IS NO PERSONAL NOTE..." + "\n" + "\n" + "PLEASE CREATE PERSONAL NOTE FIRST!";
-            alertUser(strNoNote);
+            new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\Project").mkdir();
         }else {
             File[] fileList = rep.listFiles();
 
-            for (int i = 0; i < fileList.length; i++) {
-                caseNotes.addAll(fileList[i].getName());
-            }
+            if (fileList.length == 0){
+                String strNoNote = "THERE IS NO PERSONAL NOTE..." + "\n" + "\n" + "PLEASE CREATE PERSONAL NOTE FIRST!";
+                alertUser(strNoNote);
+            }else {
 
-            lstPrjNotes.getItems().addAll(caseNotes);
-            lstPrjNotes.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+                for (int i = 0; i < fileList.length; i++) {
+                    caseNotes.addAll(fileList[i].getName());
+                }
+
+                pnPrjNotes.setVisible(true);
+                lstPrjNotes.getItems().addAll(caseNotes);
+                lstPrjNotes.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+                lstPrjNotes.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+
+                        txtPrjNoteView.clear();
+
+                        String selected = lstPrjNotes.getSelectionModel().getSelectedItem().toString();
+                        File prjCase = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\Project\\" + selected);
+
+                        if (prjCase.isFile()) {
+                            Scanner s = null;
+                            try {
+                                s = new Scanner(prjCase);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            while (s.hasNextLine()) {
+                                txtPrjNoteView.appendText(s.nextLine() + "\n");
+                            }
+                            s.close();
+                        }
+                        btnPrjDelNote.setVisible(true);
+                        btnPrjNewNote.setVisible(true);
+                        txtPrjNoteView.setVisible(true);
+
+                        btnPrjDelNote.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+
+                                File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\Project\\" + selected);
+                                caseNoteFile.delete();
+
+                                lstPrjNotes.getItems().remove(selected);
+
+                                if (lstPrjNotes.getItems().size() == 0) {
+
+                                    pnPrjNotes.setVisible(false);
+                                    btnPrjNewNote.setVisible(false);
+                                    btnPrjDelNote.setVisible(false);
+                                    txtPrjNoteView.setVisible(false);
+                                }
+                                txtPrjNoteView.clear();
+                            }
+                        });
+
+                        btnPrjNewNote.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+                                newProjectNote();
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    }
+
+    private void newProjectNote(){
+
+        Parent root;
+        try {
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("home/CaseNoteProjects.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("ADD PERSONAL CASE NOTE");
+            stage.getIcons().add(new Image("home/image/rbbicon.png"));
+            stage.setScene(new Scene(root, 650, 400));
+            stage.show();
+            stage.setMinWidth(650);
+            stage.setMinHeight(420);
+            stage.setMaxWidth(650);
+            stage.setMaxHeight(420);
+
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -4823,6 +4906,7 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseDetails);
             tableView.setContextMenu(menu);
 
@@ -4830,6 +4914,13 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     projectCaseDetails();
+                }
+            });
+
+            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    newProjectNote();
                 }
             });
 
