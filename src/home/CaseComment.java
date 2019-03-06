@@ -164,8 +164,8 @@ public class CaseComment implements Initializable {
 
             txtComNum.setText(caseSelection.get(0));
             txtComSev.setText(caseSelection.get(1));
-            txtComSubj.setText(caseSelection.get(9));
-            txtComAcc.setText(caseSelection.get(10));
+            txtComSubj.setText(caseSelection.get(14));
+            txtComAcc.setText(caseSelection.get(15));
         }
 
         Platform.runLater(new Runnable() {

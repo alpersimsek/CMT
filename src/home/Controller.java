@@ -2250,7 +2250,9 @@ public class Controller implements Initializable {
             File[] fileList = repo.listFiles();
 
             for (int i = 0; i < fileList.length; i++) {
-                Notes.addAll(fileList[i].getName());
+                if (!fileList[i].getName().equals("Project")){
+                    Notes.addAll(fileList[i].getName());
+                }
             }
 
             caseNoteList.getItems().addAll(Notes);
@@ -4977,6 +4979,31 @@ public class Controller implements Initializable {
         }
     }
 
+    private void myCaseDetails(){
+
+        Parent root;
+
+        try {
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("home/MyCaseDetails.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("CASE DETAILS WINDOW");
+            stage.getIcons().add(new Image("home/image/rbbicon.png"));
+            stage.setScene(new Scene(root, 700, 900));
+            stage.show();
+            stage.setMinWidth(720);
+            stage.setMinHeight(920);
+            stage.setMaxWidth(720);
+            stage.setMaxHeight(920);
+
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+
     private void writeDefaultSettingsToFile(String userFilter, String queueFilter, String productFilter) {
 
         ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
@@ -6369,6 +6396,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -6377,6 +6405,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -9905,14 +9940,24 @@ public class Controller implements Initializable {
         selectedCase.add(caseview.getCaseSeverity());
         selectedCase.add(caseview.getCaseStatus());
         selectedCase.add(caseview.getCaseOwner());
+        selectedCase.add(caseview.getCaseCoOwner());
+        selectedCase.add(caseview.getCaseCoOwnerQueue());
+        selectedCase.add(caseview.getCaseResponsible());
         selectedCase.add(caseview.getCaseAge().toString());
+        if(caseview.getNextCaseUpdate() != null){
+            selectedCase.add(caseview.getNextCaseUpdate().toString());
+        }else{
+            selectedCase.add("NotSet");
+        }
         selectedCase.add(caseview.getCaseEscalatedBy());
         selectedCase.add(caseview.getCaseHotList());
+        selectedCase.add(caseview.getCaseOutFollow());
         selectedCase.add(caseview.getCaseSupportType());
         selectedCase.add(caseview.getCaseProduct());
         selectedCase.add(caseview.getCaseSubject());
         selectedCase.add(caseview.getCaseAccount());
         selectedCase.add(caseview.getCaseRegion());
+        selectedCase.add(caseview.getCaseSecurity());
 
         int selectedsize= selectedCase.size();
 

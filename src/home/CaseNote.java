@@ -114,8 +114,8 @@ public class CaseNote implements Initializable {
             }
 
             txtCaseNoteSeverity.setText(caseSelection.get(1));
-            txtCaseNoteSubject.setText(caseSelection.get(9));
-            txtCaseNoteAccount.setText(caseSelection.get(10));
+            txtCaseNoteSubject.setText(caseSelection.get(14));
+            txtCaseNoteAccount.setText(caseSelection.get(15));
         }
 
         Platform.runLater(new Runnable() {
