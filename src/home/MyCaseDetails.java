@@ -17,7 +17,11 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -99,7 +103,7 @@ public class MyCaseDetails implements Initializable {
     ArrayList<String> caseSelection;
     ArrayList<String> caseCommentArray;
 
-
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
 
     private void setFields(){
 
@@ -180,7 +184,7 @@ public class MyCaseDetails implements Initializable {
     }
 
     private void processComments(String str1){
-        try(HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_comments.xls")))){
+        try(HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_comments.xls")))){
 
             caseCommentArray = new ArrayList<>();
             HSSFSheet filtersheet = workbook.getSheetAt(0);
@@ -251,8 +255,45 @@ public class MyCaseDetails implements Initializable {
 
     private void addNote(){
 
+        if (!txtMyCaseDetAddNote.getText().isEmpty()) {
+
+            try {
+
+                File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + txtMyCaseDetNum.getText());
+
+                if (!caseNoteFile.exists()) {
+                    new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes").mkdir();
+
+                    FileWriter writer = new FileWriter(caseNoteFile);
+                    writer.write("=====================" + "\n" + LocalTime.now().format(dtf) + "           " + LocalDate.now() + "\n" + "\n" +
+                            txtMyCaseDetAddNote.getText() + "\n" + "\n");
+
+                    writer.close();
+
+                } else {
+
+                    FileWriter writer = new FileWriter(caseNoteFile, true);
+                    writer.append("=====================" + "\n" + LocalTime.now().format(dtf) + "           " + LocalDate.now() + "\n" + "\n" + txtMyCaseDetAddNote.getText() + "\n" + "\n");
+                    writer.close();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        readNotes(txtMyCaseDetNum.getText());
+        txtMyCaseDetAddNote.clear();
     }
 
+    private void delNote(){
+
+        File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + txtMyCaseDetNum.getText());
+        File caseDetail = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\" + txtMyCaseDetNum.getText());
+        caseNoteFile.delete();
+        caseDetail.delete();
+        readNotes(txtMyCaseDetNum.getText());
+    }
 
     @FXML
     void handleMouseClick(MouseEvent event) {
@@ -262,6 +303,9 @@ public class MyCaseDetails implements Initializable {
         }
         if (event.getSource() == btnSaveNote){
             addNote();
+        }
+        if (event.getSource() == btnDeletNote){
+            delNote();
         }
 
     }

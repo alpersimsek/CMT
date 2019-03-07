@@ -12,8 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.CaseDetails">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="920.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.CaseDetails">
    <children>
       <GridPane layoutX="14.0" layoutY="14.0" prefHeight="235.0" prefWidth="590.0" AnchorPane.bottomAnchor="510.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
         <columnConstraints>
@@ -239,13 +238,16 @@
         <rowConstraints>
           <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="70.0" minHeight="70.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="90.0" minHeight="90.0" prefHeight="90.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="90.0" minHeight="90.0" prefHeight="90.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hot List Comment :" wrappingWidth="131.796875" GridPane.rowIndex="1">
@@ -266,27 +268,35 @@
                </font>
             </Text>
             <TextArea fx:id="txtPrjNote" editable="false" layoutX="140.0" layoutY="130.0" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.rowSpan="2" />
+            <Text layoutX="10.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Personal Note :" wrappingWidth="132.796875" GridPane.rowIndex="10">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <TextArea fx:id="txtPrjAddNote" layoutX="140.0" layoutY="260.0" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="10" GridPane.rowSpan="2" />
          </children>
       </GridPane>
-      <GridPane layoutX="14.0" layoutY="612.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="650.0">
+      <GridPane layoutX="14.0" layoutY="612.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="815.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+          <ColumnConstraints hgrow="SOMETIMES" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="10.0" minWidth="10.0" prefWidth="10.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" />
+          <ColumnConstraints hgrow="SOMETIMES" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
             <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnPrjAddNote" graphicTextGap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handlePrjMouse" prefHeight="50.0" prefWidth="140.0" text="NEW NOTE" GridPane.columnIndex="1">
+            <Button fx:id="btnPrjAddNote" graphicTextGap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handlePrjMouse" prefHeight="50.0" prefWidth="140.0" text="SAVE NOTE" GridPane.columnIndex="1">
                <font>
                   <Font size="14.0" />
                </font>
                <graphic>
-                  <FontAwesomeIconView fill="GREY" glyphName="BOOK" size="20" />
+                  <FontAwesomeIconView fill="GREY" glyphName="PENCIL" size="20" />
                </graphic>
             </Button>
             <Button fx:id="btnPrjClose" graphicTextGap="5.0" layoutX="190.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handlePrjMouse" prefHeight="50.0" prefWidth="140.0" text="CLOSE" GridPane.columnIndex="3">
@@ -297,11 +307,22 @@
                   <FontAwesomeIconView fill="GREY" glyphName="CLOSE" size="20" />
                </graphic>
             </Button>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Case comment data set is only 7 days backwards!" wrappingWidth="279.13671875" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="* Case Comment Data is covering only last 7 days!" wrappingWidth="467.13671875" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font>
                <GridPane.margin>
-                  <Insets left="15.0" />
+                  <Insets left="65.0" />
                </GridPane.margin>
             </Text>
+            <Button fx:id="btnPrjDelNote" graphicTextGap="5.0" layoutX="235.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handlePrjMouse" prefHeight="50.0" prefWidth="140.0" text="DELETE NOTE" GridPane.columnIndex="5">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <graphic>
+                  <FontAwesomeIconView fill="GREY" glyphName="CLOSE" size="20" />
+               </graphic>
+            </Button>
          </children>
       </GridPane>
    </children>

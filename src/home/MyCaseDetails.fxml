@@ -386,7 +386,7 @@
                   <Font size="14.0" />
                </font>
                <graphic>
-                  <FontAwesomeIconView fill="GREY" glyphName="BOOK" size="17" />
+                  <FontAwesomeIconView fill="GREY" glyphName="PENCIL" size="17" />
                </graphic>
             </Button>
             <Button fx:id="btnClose" graphicTextGap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClick" prefHeight="40.0" prefWidth="140.0" text="CLOSE" GridPane.columnIndex="3">
@@ -397,7 +397,7 @@
                   <FontAwesomeIconView fill="GREY" glyphName="CLOSE" size="17" />
                </graphic>
             </Button>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="* Case Comment Data is covering only last 7 days!" wrappingWidth="331.13671875" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="* Case Comment Data is covering only last 7 days!" wrappingWidth="400.13671875" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="14.0" />
                </font>

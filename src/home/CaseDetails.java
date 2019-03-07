@@ -1,5 +1,6 @@
 package home;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,6 +21,9 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
 import java.io.*;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -28,63 +32,53 @@ public class CaseDetails implements Initializable {
 
     @FXML
     private TextField txtPrjCaseNum;
-
     @FXML
     private TextField txtPrjCaseSev;
-
     @FXML
     private TextField txtPrjCaseStat;
-
     @FXML
     private TextField txtPrjCaseOwner;
-
     @FXML
     private TextField txtPrjHotListR;
-
     @FXML
     private TextField txtPrjCaseSub;
-
     @FXML
     private TextField txtPrjHotListB;
-
     @FXML
     private TextField txtPrjProd;
-
     @FXML
     private TextField txtPrjHotListD;
-
     @FXML
     private TextField txtPrjGateDate;
-
     @FXML
     private TextField txtPrjAcc;
-
     @FXML
     private TextField txtPrjAge;
-
     @FXML
     private TextField txtPrjReg;
-
     @FXML
     private TextArea txtHotListComm;
-
     @FXML
     private TextArea txtPrjCaseComment;
-
     @FXML
     private TextArea txtPrjNote;
-
+    @FXML
+    private TextArea txtPrjAddNote;
     @FXML
     private Button btnPrjAddNote;
-
     @FXML
     private Button btnPrjClose;
+    @FXML
+    private Button btnPrjDelNote;
 
 
     File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\caseSelProject");
     ArrayList<String> prjCaseDetails = new ArrayList<String>();
     ArrayList<String> caseCommentArray;
     String[] contentArray;
+
+    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+
 
     private void readDetails() {
 
@@ -130,9 +124,23 @@ public class CaseDetails implements Initializable {
         txtPrjCaseSub.setText(contentArray[15]);
 
         projectCaseComments();
-        readNotes();
+        readNotes(txtPrjCaseNum.getText());
+
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                setHeader();
+                txtPrjAddNote.requestFocus();
+            }
+        });
     }
 
+
+    private void setHeader(){
+
+        Stage stage = (Stage) txtPrjCaseNum.getScene().getWindow();
+        stage.setTitle(txtPrjCaseNum.getText() +  " : CASE DETAIL WINDOW" );
+    }
 
     @FXML
     void handlePrjMouse(MouseEvent event) {
@@ -141,35 +149,57 @@ public class CaseDetails implements Initializable {
             ((Stage)(btnPrjClose).getScene().getWindow()).close();
         }
         if (event.getSource() == btnPrjAddNote){
-            ((Stage)(btnPrjClose).getScene().getWindow()).close();
             addNewNote();
+        }
+        if (event.getSource() == btnPrjDelNote){
+            delNote();
         }
     }
 
     private void addNewNote(){
+        if (!txtPrjAddNote.getText().isEmpty()) {
 
-        Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("home/CaseNoteProjects.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("ADD PERSONAL CASE NOTE");
-            stage.getIcons().add(new Image("home/image/rbbicon.png"));
-            stage.setScene(new Scene(root, 650, 400));
-            stage.show();
-            stage.setMinWidth(650);
-            stage.setMinHeight(420);
-            stage.setMaxWidth(650);
-            stage.setMaxHeight(420);
+            try {
 
+                File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\Project\\" + txtPrjCaseNum.getText());
+
+                if (!caseNoteFile.exists()) {
+                    new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes").mkdir();
+                    new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\Project").mkdir();
+
+                    FileWriter writer = new FileWriter(caseNoteFile);
+                    writer.write("=====================" + "\n" + LocalTime.now().format(dtf) + "           " + LocalDate.now() + "\n" + "\n" +
+                            txtPrjAddNote.getText() + "\n" + "\n");
+
+                    writer.close();
+
+                } else {
+
+                    FileWriter writer = new FileWriter(caseNoteFile, true);
+                    writer.append("=====================" + "\n" + LocalTime.now().format(dtf) + "           " + LocalDate.now() + "\n" + "\n" + txtPrjAddNote.getText() + "\n" + "\n");
+                    writer.close();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+
+        readNotes(txtPrjCaseNum.getText());
+        txtPrjAddNote.clear();
+    }
+
+    private void delNote(){
+
+        File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\Project\\" + txtPrjCaseNum.getText());
+        caseNoteFile.delete();
+        readNotes(txtPrjCaseNum.getText());
+
     }
 
     private void projectCaseComments(){
 
-        try(HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_comments.xls")))){
+        try(HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_comments.xls")))){
 
             caseCommentArray = new ArrayList<>();
             HSSFSheet filtersheet = workbook.getSheetAt(0);
@@ -238,10 +268,10 @@ public class CaseDetails implements Initializable {
         caseCommentArray.clear();
     }
 
-    private void readNotes(){
+    private void readNotes(String str){
 
         txtPrjNote.clear();
-        File prjCase = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\Project\\" + contentArray[0]);
+        File prjCase = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\Project\\" + str);
 
         if (prjCase.isFile()) {
             Scanner s = null;

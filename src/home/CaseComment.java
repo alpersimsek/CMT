@@ -62,7 +62,7 @@ public class CaseComment implements Initializable {
 
     private void viewCases(){
 
-        try(HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_comments.xls")))){
+        try(HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_comments.xls")))){
 
             caseCommentArray = new ArrayList<>();
             HSSFSheet filtersheet = workbook.getSheetAt(0);

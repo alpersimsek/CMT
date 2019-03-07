@@ -50,6 +50,7 @@ import java.awt.*;
 import javafx.scene.control.TextArea;
 import java.io.*;
 import java.net.*;
+import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -2480,7 +2481,7 @@ public class Controller implements Initializable {
 
         tableCustomers.setVisible(true);
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -2641,6 +2642,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCustomers.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -2649,6 +2651,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -2697,7 +2706,7 @@ public class Controller implements Initializable {
 
         tableCustomers.setVisible(true);
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -2840,6 +2849,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCustomers.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -2848,6 +2858,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -2892,7 +2909,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3034,6 +3051,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -3042,6 +3060,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -3099,7 +3124,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3244,6 +3269,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -3252,6 +3278,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -3310,7 +3343,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3413,6 +3446,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -3421,6 +3455,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -3478,7 +3519,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3587,6 +3628,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -3595,6 +3637,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -3652,7 +3701,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3754,6 +3803,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -3762,6 +3812,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -3818,7 +3875,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3952,6 +4009,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -3960,6 +4018,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -4016,7 +4081,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -4152,6 +4217,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -4160,6 +4226,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -4224,7 +4297,7 @@ public class Controller implements Initializable {
 
         try {
 
-            FileUtils.copyURLToFile(new URL(newLoc2), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_user_prod.csv"));
+            FileUtils.copyURLToFile(new URL(newLoc2), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_user_prod.csv"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -4232,7 +4305,7 @@ public class Controller implements Initializable {
 
         try {
 
-            FileUtils.copyURLToFile(new URL(newLoc), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_projects.csv"));
+            FileUtils.copyURLToFile(new URL(newLoc), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.csv"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -4240,14 +4313,14 @@ public class Controller implements Initializable {
 
         try{
 
-            FileUtils.copyURLToFile(new URL(newLoc3), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V2.csv"));
+            FileUtils.copyURLToFile(new URL(newLoc3), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V2.csv"));
             LocalDate refreshDate = LocalDate.now();
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
             lblRefreshText.setVisible(true);
             String dataDate = "Data Time Stamp is:" + "\n" + LocalTime.now().format(dtf).toString() + "\n" + refreshDate.toString();
             lblRefreshText.setText(dataDate);
 
-            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_data_Date.txt"));
+            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_data_Date.txt"));
             writer.write(dataDate);
             writer.close();
 
@@ -4257,7 +4330,7 @@ public class Controller implements Initializable {
 
         try{
 
-            FileUtils.copyURLToFile(new URL(newLoc4), new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_comments.csv"));
+            FileUtils.copyURLToFile(new URL(newLoc4), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_comments.csv"));
 
         }catch (Exception e){
             e.printStackTrace();
@@ -4285,7 +4358,6 @@ public class Controller implements Initializable {
     private void connectOkta() {
 
         if (!btnLogin.getText().equals("Logged!")) {
-
 
             WebEngine webEngine = webviewTest.getEngine();
 
@@ -4351,7 +4423,7 @@ public class Controller implements Initializable {
         HSSFCell supHotLevel;
         HSSFCell supHotReason;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_projects.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
@@ -4634,7 +4706,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_projects.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -4969,9 +5041,9 @@ public class Controller implements Initializable {
             stage.setScene(new Scene(root, 620, 800));
             stage.show();
             stage.setMinWidth(620);
-            stage.setMinHeight(800);
+            stage.setMinHeight(950);
             stage.setMaxWidth(620);
-            stage.setMaxHeight(800);
+            stage.setMaxHeight(950);
 
         }
         catch (IOException e) {
@@ -5000,7 +5072,7 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
 
-
+        saveCaseDetails();
     }
 
 
@@ -5027,7 +5099,7 @@ public class Controller implements Initializable {
 
         try {
 
-            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_user_default_settings.txt"));
+            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_user_default_settings.txt"));
             int size = settingsUsers.size();
             for (int i = 0; i < size; i++) {
                 String str = settingsUsers.get(i);
@@ -5063,7 +5135,7 @@ public class Controller implements Initializable {
 
         try {
 
-            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_queueu_default_settings.txt"));
+            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_queueu_default_settings.txt"));
             int size = settingsQueue.size();
             for (int i = 0; i < size; i++) {
                 String str = settingsQueue.get(i);
@@ -5098,7 +5170,7 @@ public class Controller implements Initializable {
 
         try {
 
-            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_product_default_settings.txt"));
+            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_product_default_settings.txt"));
             int size = settingsProducts.size();
             for (int i = 0; i < size; i++) {
                 String str = settingsProducts.get(i);
@@ -5143,9 +5215,9 @@ public class Controller implements Initializable {
 
         // Load Already Saved Settings File if there are any
 
-        File settingUsersFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_user_default_settings.txt");
-        File settingQueueFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_queueu_default_settings.txt");
-        File settingProductsFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_product_default_settings.txt");
+        File settingUsersFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_user_default_settings.txt");
+        File settingQueueFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_queueu_default_settings.txt");
+        File settingProductsFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_product_default_settings.txt");
 
         if (settingUsersFile.isFile()) {
 
@@ -5209,7 +5281,7 @@ public class Controller implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
 
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -5348,7 +5420,15 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -5405,7 +5485,7 @@ public class Controller implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
 
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -5575,6 +5655,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -5583,6 +5664,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -5642,7 +5730,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -5781,6 +5869,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -5789,6 +5878,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -5850,7 +5946,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -5941,6 +6037,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -5949,6 +6046,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -6006,7 +6110,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -6171,6 +6275,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -6179,6 +6284,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -6237,7 +6349,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -6469,7 +6581,7 @@ public class Controller implements Initializable {
 
         ArrayList<String> caseCommentArray = new ArrayList();
 
-        try(HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_comments.xls")))){
+        try(HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_comments.xls")))){
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int mycaseNumCellRef = 0;
@@ -6567,7 +6679,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -6694,6 +6806,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -6702,6 +6815,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -6757,7 +6877,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -6893,6 +7013,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -6901,6 +7022,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -6956,7 +7084,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -7081,6 +7209,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -7089,6 +7218,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -7146,7 +7282,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -7301,6 +7437,7 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseSFDC);
             menu.getItems().add(casePersonalNote);
             menu.getItems().add(openCaseComments);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
@@ -7309,6 +7446,13 @@ public class Controller implements Initializable {
                     newCaseNote();
 
                 }});
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -7365,7 +7509,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -7480,7 +7624,15 @@ public class Controller implements Initializable {
                 menu = new ContextMenu();
                 String caseno = "";
                 menu.getItems().add(openCaseSFDC);
+                menu.getItems().add(openCaseDetails);
                 tableCases.setContextMenu(menu);
+
+                openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        myCaseDetails();
+                    }
+                });
 
                 openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -7532,7 +7684,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -7616,7 +7768,15 @@ public class Controller implements Initializable {
                 menu = new ContextMenu();
                 String caseno = "";
                 menu.getItems().add(openCaseSFDC);
+                menu.getItems().add(openCaseDetails);
                 tableCases.setContextMenu(menu);
+
+                openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        myCaseDetails();
+                    }
+                });
 
                 openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -7668,7 +7828,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -7747,7 +7907,16 @@ public class Controller implements Initializable {
                 menu = new ContextMenu();
                 String caseno = "";
                 menu.getItems().add(openCaseSFDC);
+                menu.getItems().add(openCaseDetails);
+
                 tableCases.setContextMenu(menu);
+
+                openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        myCaseDetails();
+                    }
+                });
 
                 openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -7799,7 +7968,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -7878,7 +8047,15 @@ public class Controller implements Initializable {
                 menu = new ContextMenu();
                 String caseno = "";
                 menu.getItems().add(openCaseSFDC);
+                menu.getItems().add(openCaseDetails);
                 tableCases.setContextMenu(menu);
+
+                openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        myCaseDetails();
+                    }
+                });
 
                 openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -7930,7 +8107,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -8011,7 +8188,15 @@ public class Controller implements Initializable {
                 menu = new ContextMenu();
                 String caseno = "";
                 menu.getItems().add(openCaseSFDC);
+                menu.getItems().add(openCaseDetails);
                 tableCases.setContextMenu(menu);
+
+                openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        myCaseDetails();
+                    }
+                });
 
                 openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
@@ -8065,7 +8250,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -8182,7 +8367,15 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -8233,7 +8426,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -8308,7 +8501,15 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -8359,7 +8560,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -8482,7 +8683,15 @@ public class Controller implements Initializable {
             menu = new ContextMenu();
             String caseno = "";
             menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
 
             openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
@@ -8585,10 +8794,10 @@ public class Controller implements Initializable {
 
         try {
 
-            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V2.csv");
+            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V2.csv");
 
             HSSFWorkbook workBook = new HSSFWorkbook();
-            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V2.xls";
+            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V2.xls";
             HSSFSheet sheet = workBook.createSheet("Data");
             CreationHelper helper = workBook.getCreationHelper();
 
@@ -8675,7 +8884,7 @@ public class Controller implements Initializable {
         HSSFCell cellVal;
         HSSFCell age;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V2.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V2.xls")))) {
             HSSFSheet filtersheet = workbook.getSheetAt(0);
 
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -8718,14 +8927,11 @@ public class Controller implements Initializable {
                         cellValue = "NotSet";
                         cellVal.setCellValue(cellValue);
                     }
-                    if (row == 5717){
-                        System.out.println(cellValue);
-                    }
                 }
             }
 
 
-            FileOutputStream output_file =new FileOutputStream(new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls"));
+            FileOutputStream output_file =new FileOutputStream(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls"));
             workbook.write(output_file);
             output_file.close();
 
@@ -8739,10 +8945,10 @@ public class Controller implements Initializable {
 
         try {
 
-            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_projects.csv");
+            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.csv");
 
             HSSFWorkbook workBook = new HSSFWorkbook();
-            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\cmt_projects.xls";
+            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.xls";
             HSSFSheet sheet = workBook.createSheet("Projects");
             CreationHelper helper = workBook.getCreationHelper();
 
@@ -8768,8 +8974,6 @@ public class Controller implements Initializable {
 
             int lastRow = sheet.getLastRowNum();
 
-            System.out.println(lastRow);
-
             for (int i = 0; i < 5; i++) {
                 sheet.removeRow(sheet.getRow(lastRow - i));
             }
@@ -8787,11 +8991,11 @@ public class Controller implements Initializable {
 
     private void parseUserData() {
         try {
-            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_user_prod.csv");
+            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_user_prod.csv");
 
             HSSFWorkbook workBook = new HSSFWorkbook();
 
-            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\cmt_user_prod.xls";
+            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_user_prod.xls";
             HSSFSheet sheet = workBook.createSheet("UserProd");
 
             BufferedReader br = new BufferedReader(new FileReader(csvfile));
@@ -8830,10 +9034,10 @@ public class Controller implements Initializable {
     private void parseComments(){
         try {
 
-            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_comments.csv");
+            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_comments.csv");
 
             HSSFWorkbook workBook = new HSSFWorkbook();
-            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\cmt_comments.xls";
+            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_comments.xls";
             HSSFSheet sheet = workBook.createSheet("Survey");
             CreationHelper helper = workBook.getCreationHelper();
 
@@ -8895,7 +9099,7 @@ public class Controller implements Initializable {
         HSSFCell caseOwner;
         HSSFCell caseUpdate;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
             HSSFSheet filtersheet = workbook.getSheetAt(0);
 
             hotlist = 0;
@@ -9174,7 +9378,7 @@ public class Controller implements Initializable {
         HSSFCell myCoOwnedCase;
         HSSFCell myCoOwnerQueue;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
@@ -9495,7 +9699,7 @@ public class Controller implements Initializable {
         HSSFCell mycaseUpdate;
         HSSFCell productName;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
@@ -10123,7 +10327,7 @@ public class Controller implements Initializable {
         HSSFCell status;
         HSSFCell outFollow;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
@@ -10283,7 +10487,7 @@ public class Controller implements Initializable {
 
         try {
 
-            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_user_prod.xls")));
+            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_user_prod.xls")));
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -10455,7 +10659,7 @@ public class Controller implements Initializable {
 
         try {
 
-            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_user_prod.xls")));
+            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_user_prod.xls")));
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -10745,7 +10949,7 @@ public class Controller implements Initializable {
         customerCol.setCellValueFactory(new PropertyValueFactory<AccountTableView, String>("accountName"));
         customerSelectedCol.setCellValueFactory(new PropertyValueFactory<AccountTableView, String>("accountName"));
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
@@ -11607,9 +11811,52 @@ public class Controller implements Initializable {
         queueArray.add(85, "TS UT-SD");
     }
 
+    private void arrangeCMTFolder() {
+
+        File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT");
+        File repo2 = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings");
+        File repo3 = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data");
+        File repo4 = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Selection");
+
+        if (!repo.exists()) {
+            new File(System.getProperty("user.home") + "\\Documents\\CMT").mkdir();
+        }
+
+        if (!repo2.exists()){
+            new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings").mkdir();
+        }
+        if (!repo3.exists()){
+            new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data").mkdir();
+        }
+        if (!repo4.exists()){
+            new File(System.getProperty("user.home") + "\\Documents\\CMT\\Selection").mkdir();
+        }
+
+        File[] fileList = repo.listFiles();
+
+        for (int i = 0; i < fileList.length; i++) {
+
+            if (fileList[i].getName().equals("cmt_product_default_settings.txt")
+                    || fileList[i].getName().equals("cmt_queueu_default_settings.txt") ||
+                    fileList[i].getName().equals("cmt_user_default_settings.txt")) {
+
+                File oldone = new File(System.getProperty("user.home") + "\\Documents\\CMT\\"+fileList[i].getName());
+                oldone.renameTo(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\"+fileList[i].getName()));
+            }
+            if (fileList[i].getName().equals("cmt_case_data_V2.csv") || fileList[i].getName().equals("cmt_case_data_V2.xls") || fileList[i].getName().equals("cmt_case_data_V3.xls") ||
+                    fileList[i].getName().equals("cmt_comments.csv") || fileList[i].getName().equals("cmt_comments.xls") || fileList[i].getName().equals("cmt_projects.csv") ||
+                    fileList[i].getName().equals("cmt_projects.xls")|| fileList[i].getName().equals("cmt_user_prod.csv") || fileList[i].getName().equals("cmt_user_prod.xls")){
+
+                File oldone2 = new File(System.getProperty("user.home") + "\\Documents\\CMT\\"+fileList[i].getName());
+                oldone2.renameTo(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\"+fileList[i].getName()));
+            }
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        arrangeCMTFolder();
         readDefaultSettingFiles();
         setqueueArray();
         readTimeStamp();

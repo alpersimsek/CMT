@@ -88,7 +88,7 @@ public class Model implements Initializable {
 
         try {
 
-            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_user_prod.xls")));
+            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_user_prod.xls")));
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
             int cellnum = filtersheet.getRow(0).getLastCellNum();
