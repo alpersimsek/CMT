@@ -161,7 +161,7 @@ public class MyCaseDetails implements Initializable {
     private void setHeader(){
 
         Stage stage = (Stage) txtMyCaseDetNum.getScene().getWindow();
-        stage.setTitle(caseSelection.get(0) +  " : CASE DETAIL WINDOW" );
+        stage.setTitle(caseSelection.get(0) +  " : CASE Details..." );
     }
 
     private void readNotes(String str){

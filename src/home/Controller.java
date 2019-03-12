@@ -392,6 +392,8 @@ public class Controller implements Initializable {
     @FXML
     private Button btnGatingPrevious;
     @FXML
+    private Button btnProjectsAll;
+    @FXML
     private FontAwesomeIconView btnBack;
     @FXML
     private FontAwesomeIconView btnInfo;
@@ -542,37 +544,27 @@ public class Controller implements Initializable {
     @FXML
     private TableColumn<ProjectTableView, String> prjNumCol;
     @FXML
+    private TableColumn<ProjectTableView, String> prjNoCol;
+    @FXML
     private TableColumn<ProjectTableView, String> prjSevCol;
     @FXML
     private TableColumn<ProjectTableView, String> prjStatCol;
     @FXML
-    private TableColumn<ProjectTableView, String> prjOwnCol;
-    @FXML
-    private TableColumn<ProjectTableView, String> prjAgeCol;
-    @FXML
-    private TableColumn<ProjectTableView, String> prjPrdCol;
-    @FXML
-    private TableColumn<ProjectTableView, String> prjHLCol;
-    @FXML
-    private TableColumn<ProjectTableView, String> prjHRCol;
-    @FXML
-    private TableColumn<ProjectTableView, String> prjHCCol;
-    @FXML
-    private TableColumn<ProjectTableView, String> prjHBCol;
-    @FXML
-    private TableColumn<ProjectTableView, String> prjHDCol;
-    @FXML
-    private TableColumn<ProjectTableView, String> prjPDCol;
+    private TableColumn<ProjectTableView, String> prjProdCol;
     @FXML
     private TableColumn<ProjectTableView, String> prjAccCol;
     @FXML
-    private TableColumn<ProjectTableView, String> prjRegCol;
-    @FXML
-    private TableColumn<ProjectTableView, String> prjESBCol;
-    @FXML
     private TableColumn<ProjectTableView, String> prjSubCol;
     @FXML
-    private TableColumn<ProjectTableView, String> prjTypeCol;
+    private TableColumn<ProjectTableView, String> prjModCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjHotRCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjGateDateCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjRegionCol;
+    @FXML
+    private TableColumn<ProjectTableView, String> prjSiteStatusCol;
     @FXML
     private Button btnQueueUpdate;
     @FXML
@@ -796,6 +788,7 @@ public class Controller implements Initializable {
     int prjGatingNow = 0;
     int prjGatingDate = 0;
     int prjGatingPrev = 0;
+    int prjAllCases = 0;
 
 
     //Alert Strings
@@ -835,16 +828,22 @@ public class Controller implements Initializable {
 
             apnProjects.toFront();
             lblStatus.setText("PROJECTS VIEW");
-            tableProjects.setVisible(false);
-            btnToExcel.setVisible(false);
+            btnToExcel.setVisible(true);
             btnBack.setVisible(false);
             pnPrjNotes.setVisible(false);
             btnPrjNewNote.setVisible(false);
             btnPrjDelNote.setVisible(false);
             txtPrjNoteView.setVisible(false);
+            parseProjectData();
             projectsPage();
+            initProjectTable();
+            tableProjects.getItems().clear();
+            tableProjects.setVisible(true);
+            tableProjects.toFront();
 
-         }
+            buildTableProjects(tableProjects, "All");
+
+        }
 
         if (event.getSource() == btnCustomers) {
             lblStatus.setText("CUSTOMER VIEW");
@@ -4286,14 +4285,16 @@ public class Controller implements Initializable {
 
     private void downloadCSV() {
 
+        String filename1 = "cmt_projects.csv";
         String filename2 = "cmt_user_prod.csv";
         String filename3 = "cmt_case_data_V2.csv";
         String filename4 = "cmt_comments.csv";
-        String filename1 = "cmt_projects.csv";
+        String filename5 = "cmt_project_details.csv";
         String newLoc2 = "https://na8.salesforce.com/00OC0000006r1xS?export=1&enc=UTF-8&xf=csv?filename=" + filename2;
         String newLoc = "https://na8.salesforce.com/00OC0000007My3o?export=1&enc=UTF-8&xf=csv?filename=" + filename1;
         String newLoc3 = "https://na8.salesforce.com/00OC00000076uIg?export=1&enc=UTF-8&xf=csv?filename=" + filename3;
         String newLoc4 = "https://na8.salesforce.com/00OC0000006r5ig?export=1&enc=UTF-8&xf=csv?filename=" + filename4;
+        String newLoc5 = "https://na8.salesforce.com/00OC0000007Mzu5?export=1&enc=UTF-8&xf=csv?filename=" + filename5;
 
         try {
 
@@ -4306,6 +4307,14 @@ public class Controller implements Initializable {
         try {
 
             FileUtils.copyURLToFile(new URL(newLoc), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.csv"));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+
+            FileUtils.copyURLToFile(new URL(newLoc5), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_project_details.csv"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -4420,7 +4429,6 @@ public class Controller implements Initializable {
     private void projectsPage() {
 
         HSSFCell theater;
-        HSSFCell supHotLevel;
         HSSFCell supHotReason;
 
         try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.xls")))) {
@@ -4436,6 +4444,7 @@ public class Controller implements Initializable {
             prjGatingNow = 0;
             prjGatingDate = 0;
             prjGatingPrev = 0;
+            prjAllCases = 0;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -4443,9 +4452,6 @@ public class Controller implements Initializable {
                 switch (filterColName) {
                     case ("Support Theater"):
                         caseRegionRef = i;
-                        break;
-                    case("Support Hotlist Level"):
-                        caseSupHotListLRef = i;
                         break;
                     case ("Support Hotlist Reason"):
                         caseSupHotListRRef = i;
@@ -4457,36 +4463,31 @@ public class Controller implements Initializable {
                 theater = filtersheet.getRow(i).getCell(caseRegionRef);
                 String region = theater.getStringCellValue();
 
-                supHotLevel = filtersheet.getRow(i).getCell(caseSupHotListLRef);
-                String hotLevel = supHotLevel.getStringCellValue();
-
                 supHotReason = filtersheet.getRow(i).getCell(caseSupHotListRRef);
                 String hotReason = supHotReason.getStringCellValue();
 
-                if (hotLevel.equals("Project")){
-
-                    if (region.equals("AMERICAS") || region.equals("NA")) {
-                        prjAmericas++;
-                    }
-                    if (region.equals("EMEA")) {
-                        prjEmea++;
-                    }
-                    if (region.equals("ASIAPAC")) {
-                        prjApac++;
-                    }
-                    if (region.equals("JAPAN")) {
-                        prjJapan++;
-                    }
-                    if (hotReason.equals("Project Gating - Now") || hotReason.equals("Gating Now")){
-                        prjGatingNow++;
-                    }
-                    if (hotReason.equals("Project Gating - Date")){
-                        prjGatingDate++;
-                    }
-                    if (hotReason.equals("Project Gating - Previously") || hotReason.equals("Previously Gating")){
-                        prjGatingPrev++;
-                    }
+                if (region.equals("AMERICAS") || region.equals("NA")) {
+                    prjAmericas++;
                 }
+                if (region.equals("EMEA")) {
+                    prjEmea++;
+                }
+                if (region.equals("ASIAPAC")) {
+                    prjApac++;
+                }
+                if (region.equals("JAPAN")) {
+                    prjJapan++;
+                }
+                if (hotReason.equals("Project Gating - Now") || hotReason.equals("Gating Now")){
+                    prjGatingNow++;
+                }
+                if (hotReason.equals("Project Gating - Date")){
+                    prjGatingDate++;
+                }
+                if (hotReason.equals("Project Gating - Previously") || hotReason.equals("Previously Gating")){
+                    prjGatingPrev++;
+                }
+                prjAllCases++;
             }
             btnAmericas.setText(String.valueOf(prjAmericas));
             btnEmea.setText(String.valueOf(prjEmea));
@@ -4495,6 +4496,7 @@ public class Controller implements Initializable {
             btnGatingNow.setText(String.valueOf(prjGatingNow));
             btnGatingDate.setText(String.valueOf(prjGatingDate));
             btnGatingPrevious.setText(String.valueOf(prjGatingPrev));
+            btnProjectsAll.setText(String.valueOf(prjAllCases));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -4593,6 +4595,18 @@ public class Controller implements Initializable {
                 alertUser(strAlert);
             }
         }
+
+        if (event.getSource() == btnProjectsAll){
+            if (prjAllCases !=0){
+                tableProjects.getItems().clear();
+                initProjectTable();
+                buildTableProjects(tableProjects, "All");
+            }
+            if (prjAllCases == 0){
+                alertUser(strAlert);
+            }
+        }
+
         if (event.getSource() == btnPrjMyNotes){
             getPrjNotesList();
         }
@@ -4712,8 +4726,6 @@ public class Controller implements Initializable {
             int cellnum = filtersheet.getRow(0).getLastCellNum();
             int lastRow = filtersheet.getLastRowNum();
             HSSFCell cellVal;
-            HSSFCell cellVal2;
-            HSSFCell ageCell;
             HSSFCell reason;
 
             for (int i = 0; i < cellnum; i++) {
@@ -4722,12 +4734,6 @@ public class Controller implements Initializable {
 
                 if (filterColName.equals("Support Theater")) {
                     caseRegionRef = i;
-                }
-                if (filterColName.equals("Support Hotlist Level")) {
-                    caseSupHotListLRef = i;
-                }
-                if (filterColName.equals("Age (Days)")){
-                    caseAgeRefCell = i;
                 }
                 if (filterColName.equals("Support Hotlist Reason")){
                     caseSupHotListRRef = i;
@@ -4738,20 +4744,38 @@ public class Controller implements Initializable {
 
                 cellVal = filtersheet.getRow(k).getCell(caseRegionRef);
                 String cellValToCompare = cellVal.getStringCellValue();
-                cellVal2 = filtersheet.getRow(k).getCell(caseSupHotListLRef);
-                String cellValToCompare2 = cellVal2.getStringCellValue();
-                ageCell = filtersheet.getRow(k).getCell(caseAgeRefCell);
-                String ageString = ageCell.getStringCellValue();
                 reason = filtersheet.getRow(k).getCell(caseSupHotListRRef);
                 String hotReason = reason.getStringCellValue();
 
+                if (str1.equals("All")){
 
-                ageString = ageString.replace(".0000000000", "");
-                ageCell.setCellValue(ageString);
+                    ArrayList<String> array = new ArrayList<>();
+                    ObservableList<ProjectTableView> observableList = FXCollections.observableArrayList();
 
-                if (str1 == "NA") {
+                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                    while (iterCells.hasNext()) {
+                        HSSFCell cell = (HSSFCell) iterCells.next();
+                        array.add(cell.getStringCellValue());
+                    }
 
-                    if ((cellValToCompare.equals("AMERICAS") || cellValToCompare.equals("NA")) && cellValToCompare2.equals("Project")) {
+
+                    observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
+                            array.get(3), array.get(4), array.get(5), array.get(6), array.get(7),
+                            array.get(8), array.get(9), array.get(10),
+                            array.get(11)));
+
+                    tableView.getItems().addAll(observableList);
+                    caseCount++;
+
+                    if (tableView.getItems().size() >= caseCount + 1) {
+                        tableView.getItems().removeAll(observableList);
+                    }
+
+                }
+
+                if (str1.equals("NA")) {
+
+                    if ((cellValToCompare.equals("AMERICAS") || cellValToCompare.equals("NA"))) {
 
                         ArrayList<String> array = new ArrayList<>();
                         ObservableList<ProjectTableView> observableList = FXCollections.observableArrayList();
@@ -4762,15 +4786,10 @@ public class Controller implements Initializable {
                             array.add(cell.getStringCellValue());
                         }
 
-                        int age = 0;
-
-                        age = Integer.parseInt(array.get(caseAgeRefCell));
-
                         observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), age, array.get(5), array.get(6), array.get(7),
+                                array.get(3), array.get(4), array.get(5), array.get(6), array.get(7),
                                 array.get(8), array.get(9), array.get(10),
-                                array.get(11), array.get(12), array.get(13),
-                                array.get(14), array.get(15), array.get(16)));
+                                array.get(11)));
 
                         tableView.getItems().addAll(observableList);
                         caseCount++;
@@ -4780,9 +4799,9 @@ public class Controller implements Initializable {
                         }
                     }
                 }
-                if (str1 == "EMEA") {
+                if (str1.equals("EMEA")) {
 
-                    if (cellValToCompare.equals("EMEA") && cellValToCompare2.equals("Project")) {
+                    if (cellValToCompare.equals("EMEA")) {
 
                         ArrayList<String> array = new ArrayList<>();
                         ObservableList<ProjectTableView> observableList = FXCollections.observableArrayList();
@@ -4793,15 +4812,10 @@ public class Controller implements Initializable {
                             array.add(cell.getStringCellValue());
                         }
 
-                        int age = 0;
-
-                        age = Integer.parseInt(array.get(caseAgeRefCell));
-
                         observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), age, array.get(5), array.get(6), array.get(7),
+                                array.get(3), array.get(4), array.get(5), array.get(6), array.get(7),
                                 array.get(8), array.get(9), array.get(10),
-                                array.get(11), array.get(12), array.get(13),
-                                array.get(14), array.get(15), array.get(16)));
+                                array.get(11)));
 
                         tableView.getItems().addAll(observableList);
                         caseCount++;
@@ -4811,9 +4825,9 @@ public class Controller implements Initializable {
                         }
                     }
                 }
-                if (str1 == "APAC") {
+                if (str1.equals("APAC")) {
 
-                    if (cellValToCompare.equals("ASIAPAC") && cellValToCompare2.equals("Project")) {
+                    if (cellValToCompare.equals("ASIAPAC")) {
 
                         ArrayList<String> array = new ArrayList<>();
                         ObservableList<ProjectTableView> observableList = FXCollections.observableArrayList();
@@ -4824,15 +4838,10 @@ public class Controller implements Initializable {
                             array.add(cell.getStringCellValue());
                         }
 
-                        int age = 0;
-
-                        age = Integer.parseInt(array.get(caseAgeRefCell));
-
                         observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), age, array.get(5), array.get(6), array.get(7),
+                                array.get(3), array.get(4), array.get(5), array.get(6), array.get(7),
                                 array.get(8), array.get(9), array.get(10),
-                                array.get(11), array.get(12), array.get(13),
-                                array.get(14), array.get(15), array.get(16)));
+                                array.get(11)));
 
                         tableView.getItems().addAll(observableList);
                         caseCount++;
@@ -4842,9 +4851,9 @@ public class Controller implements Initializable {
                         }
                     }
                 }
-                if (str1 == "JAPAN") {
+                if (str1.equals("JAPAN")){
 
-                    if (cellValToCompare.equals("JAPAN") && cellValToCompare2.equals("Project")) {
+                    if (cellValToCompare.equals("JAPAN")) {
 
                         ArrayList<String> array = new ArrayList<>();
                         ObservableList<ProjectTableView> observableList = FXCollections.observableArrayList();
@@ -4855,15 +4864,10 @@ public class Controller implements Initializable {
                             array.add(cell.getStringCellValue());
                         }
 
-                        int age = 0;
-
-                        age = Integer.parseInt(array.get(caseAgeRefCell));
-
                         observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), age, array.get(5), array.get(6), array.get(7),
+                                array.get(3), array.get(4), array.get(5), array.get(6), array.get(7),
                                 array.get(8), array.get(9), array.get(10),
-                                array.get(11), array.get(12), array.get(13),
-                                array.get(14), array.get(15), array.get(16)));
+                                array.get(11)));
 
                         tableView.getItems().addAll(observableList);
                         caseCount++;
@@ -4873,9 +4877,9 @@ public class Controller implements Initializable {
                         }
                     }
                 }
-                if (str1 == "NOW") {
+                if (str1.equals("NOW")) {
 
-                    if ((hotReason.equals("Project Gating - Now") || hotReason.equals("Gating Now")) && cellValToCompare2.equals("Project")) {
+                    if ((hotReason.equals("Project Gating - Now") || hotReason.equals("Gating Now"))) {
 
                         ArrayList<String> array = new ArrayList<>();
                         ObservableList<ProjectTableView> observableList = FXCollections.observableArrayList();
@@ -4886,15 +4890,10 @@ public class Controller implements Initializable {
                             array.add(cell.getStringCellValue());
                         }
 
-                        int age = 0;
-
-                        age = Integer.parseInt(array.get(caseAgeRefCell));
-
                         observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), age, array.get(5), array.get(6), array.get(7),
+                                array.get(3), array.get(4), array.get(5), array.get(6), array.get(7),
                                 array.get(8), array.get(9), array.get(10),
-                                array.get(11), array.get(12), array.get(13),
-                                array.get(14), array.get(15), array.get(16)));
+                                array.get(11)));
 
                         tableView.getItems().addAll(observableList);
                         caseCount++;
@@ -4904,9 +4903,9 @@ public class Controller implements Initializable {
                         }
                     }
                 }
-                if (str1 == "PREV") {
+                if (str1.equals("PREV")) {
 
-                    if ((hotReason.equals("Project Gating - Previously") || hotReason.equals("Previously Gating")) && cellValToCompare2.equals("Project")) {
+                    if ((hotReason.equals("Project Gating - Previously") || hotReason.equals("Previously Gating"))) {
 
                         ArrayList<String> array = new ArrayList<>();
                         ObservableList<ProjectTableView> observableList = FXCollections.observableArrayList();
@@ -4917,15 +4916,10 @@ public class Controller implements Initializable {
                             array.add(cell.getStringCellValue());
                         }
 
-                        int age = 0;
-
-                        age = Integer.parseInt(array.get(caseAgeRefCell));
-
                         observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), age, array.get(5), array.get(6), array.get(7),
+                                array.get(3), array.get(4), array.get(5), array.get(6), array.get(7),
                                 array.get(8), array.get(9), array.get(10),
-                                array.get(11), array.get(12), array.get(13),
-                                array.get(14), array.get(15), array.get(16)));
+                                array.get(11)));
 
                         tableView.getItems().addAll(observableList);
                         caseCount++;
@@ -4935,9 +4929,9 @@ public class Controller implements Initializable {
                         }
                     }
                 }
-                if (str1 == "DATE") {
+                if (str1.equals("DATE")) {
 
-                    if (hotReason.equals("Project Gating - Date")  && cellValToCompare2.equals("Project")) {
+                    if (hotReason.equals("Project Gating - Date")) {
 
                         ArrayList<String> array = new ArrayList<>();
                         ObservableList<ProjectTableView> observableList = FXCollections.observableArrayList();
@@ -4948,15 +4942,11 @@ public class Controller implements Initializable {
                             array.add(cell.getStringCellValue());
                         }
 
-                        int age = 0;
-
-                        age = Integer.parseInt(array.get(caseAgeRefCell));
 
                         observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), age, array.get(5), array.get(6), array.get(7),
+                                array.get(3), array.get(4), array.get(5), array.get(6), array.get(7),
                                 array.get(8), array.get(9), array.get(10),
-                                array.get(11), array.get(12), array.get(13),
-                                array.get(14), array.get(15), array.get(16)));
+                                array.get(11)));
 
                         tableView.getItems().addAll(observableList);
                         caseCount++;
@@ -8789,6 +8779,51 @@ public class Controller implements Initializable {
         fileOut.close();
     }
 
+    private void extractToExcelProjects(TableView tableView, String textData, File file) throws IOException {
+
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet spreadsheet = workbook.createSheet(textData);
+        HSSFRow row = spreadsheet.createRow(0);
+        TableColumn tableColumn = new TableColumn();
+
+        ArrayList headerArray = new ArrayList();
+        headerArray.add("Case No.");
+        headerArray.add("Account Name");
+        headerArray.add("Support Product");
+        headerArray.add("Subject");
+        headerArray.add("Last Modified Date");
+        headerArray.add("Severity");
+        headerArray.add("Status");
+        headerArray.add("Case Number");
+        headerArray.add("Support Hot List Reason");
+        headerArray.add("Project Gating Date");
+        headerArray.add("Support Theater");
+        headerArray.add("Site Status");
+
+        for (int k = 0; k < tableView.getColumns().size(); k++) {
+            row.createCell(k).setCellValue(headerArray.get(k).toString());
+        }
+
+        for (int i = 0; i < tableView.getItems().size(); i++) {
+
+            row = spreadsheet.createRow(i + 1);
+
+            for (int j = 0; j < tableView.getColumns().size(); j++) {
+
+                tableColumn = (TableColumn) tableView.getColumns().get(j);
+                if (tableColumn.getCellObservableValue(i).getValue() != null) {
+                    row.createCell(j).setCellValue(tableColumn.getCellObservableValue(i).getValue().toString());
+                } else {
+                    row.createCell(j).setCellValue("");
+                }
+            }
+        }
+
+        FileOutputStream fileOut = new FileOutputStream(file);
+        workbook.write(fileOut);
+        fileOut.close();
+    }
+
     /* Creating XLS File from CSV File downloaded*/
     private void parseData() {
 
@@ -8946,7 +8981,6 @@ public class Controller implements Initializable {
         try {
 
             File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.csv");
-
             HSSFWorkbook workBook = new HSSFWorkbook();
             String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.xls";
             HSSFSheet sheet = workBook.createSheet("Projects");
@@ -8985,8 +9019,52 @@ public class Controller implements Initializable {
         }catch (Exception e) {
             e.printStackTrace();
         }
+        parseProjectDetailsData();
+    }
 
+    private void parseProjectDetailsData(){
 
+        try {
+
+            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_project_details.csv");
+            HSSFWorkbook workBook = new HSSFWorkbook();
+            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_project_details.xls";
+            HSSFSheet sheet = workBook.createSheet("Project Details");
+            CreationHelper helper = workBook.getCreationHelper();
+
+            int r = 0;
+
+            CsvParserSettings settings = new CsvParserSettings();
+            settings.setMaxCharsPerColumn(100000);
+            settings.getFormat().setLineSeparator("\n");
+
+            CsvParser parser = new CsvParser(settings);
+            parser.beginParsing(csvfile);
+
+            String[] row;
+            while ((row = parser.parseNext()) != null) {
+
+                Row frow = sheet.createRow((short) r++);
+                for (int i = 0; i <row.length ; i++) {
+                    frow.createCell(i).setCellValue(helper.createRichTextString(row[i]));
+                }
+            }
+
+            parser.stopParsing();
+
+            int lastRow = sheet.getLastRowNum();
+
+            for (int i = 0; i < 5; i++) {
+                sheet.removeRow(sheet.getRow(lastRow - i));
+            }
+
+            FileOutputStream fileOutputStream = new FileOutputStream(xlsFileAddress);
+            workBook.write(fileOutputStream);
+            fileOutputStream.close();
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void parseUserData() {
@@ -10108,23 +10186,19 @@ public class Controller implements Initializable {
 
     private void initProjectTable(){
 
-        prjNumCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseNumber"));
-        prjSevCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseStatus"));
-        prjStatCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseSeverity"));
-        prjOwnCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseOwner"));
-        prjAgeCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseAge"));
-        prjPrdCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseProduct"));
-        prjHLCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseHotListLevel"));
-        prjHRCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseHotListReason"));
-        prjHCCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseHotListComment"));
-        prjHBCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseHotListBy"));
-        prjHDCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseHotListDate"));
-        prjPDCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjGatingDate"));
+        prjNoCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseNo"));
         prjAccCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseAccount"));
-        prjRegCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseRegion"));
-        prjESBCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseEscalatedBy"));
+        prjProdCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseProduct"));
         prjSubCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseSubject"));
-        prjTypeCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseSupportType"));
+        prjModCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjModDate"));
+        prjStatCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseSeverity"));
+        prjSevCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseStatus"));
+        prjNumCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseNumber"));
+        prjHotRCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjHotR"));
+        prjGateDateCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjGateDate"));
+        prjRegionCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjRegion"));
+        prjSiteStatusCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjSiteStatus"));
+
     }
 
 
@@ -10177,6 +10251,7 @@ public class Controller implements Initializable {
             }
 
             writer.close();
+            writer.close();
 
         }catch (Exception e){
             e.printStackTrace();
@@ -10189,31 +10264,53 @@ public class Controller implements Initializable {
         int row = tablePosition.getRow();
         ProjectTableView caseview = (ProjectTableView) tableCases.getItems().get(row);
         TableColumn tableColumn = tablePosition.getTableColumn();
-        String data1 = caseview.getPrjCaseNumber();
+        String data1 = caseview.getPrjCaseNo();
         ClipboardContent content = new ClipboardContent();
         content.putString(data1);
         Clipboard.getSystemClipboard().setContent(content);
 
-        selectedCase = new ArrayList<>();
-        selectedCase.add(caseview.getPrjCaseNumber());
-        selectedCase.add(caseview.getPrjCaseSeverity());
-        selectedCase.add(caseview.getPrjCaseStatus());
-        selectedCase.add(caseview.getPrjCaseOwner());
-        selectedCase.add(caseview.getPrjCaseAge().toString());
-        selectedCase.add(caseview.getPrjCaseProduct());
-        selectedCase.add(caseview.getPrjCaseHotListLevel());
-        selectedCase.add(caseview.getPrjCaseHotListReason());
-        selectedCase.add(caseview.getPrjCaseHotListComment());
-        selectedCase.add(caseview.getPrjCaseHotListBy());
-        selectedCase.add(caseview.getPrjCaseHotListDate());
-        selectedCase.add(caseview.getPrjGatingDate());
-        selectedCase.add(caseview.getPrjCaseAccount());
-        selectedCase.add(caseview.getPrjCaseRegion());
-        selectedCase.add(caseview.getPrjCaseEscalatedBy());
-        selectedCase.add(caseview.getPrjCaseSubject());
-        selectedCase.add(caseview.getPrjCaseSupportType());
+
+        HSSFCell cellVal;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_project_details.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+
+                if (filterColName.equals("Case Number")) {
+                    caseNumCellRef = i;
+                }
+            }
+
+            for (int k = 1; k < lastRow + 1; k++) {
+
+                cellVal = filtersheet.getRow(k).getCell(caseNumCellRef);
+                String cellValToCompare = cellVal.getStringCellValue();
+
+                if (cellValToCompare.equals(data1)){
+
+                    selectedCase = new ArrayList<>();
+                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                    while (iterCells.hasNext()) {
+                        HSSFCell cell = (HSSFCell) iterCells.next();
+                        selectedCase.add(cell.getStringCellValue());
+                    }
+
+                }
+            }
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         int selectedsize= selectedCase.size();
+
 
         try {
 
@@ -10308,7 +10405,12 @@ public class Controller implements Initializable {
 
             if (file != null) {
 
-                extractToExcel(table, "testData", file);
+
+                if (table != tableProjects) {
+                    extractToExcel(table, "CMT", file);
+                }else{
+                    extractToExcelProjects(table, "CMT Projects", file);
+                }
             }
             primaryStage.close();
         } catch (Exception e) {

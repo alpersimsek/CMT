@@ -105,23 +105,25 @@ public class CaseDetails implements Initializable {
             }
         }
         String contents = sb.toString();
-        //contents = contents.replace("\n", "");
-       contentArray = contents.split("\",\"");
+        contents = contents.replace(".0000000000", "");
+
+        contentArray = contents.split("\",\"");
+
 
         txtPrjCaseNum.setText(contentArray[0]);
-        txtPrjCaseStat.setText(contentArray[1]);
-        txtPrjCaseSev.setText(contentArray[2]);
+        txtPrjCaseSev.setText(contentArray[1]);
+        txtPrjCaseStat.setText(contentArray[2]);
         txtPrjCaseOwner.setText(contentArray[3]);
-        txtPrjAge.setText(contentArray[4]);
-        txtPrjProd.setText(contentArray[5]);
-        txtPrjHotListR.setText(contentArray[7]);
-        txtHotListComm.setText(contentArray[8]);
-        txtPrjHotListB.setText(contentArray[9]);
-        txtPrjHotListD.setText(contentArray[10]);
-        txtPrjGateDate.setText(contentArray[11]);
-        txtPrjAcc.setText(contentArray[12]);
-        txtPrjReg.setText(contentArray[13]);
-        txtPrjCaseSub.setText(contentArray[15]);
+        txtPrjHotListR.setText(contentArray[4]);
+        txtPrjCaseSub.setText(contentArray[5]);
+        txtPrjHotListB.setText(contentArray[6]);
+        txtPrjProd.setText(contentArray[7]);
+        txtPrjHotListD.setText(contentArray[8]);
+        txtPrjGateDate.setText(contentArray[9]);
+        txtPrjAcc.setText(contentArray[10]);
+        txtPrjAge.setText(contentArray[11]);
+        txtPrjReg.setText(contentArray[12]);
+        txtHotListComm.setText(contentArray[13]);
 
         projectCaseComments();
         readNotes(txtPrjCaseNum.getText());
@@ -139,7 +141,7 @@ public class CaseDetails implements Initializable {
     private void setHeader(){
 
         Stage stage = (Stage) txtPrjCaseNum.getScene().getWindow();
-        stage.setTitle(txtPrjCaseNum.getText() +  " : CASE DETAIL WINDOW" );
+        stage.setTitle(txtPrjCaseNum.getText() +  " : CASE Details..." );
     }
 
     @FXML
