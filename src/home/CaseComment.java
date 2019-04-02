@@ -118,7 +118,7 @@ public class CaseComment implements Initializable {
                 ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("home/image/rbbicon.png"));
                 alert.setTitle("RBBN CASE MANAGEMENT TOOL WARNING:");
                 alert.setHeaderText(null);
-                alert.setContentText("THERE IS NO COMMENT FOR THIS CASE"+ "\n" + "SINCE 7 DAYS!");
+                alert.setContentText("THERE IS NO WORK COMMENT FOR THIS CASE"+ "\n" + "SINCE 7 DAYS!");
                 alert.showAndWait();
             }
 
@@ -180,7 +180,7 @@ public class CaseComment implements Initializable {
     private void setHeader(){
 
         Stage stage = (Stage) txtCaseComments.getScene().getWindow();
-        stage.setTitle(caseSelection.get(0) +  " : COMMENTS FROM LAST 7 DAYS" );
+        stage.setTitle(caseSelection.get(0) +  " : WORK NOTE(S) FROM LAST 7 DAYS" );
 
     }
 
@@ -192,7 +192,7 @@ public class CaseComment implements Initializable {
         try {
             root = FXMLLoader.load(getClass().getClassLoader().getResource("home/CaseNote.fxml"));
             Stage stage = new Stage();
-            stage.setTitle("ADD PERSONAL CASE NOTE");
+            stage.setTitle("ADD MEMO");
             stage.getIcons().add(new Image("home/image/rbbicon.png"));
             stage.setScene(new Scene(root, 650, 400));
             stage.show();

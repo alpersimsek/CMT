@@ -48,13 +48,14 @@ import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Row;
 import java.awt.*;
 import javafx.scene.control.TextArea;
+
 import java.io.*;
 import java.net.*;
-import java.nio.file.Files;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -140,6 +141,8 @@ public class Controller implements Initializable {
     @FXML
     private Label lblRefreshText;
     @FXML
+    private Label lblDownload;
+    @FXML
     private TextField txUsers;
     @FXML
     private TextField txProducts;
@@ -163,6 +166,10 @@ public class Controller implements Initializable {
     private TextField txtCaseAgeNote;
     @FXML
     private TextField txtCaseOwnerNote;
+    @FXML
+    private TextField txtCaseCoOwnerNote;
+    @FXML
+    private TextField txtCaseCoQueueNote;
     @FXML
     private TextField txtCaseSeverityNote;
     @FXML
@@ -635,8 +642,8 @@ public class Controller implements Initializable {
 
     ContextMenu menu = new ContextMenu();
     MenuItem openCaseSFDC = new MenuItem("Search This Case in SalesForce...");
-    MenuItem casePersonalNote = new MenuItem("Add Personal Note To This Case...");
-    MenuItem openCaseComments = new MenuItem("Open Comments for this case...");
+    MenuItem casePersonalNote = new MenuItem("Add Memo For This Case...");
+    MenuItem openCaseComments = new MenuItem("Read Work Notes for this case...");
     MenuItem openCaseDetails = new MenuItem("View Details...");
 
     //Case Ref Cells
@@ -2271,6 +2278,10 @@ public class Controller implements Initializable {
                             String selectedCase = caseNoteList.getSelectionModel().getSelectedItem().toString();
                             File caseDetails = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\" + selectedCase);
 
+                            ClipboardContent content = new ClipboardContent();
+                            content.putString(selectedCase);
+                            Clipboard.getSystemClipboard().setContent(content);
+
                             if (caseDetails.isFile()) {
                                 Scanner s = null;
                                 try {
@@ -2286,20 +2297,22 @@ public class Controller implements Initializable {
                                 txtCaseSeverityNote.setText(details.get(1));
                                 txtCaseStatusNote.setText(details.get(2));
                                 txtCaseOwnerNote.setText(details.get(3));
-                                txtCaseAgeNote.setText(details.get(4));
-                                txtCaseTypeNote.setText(details.get(7));
-                                txtCaseProductNote.setText(details.get(8));
-                                txtCaseSubjectNote.setText(details.get(9));
-                                txtCaseAccountNote.setText(details.get(10));
-                                txtCaseRegionNote.setText(details.get(11));
+                                txtCaseCoOwnerNote.setText(details.get(4));
+                                txtCaseCoQueueNote.setText(details.get(5));
+                                txtCaseAgeNote.setText(details.get(7));
+                                txtCaseTypeNote.setText(details.get(12));
+                                txtCaseProductNote.setText(details.get(13));
+                                txtCaseSubjectNote.setText(details.get(14));
+                                txtCaseAccountNote.setText(details.get(15));
+                                txtCaseRegionNote.setText(details.get(16));
 
-                                if (!details.get(5).equals("NotSet")) {
+                                if (!details.get(8).equals("NotSet")) {
                                     checkBoxEscalatedNote.setSelected(true);
                                 }
                                 else{
                                     checkBoxEscalatedNote.setSelected(false);
                                 }
-                                if (!details.get(6).equals("NotSet")){
+                                if (!details.get(9).equals("NotSet")){
                                     checkBoxHotIssueNote.setSelected(true);
                                 }else{
                                     checkBoxHotIssueNote.setSelected(false);
@@ -2400,11 +2413,11 @@ public class Controller implements Initializable {
             stage.setMaxWidth(650);
             stage.setMaxHeight(420);
 
-            saveCaseDetails();
+            //saveCaseDetails();
 
         }
         catch (IOException e) {
-            System.out.println("Not Able To Open Case Note Window");
+            e.printStackTrace();
         }
     }
 
@@ -2426,26 +2439,36 @@ public class Controller implements Initializable {
 
     }
 
-    private void saveCaseDetails() {
+    private void saveCaseDetails(CaseTableView caseview) {
 
-        TablePosition tablePosition = (TablePosition) tableCases.getSelectionModel().getSelectedCells().get(0);
+        /*TablePosition tablePosition = (TablePosition) tableCases.getSelectionModel().getSelectedCells().get(0);
         int row = tablePosition.getRow();
         CaseTableView caseview = (CaseTableView) tableCases.getItems().get(row);
-        TableColumn tableColumn = tablePosition.getTableColumn();
+        TableColumn tableColumn = tablePosition.getTableColumn();*/
 
         selectedCase = new ArrayList<>();
         selectedCase.add(caseview.getCaseNumber());
         selectedCase.add(caseview.getCaseSeverity());
         selectedCase.add(caseview.getCaseStatus());
         selectedCase.add(caseview.getCaseOwner());
+        selectedCase.add(caseview.getCaseCoOwner());
+        selectedCase.add(caseview.getCaseCoOwnerQueue());
+        selectedCase.add(caseview.getCaseResponsible());
         selectedCase.add(caseview.getCaseAge().toString());
+        if(caseview.getNextCaseUpdate() != null){
+            selectedCase.add(caseview.getNextCaseUpdate().toString());
+        }else{
+            selectedCase.add("NotSet");
+        }
         selectedCase.add(caseview.getCaseEscalatedBy());
         selectedCase.add(caseview.getCaseHotList());
+        selectedCase.add(caseview.getCaseOutFollow());
         selectedCase.add(caseview.getCaseSupportType());
         selectedCase.add(caseview.getCaseProduct());
         selectedCase.add(caseview.getCaseSubject());
         selectedCase.add(caseview.getCaseAccount());
         selectedCase.add(caseview.getCaseRegion());
+        selectedCase.add(caseview.getCaseSecurity());
 
         int selectedsize= selectedCase.size();
 
@@ -2644,6 +2667,19 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseDetails);
             tableCustomers.setContextMenu(menu);
 
+
+            // Selecting and Copy the Case Number to Clipboard
+            tableCustomers.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCustomers);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -2680,19 +2716,6 @@ public class Controller implements Initializable {
                     viewCaseComments();
                 }
             });
-
-            // Selecting and Copy the Case Number to Clipboard
-            tableCustomers.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    try {
-                        copyCaseNumberToClipboard(tableCustomers);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -2851,6 +2874,18 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseDetails);
             tableCustomers.setContextMenu(menu);
 
+            // Selecting and Copy the Case Number to Clipboard
+            tableCustomers.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCustomers);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -2885,17 +2920,6 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     viewCaseComments();
-                }
-            });
-            // Selecting and Copy the Case Number to Clipboard
-            tableCustomers.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    try {
-                        copyCaseNumberToClipboard(tableCustomers);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                 }
             });
 
@@ -3053,6 +3077,18 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -3087,17 +3123,6 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     viewCaseComments();
-                }
-            });
-            // Selecting and Copy the Case Number to Clipboard
-            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    try {
-                        copyCaseNumberToClipboard(tableCases);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                 }
             });
 
@@ -3271,6 +3296,18 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -3305,18 +3342,6 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     viewCaseComments();
-                }
-            });
-
-            // Selecting and Copy the Case Number to Clipboard
-            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    try {
-                        copyCaseNumberToClipboard(tableCases);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
                 }
             });
 
@@ -3448,6 +3473,18 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -3484,17 +3521,7 @@ public class Controller implements Initializable {
                     viewCaseComments();
                 }
             });
-            // Selecting and Copy the Case Number to Clipboard
-            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    try {
-                        copyCaseNumberToClipboard(tableCases);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+
 
             btnBack.setVisible(true);
             btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -3630,6 +3657,18 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -3666,17 +3705,7 @@ public class Controller implements Initializable {
                     viewCaseComments();
                 }
             });
-            // Selecting and Copy the Case Number to Clipboard
-            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    try {
-                        copyCaseNumberToClipboard(tableCases);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+
 
             btnBack.setVisible(true);
             btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -3805,6 +3834,18 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -3841,17 +3882,7 @@ public class Controller implements Initializable {
                     viewCaseComments();
                 }
             });
-            // Selecting and Copy the Case Number to Clipboard
-            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    try {
-                        copyCaseNumberToClipboard(tableCases);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+
 
             btnBack.setVisible(true);
             btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -4011,6 +4042,18 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -4046,17 +4089,7 @@ public class Controller implements Initializable {
                     viewCaseComments();
                 }
             });
-            // Selecting and Copy the Case Number to Clipboard
-            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    try {
-                        copyCaseNumberToClipboard(tableCases);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+
 
             btnBack.setVisible(true);
             btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -4219,6 +4252,18 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -4254,17 +4299,7 @@ public class Controller implements Initializable {
                     viewCaseComments();
                 }
             });
-            // Selecting and Copy the Case Number to Clipboard
-            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    try {
-                        copyCaseNumberToClipboard(tableCases);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
+
 
             btnBack.setVisible(true);
             btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -4329,6 +4364,8 @@ public class Controller implements Initializable {
             String dataDate = "Data Time Stamp is:" + "\n" + LocalTime.now().format(dtf).toString() + "\n" + refreshDate.toString();
             lblRefreshText.setText(dataDate);
 
+            lblDownload.setText("Downloading...");
+
             FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_data_Date.txt"));
             writer.write(dataDate);
             writer.close();
@@ -4362,6 +4399,8 @@ public class Controller implements Initializable {
             }
         }));
         time.playFromStart();
+        lblDownload.setText("    Connected!");
+
     }
 
     private void connectOkta() {
@@ -4389,7 +4428,6 @@ public class Controller implements Initializable {
                     (webView, message, lineNumber, sourceId)-> System.out.println("Console: [" + sourceId + ":" + lineNumber + "] " + message)
             );*/
 
-            webEngine.setJavaScriptEnabled(true);
             webEngine.load("https://sonus.okta.com");
 
             browserLoginPane.toFront();
@@ -4397,6 +4435,7 @@ public class Controller implements Initializable {
             progressBar.setVisible(true);
             progressBar.toFront();
             progressBar.setProgress(0.20);
+            lblDownload.setText(" Connecting/Downloading...");
 
             webEngine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
                 @Override
@@ -4410,11 +4449,17 @@ public class Controller implements Initializable {
                             apnBrowser.toBack();
                             progressBar.setProgress(0.60);
                         }
-                        if (webEngine.getLocation().equals("https://na8.salesforce.com/500/o") || webEngine.getLocation().equals("https://na8.salesforce.com/home/home.jsp")) {
+                        if (webEngine.getLocation().contains("salesforce.com/500") || webEngine.getLocation().contains("salesforce.com/home")){
+
+                                //webEngine.getLocation().equals("https://na8.salesforce.com/500/o") || webEngine.getLocation().equals("https://na8.salesforce.com/home/home.jsp") ||
+                                //webEngine.getLocation().equals("https://na104.salesforce.com/500/o") || webEngine.getLocation().equals("https://na104.salesforce.com/home/home.jsp")) {
+
                             progressBar.setProgress(0.80);
                             btnLoadData.setVisible(true);
                             progressBar.setVisible(false);
                             btnLogin.setText("Logged!");
+                            btnLogin.setVisible(false);
+                            lblDownload.setText("     Connected!");
                             downloadCSV();
                             progressBar.setProgress(1);
                             apnMyCases.toFront();
@@ -4501,7 +4546,6 @@ public class Controller implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @FXML
@@ -4974,6 +5018,18 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseDetails);
             tableView.setContextMenu(menu);
 
+            // Selecting and Copy the Case Number to Clipboard
+            tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboardProjects(tableView);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -5003,17 +5059,6 @@ public class Controller implements Initializable {
                 }
             });
 
-            // Selecting and Copy the Case Number to Clipboard
-            tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    try {
-                        copyCaseNumberToClipboardProjects(tableView);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -5062,7 +5107,7 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
 
-        saveCaseDetails();
+        //saveCaseDetails();
     }
 
 
@@ -5177,7 +5222,7 @@ public class Controller implements Initializable {
 
     private void readTimeStamp(){
 
-        File timeStampFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_data_Date.txt");
+        File timeStampFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_data_Date.txt");
 
         if (timeStampFile.isFile()){
             Scanner s = null;
@@ -5413,6 +5458,19 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
+            // Select and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+
             openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -5436,18 +5494,6 @@ public class Controller implements Initializable {
                 }
             });
 
-            // Select and Copy the Case Number to Clipboard
-            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    try {
-                        copyCaseNumberToClipboard(tableCases);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            });
 
             btnBack.setVisible(true);
             btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -6657,7 +6703,7 @@ public class Controller implements Initializable {
             stage.setMaxWidth(650);
             stage.setMaxHeight(420);
 
-            saveCaseDetails();
+            //saveCaseDetails();
 
         }
         catch (IOException e) {
@@ -8676,6 +8722,19 @@ public class Controller implements Initializable {
             menu.getItems().add(openCaseDetails);
             tableCases.setContextMenu(menu);
 
+
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -8699,17 +8758,6 @@ public class Controller implements Initializable {
                 }
             });
 
-            // Selecting and Copy the Case Number to Clipboard
-            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    try {
-                        copyCaseNumberToClipboard(tableCases);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
 
             btnBack.setVisible(true);
             btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -10212,50 +10260,7 @@ public class Controller implements Initializable {
         ClipboardContent content = new ClipboardContent();
         content.putString(data1);
         Clipboard.getSystemClipboard().setContent(content);
-
-        selectedCase = new ArrayList<>();
-        selectedCase.add(caseview.getCaseNumber());
-        selectedCase.add(caseview.getCaseSeverity());
-        selectedCase.add(caseview.getCaseStatus());
-        selectedCase.add(caseview.getCaseOwner());
-        selectedCase.add(caseview.getCaseCoOwner());
-        selectedCase.add(caseview.getCaseCoOwnerQueue());
-        selectedCase.add(caseview.getCaseResponsible());
-        selectedCase.add(caseview.getCaseAge().toString());
-        if(caseview.getNextCaseUpdate() != null){
-            selectedCase.add(caseview.getNextCaseUpdate().toString());
-        }else{
-            selectedCase.add("NotSet");
-        }
-        selectedCase.add(caseview.getCaseEscalatedBy());
-        selectedCase.add(caseview.getCaseHotList());
-        selectedCase.add(caseview.getCaseOutFollow());
-        selectedCase.add(caseview.getCaseSupportType());
-        selectedCase.add(caseview.getCaseProduct());
-        selectedCase.add(caseview.getCaseSubject());
-        selectedCase.add(caseview.getCaseAccount());
-        selectedCase.add(caseview.getCaseRegion());
-        selectedCase.add(caseview.getCaseSecurity());
-
-        int selectedsize= selectedCase.size();
-
-        try {
-
-            File caseSelFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\" + "caseSel");
-
-            FileWriter writer = new FileWriter(caseSelFile);
-
-            for (int i = 0; i <selectedsize ; i++) {
-
-                writer.write(selectedCase.get(i) + "\n");
-            }
-
-            writer.close();
-            writer.close();
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        saveCaseDetails(caseview);
 
     }
     private void copyCaseNumberToClipboardProjects(TableView<ProjectTableView> tableCases) {
@@ -10304,13 +10309,11 @@ public class Controller implements Initializable {
                 }
             }
 
-
         }catch (Exception e){
             e.printStackTrace();
         }
 
         int selectedsize= selectedCase.size();
-
 
         try {
 
@@ -11322,7 +11325,7 @@ public class Controller implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("For any issues/requests please inform us:" + "\n" + "\n" +
                     "Alper Simsek"+ "    " + "asimsek@rbbn.com" + "\n" + "\n" +
-                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.08");
+                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.09");
             alert.showAndWait();
         }
         if (event.getSource() == btnUsersSaveAs){
@@ -11965,5 +11968,6 @@ public class Controller implements Initializable {
         myProductsPage();
         overviewPage();
         myCasesPage();
+        lblDownload.setText("Connection Offline!");
     }
 }

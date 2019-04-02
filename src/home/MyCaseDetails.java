@@ -102,13 +102,16 @@ public class MyCaseDetails implements Initializable {
 
     ArrayList<String> caseSelection;
     ArrayList<String> caseCommentArray;
+    String caseNum;
 
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
 
     private void setFields(){
 
+        caseNum = Clipboard.getSystemClipboard().getString();
+
         caseSelection = new ArrayList<>();
-        File casesel = new File(System.getProperty("user.home") + "\\Documents\\CMT\\" + "caseSel");
+        File casesel = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\" + caseNum);
 
         if (casesel.isFile()) {
             Scanner s = null;
@@ -143,8 +146,8 @@ public class MyCaseDetails implements Initializable {
             txtMyCaseDetAcc.setText(caseSelection.get(15));
             txtMyCaseDetReg.setText(caseSelection.get(16));
             txtMyCaseDetSec.setText(caseSelection.get(17));
-            processComments(caseSelection.get(0));
-            readNotes(caseSelection.get(0));
+            processComments(caseNum);
+            readNotes(caseNum);
 
         }
 
@@ -161,7 +164,7 @@ public class MyCaseDetails implements Initializable {
     private void setHeader(){
 
         Stage stage = (Stage) txtMyCaseDetNum.getScene().getWindow();
-        stage.setTitle(caseSelection.get(0) +  " : CASE Details..." );
+        stage.setTitle(caseNum +  " : Case Details..." );
     }
 
     private void readNotes(String str){

@@ -310,7 +310,7 @@
             <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="150.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Case Comments *" wrappingWidth="139.13671875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Work Notes *" wrappingWidth="139.13671875">
                <font>
                   <Font size="14.0" />
                </font>
@@ -332,7 +332,7 @@
             <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="150.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Notes" wrappingWidth="139.13671875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="My Memo Entries:" wrappingWidth="139.13671875">
                <font>
                   <Font size="14.0" />
                </font>
@@ -354,7 +354,7 @@
             <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="150.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add Personal Note" wrappingWidth="139.13671875">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Add Memo:" wrappingWidth="139.13671875">
                <font>
                   <Font size="14.0" />
                </font>
@@ -381,7 +381,7 @@
             <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnSaveNote" graphicTextGap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClick" prefHeight="40.0" prefWidth="140.0" text="SAVE NOTE" GridPane.columnIndex="1">
+            <Button fx:id="btnSaveNote" graphicTextGap="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClick" prefHeight="40.0" prefWidth="140.0" text="SAVE MEMO" GridPane.columnIndex="1">
                <font>
                   <Font size="14.0" />
                </font>
@@ -397,7 +397,7 @@
                   <FontAwesomeIconView fill="GREY" glyphName="CLOSE" size="17" />
                </graphic>
             </Button>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="* Case Comment Data is covering only last 7 days!" wrappingWidth="400.13671875" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="* Work Notes data is covering only last 7 days!" wrappingWidth="400.13671875" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <font>
                   <Font size="14.0" />
                </font>
@@ -405,7 +405,7 @@
                   <Insets left="18.0" />
                </GridPane.margin>
             </Text>
-            <Button fx:id="btnDeletNote" graphicTextGap="10.0" layoutX="375.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClick" prefHeight="40.0" prefWidth="140.0" text="DELETE NOTE" GridPane.columnIndex="5">
+            <Button fx:id="btnDeletNote" graphicTextGap="10.0" layoutX="375.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClick" prefHeight="40.0" prefWidth="140.0" text="DELETE MEMO" GridPane.columnIndex="5">
                <font>
                   <Font size="14.0" />
                </font>

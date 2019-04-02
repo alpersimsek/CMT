@@ -141,7 +141,7 @@ public class CaseDetails implements Initializable {
     private void setHeader(){
 
         Stage stage = (Stage) txtPrjCaseNum.getScene().getWindow();
-        stage.setTitle(txtPrjCaseNum.getText() +  " : CASE Details..." );
+        stage.setTitle(txtPrjCaseNum.getText() +  " : Case Details..." );
     }
 
     @FXML

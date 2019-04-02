@@ -45,7 +45,7 @@
                   <Insets left="5.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="btnNewNote" graphicTextGap="10.0" layoutX="410.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="35.0" prefWidth="190.0" text="ADD NEW NOTE" GridPane.rowIndex="3">
+            <Button fx:id="btnNewNote" graphicTextGap="10.0" layoutX="410.0" layoutY="50.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="35.0" prefWidth="190.0" text="ADD MEMO" GridPane.rowIndex="3">
                <font>
                   <Font size="18.0" />
                </font>

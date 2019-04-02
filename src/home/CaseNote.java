@@ -48,6 +48,7 @@ public class CaseNote implements Initializable {
     ArrayList<String> caseSelection;
 
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
+    String caseNumber;
 
 
     @FXML
@@ -59,7 +60,7 @@ public class CaseNote implements Initializable {
 
                 try {
 
-                    File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + txtCaseNoteNum.getText());
+                    File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + caseNumber);
 
                     if (!caseNoteFile.exists()){
                         new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes").mkdir();
@@ -99,7 +100,7 @@ public class CaseNote implements Initializable {
     }
 
     private void setFields(){
-        caseSelection = new ArrayList<>();
+        /*caseSelection = new ArrayList<>();
         File casesel = new File(System.getProperty("user.home") + "\\Documents\\CMT\\" + "caseSel");
 
         if (casesel.isFile()) {
@@ -116,7 +117,7 @@ public class CaseNote implements Initializable {
             txtCaseNoteSeverity.setText(caseSelection.get(1));
             txtCaseNoteSubject.setText(caseSelection.get(14));
             txtCaseNoteAccount.setText(caseSelection.get(15));
-        }
+        }*/
 
         Platform.runLater(new Runnable() {
             @Override
@@ -129,14 +130,15 @@ public class CaseNote implements Initializable {
 
     private void setHeader(){
 
-        Stage stage = (Stage) txtCaseNote.getScene().getWindow();
-        stage.setTitle(caseSelection.get(0) +  " : PERSONAL NOTE" );
+        caseNumber = Clipboard.getSystemClipboard().getString();
 
+        Stage stage = (Stage) txtCaseNote.getScene().getWindow();
+        stage.setTitle(caseNumber +  " : MEMO ENTRY" );
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        setCaseNumber();
+        //setCaseNumber();
         setFields();
     }
 }

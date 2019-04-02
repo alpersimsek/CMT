@@ -28,6 +28,316 @@
    <children>
       <StackPane prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
+            <AnchorPane fx:id="apnNotes" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
+               <children>
+                  <Pane layoutX="14.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="343.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="5.0">
+                     <children>
+                        <ListView fx:id="caseNoteList" layoutY="30.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="313.0" prefWidth="200.0" />
+                        <Label layoutX="5.0" layoutY="1.0" prefHeight="27.0" prefWidth="193.0" text="My Entries:">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane fx:id="pnCaseDetailsNote" layoutX="305.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="343.0" prefWidth="780.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="215.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
+                     <children>
+                        <GridPane layoutX="17.0" layoutY="16.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="331.0" prefWidth="826.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="35.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="90.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="140.0" />
+                              <ColumnConstraints maxWidth="-Infinity" minWidth="-Infinity" prefWidth="70.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" />
+                              <ColumnConstraints />
+                              <ColumnConstraints />
+                              <ColumnConstraints />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="20.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <TextField fx:id="txtCaseNumnberNote" editable="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="5.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number :" wrappingWidth="107.515625" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Severity :" wrappingWidth="70.515625" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </Text>
+                              <TextField fx:id="txtCaseSeverityNote" editable="false" layoutX="142.0" layoutY="38.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="140.0" GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </TextField>
+                              <TextField fx:id="txtCaseOwnerNote" editable="false" layoutX="142.0" layoutY="38.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="5.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Text layoutX="15.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status : " wrappingWidth="57.515625" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <Text layoutX="330.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Owner :" wrappingWidth="59.515625" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </Text>
+                              <Text fx:id="txtEscalated" fill="RED" layoutX="330.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Escalated : " wrappingWidth="78.515625" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <CheckBox fx:id="checkBoxEscalatedNote" mnemonicParsing="false" textFill="RED" GridPane.columnIndex="5" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets left="100.0" />
+                                 </GridPane.margin>
+                              </CheckBox>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Age :" wrappingWidth="41.515625" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="60.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <TextField fx:id="txtCaseAgeNote" editable="false" layoutX="410.0" layoutY="93.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="50.0" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="100.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Text layoutX="15.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subject :" wrappingWidth="74.515625" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="1.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <TextField fx:id="txtCaseProductNote" editable="false" layoutX="142.0" layoutY="93.0" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="5.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Text fill="ORANGE" layoutX="573.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hot Issue :" wrappingWidth="85.515625" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <CheckBox fx:id="checkBoxHotIssueNote" disable="true" layoutX="658.0" layoutY="82.0" mnemonicParsing="false" textFill="RED" GridPane.columnIndex="7" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets left="30.0" />
+                                 </GridPane.margin>
+                              </CheckBox>
+                              <TextField fx:id="txtCaseStatusNote" editable="false" layoutX="85.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="7" GridPane.columnSpan="3" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                              <Text layoutX="265.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type :" wrappingWidth="43.515625" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <TextField fx:id="txtCaseTypeNote" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="7" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Product :" wrappingWidth="78.515625" GridPane.rowIndex="4">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Text>
+                              <TextField fx:id="txtCaseSubjectNote" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="580.0" GridPane.columnIndex="1" GridPane.columnSpan="7" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="5.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Account :" wrappingWidth="74.515625" GridPane.rowIndex="6">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Text>
+                              <TextField fx:id="txtCaseAccountNote" editable="false" prefHeight="30.0" prefWidth="251.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="6">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="5.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Region :" wrappingWidth="61.515625" GridPane.columnIndex="6" GridPane.rowIndex="6">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <TextField fx:id="txtCaseRegionNote" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="7" GridPane.rowIndex="6">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Button fx:id="btnViewNote" graphicTextGap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="View Memo(s)" GridPane.rowIndex="8">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="GREY" glyphName="BOOK" size="20" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnAddNewNote" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="New Memo" GridPane.columnIndex="2" GridPane.rowIndex="8">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="GREY" glyphName="PENCIL_SQUARE_ALT" size="20" />
+                                 </graphic>
+                                 <GridPane.margin>
+                                    <Insets left="50.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <Button fx:id="btnDelNote" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Delete Memo" GridPane.columnIndex="5" GridPane.rowIndex="8">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="210.0" />
+                                 </GridPane.margin>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="GREY" glyphName="TRASH_ALT" size="20" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnViewComment" graphicTextGap="5.0" layoutX="85.0" layoutY="329.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" text="View Work Notes" GridPane.columnIndex="5" GridPane.rowIndex="8">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="GREY" glyphName="COMMENT" size="20" />
+                                 </graphic>
+                                 <GridPane.margin>
+                                    <Insets left="30.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Co-Owner :" wrappingWidth="83.515625" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </Text>
+                              <TextField fx:id="txtCaseCoOwnerNote" editable="false" layoutX="85.0" layoutY="55.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="5.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Details :" wrappingWidth="108.515625">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                              </Text>
+                              <Text layoutX="10.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CO Queue :" wrappingWidth="83.515625" GridPane.columnIndex="5" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <TextField fx:id="txtCaseCoQueueNote" editable="false" layoutX="90.0" layoutY="115.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="220.0" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </Pane>
+                  <AnchorPane fx:id="spnNote" layoutY="372.0" prefHeight="473.0" prefWidth="1080.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="360.0">
+                     <children>
+                        <TextArea fx:id="txtShowCaseNotes" editable="false" prefHeight="435.0" prefWidth="1060.0" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextArea>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
             <AnchorPane fx:id="apnProjects" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: WHITE;" stylesheets="@home.css">
                <children>
                   <GridPane layoutX="14.0" layoutY="26.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="25.0">
@@ -178,7 +488,7 @@
                       <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="btnPrjMyNotes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="50.0" prefWidth="120.0" text="MY NOTES">
+                        <Button fx:id="btnPrjMyNotes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="50.0" prefWidth="120.0" text="MemoPad">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -191,7 +501,7 @@
                               <ListView fx:id="lstPrjNotes" layoutX="2.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="195.0" prefWidth="120.0" />
                            </children>
                         </Pane>
-                        <Button fx:id="btnPrjNewNote" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="50.0" prefWidth="140.0" text="NEW NOTE" visible="false" GridPane.columnIndex="2">
+                        <Button fx:id="btnPrjNewNote" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="50.0" prefWidth="140.0" text="NEW MEMO" visible="false" GridPane.columnIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -202,7 +512,7 @@
                               <Insets left="30.0" />
                            </GridPane.margin>
                         </Button>
-                        <Button fx:id="btnPrjDelNote" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="50.0" prefWidth="140.0" text="DELETE NOTE" visible="false" GridPane.columnIndex="2">
+                        <Button fx:id="btnPrjDelNote" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="50.0" prefWidth="140.0" text="DELETE MEMO" visible="false" GridPane.columnIndex="2">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -1960,277 +2270,6 @@
                   </GridPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apnNotes" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
-               <children>
-                  <Pane layoutX="14.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="343.0" prefWidth="300.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
-                     <children>
-                        <ListView fx:id="caseNoteList" layoutY="30.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="313.0" prefWidth="300.0" />
-                        <Label layoutX="5.0" layoutY="1.0" prefHeight="25.0" prefWidth="279.0" text="Available Notes:">
-                           <font>
-                              <Font name="System Bold" size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </Pane>
-                  <Pane fx:id="pnCaseDetailsNote" layoutX="305.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="343.0" prefWidth="780.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="310.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0">
-                     <children>
-                        <GridPane layoutX="17.0" layoutY="16.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="331.0" prefWidth="709.0">
-                          <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="75.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="90.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="30.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="230.0" />
-                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="150.0" />
-                              <ColumnConstraints />
-                              <ColumnConstraints />
-                              <ColumnConstraints />
-                              <ColumnConstraints />
-                          </columnConstraints>
-                          <rowConstraints>
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
-                            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES" />
-                          </rowConstraints>
-                           <children>
-                              <TextField fx:id="txtCaseNumnberNote" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                              </TextField>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Number :" wrappingWidth="83.515625" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="1.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Severity :" wrappingWidth="70.515625" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="30.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <TextField fx:id="txtCaseSeverityNote" editable="false" layoutX="142.0" layoutY="38.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="230.0" GridPane.columnIndex="5" GridPane.columnSpan="3" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                              </TextField>
-                              <TextField fx:id="txtCaseOwnerNote" editable="false" layoutX="142.0" layoutY="38.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="230.0" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                              </TextField>
-                              <Text layoutX="15.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status : " wrappingWidth="60.515625" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="1.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text layoutX="330.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Owner :" wrappingWidth="59.515625" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="40.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text fx:id="txtEscalated" fill="RED" layoutX="330.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Escalated : " wrappingWidth="78.515625" GridPane.rowIndex="4">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="1.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <CheckBox fx:id="checkBoxEscalatedNote" mnemonicParsing="false" textFill="RED" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                                 <GridPane.margin>
-                                    <Insets left="5.0" />
-                                 </GridPane.margin>
-                              </CheckBox>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Age :" wrappingWidth="41.515625" GridPane.columnIndex="4" GridPane.rowIndex="4">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="10.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <TextField fx:id="txtCaseAgeNote" editable="false" layoutX="410.0" layoutY="93.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="50.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="50.0" />
-                                 </GridPane.margin>
-                              </TextField>
-                              <Text layoutX="15.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subject :" wrappingWidth="74.515625" GridPane.rowIndex="5">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="1.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <TextField fx:id="txtCaseProductNote" editable="false" layoutX="142.0" layoutY="93.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="480.0" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="3">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets />
-                                 </GridPane.margin>
-                              </TextField>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Case Details" wrappingWidth="138.515625">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Text>
-                              <Text fill="ORANGE" layoutX="573.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hot Issue :" wrappingWidth="85.515625" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="10.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <CheckBox fx:id="checkBoxHotIssueNote" disable="true" layoutX="658.0" layoutY="82.0" mnemonicParsing="false" textFill="RED" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                                 <GridPane.margin>
-                                    <Insets left="5.0" />
-                                 </GridPane.margin>
-                              </CheckBox>
-                              <TextField fx:id="txtCaseStatusNote" editable="false" layoutX="85.0" layoutY="55.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </TextField>
-                              <Text layoutX="265.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Type :" wrappingWidth="43.515625" GridPane.columnIndex="5" GridPane.rowIndex="4">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="20.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <TextField fx:id="txtCaseTypeNote" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="4">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="80.0" />
-                                 </GridPane.margin>
-                              </TextField>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Product :" wrappingWidth="78.515625" GridPane.rowIndex="3">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Text>
-                              <TextField fx:id="txtCaseSubjectNote" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="627.0" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="5">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </TextField>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Account :" wrappingWidth="74.515625" GridPane.rowIndex="6">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Text>
-                              <TextField fx:id="txtCaseAccountNote" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="251.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.rowIndex="6">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </TextField>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Region :" wrappingWidth="74.515625" GridPane.columnIndex="5" GridPane.rowIndex="6">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="20.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <TextField fx:id="txtCaseRegionNote" editable="false" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="5" GridPane.rowIndex="6">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="80.0" />
-                                 </GridPane.margin>
-                              </TextField>
-                              <Button fx:id="btnViewNote" graphicTextGap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="View Notes" GridPane.rowIndex="7">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                                 <graphic>
-                                    <FontAwesomeIconView fill="GREY" glyphName="BOOK" size="20" />
-                                 </graphic>
-                              </Button>
-                              <Button fx:id="btnAddNewNote" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Add New Note" GridPane.columnIndex="2" GridPane.rowIndex="7">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                                 <graphic>
-                                    <FontAwesomeIconView fill="GREY" glyphName="PENCIL_SQUARE_ALT" size="20" />
-                                 </graphic>
-                                 <GridPane.margin>
-                                    <Insets left="70.0" />
-                                 </GridPane.margin>
-                              </Button>
-                              <Button fx:id="btnDelNote" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Delete Note" GridPane.columnIndex="5" GridPane.rowIndex="7">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="190.0" />
-                                 </GridPane.margin>
-                                 <graphic>
-                                    <FontAwesomeIconView fill="GREY" glyphName="TRASH_ALT" size="20" />
-                                 </graphic>
-                              </Button>
-                              <Button fx:id="btnViewComment" graphicTextGap="5.0" layoutX="85.0" layoutY="329.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="155.0" text="View Comments" GridPane.columnIndex="5" GridPane.rowIndex="7">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                                 <graphic>
-                                    <FontAwesomeIconView fill="GREY" glyphName="COMMENT" size="20" />
-                                 </graphic>
-                                 <GridPane.margin>
-                                    <Insets left="20.0" />
-                                 </GridPane.margin>
-                              </Button>
-                           </children>
-                        </GridPane>
-                     </children>
-                  </Pane>
-                  <AnchorPane fx:id="spnNote" layoutY="372.0" prefHeight="473.0" prefWidth="1080.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="360.0">
-                     <children>
-                        <TextArea fx:id="txtShowCaseNotes" editable="false" prefHeight="435.0" prefWidth="1060.0" wrapText="true" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </TextArea>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </AnchorPane>
             <AnchorPane fx:id="apnTableView" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <TableView fx:id="tableCases" prefHeight="850.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -2770,7 +2809,7 @@
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnMyNotes" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="My Notes" textFill="WHITE">
+                  <Button fx:id="btnMyNotes" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="MemoPad" textFill="WHITE">
                      <graphic>
                         <FontAwesomeIconView fill="#ff007f" glyphName="PENCIL_SQUARE_ALT" size="24" />
                      </graphic>
@@ -2833,6 +2872,11 @@
                      <padding>
                         <Insets left="10.0" />
                      </padding>
+                  </Label>
+                  <Label fx:id="lblDownload" prefHeight="55.0" prefWidth="436.0" text="  Downloading..." textFill="#ff007f">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
                   </Label>
                   <ProgressBar fx:id="progressBar" blendMode="EXCLUSION" prefHeight="30.0" prefWidth="200.0" progress="0.0" stylesheets="@home.css" visible="false" />
                </children>
