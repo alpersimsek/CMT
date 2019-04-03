@@ -491,6 +491,10 @@ public class Controller implements Initializable {
     @FXML
     private Button btnFilterAccountUpdate;
     @FXML
+    private Button btnFilterAccountUpdateAdd;
+    @FXML
+    private Button btnFilterAccountUpdateRemove;
+    @FXML
     private Button btnFilterAccountClose;
     @FXML
     private TextField txtFilterAccounts;
@@ -508,6 +512,10 @@ public class Controller implements Initializable {
     private TableColumn<UserTableView, String> userSelectedCol;
     @FXML
     private Button btnUsersUpdate;
+    @FXML
+    private Button btnUsersUpdateAdd;
+    @FXML
+    private Button btnUsersUpdateRemove;
     @FXML
     private Button btnUserSelectClose;
     @FXML
@@ -532,6 +540,10 @@ public class Controller implements Initializable {
     private TableColumn<ProductTableView, String> productColSelected;
     @FXML
     private Button btnProductUpdate;
+    @FXML
+    private Button btnProductUpdateAdd;
+    @FXML
+    private Button btnProductUpdateRemove;
     @FXML
     private Button btnProductSelectClose;
     @FXML
@@ -574,6 +586,10 @@ public class Controller implements Initializable {
     private TableColumn<ProjectTableView, String> prjSiteStatusCol;
     @FXML
     private Button btnQueueUpdate;
+    @FXML
+    private Button btnQueueUpdateAdd;
+    @FXML
+    private Button btnQueueUpdateRemove;
     @FXML
     private Button btnQueueSelectClose;
     @FXML
@@ -2306,13 +2322,13 @@ public class Controller implements Initializable {
                                 txtCaseAccountNote.setText(details.get(15));
                                 txtCaseRegionNote.setText(details.get(16));
 
-                                if (!details.get(8).equals("NotSet")) {
+                                if (!details.get(9).equals("NotSet")) {
                                     checkBoxEscalatedNote.setSelected(true);
                                 }
                                 else{
                                     checkBoxEscalatedNote.setSelected(false);
                                 }
-                                if (!details.get(9).equals("NotSet")){
+                                if (!details.get(10).equals("NotSet")){
                                     checkBoxHotIssueNote.setSelected(true);
                                 }else{
                                     checkBoxHotIssueNote.setSelected(false);
@@ -6591,7 +6607,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        System.out.println("Table Headers Selected! Ignore!");
                     }
                 }
             });
@@ -8436,7 +8452,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        System.out.println("Table Headers Selected! Ignore!");
                     }
                 }
             });
@@ -10587,6 +10603,7 @@ public class Controller implements Initializable {
         HSSFCell userCoOwnerCell;
 
         tableUsers.setVisible(true);
+        tableUsersSelected.getItems().clear();
         userCol.setCellValueFactory(new PropertyValueFactory<UserTableView, String>("userName"));
         userSelectedCol.setCellValueFactory(new PropertyValueFactory<UserTableView, String>("userName"));
 
@@ -10686,6 +10703,22 @@ public class Controller implements Initializable {
 
             });
 
+            btnUsersUpdateAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+
+                        if (tableUsers.getSelectionModel().getSelectedItem() != null) {
+                            UserTableView selectedUsr = tableUsers.getSelectionModel().getSelectedItem();
+                            tableUsersSelected.getItems().add(selectedUsr);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             tableUsersSelected.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -10703,6 +10736,22 @@ public class Controller implements Initializable {
                         }
                     }
 
+                }
+            });
+
+            btnUsersUpdateRemove.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+
+                        if (tableUsersSelected.getSelectionModel().getSelectedCells() != null) {
+                            UserTableView selectedCust = tableUsersSelected.getSelectionModel().getSelectedItem();
+                            tableUsersSelected.getItems().remove(selectedCust);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 
@@ -10730,7 +10779,26 @@ public class Controller implements Initializable {
                         e.printStackTrace();
                     }
 
-                    txUsers.setText(usersFiltered.toString().replace("[", "").replace("]", ""));
+                    if (txUsers.getText().equals("")){
+                        txUsers.setText(usersFiltered.toString().replace("[", "").replace("]", ""));
+                    }else{
+
+                        ArrayList<String> selUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
+
+                        int selSize = selUser.size();
+                        int userFSize = usersFiltered.size();
+
+                        for (int i = 0; i < selSize ; i++) {
+                            if (usersFiltered.contains(selUser.get(i))){
+                                usersFiltered.remove(selUser.get(i));
+                                userFSize--;
+                            }
+                        }
+                        if (userFSize != 0) {
+                            txUsers.appendText(", " + usersFiltered.toString().replace("[", "").replace("]", ""));
+                        }
+                    }
+
                     pnUsersSelect.setVisible(false);
                 }
             });
@@ -10759,6 +10827,7 @@ public class Controller implements Initializable {
         HSSFCell prodCell;
 
         tableProducts.setVisible(true);
+        tableProductsSelected.getItems().clear();
         productCol.setCellValueFactory(new PropertyValueFactory<ProductTableView, String>("productName"));
         productColSelected.setCellValueFactory(new PropertyValueFactory<ProductTableView, String>("productName"));
 
@@ -10846,6 +10915,22 @@ public class Controller implements Initializable {
 
             });
 
+            btnProductUpdateAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+
+                        if (tableProducts.getSelectionModel().getSelectedItem() != null) {
+                            ProductTableView selectedProduct = tableProducts.getSelectionModel().getSelectedItem();
+                            tableProductsSelected.getItems().add(selectedProduct);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             tableProductsSelected.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -10863,6 +10948,22 @@ public class Controller implements Initializable {
                         }
                     }
 
+                }
+            });
+
+            btnProductUpdateRemove.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+
+                        if (tableProductsSelected.getSelectionModel().getSelectedCells() != null) {
+                            ProductTableView selectedCust = tableProductsSelected.getSelectionModel().getSelectedItem();
+                            tableProductsSelected.getItems().remove(selectedCust);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 
@@ -10890,7 +10991,28 @@ public class Controller implements Initializable {
                         e.printStackTrace();
                     }
 
-                    txProducts.setText(productsFiltered.toString().replace("[", "").replace("]", ""));
+                    if(txProducts.getText().equals("")){
+                        txProducts.setText(productsFiltered.toString().replace("[", "").replace("]", ""));
+                    }else{
+
+                        ArrayList<String> selProd = new ArrayList<>(Arrays.asList(txProducts.getText().split(",\\s*")));
+
+                        int selSize = selProd.size();
+                        int productFSize = productsFiltered.size();
+
+                        for (int i = 0; i < selSize ; i++) {
+
+                            if (productsFiltered.contains(selProd.get(i))){
+                                productsFiltered.remove(selProd.get(i));
+                                productFSize--;
+                            }
+                        }
+
+                        if (productFSize != 0) {
+                            txProducts.appendText(", " + productsFiltered.toString().replace("[", "").replace("]", ""));
+                        }
+                    }
+
                     pnProductSelect.setVisible(false);
                 }
             });
@@ -10917,6 +11039,7 @@ public class Controller implements Initializable {
     public void queueSelectArray() {
 
         tableQueue.setVisible(true);
+        tableQueueSelected.getItems().clear();
         queueCol.setCellValueFactory(new PropertyValueFactory<QueueTableView, String>("queueName"));
         queueColSelected.setCellValueFactory(new PropertyValueFactory<QueueTableView, String>("queueName"));
 
@@ -10966,7 +11089,6 @@ public class Controller implements Initializable {
 
                             if (tableQueue.getSelectionModel().getSelectedItem() != null) {
                                 QueueTableView selectedQue = tableQueue.getSelectionModel().getSelectedItem();
-                                //filteredAccounts.add(selectedAcc.getAccountName());
                                 tableQueueSelected.getItems().add(selectedQue);
                             }
 
@@ -10979,11 +11101,27 @@ public class Controller implements Initializable {
 
         });
 
+        btnQueueUpdateAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+
+                    if (tableQueue.getSelectionModel().getSelectedItem() != null) {
+                        QueueTableView selectedQue = tableQueue.getSelectionModel().getSelectedItem();
+                        tableQueueSelected.getItems().add(selectedQue);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
         tableQueueSelected.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
 
-                if (event.getClickCount() > 1) {
+                if (event.getClickCount() > 1){
                     try {
 
                         if (tableQueueSelected.getSelectionModel().getSelectedCells() != null) {
@@ -10996,6 +11134,22 @@ public class Controller implements Initializable {
                     }
                 }
 
+            }
+        });
+
+        btnQueueUpdateRemove.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+
+                    if (tableQueueSelected.getSelectionModel().getSelectedCells() != null) {
+                        QueueTableView selectedQueue = tableQueueSelected.getSelectionModel().getSelectedItem();
+                        tableQueueSelected.getItems().remove(selectedQueue);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -11023,7 +11177,26 @@ public class Controller implements Initializable {
                     e.printStackTrace();
                 }
 
-                txQueues.setText(queuesFiltered.toString().replace("[", "").replace("]", ""));
+                if(txQueues.getText().equals("")){
+                    txQueues.appendText(queuesFiltered.toString().replace("[", "").replace("]", ""));
+                }else{
+
+                    ArrayList<String> selQueue = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
+
+                    int selSize = selQueue.size();
+                    int queueFSize = queuesFiltered.size();
+
+                    for (int i = 0; i < selSize ; i++) {
+                        if (queuesFiltered.contains(selQueue.get(i))){
+                            queuesFiltered.remove(selQueue.get(i));
+                            queueFSize--;
+                        }
+                    }
+                    if (queueFSize != 0) {
+                        txQueues.appendText(", " + queuesFiltered.toString().replace("[", "").replace("]", ""));
+                    }
+                }
+
                 pnQueueSelect.setVisible(false);
             }
         });
@@ -11136,6 +11309,22 @@ public class Controller implements Initializable {
 
             });
 
+            btnFilterAccountUpdateAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+
+                        if (tableAccounts.getSelectionModel().getSelectedItem() != null) {
+                            AccountTableView selectedAcc = tableAccounts.getSelectionModel().getSelectedItem();
+                            tableAccountsSelected.getItems().add(selectedAcc);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             tableAccountsSelected.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -11153,6 +11342,22 @@ public class Controller implements Initializable {
                         }
                     }
 
+                }
+            });
+
+            btnFilterAccountUpdateRemove.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+
+                        if (tableAccountsSelected.getSelectionModel().getSelectedCells() != null) {
+                            AccountTableView selectedCust = tableAccountsSelected.getSelectionModel().getSelectedItem();
+                            tableAccountsSelected.getItems().remove(selectedCust);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 
@@ -11325,7 +11530,7 @@ public class Controller implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("For any issues/requests please inform us:" + "\n" + "\n" +
                     "Alper Simsek"+ "    " + "asimsek@rbbn.com" + "\n" + "\n" +
-                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.09");
+                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.10");
             alert.showAndWait();
         }
         if (event.getSource() == btnUsersSaveAs){
@@ -11339,6 +11544,7 @@ public class Controller implements Initializable {
             pnProductSelect.setVisible(false);
             pnUsersSave.toFront();
             pnUsersSave.setVisible(true);
+            txtUsersSave.clear();
             saveUserProfile();
 
         }
@@ -11357,8 +11563,8 @@ public class Controller implements Initializable {
             pnQueueSelect.setVisible(false);
             pnUsersSelect.setVisible(false);
             pnProductSelect.setVisible(false);
+            txtProductsSave.clear();
             saveProductProfile();
-
 
         }
         if (event.getSource() == btnProductsSaveClose){
@@ -11376,6 +11582,7 @@ public class Controller implements Initializable {
             pnQueueSelect.setVisible(false);
             pnUsersSelect.setVisible(false);
             pnProductSelect.setVisible(false);
+            txtQueuesSave.clear();
             saveQueueProfile();
 
 
