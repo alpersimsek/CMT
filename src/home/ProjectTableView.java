@@ -11,14 +11,13 @@ public class ProjectTableView {
     private final SimpleStringProperty prjModDate;
     private final SimpleStringProperty prjCaseStatus;
     private final SimpleStringProperty prjCaseSeverity;
-    private final SimpleStringProperty prjCaseNumber;
     private final SimpleStringProperty prjHotR;
     private final SimpleStringProperty prjGateDate;
     private final SimpleStringProperty prjRegion;
     private final SimpleStringProperty prjSiteStatus;
 
     protected ProjectTableView(String cNo, String cAcc, String cProd, String cSub, String cModDate, String cStat, String cSev,
-                               String cNum, String cHotR, String cGateDate, String cReg, String cSite) {
+                               String cHotR, String cGateDate, String cReg, String cSite) {
 
 
         this.prjCaseNo = new SimpleStringProperty(cNo);
@@ -28,7 +27,6 @@ public class ProjectTableView {
         this.prjModDate = new SimpleStringProperty(cModDate);
         this.prjCaseStatus = new SimpleStringProperty(cStat);
         this.prjCaseSeverity = new SimpleStringProperty(cSev);
-        this.prjCaseNumber = new SimpleStringProperty(cNum);
         this.prjHotR = new SimpleStringProperty(cHotR);
         this.prjGateDate = new SimpleStringProperty(cGateDate);
         this.prjRegion = new SimpleStringProperty(cReg);
@@ -91,14 +89,6 @@ public class ProjectTableView {
         prjCaseSeverity.set(cSev);
     }
 
-    public String getPrjCaseNumber() {
-        return prjCaseNumber.get();
-    }
-
-    public void setPrjCaseNumber(String cNum) {
-        prjCaseNumber.set(cNum);
-    }
-
     public String getPrjHotR() {
         return prjHotR.get();
     }
@@ -106,7 +96,6 @@ public class ProjectTableView {
     public void setPrjHotR(String cHotR) {
         prjHotR.set(cHotR);
     }
-
 
     public String getPrjGateDate() {
         return prjGateDate.get();

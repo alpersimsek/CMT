@@ -1,6 +1,8 @@
 package home;
 
 import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,6 +11,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -20,7 +24,7 @@ import java.util.ResourceBundle;
 
 public class Login implements Initializable {
 
-    String password = "rbbnforecast!";
+    String password = "crystalball";
 
     @FXML
     private TextField txtpass;
@@ -32,21 +36,15 @@ public class Login implements Initializable {
     private Button btnClose;
 
     @FXML
-    private Text txtWrongPass;
-
-    @FXML
     void handleMouseClicked(MouseEvent event) {
 
         if(event.getSource() == btnClose){
             ((Stage)(btnClose).getScene().getWindow()).close();
         }
-
         if (event.getSource() == btnLogin){
-            txtWrongPass.setVisible(false);
             checkUser();
         }
         if (event.getSource() == txtpass){
-            txtWrongPass.setVisible(false);
             txtpass.clear();
         }
     }
@@ -67,10 +65,8 @@ public class Login implements Initializable {
 
             }
             else{
-                txtWrongPass.setVisible(true);
             }
         }
-
     }
 
     private void openForecastPage () throws Exception{
@@ -86,12 +82,12 @@ public class Login implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("RBBN Case Management Tool Forecast Modeling Page");
             stage.getIcons().add(new Image("home/image/rbbicon.png"));
-            stage.setScene(new Scene(root, 1024, 768));
+            stage.setScene(new Scene(root, 1280, 950));
             stage.show();
-            stage.setMinWidth(1024);
-            stage.setMinHeight(768);
-            stage.setMaxWidth(1024);
-            stage.setMaxHeight(768);
+            stage.setMinWidth(1280);
+            stage.setMinHeight(950);
+            stage.setMaxWidth(1280);
+            stage.setMaxHeight(950);
 
         }
         catch (IOException e) {
@@ -106,6 +102,15 @@ public class Login implements Initializable {
             @Override
             public void run() {
                 txtpass.requestFocus();
+            }
+        });
+
+        txtpass.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.getCode() == KeyCode.ENTER){
+                    checkUser();
+                }
             }
         });
     }

@@ -1,5 +1,6 @@
 package home;
 
+import com.jcraft.jsch.*;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -38,16 +39,16 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.commons.io.FileUtils;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.commons.vfs.provider.sftp.SftpFileSystemConfigBuilder;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
-import org.apache.poi.ss.usermodel.CreationHelper;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.*;
+
 import java.awt.*;
 import javafx.scene.control.TextArea;
+import org.apache.poi.ss.usermodel.Font;
 
 import java.io.*;
 import java.net.*;
@@ -202,6 +203,8 @@ public class Controller implements Initializable {
     private Button btnMyNotes;
     @FXML
     private Button btnSettings;
+    @FXML
+    private Button btnProjection;
     @FXML
     private Button btnLoadData;
     @FXML
@@ -911,6 +914,10 @@ public class Controller implements Initializable {
             btnBack.setVisible(false);
             apnSettings.toFront();
 
+        }
+
+        if (event.getSource() == btnProjection){
+            projectionLoginPage();
         }
 
         if (event.getSource() == btnLogin) {
@@ -2437,6 +2444,86 @@ public class Controller implements Initializable {
         }
     }
 
+    private void projectionPage(){
+
+        String user = "santera";
+        String password = "santera1";
+        String host = "47.168.122.68";
+        int port = 22;
+        String command1="ls -ltr";
+
+        try{
+
+            java.util.Properties config = new java.util.Properties();
+
+            JSch jsch = new JSch();
+            Session session = jsch.getSession(user, host, port);
+            session.setPassword(password);
+            session.setConfig("PreferredAuthentications",
+                    "publickey,keyboard-interactive,password");
+            session.setConfig("StrictHostKeyChecking", "no");
+            System.out.println("Establishing Connection...");
+            session.connect();
+            System.out.println("Connection established.");
+
+            Channel channel=session.openChannel("exec");
+            ((ChannelExec)channel).setCommand(command1);
+            channel.setInputStream(null);
+            ((ChannelExec)channel).setErrStream(System.err);
+
+            channel.connect();
+
+            /*InputStream in=channel.getInputStream();
+            channel.connect();
+            byte[] tmp=new byte[1024];
+            while(true){
+                while(in.available()>0){
+                    int i=in.read(tmp, 0, 1024);
+                    if(i<0)break;
+                    System.out.print(new String(tmp, 0, i));
+                }
+                if(channel.isClosed()){
+                    System.out.println("exit-status: "+channel.getExitStatus());
+                    break;
+                }
+                try{Thread.sleep(1000);}catch(Exception ee){}
+            }*/
+
+            Session session2 = jsch.getSession(user, host);
+            session2.setPassword(password);
+            session2.setConfig("PreferredAuthentications",
+                    "publickey,keyboard-interactive,password");
+            session2.setConfig("StrictHostKeyChecking", "no");
+
+            System.out.println("Establishing Connection...");
+            session2.connect();
+            System.out.println("Connection established.");
+
+            ChannelSftp sftpChannel = (ChannelSftp) session.openChannel("sftp");
+            sftpChannel.connect();
+
+            File projectionDir = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Projection");
+
+            if (!projectionDir.exists()) {
+
+                new File(System.getProperty("user.home") + "\\Documents\\CMT\\Projection").mkdir();
+            }
+
+            sftpChannel.get("/space/Santera/msg", System.getProperty("user.home") + "/Documents/CMT/Projection/msg");
+
+            channel.disconnect();
+            session.disconnect();
+            sftpChannel.disconnect();
+            session2.disconnect();
+            System.out.println("DONE");
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
     private void projectionLoginPage(){
 
         Parent root;
@@ -2444,9 +2531,11 @@ public class Controller implements Initializable {
         try {
             root = FXMLLoader.load(getClass().getClassLoader().getResource("home/Login.fxml"));
             Stage stage = new Stage();
-            stage.setTitle("PLEASE LOGIN TO PROCEED...");
+            stage.setTitle("Please Login...");
             stage.getIcons().add(new Image("home/image/rbbicon.png"));
-            stage.setScene(new Scene(root, 450, 250));
+            stage.setScene(new Scene(root, 350, 200));
+            stage.setMaxWidth(350);
+            stage.setMaxHeight(200);
             stage.show();
 
         }catch(Exception e){
@@ -4340,12 +4429,12 @@ public class Controller implements Initializable {
         String filename2 = "cmt_user_prod.csv";
         String filename3 = "cmt_case_data_V2.csv";
         String filename4 = "cmt_comments.csv";
-        String filename5 = "cmt_project_details.csv";
+        //String filename5 = "cmt_project_details.csv";
         String newLoc2 = "https://na8.salesforce.com/00OC0000006r1xS?export=1&enc=UTF-8&xf=csv?filename=" + filename2;
         String newLoc = "https://na8.salesforce.com/00OC0000007My3o?export=1&enc=UTF-8&xf=csv?filename=" + filename1;
         String newLoc3 = "https://na8.salesforce.com/00OC00000076uIg?export=1&enc=UTF-8&xf=csv?filename=" + filename3;
         String newLoc4 = "https://na8.salesforce.com/00OC0000006r5ig?export=1&enc=UTF-8&xf=csv?filename=" + filename4;
-        String newLoc5 = "https://na8.salesforce.com/00OC0000007Mzu5?export=1&enc=UTF-8&xf=csv?filename=" + filename5;
+        //String newLoc5 = "https://na8.salesforce.com/00OC0000007Mzu5?export=1&enc=UTF-8&xf=csv?filename=" + filename5;
 
         try {
 
@@ -4363,13 +4452,13 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
 
-        try {
+        /*try {
 
             FileUtils.copyURLToFile(new URL(newLoc5), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_project_details.csv"));
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
         try{
 
@@ -4821,8 +4910,7 @@ public class Controller implements Initializable {
 
                     observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
                             array.get(3), array.get(4), array.get(5), array.get(6), array.get(7),
-                            array.get(8), array.get(9), array.get(10),
-                            array.get(11)));
+                            array.get(8), array.get(9), array.get(10)));
 
                     tableView.getItems().addAll(observableList);
                     caseCount++;
@@ -4848,8 +4936,7 @@ public class Controller implements Initializable {
 
                         observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
                                 array.get(3), array.get(4), array.get(5), array.get(6), array.get(7),
-                                array.get(8), array.get(9), array.get(10),
-                                array.get(11)));
+                                array.get(8), array.get(9), array.get(10)));
 
                         tableView.getItems().addAll(observableList);
                         caseCount++;
@@ -4874,8 +4961,7 @@ public class Controller implements Initializable {
 
                         observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
                                 array.get(3), array.get(4), array.get(5), array.get(6), array.get(7),
-                                array.get(8), array.get(9), array.get(10),
-                                array.get(11)));
+                                array.get(8), array.get(9), array.get(10)));
 
                         tableView.getItems().addAll(observableList);
                         caseCount++;
@@ -4900,8 +4986,7 @@ public class Controller implements Initializable {
 
                         observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
                                 array.get(3), array.get(4), array.get(5), array.get(6), array.get(7),
-                                array.get(8), array.get(9), array.get(10),
-                                array.get(11)));
+                                array.get(8), array.get(9), array.get(10)));
 
                         tableView.getItems().addAll(observableList);
                         caseCount++;
@@ -4926,8 +5011,7 @@ public class Controller implements Initializable {
 
                         observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
                                 array.get(3), array.get(4), array.get(5), array.get(6), array.get(7),
-                                array.get(8), array.get(9), array.get(10),
-                                array.get(11)));
+                                array.get(8), array.get(9), array.get(10)));
 
                         tableView.getItems().addAll(observableList);
                         caseCount++;
@@ -4952,8 +5036,7 @@ public class Controller implements Initializable {
 
                         observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
                                 array.get(3), array.get(4), array.get(5), array.get(6), array.get(7),
-                                array.get(8), array.get(9), array.get(10),
-                                array.get(11)));
+                                array.get(8), array.get(9), array.get(10)));
 
                         tableView.getItems().addAll(observableList);
                         caseCount++;
@@ -4978,8 +5061,7 @@ public class Controller implements Initializable {
 
                         observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
                                 array.get(3), array.get(4), array.get(5), array.get(6), array.get(7),
-                                array.get(8), array.get(9), array.get(10),
-                                array.get(11)));
+                                array.get(8), array.get(9), array.get(10)));
 
                         tableView.getItems().addAll(observableList);
                         caseCount++;
@@ -5005,8 +5087,7 @@ public class Controller implements Initializable {
 
                         observableList.add(new ProjectTableView(array.get(0), array.get(1), array.get(2),
                                 array.get(3), array.get(4), array.get(5), array.get(6), array.get(7),
-                                array.get(8), array.get(9), array.get(10),
-                                array.get(11)));
+                                array.get(8), array.get(9), array.get(10)));
 
                         tableView.getItems().addAll(observableList);
                         caseCount++;
@@ -8819,8 +8900,26 @@ public class Controller implements Initializable {
         headerArray.add("Region");
         headerArray.add("Security");
 
+        HSSFCellStyle style = workbook.createCellStyle();
+        style.setFillBackgroundColor(IndexedColors.BLUE.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        Font font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeightInPoints((short)10);
+        font.setColor(IndexedColors.WHITE.getIndex());
+        style.setFont(font);
+        style.setWrapText(true);
+
+        HSSFCellStyle style1 = workbook.createCellStyle();
+        Font font1 = workbook.createFont();
+        font1.setFontHeightInPoints((short)9);
+        font1.setColor(IndexedColors.BLACK.getIndex());
+        style1.setFont(font1);
+
         for (int k = 0; k < tableView.getColumns().size(); k++) {
             row.createCell(k).setCellValue(headerArray.get(k).toString());
+            row.getCell(k).setCellStyle(style);
+            spreadsheet.autoSizeColumn(k);
         }
 
         for (int i = 0; i < tableView.getItems().size(); i++) {
@@ -8864,8 +8963,27 @@ public class Controller implements Initializable {
         headerArray.add("Support Theater");
         headerArray.add("Site Status");
 
+        HSSFCellStyle style = workbook.createCellStyle();
+        style.setFillBackgroundColor(IndexedColors.BLUE.getIndex());
+        style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+        Font font = workbook.createFont();
+        font.setBold(true);
+        font.setFontHeightInPoints((short)10);
+        font.setColor(IndexedColors.WHITE.getIndex());
+        style.setFont(font);
+
+
+        HSSFCellStyle style1 = workbook.createCellStyle();
+        Font font1 = workbook.createFont();
+        font1.setFontHeightInPoints((short)9);
+        font1.setColor(IndexedColors.BLACK.getIndex());
+        style1.setFont(font1);
+
+
         for (int k = 0; k < tableView.getColumns().size(); k++) {
             row.createCell(k).setCellValue(headerArray.get(k).toString());
+            row.getCell(k).setCellStyle(style);
+            spreadsheet.autoSizeColumn(k);
         }
 
         for (int i = 0; i < tableView.getItems().size(); i++) {
@@ -8880,6 +8998,8 @@ public class Controller implements Initializable {
                 } else {
                     row.createCell(j).setCellValue("");
                 }
+                row.getCell(j).setCellStyle(style1);
+                spreadsheet.autoSizeColumn(j);
             }
         }
 
@@ -9083,7 +9203,7 @@ public class Controller implements Initializable {
         }catch (Exception e) {
             e.printStackTrace();
         }
-        parseProjectDetailsData();
+        //parseProjectDetailsData();
     }
 
     private void parseProjectDetailsData(){
@@ -10257,7 +10377,6 @@ public class Controller implements Initializable {
         prjModCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjModDate"));
         prjStatCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseSeverity"));
         prjSevCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseStatus"));
-        prjNumCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjCaseNumber"));
         prjHotRCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjHotR"));
         prjGateDateCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjGateDate"));
         prjRegionCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjRegion"));
@@ -10293,7 +10412,7 @@ public class Controller implements Initializable {
 
         HSSFCell cellVal;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_project_details.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -10303,7 +10422,7 @@ public class Controller implements Initializable {
 
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
 
-                if (filterColName.equals("Case Number")) {
+                if (filterColName.equals("Case No.")) {
                     caseNumCellRef = i;
                 }
             }
@@ -10379,7 +10498,7 @@ public class Controller implements Initializable {
         int row = tablePosition.getRow();
         ProjectTableView caseview = (ProjectTableView) tableCases.getItems().get(row);
         TableColumn tableColumn = tablePosition.getTableColumn();
-        caseNumber = caseview.getPrjCaseNumber();
+        caseNumber = caseview.getPrjCaseNo();
         return caseNumber;
     }
 

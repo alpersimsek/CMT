@@ -68,9 +68,7 @@ public class Model implements Initializable {
     private TableColumn<ProductTableView, String> tableFCColumn;
 
     Boolean allProducts = false;
-    Boolean periodMonthly = false;
-    Boolean perodQuarter = false;
-    Boolean periodYear = false;
+
 
     @FXML
     private WebView webimage;
@@ -111,6 +109,7 @@ public class Model implements Initializable {
             }
 
             prodArray = (ArrayList) prodArray.stream().distinct().collect(Collectors.toList());
+
             Collections.sort(prodArray);
 
             ObservableList<ProductTableView> prodList = FXCollections.observableArrayList();
@@ -170,6 +169,22 @@ public class Model implements Initializable {
 
             });
 
+            btnaddSelected.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+
+                        if (tableForecastProd.getSelectionModel().getSelectedItem() != null) {
+                            ProductTableView selectedProduct = tableForecastProd.getSelectionModel().getSelectedItem();
+                            tableFCProdSelected.getItems().add(selectedProduct);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
             tableFCProdSelected.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
@@ -187,6 +202,22 @@ public class Model implements Initializable {
                         }
                     }
 
+                }
+            });
+
+            btnremoveSelected.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+
+                        if (tableFCProdSelected.getSelectionModel().getSelectedCells() != null) {
+                            ProductTableView selectedCust = tableFCProdSelected.getSelectionModel().getSelectedItem();
+                            tableFCProdSelected.getItems().remove(selectedCust);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
 
@@ -247,8 +278,9 @@ public class Model implements Initializable {
             txtFilter.requestFocus();
             rdAll.setSelected(false);
             allProducts = false;
+            webimage.setVisible(false);
         }
-          if (event.getSource() == btnRun){
+        if (event.getSource() == btnRun){
             runForecast();
         }
 
@@ -256,30 +288,21 @@ public class Model implements Initializable {
 
     private void runForecast() {
 
-        if (rdAll.isSelected()){
-
-            if (periodMonthly){
-                System.out.println("All Products - Monthly");
-            }
-            if (perodQuarter){
-                System.out.println("All Products - Quarterly");
-            }
-            if (periodYear){
-                System.out.println("All Products - Yearly");
-            }
-
-        }else{
-
-            if (periodMonthly){
-                System.out.println(txtProducts.getText() + "  - Monthly");
-            }
-            if (perodQuarter){
-                System.out.println(txtProducts.getText()+  "  - Quarterly");
-            }
-            if (periodYear){
-                System.out.println(txtProducts.getText() + " - Yearly");
-            }
+        if (txtProducts.getText().isEmpty() && !rdAll.isSelected()){
+            System.out.println("Please Select Product(s) or Select All Product button to proceed");
         }
+
+        if (!txtProducts.getText().isEmpty() && rdAll.isSelected()){
+            System.out.println("All Products Selected, ignoring prompted product list");
+        }
+        if (txtProducts.getText().isEmpty() && rdAll.isSelected()){
+            System.out.println("All Products Selected");
+        }
+        if (!txtProducts.getText().isEmpty() && !rdAll.isSelected()){
+            System.out.println(txtProducts.getText());
+        }
+
+        webimage.setVisible(true);
 
         WebEngine webEngine = webimage.getEngine();
         try {
@@ -287,9 +310,7 @@ public class Model implements Initializable {
         }catch (Exception e){
             e.printStackTrace();
         }
-
     }
-
 
     @FXML
     void handleWebClick(MouseEvent event) {

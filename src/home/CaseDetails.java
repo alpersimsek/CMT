@@ -111,19 +111,19 @@ public class CaseDetails implements Initializable {
 
 
         txtPrjCaseNum.setText(contentArray[0]);
-        txtPrjCaseSev.setText(contentArray[1]);
-        txtPrjCaseStat.setText(contentArray[2]);
-        txtPrjCaseOwner.setText(contentArray[3]);
-        txtPrjHotListR.setText(contentArray[4]);
-        txtPrjCaseSub.setText(contentArray[5]);
-        txtPrjHotListB.setText(contentArray[6]);
-        txtPrjProd.setText(contentArray[7]);
-        txtPrjHotListD.setText(contentArray[8]);
-        txtPrjGateDate.setText(contentArray[9]);
-        txtPrjAcc.setText(contentArray[10]);
-        txtPrjAge.setText(contentArray[11]);
-        txtPrjReg.setText(contentArray[12]);
-        txtHotListComm.setText(contentArray[13]);
+        txtPrjCaseSev.setText(contentArray[6]);
+        txtPrjCaseStat.setText(contentArray[5]);
+        txtPrjCaseOwner.setText(contentArray[11]);
+        txtPrjHotListR.setText(contentArray[7]);
+        txtPrjCaseSub.setText(contentArray[3]);
+        txtPrjHotListB.setText(contentArray[12]);
+        txtPrjProd.setText(contentArray[2]);
+        txtPrjHotListD.setText(contentArray[13]);
+        txtPrjGateDate.setText(contentArray[8]);
+        txtPrjAcc.setText(contentArray[1]);
+        txtPrjAge.setText(contentArray[14]);
+        txtPrjReg.setText(contentArray[9]);
+        txtHotListComm.setText(contentArray[15]);
 
         projectCaseComments();
         readNotes(txtPrjCaseNum.getText());
