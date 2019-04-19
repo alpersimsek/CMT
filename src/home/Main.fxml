@@ -28,195 +28,6 @@
    <children>
       <StackPane prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0">
          <children>
-            <AnchorPane fx:id="apnProjects" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: WHITE;" stylesheets="@home.css">
-               <children>
-                  <GridPane layoutX="14.0" layoutY="26.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="25.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
-                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Button fx:id="btnAmericas" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="100.0" prefWidth="100.0" text="0" textFill="#ff007f" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="System Bold" size="38.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image/Americas-Icon.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnEmea" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="100.0" prefWidth="100.0" text="0" textFill="#ff007f" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="System Bold" size="38.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image/Europe-Icon.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnJapan" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="120.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="100.0" prefWidth="100.0" text="0" textFill="#ff007f" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                           <font>
-                              <Font name="System Bold" size="38.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true">
-                                 <image>
-                                    <Image url="@image/japan2.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnApac" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="100.0" prefWidth="100.0" text="0" textFill="#ff007f" GridPane.rowIndex="3">
-                           <font>
-                              <Font name="System Bold" size="38.0" />
-                           </font>
-                           <graphic>
-                              <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@image/Asia-Pacific-Icon.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnGatingNow" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="100.0" prefWidth="100.0" text="0" textFill="#ff007f" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="System Bold" size="34.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="GREY" glyphName="BULLHORN" size="34" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnGatingDate" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="100.0" prefWidth="100.0" text="0" textFill="#ff007f" GridPane.columnIndex="6" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="System Bold" size="34.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="GREY" glyphName="CALENDAR" size="34" />
-                           </graphic>
-                        </Button>
-                        <Button fx:id="btnGatingPrevious" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="100.0" prefWidth="100.0" text="0" textFill="#ff007f" GridPane.columnIndex="4" GridPane.rowIndex="3">
-                           <font>
-                              <Font name="System Bold" size="34.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="GREY" glyphName="FIRE_EXTINGUISHER" size="34" />
-                           </graphic>
-                        </Button>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GATING NOW" GridPane.columnIndex="4">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GATING DATE" GridPane.columnIndex="6">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PREV. GATING" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Text>
-                        <Button fx:id="btnProjectsAll" contentDisplay="TOP" graphicTextGap="0.0" layoutX="400.0" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="100.0" prefWidth="100.0" text="0" textFill="#ff007f" GridPane.columnIndex="6" GridPane.rowIndex="3">
-                           <font>
-                              <Font name="System Bold" size="34.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="GREY" glyphName="LIST_ALT" size="34" />
-                           </graphic>
-                        </Button>
-                        <Text layoutX="270.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ALL" GridPane.columnIndex="6" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Text>
-                     </children>
-                  </GridPane>
-                  <TableView fx:id="tableProjects" layoutX="5.0" layoutY="282.0" prefHeight="561.0" prefWidth="1079.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="280.0">
-                    <columns>
-                      <TableColumn fx:id="prjNoCol" maxWidth="113.0" minWidth="113.0" prefWidth="113.0" resizable="false" text="Case No." />
-                      <TableColumn fx:id="prjAccCol" editable="false" maxWidth="200.0" minWidth="150.0" prefWidth="150.0" text="Account Name" />
-                        <TableColumn fx:id="prjProdCol" maxWidth="250.0" minWidth="120.0" prefWidth="180.0" text="Product" />
-                        <TableColumn fx:id="prjSubCol" maxWidth="600.0" minWidth="200.0" prefWidth="300.0" text="Subject" />
-                        <TableColumn fx:id="prjModCol" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" resizable="false" text="Last Modified" />
-                        <TableColumn fx:id="prjStatCol" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" resizable="false" text="Severity" />
-                        <TableColumn fx:id="prjSevCol" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" resizable="false" text="Status" />
-                        <TableColumn fx:id="prjHotRCol" maxWidth="250.0" minWidth="150.0" prefWidth="150.0" text="Hot List Reason" />
-                        <TableColumn fx:id="prjGateDateCol" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" resizable="false" text="Gating Date" />
-                        <TableColumn fx:id="prjRegionCol" maxWidth="80.0" minWidth="80.0" resizable="false" text="Region" />
-                        <TableColumn fx:id="prjSiteStatusCol" maxWidth="230.0" minWidth="130.0" prefWidth="130.0" text="Site Status" />
-                    </columns>
-                  </TableView>
-                  <GridPane layoutX="528.0" layoutY="14.0" prefHeight="240.0" prefWidth="543.0" AnchorPane.leftAnchor="530.0" AnchorPane.topAnchor="25.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="410.0" minWidth="410.0" prefWidth="410.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="5.0" minHeight="5.0" prefHeight="5.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="90.0" minHeight="90.0" prefHeight="90.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                     <children>
-                        <Button fx:id="btnPrjMyNotes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="50.0" prefWidth="120.0" text="MemoPad">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="GREY" glyphName="BOOK" size="20" />
-                           </graphic>
-                        </Button>
-                        <Pane fx:id="pnPrjNotes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="195.0" prefWidth="120.0" visible="false" GridPane.rowIndex="2" GridPane.rowSpan="2">
-                           <children>
-                              <ListView fx:id="lstPrjNotes" layoutX="2.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="195.0" prefWidth="120.0" />
-                           </children>
-                        </Pane>
-                        <Button fx:id="btnPrjNewNote" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="50.0" prefWidth="140.0" text="NEW MEMO" visible="false" GridPane.columnIndex="2">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="GREY" glyphName="PENCIL" size="20" />
-                           </graphic>
-                           <GridPane.margin>
-                              <Insets left="30.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Button fx:id="btnPrjDelNote" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="50.0" prefWidth="140.0" text="DELETE MEMO" visible="false" GridPane.columnIndex="2">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <graphic>
-                              <FontAwesomeIconView fill="GREY" glyphName="TRASH_ALT" size="20" />
-                           </graphic>
-                           <GridPane.margin>
-                              <Insets left="230.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <TextArea fx:id="txtPrjNoteView" editable="false" prefHeight="200.0" prefWidth="200.0" visible="false" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.rowSpan="2" />
-                     </children>
-                  </GridPane>
-               </children>
-            </AnchorPane>
             <AnchorPane fx:id="apnCustomers" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
                <children>
                   <TableView fx:id="tableCustomers" prefHeight="200.0" prefWidth="200.0" stylesheets="@home.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="235.0">
@@ -475,6 +286,195 @@
                         </GridPane>
                      </children>
                   </Pane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="apnProjects" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: WHITE;" stylesheets="@home.css">
+               <children>
+                  <GridPane layoutX="14.0" layoutY="26.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="25.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="20.0" minHeight="20.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button fx:id="btnAmericas" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="100.0" prefWidth="100.0" text="0" textFill="#ff007f" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="38.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@image/Americas-Icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnEmea" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="100.0" prefWidth="100.0" text="0" textFill="#ff007f" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="38.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@image/Europe-Icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnJapan" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="120.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="100.0" prefWidth="100.0" text="0" textFill="#ff007f" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="38.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true">
+                                 <image>
+                                    <Image url="@image/japan2.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnApac" contentDisplay="CENTER" graphicTextGap="0.0" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="100.0" prefWidth="100.0" text="0" textFill="#ff007f" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="38.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@image/Asia-Pacific-Icon.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnGatingNow" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="100.0" prefWidth="100.0" text="0" textFill="#ff007f" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="34.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="GREY" glyphName="BULLHORN" size="34" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnGatingDate" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="100.0" prefWidth="100.0" text="0" textFill="#ff007f" GridPane.columnIndex="6" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="34.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="GREY" glyphName="CALENDAR" size="34" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnGatingPrevious" contentDisplay="TOP" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="100.0" prefWidth="100.0" text="0" textFill="#ff007f" GridPane.columnIndex="4" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="34.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="GREY" glyphName="FIRE_EXTINGUISHER" size="34" />
+                           </graphic>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GATING NOW" GridPane.columnIndex="4">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="GATING DATE" GridPane.columnIndex="6">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PREV. GATING" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnProjectsAll" contentDisplay="TOP" graphicTextGap="0.0" layoutX="400.0" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="100.0" prefWidth="100.0" text="0" textFill="#ff007f" GridPane.columnIndex="6" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="34.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="GREY" glyphName="LIST_ALT" size="34" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="270.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ALL" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </GridPane>
+                  <TableView fx:id="tableProjects" layoutX="5.0" layoutY="282.0" prefHeight="561.0" prefWidth="1079.0" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="280.0">
+                    <columns>
+                      <TableColumn fx:id="prjNoCol" maxWidth="113.0" minWidth="113.0" prefWidth="113.0" resizable="false" text="Case No." />
+                      <TableColumn fx:id="prjAccCol" editable="false" maxWidth="200.0" minWidth="150.0" prefWidth="150.0" text="Account Name" />
+                        <TableColumn fx:id="prjProdCol" maxWidth="250.0" minWidth="120.0" prefWidth="180.0" text="Product" />
+                        <TableColumn fx:id="prjSubCol" maxWidth="600.0" minWidth="200.0" prefWidth="300.0" text="Subject" />
+                        <TableColumn fx:id="prjModCol" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" resizable="false" text="Last Modified" />
+                        <TableColumn fx:id="prjStatCol" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" resizable="false" text="Severity" />
+                        <TableColumn fx:id="prjSevCol" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" resizable="false" text="Status" />
+                        <TableColumn fx:id="prjHotRCol" maxWidth="250.0" minWidth="150.0" prefWidth="150.0" text="Hot List Reason" />
+                        <TableColumn fx:id="prjGateDateCol" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" resizable="false" text="Gating Date" />
+                        <TableColumn fx:id="prjRegionCol" maxWidth="80.0" minWidth="80.0" resizable="false" text="Region" />
+                        <TableColumn fx:id="prjSiteStatusCol" maxWidth="230.0" minWidth="130.0" prefWidth="130.0" text="Site Status" />
+                    </columns>
+                  </TableView>
+                  <GridPane layoutX="528.0" layoutY="14.0" prefHeight="240.0" prefWidth="543.0" AnchorPane.leftAnchor="530.0" AnchorPane.topAnchor="25.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="410.0" minWidth="410.0" prefWidth="410.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="5.0" minHeight="5.0" prefHeight="5.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="90.0" minHeight="90.0" prefHeight="90.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button fx:id="btnPrjMyNotes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="50.0" prefWidth="120.0" text="MemoPad">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="GREY" glyphName="BOOK" size="20" />
+                           </graphic>
+                        </Button>
+                        <Pane fx:id="pnPrjNotes" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="195.0" prefWidth="120.0" visible="false" GridPane.rowIndex="2" GridPane.rowSpan="2">
+                           <children>
+                              <ListView fx:id="lstPrjNotes" layoutX="2.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="195.0" prefWidth="120.0" />
+                           </children>
+                        </Pane>
+                        <Button fx:id="btnPrjNewNote" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="50.0" prefWidth="140.0" text="NEW MEMO" visible="false" GridPane.columnIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="GREY" glyphName="PENCIL" size="20" />
+                           </graphic>
+                           <GridPane.margin>
+                              <Insets left="30.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <Button fx:id="btnPrjDelNote" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleProjectClicks" prefHeight="50.0" prefWidth="140.0" text="DELETE MEMO" visible="false" GridPane.columnIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="GREY" glyphName="TRASH_ALT" size="20" />
+                           </graphic>
+                           <GridPane.margin>
+                              <Insets left="230.0" />
+                           </GridPane.margin>
+                        </Button>
+                        <TextArea fx:id="txtPrjNoteView" editable="false" prefHeight="200.0" prefWidth="200.0" visible="false" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.rowSpan="2" />
+                     </children>
+                  </GridPane>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="apnSettings" onMouseClicked="#handleMouseClicked" prefHeight="850.0" prefWidth="1080.0" style="-fx-background-color: #FFFFFF;">
@@ -3084,7 +3084,15 @@
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="btnProjection" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="316.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="Projection" textFill="WHITE" visible="false">
+                  <Button fx:id="btnProjection" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="316.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="Projection" textFill="WHITE">
+                     <graphic>
+                        <FontAwesomeIconView fill="#ff007f" glyphName="GEARS" size="24" />
+                     </graphic>
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnSkillSet" alignment="BASELINE_LEFT" graphicTextGap="10.0" layoutX="10.0" layoutY="367.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="SkillSet" textFill="WHITE">
                      <graphic>
                         <FontAwesomeIconView fill="#ff007f" glyphName="GEARS" size="24" />
                      </graphic>
@@ -3116,12 +3124,18 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Label fx:id="lblDownload" prefHeight="55.0" prefWidth="436.0" text="  Downloading..." textFill="#ff007f">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
                   <ProgressBar fx:id="progressBar" blendMode="EXCLUSION" prefHeight="30.0" prefWidth="200.0" progress="0.0" stylesheets="@home.css" visible="false" />
+                  <Label fx:id="lblDownload" text="Connection Offline!" textFill="#ff007f">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding>
+                  </Label>
                </children>
             </VBox>
             <ImageView fitHeight="71.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">

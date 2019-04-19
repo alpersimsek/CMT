@@ -184,6 +184,7 @@ public class MyCaseDetails implements Initializable {
             }
             s.close();
         }
+        txtMyCaseDetNotes.positionCaret(txtMyCaseDetNotes.getLength());
     }
 
     private void processComments(String str1){
@@ -247,7 +248,7 @@ public class MyCaseDetails implements Initializable {
 
                 txtMyCaseDetComm.appendText("===============" + "\n" + caseCommentArray.get(i)+ "\n" + "\n" + caseCommentArray.get(i+1) + "\n");
             }
-            txtMyCaseDetComm.positionCaret(0);
+            txtMyCaseDetComm.positionCaret(txtMyCaseDetComm.getLength());
 
         }catch (Exception e){
             e.printStackTrace();

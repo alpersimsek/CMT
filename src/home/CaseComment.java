@@ -54,8 +54,6 @@ public class CaseComment implements Initializable {
     ArrayList<String> caseCommentArray;
     ArrayList<String> caseSelection;
 
-
-
     private void setCaseNumber(){
 
     }
@@ -148,8 +146,11 @@ public class CaseComment implements Initializable {
     }
 
     private void setFields(){
+
         caseSelection = new ArrayList<>();
-        File casesel = new File(System.getProperty("user.home") + "\\Documents\\CMT\\" + "caseSel");
+
+        String caseN = Clipboard.getSystemClipboard().getString();
+        File casesel = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\" + caseN);
 
         if (casesel.isFile()) {
             Scanner s = null;
@@ -161,12 +162,12 @@ public class CaseComment implements Initializable {
             while (s.hasNextLine()) {
                 caseSelection.add(s.nextLine());
             }
-
-            txtComNum.setText(caseSelection.get(0));
-            txtComSev.setText(caseSelection.get(1));
-            txtComSubj.setText(caseSelection.get(14));
-            txtComAcc.setText(caseSelection.get(15));
         }
+
+        txtComNum.setText(caseSelection.get(0));
+        txtComSev.setText(caseSelection.get(1));
+        txtComSubj.setText(caseSelection.get(14));
+        txtComAcc.setText(caseSelection.get(15));
 
         Platform.runLater(new Runnable() {
             @Override
@@ -197,9 +198,9 @@ public class CaseComment implements Initializable {
             stage.setScene(new Scene(root, 650, 400));
             stage.show();
             stage.setMinWidth(650);
-            stage.setMinHeight(420);
+            stage.setMinHeight(820);
             stage.setMaxWidth(650);
-            stage.setMaxHeight(420);
+            stage.setMaxHeight(820);
 
         }
         catch (IOException e) {

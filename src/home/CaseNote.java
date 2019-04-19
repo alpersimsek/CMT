@@ -27,6 +27,8 @@ public class CaseNote implements Initializable {
 
     @FXML
     private TextArea txtCaseNote;
+    @FXML
+    private TextArea txtCaseNotePrev;
 
     @FXML
     private Button btnCaseNoteClose;
@@ -82,7 +84,11 @@ public class CaseNote implements Initializable {
                     e.printStackTrace();
                 }
 
-                ((Stage)(btnCaseNoteSave).getScene().getWindow()).close();
+                readNotes(txtCaseNoteNum.getText());
+                txtCaseNotePrev.positionCaret(txtCaseNotePrev.getLength());
+                txtCaseNote.clear();
+                txtCaseNote.requestFocus();
+
             }
 
         }
@@ -100,8 +106,11 @@ public class CaseNote implements Initializable {
     }
 
     private void setFields(){
-        /*caseSelection = new ArrayList<>();
-        File casesel = new File(System.getProperty("user.home") + "\\Documents\\CMT\\" + "caseSel");
+
+        String caseNum = Clipboard.getSystemClipboard().getString();
+
+        caseSelection = new ArrayList<>();
+        File casesel = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\" + caseNum);
 
         if (casesel.isFile()) {
             Scanner s = null;
@@ -113,11 +122,14 @@ public class CaseNote implements Initializable {
             while (s.hasNextLine()) {
                 caseSelection.add(s.nextLine());
             }
+        }
 
-            txtCaseNoteSeverity.setText(caseSelection.get(1));
-            txtCaseNoteSubject.setText(caseSelection.get(14));
-            txtCaseNoteAccount.setText(caseSelection.get(15));
-        }*/
+        txtCaseNoteNum.setText(caseSelection.get(0));
+        txtCaseNoteSeverity.setText(caseSelection.get(1));
+        txtCaseNoteSubject.setText(caseSelection.get(14));
+        txtCaseNoteAccount.setText(caseSelection.get(15));
+
+        readNotes(caseNum);
 
         Platform.runLater(new Runnable() {
             @Override
@@ -134,6 +146,26 @@ public class CaseNote implements Initializable {
 
         Stage stage = (Stage) txtCaseNote.getScene().getWindow();
         stage.setTitle(caseNumber +  " : MEMO ENTRY" );
+    }
+
+    private void readNotes(String str){
+
+        txtCaseNotePrev.clear();
+
+        File prjCase = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + str);
+
+        if (prjCase.isFile()) {
+            Scanner s = null;
+            try {
+                s = new Scanner(prjCase);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            while (s.hasNextLine()) {
+                txtCaseNotePrev.appendText(s.nextLine() + "\n");
+            }
+            s.close();
+        }
     }
 
     @Override

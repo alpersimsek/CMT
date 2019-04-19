@@ -28,6 +28,8 @@ public class Main extends Application {
             primaryStage.show();
             primaryStage.setMinHeight(950);
             primaryStage.setMinWidth(1280);
+            primaryStage.setMaxWidth(1280);
+            primaryStage.setMaxHeight(950);
 
         } if (screenHeight < 1025) {
 
@@ -39,6 +41,8 @@ public class Main extends Application {
             primaryStage.show();
             primaryStage.setMinHeight(720);
             primaryStage.setMinWidth(1020);
+            primaryStage.setMaxHeight(720);
+            primaryStage.setMaxWidth(1020);
         }
     }
 

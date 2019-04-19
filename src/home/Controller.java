@@ -39,9 +39,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.vfs.provider.sftp.SftpFileSystemConfigBuilder;
 import org.apache.poi.hssf.usermodel.*;
-import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.*;
@@ -205,6 +203,8 @@ public class Controller implements Initializable {
     private Button btnSettings;
     @FXML
     private Button btnProjection;
+    @FXML
+    private Button btnSkillSet;
     @FXML
     private Button btnLoadData;
     @FXML
@@ -819,7 +819,7 @@ public class Controller implements Initializable {
 
     //Alert Strings
     String strAlert = "NO RECORD FOUND..." + "\n" + "\n" + "PLEASE RELOAD DATA FOR RECENT DATA!" + "\n" + "\n" + "IF NOT ALREADY, PLEASE LOGIN!";
-    String strNoNote = "THERE IS NO PERSONAL NOTE..." + "\n" + "\n" + "PLEASE CREATE PERSONAL NOTE FIRST!";
+    String strNoNote = "There is No Personal Memo Saved..." + "\n" + "\n" + "PLEASE CREATE PERSONAL MEMO FIRST!";
     String strSave = "PLEASE PROMPT A PROFILE NAME";
     String strLoadProf = "THERE IS NO USER PROFILE SAVED!";
 
@@ -919,9 +919,14 @@ public class Controller implements Initializable {
         if (event.getSource() == btnProjection){
             projectionLoginPage();
         }
+        if (event.getSource() == btnSkillSet){
+            skillView();
+        }
 
         if (event.getSource() == btnLogin) {
 
+            btnToExcel.setVisible(false);
+            btnBack.setVisible(false);
             //Connect to OKTA SSO
             connectOkta();
         }
@@ -2348,6 +2353,24 @@ public class Controller implements Initializable {
                             btnAddNewNote.setVisible(true);
                             btnDelNote.setVisible(true);
 
+                            txtShowCaseNotes.clear();
+
+                            File caseNote = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + selectedCase);
+
+                            if (caseNote.isFile()) {
+                                Scanner s = null;
+                                try {
+                                    s = new Scanner(caseNote);
+                                } catch (Exception e) {
+                                    System.out.println("No Selection of Any Case");
+                                }
+                                while (s.hasNextLine()) {
+                                    txtShowCaseNotes.appendText(s.nextLine() + "\n");
+                                }
+                                s.close();
+                            }
+                            spnNote.setVisible(true);
+
                             btnViewNote.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
@@ -2432,9 +2455,9 @@ public class Controller implements Initializable {
             stage.setScene(new Scene(root, 650, 400));
             stage.show();
             stage.setMinWidth(650);
-            stage.setMinHeight(420);
+            stage.setMinHeight(820);
             stage.setMaxWidth(650);
-            stage.setMaxHeight(420);
+            stage.setMaxHeight(820);
 
             //saveCaseDetails();
 
@@ -2541,7 +2564,60 @@ public class Controller implements Initializable {
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
 
+    private void skillView(){
+
+        ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
+        ArrayList<String> setUser2 = new ArrayList();
+        int userArraySize = setUser.size();
+
+        for (int i = 0; i < userArraySize; i++) {
+
+            Pattern pattern = Pattern.compile("\\b([a-z])([\\w]*)");
+            Matcher matcher = pattern.matcher(setUser.get(i));
+            StringBuffer buffer = new StringBuffer();
+            while (matcher.find()) {
+                matcher.appendReplacement(buffer, matcher.group(1).toUpperCase() + matcher.group(2));
+            }
+            String capitalized = matcher.appendTail(buffer).toString();
+            setUser2.add(capitalized);
+        }
+
+        settingsUsers = (ArrayList<String>) setUser2.stream().distinct().collect(Collectors.toList());
+        Collections.sort(settingsUsers);
+
+        try {
+
+            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\SkillSet\\users.txt"));
+            int size = settingsUsers.size();
+            for (int i = 0; i < size; i++) {
+                String str = settingsUsers.get(i);
+                writer.write(str);
+                if (i < size - 1)
+                    writer.write("\n");
+            }
+
+            writer.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Parent root;
+        try{
+            root = FXMLLoader.load(getClass().getClassLoader().getResource("home/skillSet.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("SkillSet View...");
+            stage.getIcons().add(new Image("home/image/rbbicon.png"));
+            stage.setScene(new Scene(root, 1280, 980));
+            stage.setMaxWidth(1280);
+            stage.setMaxHeight(980);
+            stage.show();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void saveCaseDetails(CaseTableView caseview) {
@@ -4452,14 +4528,6 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
 
-        /*try {
-
-            FileUtils.copyURLToFile(new URL(newLoc5), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_project_details.csv"));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
         try{
 
             FileUtils.copyURLToFile(new URL(newLoc3), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V2.csv"));
@@ -5590,7 +5658,6 @@ public class Controller implements Initializable {
 
                 }
             });
-
 
             btnBack.setVisible(true);
             btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -8971,7 +9038,7 @@ public class Controller implements Initializable {
         font.setFontHeightInPoints((short)10);
         font.setColor(IndexedColors.WHITE.getIndex());
         style.setFont(font);
-
+        style.setWrapText(true);
 
         HSSFCellStyle style1 = workbook.createCellStyle();
         Font font1 = workbook.createFont();
@@ -12154,92 +12221,17 @@ public class Controller implements Initializable {
 
         queueArray = new ArrayList<>();
 
-        queueArray.add(0, "Kandy NOC");
-        queueArray.add(1, "KBS Onboarding");
-        queueArray.add(2, "KBS Operations");
-        queueArray.add(3, "KBS Support");
-        queueArray.add(4, "PS A2 Call Processing");
-        queueArray.add(5, "PS A2 Gateways");
-        queueArray.add(6, "PS A2 GENCOM");
-        queueArray.add(7, "PS A2 IMM");
-        queueArray.add(8, "PS A2 OAM");
-        queueArray.add(9, "PS A2 WAM");
-        queueArray.add(10, "PS A6");
-        queueArray.add(11, "PS Billing");
-        queueArray.add(12, "PS C3");
-        queueArray.add(13, "PS CBM SDM");
-        queueArray.add(14, "PS CCA SST SAM21 Platform");
-        queueArray.add(15, "PS CICM");
-        queueArray.add(16, "PS CM9520");
-        queueArray.add(17, "PS Converged Intelligent Messaging (CIM)");
-        queueArray.add(18, "PS CoreBase SW");
-        queueArray.add(19, "PS CoreHardware");
-        queueArray.add(20, "PS CPaaS");
-        queueArray.add(21, "PS CSLAN8600");
-        queueArray.add(22, "PS DMS SS7");
-        queueArray.add(23, "PS EMT");
-        queueArray.add(24, "PS G5");
-        queueArray.add(25, "PS Gateways");
-        queueArray.add(26, "PS GENiUS");
-        queueArray.add(27, "PS GENView Analytics");
-        queueArray.add(28, "PS GVBM");
-        queueArray.add(29, "PS GVPP");
-        queueArray.add(30, "PS GWC");
-        queueArray.add(31, "PS hiG Gateways");
-        queueArray.add(32, "PS IN");
-        queueArray.add(33, "PS Kandy");
-        queueArray.add(34, "PS Kandy Wrappers");
-        queueArray.add(35, "PS LI / TOPS");
-        queueArray.add(36, "PS Lines Services");
-        queueArray.add(37, "PS MG15K G2 G6");
-        queueArray.add(38, "PS MG9K");
-        queueArray.add(39, "PS NSP");
-        queueArray.add(40, "PS OAM IEMS");
-        queueArray.add(41, "PS OAM SESM");
-        queueArray.add(42, "PS OAM SPFS");
-        queueArray.add(43, "PS Ribbon Protect");
-        queueArray.add(44, "PS RSM");
-        queueArray.add(45, "PS SBC");
-        queueArray.add(46, "PS SeGW");
-        queueArray.add(47, "PS Signaling");
-        queueArray.add(48, "PS SIP Lines/SIP PBX");
-        queueArray.add(49, "PS SPiDR CallP");
-        queueArray.add(50, "PS SPiDR OAM");
-        queueArray.add(51, "PS SPM MG4K");
-        queueArray.add(52, "PS SST");
-        queueArray.add(53, "PS Trunking");
-        queueArray.add(54, "PS UT-SD");
-        queueArray.add(55, "PS XLA");
-        queueArray.add(56, "PS XPM V52");
-        queueArray.add(57, "Tech-Ops ER Support");
-        queueArray.add(58, "TS Asia");
-        queueArray.add(59, "TS CALA");
-        queueArray.add(60, "TS Converged Intelligent Messaging (CIM)");
-        queueArray.add(61, "TS EDGE");
-        queueArray.add(62, "TS EMEA");
-        queueArray.add(63, "TS EMEA Marquee");
-        queueArray.add(64, "TS EMEA PI");
-        queueArray.add(65, "TS GTAC SERVICES");
-        queueArray.add(66, "TS Japan Marquee");
-        queueArray.add(67, "TS MEXICO");
-        queueArray.add(68, "TS MNOC");
-        queueArray.add(69, "TS NA");
-        queueArray.add(70, "TS NA C15");
-        queueArray.add(71, "TS NA DCO");
-        queueArray.add(72, "TS NA Federal");
-        queueArray.add(73, "TS NA G-Series");
-        queueArray.add(74, "TS NA GTD5-5ESS");
-        queueArray.add(75, "TS NA Marquee");
-        queueArray.add(76, "TS NA Safari");
-        queueArray.add(77, "TS NA Safari(GPS)");
-        queueArray.add(78, "TS NA S-Series");
-        queueArray.add(79, "TS NA Verizon Wireless");
-        queueArray.add(80, "TS Non Technical");
-        queueArray.add(81, "TS NSP");
-        queueArray.add(82, "TS PSD");
-        queueArray.add(83, "TS TAC-RESPONSE");
-        queueArray.add(84, "TS TAQUA");
-        queueArray.add(85, "TS UT-SD");
+        List queues = Arrays.asList("Kandy NOC", "KBS Onboarding", "KBS Operations","KBS Support", "PS A2 Call Processing", "PS A2 Gateways", "PS A2 GENCOM", "PS A2 IMM",
+                "PS A2 OAM", "PS A2 WAM", "PS A6", "PS Billing", "PS C3","PS CBM SDM","PS CCA SST SAM21 Platform", "PS CICM","PS CM9520","PS Converged Intelligent Messaging (CIM)",
+                "PS CoreBase SW", "PS CoreHardware", "PS CPaaS", "PS CSLAN8600","PS DMS SS7", "PS EMT", "PS G5", "PS Gateways", "PS GENiUS", "PS GENView Analytics", "PS GVBM", "PS GVPP",
+                "PS GWC", "PS hiG Gateways","PS IN", "PS Kandy","PS Kandy Wrappers", "PS LI / TOPS","PS Lines Services", "PS MG15K G2 G6","PS MG9K", "PS NSP","PS OAM IEMS","PS OAM SESM",
+                "PS OAM SPFS","PS Ribbon Protect","PS RSM","PS SBC","PS SeGW","PS Signaling", "PS SIP Lines/SIP PBX","PS SPiDR CallP","PS SPiDR OAM","PS SPM MG4K","PS SST","PS Trunking",
+                "PS UT-SD","PS XLA","PS XPM V52","Tech-Ops ER Support","TS Asia","TS CALA","TS Converged Intelligent Messaging (CIM)","TS EDGE","TS EMEA","TS EMEA Marquee","TS EMEA PI",
+                "TS GTAC SERVICES","TS Japan Marquee","TS MEXICO","TS MNOC","TS NA","TS NA C15","TS NA DCO","TS NA Federal","TS NA G-Series","TS NA GTD5-5ESS","TS NA Marquee","TS NA Safari",
+                "TS NA Safari(GPS)","TS NA S-Series","TS NA Verizon Wireless","TS Non Technical","TS NSP","TS PSD","TS TAC-RESPONSE","TS TAQUA","TS UT-SD");
+
+        queueArray.addAll(queues);
+        Collections.sort(queueArray);
     }
 
     private void arrangeCMTFolder() {
@@ -12294,6 +12286,5 @@ public class Controller implements Initializable {
         myProductsPage();
         overviewPage();
         myCasesPage();
-        lblDownload.setText("Connection Offline!");
     }
 }
