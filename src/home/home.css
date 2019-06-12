@@ -14,6 +14,12 @@
 -fx-text-fill: #FF007F;
 }
 
+.pane {
+-fx-border-color: black;
+-fx-border-insets: 5;
+-fx-border-width: 3;
+}
+
 .table-view .column-header,
 .table-view .column-header-background .filler {
     -fx-background-color:   #000000;

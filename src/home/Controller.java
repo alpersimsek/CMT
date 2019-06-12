@@ -27,9 +27,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -55,12 +53,107 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.logging.*;
 
 public class Controller implements Initializable {
 
+    private final static Logger logger = Logger.getLogger("CMT_Main_Logger");
+    FileHandler fh;
+
+    ExecutorService service = Executors.newSingleThreadExecutor();
+
+    // Region Wars
+    @FXML
+    private AnchorPane apnRegCases;
+    @FXML
+    private Button btnRegE1Cases;
+    @FXML
+    private Button btnRegE2Cases;
+    @FXML
+    private Button btnRegOutFollow;
+    @FXML
+    private Button btnRegEscalated;
+    @FXML
+    private Button btnRegHotIssues;
+    @FXML
+    private Button btnRegBCCases;
+    @FXML
+    private Button btnRegInactive;
+    @FXML
+    private Button btnRegWOH;
+    @FXML
+    private Button btnRegBCupdated;
+    @FXML
+    private Button btnRegBCWac;
+    @FXML
+    private Button btnRegBCWIP;
+    @FXML
+    private Button btnRegBCINACT;
+    @FXML
+    private Button btnRegBCEngineering;
+    @FXML
+    private Button btnRegMJupdated;
+    @FXML
+    private Button btnRegMJWac;
+    @FXML
+    private Button btnRegMJWIP;
+    @FXML
+    private Button btnRegMJINACT;
+    @FXML
+    private Button btnRegMJEngineering;
+    @FXML
+    private Button btnRegMJDue;
+    @FXML
+    private Button btnRegBCMissed;
+    @FXML
+    private Button btnRegBCDue;
+    @FXML
+    private Button btnRegMJMissed;
+    @FXML
+    private Button btnRegQueue;
+    @FXML
+    private Button btnRegUpdateToday;
+    @FXML
+    private Button btnRegUpdateMissed;
+    @FXML
+    private Button btnRegUpdateNull;
+    @FXML
+    private Button btnRegCoOwnQueue;
+    @FXML
+    private Button btnRegCoQueueAssigned;
+    // Region Wars Finished
+    @FXML
+    private ChoiceBox<String> regChoice;
+    @FXML
+    private Button btnForOverAll;
+    @FXML
+    private Button btnForMM;
+    @FXML
+    private Button btnForIMS;
+    @FXML
+    private AnchorPane apnWorkGroup;
+    @FXML
+    private WebView webWorkGroup;
+    @FXML
+    private AnchorPane apnForecastSel;
+    @FXML
+    private TextField forecastSelect;
+    @FXML
+    private ListView<String> lstForecast;
+    @FXML
+    private TextField forecastProductSelect;
+    @FXML
+    private RadioButton forecastAll;
+    @FXML
+    private Button btnForecastRun;
+    @FXML
+    private Button btnRegClear;
     @FXML
     private TextField txtUsersSave;
     @FXML
@@ -83,6 +176,8 @@ public class Controller implements Initializable {
     private Button btnQueuesLoad;
     @FXML
     private Button btnUserProfDelete;
+    @FXML
+    private Button btnMyRegion;
     @FXML
     private Button btnProductProfDelete;
     @FXML
@@ -112,15 +207,21 @@ public class Controller implements Initializable {
     @FXML
     private AnchorPane spnNote;
     @FXML
+    private AnchorPane apnProjection;
+    @FXML
     private Pane pnCaseDetailsNote;
     @FXML
     private ProgressBar progressBar;
     @FXML
     private AnchorPane apnTableView;
     @FXML
+    private AnchorPane apnManLogin;
+    @FXML
     private AnchorPane apnNotes;
     @FXML
     private AnchorPane apnSettings;
+    @FXML
+    private AnchorPane apnSkills;
     @FXML
     private AnchorPane apnMyCases;
     @FXML
@@ -179,6 +280,10 @@ public class Controller implements Initializable {
     private CheckBox checkBoxEscalatedNote;
     @FXML
     private TextField txtCaseProductNote;
+    @FXML
+    private Button btnProjectRight;
+    @FXML
+    private Button btnProjectLeft;
     @FXML
     private Button btnDelNote;
     @FXML
@@ -409,6 +514,8 @@ public class Controller implements Initializable {
     private FontAwesomeIconView btnInfo;
     @FXML
     private FontAwesomeIconView btnToExcel;
+    @FXML
+    private FontAwesomeIconView btnUnlock;
     @FXML
     private TableView<CaseTableView> tableCases;
     @FXML
@@ -645,8 +752,77 @@ public class Controller implements Initializable {
     private TextArea txtPrjNoteView;
     @FXML
     private WebView webviewTest;
+    @FXML
+    private WebView projectWeb;
+    @FXML
+    private TextField txtpass;
+    @FXML
+    private Button btnManLogin;
+    @FXML
+    private Button btnManClose;
+    @FXML
+    private RadioButton rdEngMyTeam;
+    @FXML
+    private RadioButton rdEngOverall;
+    @FXML
+    private ListView<String> engNameList;
+    @FXML
+    private ListView<String> engNameListAll;
+    @FXML
+    private ListView<String> engSkilLev;
+    @FXML
+    private ListView<String> engSkillName;
+    @FXML
+    private RadioButton rdSkilMyTeam;
+    @FXML
+    private RadioButton rdSkillOverAll;
+    @FXML
+    private ListView<String> skillNameList;
+    @FXML
+    private ListView<String> skillNameListAll;
+    @FXML
+    private ListView<String> skillLevelList;
+    @FXML
+    private ListView<String> skillEngName;
+    @FXML
+    private TextField txtSearchEng;
+    @FXML
+    private TextField txtSearchSkill;
+    @FXML
+    private Text lblSearcEng;
+    @FXML
+    private Text lblSearchSkill;
+    @FXML
+    private Button btnSkillsExport;
+
+    ArrayList<String> readUserList;
+    ArrayList<String> readOverAllUsers;
+    ArrayList<String> safeUserList;
+    int userSkillRef;
+    int skillRef;
+    String selectedLevel;
+    String selected;
+    String selectedSkill;
+    String selectedSkillLevel;
+    String selectedRegion;
+    ArrayList<String> expertLevel;
+    ArrayList<String> intLevel;
+    ArrayList<String> basicLevel;
+    ArrayList<String> noLevel;
+    ArrayList<String> skillsAll;
+    ArrayList<String> skillsExpert;
+    ArrayList<String> skillsInterm;
+    ArrayList<String> skillsBegin;
+    ArrayList<String> skillsNone;
+
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    int screenHeight = screenSize.height;
+
+    ObservableList<String> levels = FXCollections.observableArrayList();
 
     Timeline time = new Timeline();
+    Timeline timeData = new Timeline();
+
 
     WebView browserLogin = new WebView();
     ArrayList<String> settingsUsers = new ArrayList<>();
@@ -676,11 +852,6 @@ public class Controller implements Initializable {
     int caseCoOwnerRefCell = 0;
     int caseEscalatedRefCell = 0;
     int caseSupHotListRRef = 0;
-    int caseSupHotListLRef = 0;
-    int caseSupHotListCRef;
-    int caseSupHotListBRef;
-    int caseSupHotListDRef;
-    int projGateDateRef;
     int caseRegionRef;
     int caseHotListRefCell = 0;
     int caseOutFolRefCell = 0;
@@ -742,6 +913,39 @@ public class Controller implements Initializable {
     int MJpc = 0;
     int MJwip = 0;
 
+    //Region Page variables
+
+    int regHotList;
+    int regOutFollow;
+    int regEscCases;
+    int regBCCases;
+    int regInactiveCases;
+    int regBCDueCases;
+    int regBCMissedCases;
+    int regBCDSCases;
+    int regBCInactiveCases;
+    int regBCWIP;
+    int regMJDueCases;
+    int regMJMissedCases;
+    int regMJUpdated;
+    int regMJDSCases;
+    int regMJWIP;
+    int regQueuedCases;
+    int regCoOwnerQueueCases;
+    int regCoOwnerQueueCasesAssigned;
+    int regE1Case;
+    int regE2Cases;
+    int regBCupdated;
+    int regBCWac;
+    int regMJWAC;
+    int regMJInactiveCases;
+    int regWOHCases;
+    int regUpdateToday;
+    int regUpdateMissed;
+    int regUpdateNull;
+    int regCoOwnCase;
+    int regCoOwnQueue;
+
     //My Page # variables
     int myHotList = 0;
     int myOutFollow = 0;
@@ -775,7 +979,6 @@ public class Controller implements Initializable {
     int myCoOwnQueue = 0;
 
     //Product Page # variables
-
     int prodHotList = 0;
     int prodOutFollow = 0;
     int prodEscCases = 0;
@@ -806,7 +1009,6 @@ public class Controller implements Initializable {
     int prodQueueTS = 0;
 
     //Project Page Variables
-
     int prjAmericas = 0;
     int prjEmea = 0;
     int prjApac = 0;
@@ -816,12 +1018,500 @@ public class Controller implements Initializable {
     int prjGatingPrev = 0;
     int prjAllCases = 0;
 
-
     //Alert Strings
-    String strAlert = "NO RECORD FOUND..." + "\n" + "\n" + "PLEASE RELOAD DATA FOR RECENT DATA!" + "\n" + "\n" + "IF NOT ALREADY, PLEASE LOGIN!";
+    String strAlert = "NO RECORD FOUND...";
     String strNoNote = "There is No Personal Memo Saved..." + "\n" + "\n" + "PLEASE CREATE PERSONAL MEMO FIRST!";
     String strSave = "PLEASE PROMPT A PROFILE NAME";
     String strLoadProf = "THERE IS NO USER PROFILE SAVED!";
+
+
+    @FXML
+    void handleRegClicks(ActionEvent event) {
+
+        if (event.getSource() == btnRegE1Cases){
+
+            if (regE1Case != 0) {
+                lblStatus.setText("CRITICAL (OUTAGE) CASES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter1 = "Critical";
+                initTableView(tableCases);
+                regionOneFilterTableView(columnSelect, filter1, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regE1Case == 0) {
+                alertUser(strAlert);
+            }
+        }
+        if (event.getSource() == btnRegE2Cases) {
+            if (regE2Cases != 0) {
+                lblStatus.setText("E2 CASES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter1 = "E2";
+                initTableView(tableCases);
+                regionOneFilterTableView(columnSelect, filter1, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regE2Cases == 0) {
+                alertUser(strAlert);
+            }
+        }
+        if (event.getSource() == btnRegOutFollow) {
+            if (regOutFollow != 0) {
+                lblStatus.setText("OUTAGE FOLLOW-UP CASES FOR "+ selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Outage Follow-Up";
+                String filter1 = "1";
+                initTableView(tableCases);
+                regionOneFilterTableView(columnSelect, filter1, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regOutFollow == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegEscalated) {
+            if (regEscCases != 0) {
+                lblStatus.setText("ESCALATED CASES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Escalated By";
+                String filter1 = "NotSet";
+                initTableView(tableCases);
+                regionOneFilterTableView(columnSelect, filter1, tableCases, apnTableView, false);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regEscCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegBCCases) {
+            if (regBCCases != 0) {
+                lblStatus.setText("BUSINESS CRITICAL CASES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter1 = "Business Critical";
+                initTableView(tableCases);
+                regionOneFilterTableView(columnSelect, filter1, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regBCCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegHotIssues) {
+            if (regHotList != 0) {
+                lblStatus.setText("HOT ISSUES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Support Hotlist Level";
+                String filter1 = "NotSet";
+                initTableView(tableCases);
+                regionOneFilterTableView(columnSelect, filter1, tableCases, apnTableView, false);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regHotList == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegWOH) {
+            if (regWOHCases != 0) {
+                lblStatus.setText("ACTIVE WORK ON HAND CASES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                initTableView(tableCases);
+                regOverviewWOHView(true);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regWOHCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegInactive) {
+            if (regInactiveCases != 0) {
+                lblStatus.setText("INACTIVE(PC/FA) CASES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                initTableView(tableCases);
+                regOverviewWOHView(false);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regInactiveCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+    }
+
+    private void regOverviewWOHView(Boolean bool) {
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+            HSSFCell cellVal3;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+
+                if (filterColName.equals("Age (Days)")) {
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Status")) {
+                    caseStatRefCell = i;
+                }
+                if (filterColName.equals("Support Theater")) {
+                    caseRegionRef = i;
+                }
+            }
+            for (int k = 1; k < lastRow + 1; k++) {
+                cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                String cellValToCompare = cellVal.getStringCellValue();
+                cellVal2 = filtersheet.getRow(k).getCell(caseStatRefCell);
+                String caseStatus = cellVal2.getStringCellValue();
+                cellVal3 = filtersheet.getRow(k).getCell(caseRegionRef);
+                String region = cellVal3.getStringCellValue();
+
+                if (region.equals(selectedRegion)) {
+
+                    if (!bool) {
+
+                        if (caseStatus.equals("Pending Closure") || caseStatus.equals("Future Availability")) {
+                            ArrayList<String> array = new ArrayList<>();
+                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                            while (iterCells.hasNext()) {
+                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                array.add(cell.getStringCellValue());
+                            }
+
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                            LocalDate localDate = null;
+
+                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                            }
+
+                            int age = 0;
+                            age = Integer.parseInt(array.get(caseAgeRefCell));
+                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    localDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
+
+                            tableCases.getItems().addAll(observableList);
+                            caseCount++;
+                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                tableCases.getItems().removeAll(observableList);
+                            }
+                        }
+
+                    } else {
+
+                        if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                            ArrayList<String> array = new ArrayList<>();
+                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                            while (iterCells.hasNext()) {
+                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                array.add(cell.getStringCellValue());
+                            }
+
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                            LocalDate localDate = null;
+
+                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                            }
+
+                            int age = 0;
+                            age = Integer.parseInt(array.get(caseAgeRefCell));
+                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    localDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
+
+                            tableCases.getItems().addAll(observableList);
+                            caseCount++;
+                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                tableCases.getItems().removeAll(observableList);
+                            }
+                        }
+                    }
+                }
+            }
+
+            btnToExcel.setVisible(true);
+            apnTableView.toFront();
+
+            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    exportExcelAction(tableCases);
+                }
+            });
+
+            menu = new ContextMenu();
+            String caseno = "";
+            menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
+            tableCases.setContextMenu(menu);
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
+
+            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+
+                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                        URL caseSearch = new URL(search);
+                        Desktop.getDesktop().browse(caseSearch.toURI());
+                    }catch (Exception e){
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                    }
+                }
+            });
+
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
+                    }
+                }
+            });
+
+            btnBack.setVisible(true);
+            btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    apnRegCases.toFront();
+                    lblStatus.setText("REGION VIEW - CASES BASED ON " + selectedRegion +  " REGION");
+                    btnBack.setVisible(false);
+                    btnToExcel.setVisible(false);
+                    tableCases.getItems().clear();
+                }
+            });
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
+
+    private void regionOneFilterTableView(String columnSelect, String filter1, TableView tableCases, AnchorPane apnTableView, Boolean bool) {
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+            HSSFCell cellVal3;
+
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(columnSelect)) {
+                    caseCellRef = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Status")) {
+                    caseStatRefCell = i;
+                }
+                if (filterColName.equals("Support Theater")) {
+                    caseRegionRef = i;
+                }
+
+            }
+            for (int k = 1; k < lastRow + 1; k++) {
+                cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                String cellValToCompare = cellVal.getStringCellValue();
+                cellVal2 = filtersheet.getRow(k).getCell(caseStatRefCell);
+                String caseStatus = cellVal2.getStringCellValue();
+                cellVal3 = filtersheet.getRow(k).getCell(caseRegionRef);
+                String region = cellVal3.getStringCellValue();
+
+                if (region.equals(selectedRegion)){
+
+                    if (!bool) {
+                        if (!cellValToCompare.equals(filter1) && !caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                            ArrayList<String> array = new ArrayList<>();
+                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                            while (iterCells.hasNext()) {
+                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                array.add(cell.getStringCellValue());
+                            }
+
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                            LocalDate localDate = null;
+
+                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                            }
+
+                            int age = 0;
+                            age = Integer.parseInt(array.get(caseAgeRefCell));
+                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    localDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
+
+                            tableCases.getItems().addAll(observableList);
+                            caseCount++;
+                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                tableCases.getItems().removeAll(observableList);
+                            }
+                        }
+                    } else {
+                        if (cellValToCompare.equals(filter1) && (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability"))) {
+                            ArrayList<String> array = new ArrayList<>();
+                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                            while (iterCells.hasNext()) {
+                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                array.add(cell.getStringCellValue());
+                            }
+
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                            LocalDate localDate = null;
+
+                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                            }
+
+                            int age = 0;
+                            age = Integer.parseInt(array.get(caseAgeRefCell));
+                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    localDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
+
+                            tableCases.getItems().addAll(observableList);
+                            caseCount++;
+                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                tableCases.getItems().removeAll(observableList);
+                            }
+                        }
+                    }
+                }
+
+                btnToExcel.setVisible(true);
+                apnTableView.toFront();
+
+                btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        exportExcelAction(tableCases);
+                    }
+                });
+
+                menu = new ContextMenu();
+                String caseno = "";
+                menu.getItems().add(openCaseSFDC);
+                menu.getItems().add(openCaseDetails);
+                tableCases.setContextMenu(menu);
+
+                openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        myCaseDetails();
+                    }
+                });
+
+                openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        try {
+
+                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                            URL caseSearch = new URL(search);
+                            Desktop.getDesktop().browse(caseSearch.toURI());
+                        }catch (Exception e){
+                            logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                        }
+
+                    }
+                });
+
+                // Selecting and Copy the Case Number to Clipboard
+                tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        try {
+                            copyCaseNumberToClipboard(tableCases);
+                        } catch (Exception e) {
+                            logger.log(Level.WARNING, "Get Case Number Failed", e);
+                        }
+                    }
+                });
+
+                btnBack.setVisible(true);
+                btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        apnRegCases.toFront();
+                        lblStatus.setText("REGION VIEW - CASES BASED ON " + selectedRegion +  " REGION");
+                        btnBack.setVisible(false);
+                        btnToExcel.setVisible(false);
+                        tableCases.getItems().clear();
+                    }
+                });
+            }
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
+
 
     @FXML
     private void handleClicks(ActionEvent event) throws IOException, InvalidFormatException {
@@ -830,6 +1520,7 @@ public class Controller implements Initializable {
             lblStatus.setText("GENERAL OVERVIEW");
             btnToExcel.setVisible(false);
             btnBack.setVisible(false);
+            apnHome.toFront();
             apnHome.toFront();
             overviewPage();
         }
@@ -866,7 +1557,6 @@ public class Controller implements Initializable {
             tableProjects.getItems().clear();
             tableProjects.setVisible(true);
             tableProjects.toFront();
-
             buildTableProjects(tableProjects, "All");
 
         }
@@ -892,11 +1582,10 @@ public class Controller implements Initializable {
         if (event.getSource() == btnMyNotes) {
 
             pnCaseDetailsNote.setVisible(false);
-
             caseNoteTable();
 
             if (caseNoteList.getItems().size()> 0) {
-                lblStatus.setText("MY PERSONAL CASE NOTES");
+                lblStatus.setText("MY PERSONAL MEMO BOOK");
                 apnNotes.toFront();
                 btnToExcel.setVisible(false);
                 btnBack.setVisible(false);
@@ -904,7 +1593,7 @@ public class Controller implements Initializable {
                 caseNoteTable();
             }else {
                 //alertNoNoteUser();
-                alertUser(strNoNote);
+                //alertUser(strNoNote);
             }
         }
 
@@ -913,18 +1602,25 @@ public class Controller implements Initializable {
             btnToExcel.setVisible(false);
             btnBack.setVisible(false);
             apnSettings.toFront();
-
         }
 
         if (event.getSource() == btnProjection){
-            projectionLoginPage();
+
+            apnProjection.toFront();
+            projectionPage();
         }
         if (event.getSource() == btnSkillSet){
-            skillView();
+            rdEngMyTeam.setSelected(false);
+            rdSkilMyTeam.setSelected(false);
+            apnSkills.toFront();
+            lblStatus.setText("SKILL SETS");
+            skillEngSave();
+            readAllUsers();
+            readUsers();
+            failSafeUsers();
         }
 
         if (event.getSource() == btnLogin) {
-
             btnToExcel.setVisible(false);
             btnBack.setVisible(false);
             //Connect to OKTA SSO
@@ -932,7 +1628,6 @@ public class Controller implements Initializable {
         }
 
         if (event.getSource() == btnLoadData) {
-
             //Download the related reports to work on them
             downloadCSV();
         }
@@ -2264,7 +2959,25 @@ public class Controller implements Initializable {
                 tableCustomers.setVisible(false);
             }
         }
+        if (event.getSource() == btnMyRegion){
+            apnRegCases.toFront();
+            selectedRegion = regChoice.getSelectionModel().getSelectedItem();
+            lblStatus.setText("REGION VIEW - CASES BASED ON " + selectedRegion +  " REGION");
+            btnToExcel.setVisible(false);
+            btnBack.setVisible(false);
+            regionCases();
+        }
     }
+
+    private void workGroupDown(){
+
+        WebEngine webEngineWork = webWorkGroup.getEngine();
+
+
+        webEngineWork.load("http://gbpldb350.genband.com:8080/apex/f?p=101:53:9655403298134::NO:::");
+
+    }
+
 
     private void caseNoteTable(){
 
@@ -2315,7 +3028,7 @@ public class Controller implements Initializable {
                                 try {
                                     s = new Scanner(caseDetails);
                                 } catch (Exception e) {
-                                    System.out.println("No Case Details Saved");
+                                    logger.log(Level.WARNING, "Case Details - No File Found...: ", e);
                                 }
                                 while (s.hasNextLine()) {
                                     details.add(s.nextLine());
@@ -2362,7 +3075,7 @@ public class Controller implements Initializable {
                                 try {
                                     s = new Scanner(caseNote);
                                 } catch (Exception e) {
-                                    System.out.println("No Selection of Any Case");
+                                    logger.log(Level.WARNING, "Personal Memo - No File Found...: ", e);
                                 }
                                 while (s.hasNextLine()) {
                                     txtShowCaseNotes.appendText(s.nextLine() + "\n");
@@ -2384,7 +3097,7 @@ public class Controller implements Initializable {
                                         try {
                                             s = new Scanner(caseNote);
                                         } catch (Exception e) {
-                                            System.out.println("No Selection of Any Case");
+                                            logger.log(Level.WARNING, "Notes - No Case Selection File Found...: ", e);
                                         }
                                         while (s.hasNextLine()) {
                                             txtShowCaseNotes.appendText(s.nextLine() + "\n");
@@ -2437,7 +3150,7 @@ public class Controller implements Initializable {
                         }
 
                     } catch (Exception e) {
-                        System.out.println("No Case Notes");
+                        logger.log(Level.WARNING, "No Personal Memo Found...: ", e);
                     }
                 }
             });
@@ -2463,11 +3176,186 @@ public class Controller implements Initializable {
 
         }
         catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Not Able To Open New Memeo Page...: ", e);
         }
     }
 
     private void projectionPage(){
+
+        WebEngine project = projectWeb.getEngine();
+
+        btnForOverAll.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                try {
+                    project.load(String.valueOf(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Forecast\\ALL_Case_Arrival_Forecast_stats_arima.html").toURI().toURL()));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        btnForIMS.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                try {
+                    project.load(String.valueOf(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Forecast\\IMS_Case_Arrival_Forecast_stats_arima.html").toURI().toURL()));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        btnForMM.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                try {
+                    project.load(String.valueOf(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Forecast\\MM_Case_Arrival_Forecast_stats_arima.html").toURI().toURL()));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        /*btnForecastRun.setVisible(false);
+        apnProjection.toFront();
+
+
+        forecastAll.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                forecastProductSelect.clear();
+                btnForecastRun.setVisible(true);
+                apnForecastSel.setVisible(false);
+                btnForecastRun.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+
+                        WebEngine project = projectWeb.getEngine();
+
+                        try {
+                            project.load(String.valueOf(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Forecast\\Forecast_in_Future_Overall.html").toURI().toURL()));
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });
+
+        forecastProductSelect.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (forecastProductSelect.equals("")){
+                    btnForecastRun.setVisible(false);
+                }
+
+                forecastAll.setSelected(false);
+                apnForecastSel.setVisible(true);
+
+                forecastSelect.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        apnForecastSel.setVisible(true);
+                        lstForecast.getItems().clear();
+                        ObservableList<String> availProd = FXCollections.observableArrayList();
+
+                        try {
+                            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_user_prod.xls")));
+                            HSSFSheet sheet = workbook.getSheetAt(0);
+                            HSSFCell cellVal;
+
+                            int lastRow = sheet.getLastRowNum();
+                            int cellnum = sheet.getRow(0).getLastCellNum();
+
+                            for (int i = 0; i < cellnum; i++) {
+                                String filterColName = sheet.getRow(0).getCell(i).toString();
+
+                                if (filterColName.equals("Support Product")) {
+                                    caseProductRef = i;
+                                }
+                            }
+
+                            ArrayList<String> prodArray = new ArrayList<>();
+
+                            for (int i = 1; i < lastRow; i++) {
+
+                                cellVal = sheet.getRow(i).getCell(caseProductRef);
+                                String productName = "";
+
+                                if (cellVal != null) {
+                                    productName = cellVal.getStringCellValue();
+                                }
+                                prodArray.add(productName);
+                            }
+
+                            prodArray = (ArrayList) prodArray.stream().distinct().collect(Collectors.toList());
+                            Collections.sort(prodArray);
+
+                            int size = prodArray.size();
+
+                            for (int i = 0; i < size; i++) {
+                                availProd.addAll(prodArray.get(i));
+                            }
+                            lstForecast.getItems().addAll(availProd);
+
+                            FilteredList<String> filteredProduct = new FilteredList((ObservableList) availProd, p -> true);
+
+                            forecastSelect.textProperty().addListener((observable, oldValue, newValue) -> {
+                                filteredProduct.setPredicate(string -> {
+
+                                    if (newValue == null || newValue.isEmpty()) {
+                                        return true;
+                                    }
+
+                                    String lowerCaseCustomerName = newValue.toLowerCase();
+
+                                    if (string.toLowerCase().contains(lowerCaseCustomerName)) {
+                                        return true;
+                                    }
+                                    return false;
+                                });
+                            });
+
+                            lstForecast.setItems(filteredProduct);
+
+                            lstForecast.getSelectionModel().selectedItemProperty().addListener((obs, newVal, oldVal) -> {
+
+                                lstForecast.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+
+                                        if (event.getClickCount() > 1) {
+                                            try {
+
+                                                if (lstForecast.getSelectionModel().getSelectedItem() != null) {
+                                                    String selectedProduct = lstForecast.getSelectionModel().getSelectedItem();
+                                                    //filteredAccounts.add(selectedAcc.getAccountName());
+                                                    forecastProductSelect.setText(selectedProduct);
+                                                    btnForecastRun.setVisible(true);
+                                                    apnForecastSel.setVisible(false);
+                                                }
+                                            } catch (Exception e) {
+                                                logger.log(Level.WARNING, "Unable To Add Product to Selected By Click...", e);
+                                            }
+                                        }
+                                    }
+                                });
+                            });
+
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        });*/
+    }
+
+    private void projectionPage2(){
 
         String user = "santera";
         String password = "santera1";
@@ -2547,26 +3435,7 @@ public class Controller implements Initializable {
 
     }
 
-    private void projectionLoginPage(){
-
-        Parent root;
-
-        try {
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("home/Login.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("Please Login...");
-            stage.getIcons().add(new Image("home/image/rbbicon.png"));
-            stage.setScene(new Scene(root, 350, 200));
-            stage.setMaxWidth(350);
-            stage.setMaxHeight(200);
-            stage.show();
-
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    private void skillView(){
+    private void skillEngSave(){
 
         ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
         ArrayList<String> setUser2 = new ArrayList();
@@ -2601,22 +3470,7 @@ public class Controller implements Initializable {
             writer.close();
 
         } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        Parent root;
-        try{
-            root = FXMLLoader.load(getClass().getClassLoader().getResource("home/skillSet.fxml"));
-            Stage stage = new Stage();
-            stage.setTitle("SkillSet View...");
-            stage.getIcons().add(new Image("home/image/rbbicon.png"));
-            stage.setScene(new Scene(root, 1280, 980));
-            stage.setMaxWidth(1280);
-            stage.setMaxHeight(980);
-            stage.show();
-
-        }catch (Exception e){
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Skill Set - Unable to Save users...: ", e);;
         }
     }
 
@@ -2674,7 +3528,7 @@ public class Controller implements Initializable {
                 writer.close();
 
         }catch (Exception e){
-            System.out.println("Not Able to Save Case Details");
+            logger.log(Level.WARNING, "Not Able To Save Case Details...: ", e);;
         }
     }
 
@@ -2856,7 +3710,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCustomers);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -2885,7 +3739,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
 
                 }
@@ -2899,7 +3753,7 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
     }
 
@@ -3062,7 +3916,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCustomers);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -3091,7 +3945,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
 
                 }
@@ -3105,7 +3959,7 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
     }
 
@@ -3265,7 +4119,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -3294,7 +4148,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
 
                 }
@@ -3320,7 +4174,7 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
 
     }
@@ -3484,7 +4338,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -3513,7 +4367,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
 
                 }
@@ -3539,9 +4393,8 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
-
     }
 
     private void inactiveCasesProductTableView(String columnSelect, String filter, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
@@ -3661,7 +4514,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -3690,7 +4543,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
 
                 }
@@ -3717,9 +4570,8 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
-
     }
 
     private void twoFilterProductTableView(String columSelect1, String filter1, String columSelect2, String filter2, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
@@ -3845,7 +4697,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -3874,7 +4726,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
 
                 }
@@ -3901,7 +4753,7 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
 
     }
@@ -4022,7 +4874,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -4051,7 +4903,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
 
                 }
@@ -4078,7 +4930,7 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
     }
 
@@ -4230,7 +5082,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -4259,7 +5111,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
                 }
             });
@@ -4285,9 +5137,8 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
-
     }
 
     private void productOneFilterView(String columnSelect, String filter, TableView<CaseTableView> tableCases, AnchorPane apnTableView, Boolean bool) {
@@ -4440,7 +5291,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -4469,7 +5320,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
                 }
             });
@@ -4495,7 +5346,7 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
     }
 
@@ -4505,75 +5356,81 @@ public class Controller implements Initializable {
         String filename2 = "cmt_user_prod.csv";
         String filename3 = "cmt_case_data_V2.csv";
         String filename4 = "cmt_comments.csv";
-        //String filename5 = "cmt_project_details.csv";
         String newLoc2 = "https://na8.salesforce.com/00OC0000006r1xS?export=1&enc=UTF-8&xf=csv?filename=" + filename2;
         String newLoc = "https://na8.salesforce.com/00OC0000007My3o?export=1&enc=UTF-8&xf=csv?filename=" + filename1;
         String newLoc3 = "https://na8.salesforce.com/00OC00000076uIg?export=1&enc=UTF-8&xf=csv?filename=" + filename3;
         String newLoc4 = "https://na8.salesforce.com/00OC0000006r5ig?export=1&enc=UTF-8&xf=csv?filename=" + filename4;
-        //String newLoc5 = "https://na8.salesforce.com/00OC0000007Mzu5?export=1&enc=UTF-8&xf=csv?filename=" + filename5;
 
         try {
 
             FileUtils.copyURLToFile(new URL(newLoc2), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_user_prod.csv"));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Could not Download User/Product File", e);
         }
+
+        //Downloaded User Data...Now Parsing...
+        logger.info("User Data Download Completed! Now Parsing...");
+        parseUserData();
 
         try {
 
             FileUtils.copyURLToFile(new URL(newLoc), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.csv"));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Could not Download Projects File", e);
         }
+
+        //Downloaded Project Data...Now Parsing...
+        logger.info("Project Data Download Completed! Now Parsing...");
+
+        parseProjectData();
 
         try{
 
             FileUtils.copyURLToFile(new URL(newLoc3), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V2.csv"));
             LocalDate refreshDate = LocalDate.now();
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-            lblRefreshText.setVisible(true);
-            String dataDate = "Data Time Stamp is:" + "\n" + LocalTime.now().format(dtf).toString() + "\n" + refreshDate.toString();
-            lblRefreshText.setText(dataDate);
 
-            lblDownload.setText("Downloading...");
+            String dataDate = "Data Time Stamp is:" + "\n" + LocalTime.now().format(dtf).toString() + "\n" + refreshDate.toString();
 
             FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_data_Date.txt"));
             writer.write(dataDate);
             writer.close();
 
         }catch (Exception e){
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Case Data Download Failed...", e);
         }
+
+        //Downloaded Case Data...Now Parsing...
+        logger.info("Case Data Download Completed! Now Parsing...");
+
+        parseData();
 
         try{
 
             FileUtils.copyURLToFile(new URL(newLoc4), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_comments.csv"));
 
         }catch (Exception e){
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Could not Download Work Notes File", e);
         }
 
-        parseData();
-        rectifyAccountNames();
-        parseUserData();
-        parseProjectData();
-        myCasesPage();
+        logger.info("Comment Data Download Completed! Now Parsing...");
         parseComments();
+        logger.info("Account Rectify...");
+        rectifyAccountNames();
 
         time = new Timeline();
         time.setCycleCount(Timeline.INDEFINITE);
-        time.getKeyFrames().add(new KeyFrame(Duration.minutes(15), new EventHandler<ActionEvent>() {
+        time.getKeyFrames().add(new KeyFrame(Duration.minutes(5), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 time.stop();
-                downloadCSV();
+                logger.info("Time-Out! Downloading Latest Reports!...");
+                service.submit(Controller.this::downloadCSV);
             }
         }));
         time.playFromStart();
-        lblDownload.setText("    Connected!");
-
     }
 
     private void connectOkta() {
@@ -4602,13 +5459,14 @@ public class Controller implements Initializable {
             );*/
 
             webEngine.load("https://sonus.okta.com");
+            logger.info("Connecting Sonus Okta...");
 
             browserLoginPane.toFront();
             apnBrowser.toFront();
             progressBar.setVisible(true);
             progressBar.toFront();
             progressBar.setProgress(0.20);
-            lblDownload.setText(" Connecting/Downloading...");
+            lblDownload.setText(" CONNECTING/DOWNLOADING...");
 
             webEngine.getLoadWorker().stateProperty().addListener(new ChangeListener<Worker.State>() {
                 @Override
@@ -4616,6 +5474,7 @@ public class Controller implements Initializable {
 
                     if (newState == Worker.State.SUCCEEDED) {
                         if (webEngine.getLocation().equals("https://sonus.okta.com/app/UserHome")) {
+                            logger.info("Login Success to Okta...");
                             progressBar.setProgress(0.40);
                             webEngine.load("https://sonus.okta.com/home/salesforce/0oayiqwes0HuzLJ6a1t6/46?fromHome=true");
                             progressBar.setProgress(0.50);
@@ -4632,10 +5491,15 @@ public class Controller implements Initializable {
                             progressBar.setVisible(false);
                             btnLogin.setText("Logged!");
                             btnLogin.setVisible(false);
-                            lblDownload.setText("     Connected!");
+                            lblDownload.setText("CONNECTED - ONLINE");
+                            logger.info("Connected to SalesForce, starting report download...");
+                            lblDownload.setText("Downloading New Data!");
                             downloadCSV();
+                            readTimeStamp();
+                            lblDownload.setText("CONNECTED - ONLINE!");
                             progressBar.setProgress(1);
                             apnMyCases.toFront();
+                            myCasesPage();
                             lblStatus.setText("MY CASES");
                         }
                     }
@@ -4717,7 +5581,7 @@ public class Controller implements Initializable {
             btnProjectsAll.setText(String.valueOf(prjAllCases));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Project Page Build Failed...:", e);
         }
     }
 
@@ -4843,7 +5707,7 @@ public class Controller implements Initializable {
             File[] fileList = rep.listFiles();
 
             if (fileList.length == 0){
-                String strNoNote = "THERE IS NO PERSONAL NOTE..." + "\n" + "\n" + "PLEASE CREATE PERSONAL NOTE FIRST!";
+                String strNoNote = "THERE IS NO PERSONAL MEMO..." + "\n" + "\n" + "PLEASE CREATE PERSONAL MEMO FIRST!";
                 alertUser(strNoNote);
             }else {
 
@@ -4869,7 +5733,7 @@ public class Controller implements Initializable {
                             try {
                                 s = new Scanner(prjCase);
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.log(Level.WARNING, "Projects - No File Found...: ", e);
                             }
                             while (s.hasNextLine()) {
                                 txtPrjNoteView.appendText(s.nextLine() + "\n");
@@ -4929,7 +5793,7 @@ public class Controller implements Initializable {
 
         }
         catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Unable to open new Project Note Window...: ", e);
         }
     }
 
@@ -5190,7 +6054,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboardProjects(tableView);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -5219,14 +6083,14 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
                 }
             });
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
     }
 
@@ -5238,16 +6102,26 @@ public class Controller implements Initializable {
             Stage stage = new Stage();
             stage.setTitle("CASE DETAILS WINDOW");
             stage.getIcons().add(new Image("home/image/rbbicon.png"));
-            stage.setScene(new Scene(root, 620, 800));
-            stage.show();
-            stage.setMinWidth(620);
-            stage.setMinHeight(950);
-            stage.setMaxWidth(620);
-            stage.setMaxHeight(950);
 
+            if (screenHeight > 1025) {
+                stage.setScene(new Scene(root, 640, 940));
+                stage.show();
+                stage.setMinWidth(640);
+                stage.setMinHeight(940);
+                stage.setMaxWidth(640);
+                stage.setMaxHeight(940);
+            }
+            if (screenHeight <1025){
+                stage.setScene(new Scene(root, 640, 660));
+                stage.show();
+                stage.setMinWidth(640);
+                stage.setMinHeight(660);
+                stage.setMaxWidth(640);
+                stage.setMaxHeight(660);
+            }
         }
         catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Unable to open Project Case Details Window...", e);
         }
     }
 
@@ -5256,20 +6130,32 @@ public class Controller implements Initializable {
         Parent root;
 
         try {
+
             root = FXMLLoader.load(getClass().getClassLoader().getResource("home/MyCaseDetails.fxml"));
             Stage stage = new Stage();
             stage.setTitle("CASE DETAILS WINDOW");
             stage.getIcons().add(new Image("home/image/rbbicon.png"));
-            stage.setScene(new Scene(root, 700, 900));
-            stage.show();
-            stage.setMinWidth(720);
-            stage.setMinHeight(920);
-            stage.setMaxWidth(720);
-            stage.setMaxHeight(920);
+
+            if (screenHeight > 1025) {
+                stage.setScene(new Scene(root, 740, 920));
+                stage.show();
+                stage.setMinWidth(740);
+                stage.setMinHeight(920);
+                stage.setMaxWidth(740);
+                stage.setMaxHeight(920);
+            }
+            if (screenHeight <1025){
+                stage.setScene(new Scene(root, 740, 660));
+                stage.show();
+                stage.setMinWidth(740);
+                stage.setMinHeight(660);
+                stage.setMaxWidth(740);
+                stage.setMaxHeight(660);
+            }
 
         }
         catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Unable to open Case Details Window...", e);
         }
 
         //saveCaseDetails();
@@ -5311,7 +6197,7 @@ public class Controller implements Initializable {
             writer.close();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "User Default Settings Save Failed!", e);
         }
 
         ArrayList<String> setqueue = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
@@ -5346,7 +6232,7 @@ public class Controller implements Initializable {
             writer.close();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Queue Default Settings Save Failed!", e);
         }
 
         ArrayList<String> setprod = new ArrayList<>(Arrays.asList(txProducts.getText().split(",\\s*")));
@@ -5381,7 +6267,7 @@ public class Controller implements Initializable {
             writer.close();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Products Default Settings Save Failed!", e);
         }
     }
 
@@ -5396,7 +6282,7 @@ public class Controller implements Initializable {
                 s = new Scanner(timeStampFile);
 
             }catch (Exception e){
-                e.printStackTrace();
+                logger.log(Level.WARNING, "Read Time Stamp File Failed!", e);
             }
 
             ArrayList<String> readDate = new ArrayList<>();
@@ -5409,6 +6295,17 @@ public class Controller implements Initializable {
             lblRefreshText.setText(readDate.get(0)+ "\n" + readDate.get(1) + "\n" + readDate.get(2));
         }
 
+        timeData = new Timeline();
+        timeData.setCycleCount(Timeline.INDEFINITE);
+        timeData.getKeyFrames().add(new KeyFrame(Duration.minutes(6), new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                timeData.stop();
+                logger.info("Refreshing Time-Stamps!...");
+                readTimeStamp();
+            }
+        }));
+        timeData.playFromStart();
     }
 
     private void readDefaultSettingFiles() {
@@ -5425,7 +6322,7 @@ public class Controller implements Initializable {
             try {
                 s = new Scanner(settingUsersFile);
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                logger.log(Level.WARNING, "No Saved User List", e);
             }
             ArrayList<String> readUserList = new ArrayList<String>();
             while (s.hasNextLine()) {
@@ -5442,7 +6339,7 @@ public class Controller implements Initializable {
             try {
                 s = new Scanner(settingQueueFile);
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                logger.log(Level.WARNING, "No Saved Queue List", e);
             }
             ArrayList<String> readQueueList = new ArrayList<String>();
             while (s.hasNextLine()) {
@@ -5460,7 +6357,7 @@ public class Controller implements Initializable {
             try {
                 s = new Scanner(settingProductsFile);
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                logger.log(Level.WARNING, "No Saved Product List", e);
             }
             ArrayList<String> readProductList = new ArrayList<String>();
             while (s.hasNextLine()) {
@@ -5630,7 +6527,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
 
                 }
@@ -5653,7 +6550,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
 
                 }
@@ -5672,7 +6569,7 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
     }
 
@@ -5882,7 +6779,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
 
                 }
@@ -5902,7 +6799,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
 
                 }
@@ -5921,7 +6818,7 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
     }
 
@@ -6096,7 +6993,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
 
                 }
@@ -6116,7 +7013,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -6134,13 +7031,9 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
-
-
-
     }
-
 
     private void createMyQueueCaseView(String columnSelect, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
 
@@ -6264,7 +7157,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
 
                 }
@@ -6284,7 +7177,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -6302,7 +7195,7 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
     }
 
@@ -6482,7 +7375,6 @@ public class Controller implements Initializable {
                 @Override
                 public void handle(ActionEvent event) {
                     newCaseNote();
-
                 }});
 
             openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
@@ -6502,9 +7394,8 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
-
                 }
             });
 
@@ -6521,11 +7412,10 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
-
 
             btnBack.setVisible(true);
             btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -6540,9 +7430,8 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
-
     }
 
     private void myWOHTableView(TableView<CaseTableView> tableCases, AnchorPane apnTableView, boolean b) {
@@ -6735,7 +7624,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
 
                 }
@@ -6755,7 +7644,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        System.out.println("Table Headers Selected! Ignore!");
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -6773,7 +7662,7 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
     }
 
@@ -6847,7 +7736,7 @@ public class Controller implements Initializable {
             txtShowCaseNotes.positionCaret(0);
 
         }catch (Exception e){
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Work Notes Build Failed!", e);
         }
         caseCommentArray.clear();
     }
@@ -6871,7 +7760,7 @@ public class Controller implements Initializable {
 
         }
         catch (IOException e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "View Work Notes Window Failed...", e);
         }
     }
 
@@ -7033,7 +7922,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
 
                 }
@@ -7052,7 +7941,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -7069,7 +7958,7 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
     }
 
@@ -7240,9 +8129,8 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
-
                 }
             });
 
@@ -7259,7 +8147,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -7276,7 +8164,7 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
     }
 
@@ -7436,7 +8324,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
 
                 }
@@ -7455,7 +8343,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -7473,10 +8361,9 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
     }
-
 
     private void myDueFilterView(String columnSelect, String filter, TableView<CaseTableView> tableCases, AnchorPane apnTableView, int dueDay, boolean b) {
 
@@ -7664,7 +8551,7 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
 
                 }
@@ -7683,7 +8570,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -7700,9 +8587,8 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
-
     }
 
     private void oneFilterTableView(String columnSelect, String filter1, TableView tableCases, AnchorPane apnTableView, Boolean bool) {
@@ -7844,7 +8730,7 @@ public class Controller implements Initializable {
                             URL caseSearch = new URL(search);
                             Desktop.getDesktop().browse(caseSearch.toURI());
                         }catch (Exception e){
-                            e.printStackTrace();
+                            logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                         }
 
                     }
@@ -7857,7 +8743,7 @@ public class Controller implements Initializable {
                         try {
                             copyCaseNumberToClipboard(tableCases);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            logger.log(Level.WARNING, "Get Case Number Failed", e);
                         }
                     }
                 });
@@ -7875,9 +8761,8 @@ public class Controller implements Initializable {
                 });
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
-        ;
     }
 
     private void twoFilterTableView(String columnSelect1, String columnSelect2, String filter1, String filter2, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
@@ -7988,7 +8873,7 @@ public class Controller implements Initializable {
                             URL caseSearch = new URL(search);
                             Desktop.getDesktop().browse(caseSearch.toURI());
                         }catch (Exception e){
-                            e.printStackTrace();
+                            logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                         }
 
                     }
@@ -8001,7 +8886,7 @@ public class Controller implements Initializable {
                         try {
                             copyCaseNumberToClipboard(tableCases);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            logger.log(Level.WARNING, "Get Case Number Failed", e);
                         }
                     }
                 });
@@ -8019,9 +8904,8 @@ public class Controller implements Initializable {
                 });
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
-        ;
     }
 
     private void overviewWIPCaseTableView(String columnSelect, String filter, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
@@ -8128,7 +9012,7 @@ public class Controller implements Initializable {
                             URL caseSearch = new URL(search);
                             Desktop.getDesktop().browse(caseSearch.toURI());
                         }catch (Exception e){
-                            e.printStackTrace();
+                            logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                         }
 
                     }
@@ -8141,7 +9025,7 @@ public class Controller implements Initializable {
                         try {
                             copyCaseNumberToClipboard(tableCases);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            logger.log(Level.WARNING, "Get Case Number Failed", e);
                         }
                     }
                 });
@@ -8159,9 +9043,8 @@ public class Controller implements Initializable {
                 });
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
-        ;
     }
 
     private void overviewEngineeringTableView(String columnSelect, String filter1, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
@@ -8267,9 +9150,8 @@ public class Controller implements Initializable {
                             URL caseSearch = new URL(search);
                             Desktop.getDesktop().browse(caseSearch.toURI());
                         }catch (Exception e){
-                            e.printStackTrace();
+                            logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                         }
-
                     }
                 });
 
@@ -8280,7 +9162,7 @@ public class Controller implements Initializable {
                         try {
                             copyCaseNumberToClipboard(tableCases);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            logger.log(Level.WARNING, "Get Case Number Failed", e);
                         }
                     }
                 });
@@ -8298,9 +9180,8 @@ public class Controller implements Initializable {
                 });
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
-        ;
     }
 
     private void overViewInactiveTable(String columnSelect1, String filter1, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
@@ -8408,12 +9289,10 @@ public class Controller implements Initializable {
                             URL caseSearch = new URL(search);
                             Desktop.getDesktop().browse(caseSearch.toURI());
                         }catch (Exception e){
-                            e.printStackTrace();
+                            logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                         }
-
                     }
                 });
-
 
                 // Selecting and Copy the Case Number to Clipboard
                 tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -8422,7 +9301,7 @@ public class Controller implements Initializable {
                         try {
                             copyCaseNumberToClipboard(tableCases);
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            logger.log(Level.WARNING, "Get Case Number Failed", e);
                         }
                     }
                 });
@@ -8440,10 +9319,8 @@ public class Controller implements Initializable {
                 });
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
-        ;
-
     }
 
     private void overviewWOHView(Boolean bool) {
@@ -8587,9 +9464,8 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
-
                 }
             });
 
@@ -8600,7 +9476,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        System.out.println("Table Headers Selected! Ignore!");
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -8617,9 +9493,8 @@ public class Controller implements Initializable {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
-        ;
     }
 
     private void overviewQueueView(String columnSelect, String filter, TableView tableView, AnchorPane anchorpane, String overText) {
@@ -8721,9 +9596,8 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
-
                 }
             });
 
@@ -8734,7 +9608,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableView);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -8751,9 +9625,8 @@ public class Controller implements Initializable {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
-        ;
     }
 
     private void overviewDueFilterView(String columnSelect, String filter, TableView<CaseTableView> tableCases, AnchorPane apnTableView, int ageDue, Boolean due) {
@@ -8894,7 +9767,7 @@ public class Controller implements Initializable {
                     try {
                         copyCaseNumberToClipboard(tableCases);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
                     }
                 }
             });
@@ -8916,12 +9789,10 @@ public class Controller implements Initializable {
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
                     }catch (Exception e){
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                     }
-
                 }
             });
-
 
             btnBack.setVisible(true);
             btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -8935,9 +9806,8 @@ public class Controller implements Initializable {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
-
     }
 
     private void extractToExcel(TableView tableView, String textData, File file) throws IOException {
@@ -9118,7 +9988,7 @@ public class Controller implements Initializable {
             fileOutputStream.close();
 
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Parse Case Data Failed! Refer to Exception", e);
         }
 
         /*try {
@@ -9216,14 +10086,12 @@ public class Controller implements Initializable {
                 }
             }
 
-
             FileOutputStream output_file =new FileOutputStream(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls"));
             workbook.write(output_file);
             output_file.close();
 
-
         }catch (Exception e){
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Rectify account names failed, please refer to exception", e);
         }
     }
 
@@ -9268,7 +10136,7 @@ public class Controller implements Initializable {
             fileOutputStream.close();
 
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Project Data parse failed...", e);
         }
         //parseProjectDetailsData();
     }
@@ -9354,9 +10222,8 @@ public class Controller implements Initializable {
             workBook.write(fileOutputStream);
             fileOutputStream.close();
 
-
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "User Data parse failed...", e);
         }
     }
 
@@ -9400,7 +10267,7 @@ public class Controller implements Initializable {
             fileOutputStream.close();
 
         }catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Work Note Parse Failed...", e);
         }
     }
 
@@ -9687,8 +10554,277 @@ public class Controller implements Initializable {
             /* Updating completed for overview page */
 
         } catch (Exception e) {
-            System.out.println("No Data Downloaded1");
+            logger.log(Level.WARNING, "Unable To Build Overview Page... ", e);
         }
+    }
+
+    private void regionCases(){
+
+        HSSFCell region;
+        HSSFCell hotList;
+        HSSFCell outFollow;
+        HSSFCell escCases;
+        HSSFCell caseSev;
+        HSSFCell caseStat;
+        HSSFCell ageCase;
+        HSSFCell curResp;
+        HSSFCell cseQueue;
+        HSSFCell caseUpdate;
+        HSSFCell CoOwnedCase;
+        HSSFCell CoOwnerQueue;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int lastRow = filtersheet.getLastRowNum();
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+
+            regHotList = 0;
+            regOutFollow = 0;
+            regEscCases = 0;
+            regBCCases = 0;
+            regInactiveCases = 0;
+            regBCDueCases = 0;
+            regBCMissedCases = 0;
+            regBCDSCases = 0;
+            regBCInactiveCases = 0;
+            regBCWIP = 0;
+            regMJDueCases = 0;
+            regMJMissedCases = 0;
+            regMJUpdated = 0;
+            regMJDSCases = 0;
+            regMJWIP = 0;
+            regQueuedCases = 0;
+            regCoOwnerQueueCases = 0;
+            regCoOwnerQueueCasesAssigned = 0;
+            regE1Case = 0;
+            regE2Cases = 0;
+            regBCupdated = 0;
+            regBCWac = 0;
+            regMJWAC = 0;
+            regMJInactiveCases = 0;
+            regWOHCases = 0;
+            regUpdateToday = 0;
+            regUpdateMissed = 0;
+            regUpdateNull = 0;
+            regCoOwnCase = 0;
+            regCoOwnQueue = 0;
+
+            for (int i = 0; i < cellnum; i++) {
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+
+                switch (filterColName) {
+                    case ("Case Number"):
+                        mycaseNumCellRef = i;
+                        break;
+                    case ("Support Type"):
+                        mycaseSupTypeRefCell = i;
+                        break;
+                    case ("Status"):
+                        mycaseStatRefCell = i;
+                        break;
+                    case ("Severity"):
+                        mycaseSevRefCell = i;
+                        break;
+                    case ("Currently Responsible"):
+                        mycaseRespRefCell = i;
+                        break;
+                    case ("Case Owner"):
+                        mycaseOwnerRefCell = i;
+                        break;
+                    case ("Escalated By"):
+                        mycaseEscalatedRefCell = i;
+                        break;
+                    case ("Support Hotlist Level"):
+                        mycaseHotListRefCell = i;
+                        break;
+                    case ("Outage Follow-Up"):
+                        mycaseOutFolRefCell = i;
+                        break;
+                    case ("Age (Days)"):
+                        mycaseAgeRefCell = i;
+                        break;
+                    case ("Next Case Update"):
+                        mycaseUpdateCell = i;
+                        break;
+                    case ("Co-Owner"):
+                        myCoOwnCaseRefCell = i;
+                        break;
+                    case ("Co-Owner Queue"):
+                        myCoOwnQueueRefCell = i;
+                        break;
+                    case("Support Theater"):
+                        caseRegionRef =i;
+                }
+            }
+
+            for (int i = 1; i < lastRow + 1; i++) {
+
+                region = filtersheet.getRow(i).getCell(caseRegionRef);
+                String rowRegion = region.getStringCellValue();
+
+                caseStat = filtersheet.getRow(i).getCell(mycaseStatRefCell);
+                String mycaseStatus = caseStat.getStringCellValue();
+
+                caseSev = filtersheet.getRow(i).getCell(mycaseSevRefCell);
+                String mycaseSever = caseSev.getStringCellValue();
+
+                curResp = filtersheet.getRow(i).getCell(mycaseRespRefCell);
+                String myresponsible = curResp.getStringCellValue();
+
+                escCases = filtersheet.getRow(i).getCell(mycaseEscalatedRefCell);
+                String myescalatedCases = escCases.getStringCellValue();
+
+                hotList = filtersheet.getRow(i).getCell(mycaseHotListRefCell);
+                String mystrFltStatus = hotList.getStringCellValue();
+
+                outFollow = filtersheet.getRow(i).getCell(mycaseOutFolRefCell);
+                String myfollowOut = outFollow.getStringCellValue();
+
+                caseUpdate = filtersheet.getRow(i).getCell(mycaseUpdateCell);
+                String myCaseUpdate = caseUpdate.getStringCellValue();
+
+                LocalDate dateToday = LocalDate.now();
+                LocalDate caseUpdateDate = null;
+
+                if (rowRegion.equals(selectedRegion)){
+
+                    if (!myCaseUpdate.equals("NotSet")) {
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                        caseUpdateDate = LocalDate.parse(myCaseUpdate, formatter);
+                    }
+
+                    ageCase = filtersheet.getRow(i).getCell(mycaseAgeRefCell);
+                    String mycaseAge = ageCase.getStringCellValue();
+                    String myagenum = mycaseAge.replace(".0000000000", "");
+
+                    int ageCaseNum = Integer.parseInt(myagenum);
+
+                    if (!mystrFltStatus.equals("NotSet") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                        regHotList++;
+                    }
+                    if (myfollowOut.equals("1") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                        regOutFollow++;
+                    }
+                    if (!myescalatedCases.equals("NotSet") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                        regEscCases++;
+                    }
+                    if (mycaseSever.equals("Critical") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                        regE1Case++;
+                    }
+                    if (mycaseSever.equals("E2") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                        regE2Cases++;
+                    }
+
+                    if (mycaseSever.equals("Business Critical")) {
+                        if (!mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                            regBCCases++;
+                        }
+                        if (mycaseStatus.equals("Open / Assign") || mycaseStatus.equals("Isolate Fault")) {
+                            regBCWIP++;
+                        }
+                        if (myresponsible.equals("Customer action")) {
+                            regBCWac++;
+                        }
+                        if (myresponsible.equals("Customer updated")) {
+                            regBCupdated++;
+                        }
+                        if ((mycaseStatus.equals("Open / Assign")) || (mycaseStatus.equals("Isolate Fault"))) {
+                            if (ageCaseNum <= 15) {
+                                regBCDueCases++;
+                            }
+                            if (ageCaseNum > 15) {
+                                regBCMissedCases++;
+                            }
+                        }
+                        if (mycaseStatus.equals("Develop Solution")) {
+                            regBCDSCases++;
+                        }
+                        if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                            regBCInactiveCases++;
+                        }
+                    }
+                    if (mycaseSever.equals("Major")) {
+
+                        if (mycaseStatus.equals("Develop Solution")) {
+                            regMJDSCases++;
+                        }
+                        if ((mycaseStatus.equals("Open / Assign")) || (mycaseStatus.equals("Isolate Fault"))) {
+                            if (ageCaseNum <= 30) {
+                                regMJDueCases++;
+                            }
+                            if (ageCaseNum > 30) {
+                                regMJMissedCases++;
+                            }
+                        }
+                        if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                            regMJInactiveCases++;
+                        }
+                        if (myresponsible.equals("Customer action")) {
+                            regMJWAC++;
+                        }
+                        if (myresponsible.equals("Customer updated")) {
+                            regMJUpdated++;
+                        }
+                        if (mycaseStatus.equals("Open / Assign") || (mycaseStatus.equals("Isolate Fault"))) {
+                            regMJWIP++;
+                        }
+                    }
+                    if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                        regInactiveCases++;
+                    } else {
+                        regWOHCases++;
+                    }
+
+                    if ((caseUpdateDate != null)) {
+
+                        if(!myCaseUpdate.equals("NotSet")) {
+
+                            if (caseUpdateDate.compareTo(dateToday) == 0) {
+                                regUpdateToday++;
+                            }
+                            if (caseUpdateDate.compareTo(dateToday) < 0) {
+                                regUpdateMissed++;
+                            }
+                        }
+                    }
+                    if (myCaseUpdate.equals("NotSet")) {
+                        regUpdateNull++;
+                    }
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        btnRegE1Cases.setText(String.valueOf(regE1Case));
+        btnRegE2Cases.setText(String.valueOf(regE2Cases));
+        btnRegOutFollow.setText(String.valueOf(regOutFollow));
+        btnRegEscalated.setText(String.valueOf(regEscCases));
+        btnRegBCCases.setText(String.valueOf(regBCCases));
+        btnRegHotIssues.setText(String.valueOf(regHotList));
+        btnRegInactive.setText(String.valueOf(regInactiveCases));
+        btnRegBCWIP.setText(String.valueOf(regBCWIP));
+        btnRegBCWac.setText(String.valueOf(regBCWac));
+        btnRegBCupdated.setText(String.valueOf(regBCupdated));
+        btnRegBCEngineering.setText(String.valueOf(regBCDSCases));
+        btnRegBCINACT.setText(String.valueOf(regBCInactiveCases));
+        btnRegMJWIP.setText(String.valueOf(regMJWIP));
+        btnRegMJWac.setText(String.valueOf(regMJWAC));
+        btnRegMJupdated.setText(String.valueOf(regMJUpdated));
+        btnRegMJEngineering.setText(String.valueOf(regMJDSCases));
+        btnRegMJINACT.setText(String.valueOf(regMJInactiveCases));
+        btnRegBCDue.setText(String.valueOf(regBCDueCases));
+        btnRegBCMissed.setText(String.valueOf(regBCMissedCases));
+        btnRegMJDue.setText(String.valueOf(regMJDueCases));
+        btnRegMJMissed.setText(String.valueOf(regMJMissedCases));
+        btnRegQueue.setText(String.valueOf(regQueuedCases));
+        btnRegWOH.setText(String.valueOf(regWOHCases));
+        btnRegUpdateToday.setText(String.valueOf(regUpdateToday));
+        btnRegUpdateMissed.setText(String.valueOf(regUpdateMissed));
+        btnRegUpdateNull.setText(String.valueOf(regUpdateNull));
+        btnRegCoOwnQueue.setText(String.valueOf(regCoOwnerQueueCases));
+        btnRegCoQueueAssigned.setText(String.valueOf(regCoOwnerQueueCasesAssigned));
 
     }
 
@@ -10011,7 +11147,7 @@ public class Controller implements Initializable {
             btnMyCoQueueAssigned.setText(String.valueOf(myCoOwnerQueueCasesAssigned));
 
         } catch (Exception e) {
-            e.printStackTrace();        }
+            logger.log(Level.WARNING, "Unable To Build My Cases Page...", e);        }
     }
 
     private void myProductsPage() {
@@ -10318,7 +11454,7 @@ public class Controller implements Initializable {
             //btnMyUpdateNull.setText(String.valueOf(myUpdateNull));
 
         } catch (Exception e) {
-            System.out.println("No Data Downloaded5");
+            logger.log(Level.WARNING, "Unable To Build Products Page... ", e);
         }
     }
 
@@ -10335,9 +11471,9 @@ public class Controller implements Initializable {
         if (event.getSource() == btnCases) {
 
             Tooltip casesTooltip = new Tooltip();
-            casesTooltip.setText("Personalized View");
+            casesTooltip.setText("Personalized View\n" +
+                    "My Cases View");
             btnCases.setTooltip(casesTooltip);
-
         }
 
         if (event.getSource() == btnCustomers) {
@@ -10346,24 +11482,21 @@ public class Controller implements Initializable {
             customersTooltip.setText("Customer Based\n" +
                     "Case View");
             btnCustomers.setTooltip(customersTooltip);
-
         }
 
         if (event.getSource() == btnMyNotes) {
 
             Tooltip surveyTooltip = new Tooltip();
-            surveyTooltip.setText("PERSONAL NOTES...");
+            surveyTooltip.setText("Personal Memo Book...");
             btnMyNotes.setTooltip(surveyTooltip);
-
         }
 
         if (event.getSource() == btnSettings) {
 
             Tooltip settingsTooltip = new Tooltip();
-            settingsTooltip.setText("Personalize\n" +
+            settingsTooltip.setText("Customize\n" +
                     "Your Querries");
             btnSettings.setTooltip(settingsTooltip);
-
         }
 
         if (event.getSource() == btnLoadData) {
@@ -10372,17 +11505,14 @@ public class Controller implements Initializable {
             loadTooltip.setText("Connect to SFDC and \n" +
                     "gather recent data");
             btnLoadData.setTooltip(loadTooltip);
-
         }
 
         if (event.getSource() == txUsers) {
 
             Tooltip userTextBoxTip = new Tooltip();
-            userTextBoxTip.setText("Please prompt user names as\n" +
-                    "provisioned in Salesforce!");
+            userTextBoxTip.setText("Please select users from pick list");
             txUsers.setTooltip(userTextBoxTip);
         }
-
     }
 
     private void initTableView(TableView<CaseTableView> table) {
@@ -10448,9 +11578,7 @@ public class Controller implements Initializable {
         prjGateDateCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjGateDate"));
         prjRegionCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjRegion"));
         prjSiteStatusCol.setCellValueFactory(new PropertyValueFactory<ProjectTableView, String>("prjSiteStatus"));
-
     }
-
 
     private void copyCaseNumberToClipboard(TableView<CaseTableView> tableCases) {
 
@@ -10475,7 +11603,6 @@ public class Controller implements Initializable {
         ClipboardContent content = new ClipboardContent();
         content.putString(data1);
         Clipboard.getSystemClipboard().setContent(content);
-
 
         HSSFCell cellVal;
 
@@ -10512,7 +11639,7 @@ public class Controller implements Initializable {
             }
 
         }catch (Exception e){
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Unable To Get Case Number...", e);
         }
 
         int selectedsize= selectedCase.size();
@@ -10545,7 +11672,7 @@ public class Controller implements Initializable {
             writer.close();*/
 
         }catch (Exception e){
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Unable To Save Case Details...", e);
         }
     }
 
@@ -10590,7 +11717,7 @@ public class Controller implements Initializable {
             }
             primaryStage.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Unable To Export Table to Excel...", e);
         }
 
     }
@@ -10619,7 +11746,7 @@ public class Controller implements Initializable {
             }
             primaryStage.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Unable To Export Project Table to Excel...", e);
         }
     }
 
@@ -10768,7 +11895,7 @@ public class Controller implements Initializable {
             btnCustomerOutFollow.setText(String.valueOf(customerOutFol));
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Unable To Build Customer Page...", e);
         }
     }
 
@@ -10789,7 +11916,7 @@ public class Controller implements Initializable {
         HSSFCell userCoOwnerCell;
 
         tableUsers.setVisible(true);
-        tableUsersSelected.getItems().clear();
+        //tableUsersSelected.getItems().clear();
         userCol.setCellValueFactory(new PropertyValueFactory<UserTableView, String>("userName"));
         userSelectedCol.setCellValueFactory(new PropertyValueFactory<UserTableView, String>("userName"));
 
@@ -10818,7 +11945,10 @@ public class Controller implements Initializable {
                 userCell = filtersheet.getRow(i).getCell(caseOwnerRefCell);
                 String userName = userCell.getStringCellValue();
                 userCoOwnerCell = filtersheet.getRow(i).getCell(caseCoOwnerRefCell);
-                String userCoOwner = userCoOwnerCell.getStringCellValue();
+                String userCoOwner = "";
+                if (userCoOwnerCell != null) {
+                    userCoOwner = userCoOwnerCell.getStringCellValue();
+                }
 
                 if (!userName.startsWith("PS ") && !userName.startsWith("TS ") && !userName.startsWith("Tech-Ops ")) {
                     userArray.add(userName);
@@ -10826,7 +11956,6 @@ public class Controller implements Initializable {
                 if (!userCoOwner.equals("")){
                     userArray.add(userCoOwner);
                 }
-
             }
 
             userArray = (ArrayList) userArray.stream().distinct().collect(Collectors.toList());
@@ -10878,15 +12007,15 @@ public class Controller implements Initializable {
                                 if (tableUsers.getSelectionModel().getSelectedItem() != null) {
                                     UserTableView selectedUsr = tableUsers.getSelectionModel().getSelectedItem();
                                     tableUsersSelected.getItems().add(selectedUsr);
+                                    txtUserSelect.clear();
                                 }
 
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.log(Level.WARNING, "Unable To Add User to Selected Users By Click...", e);
                             }
                         }
                     }
                 });
-
             });
 
             btnUsersUpdateAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -10897,10 +12026,11 @@ public class Controller implements Initializable {
                         if (tableUsers.getSelectionModel().getSelectedItem() != null) {
                             UserTableView selectedUsr = tableUsers.getSelectionModel().getSelectedItem();
                             tableUsersSelected.getItems().add(selectedUsr);
+                            txtUserSelect.clear();
                         }
 
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Unable To Add User to Selected Users By Button...", e);
                     }
                 }
             });
@@ -10918,10 +12048,9 @@ public class Controller implements Initializable {
                             }
 
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            logger.log(Level.WARNING, "Unable To Remove User to Selected Users By Click...", e);
                         }
                     }
-
                 }
             });
 
@@ -10936,7 +12065,7 @@ public class Controller implements Initializable {
                         }
 
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Unable To Remove User to Selected Users By Button...", e);
                     }
                 }
             });
@@ -10962,7 +12091,7 @@ public class Controller implements Initializable {
                         usersFiltered = (ArrayList) usersFiltered.stream().distinct().collect(Collectors.toList());
 
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Unable To Update UserList ...", e);
                     }
 
                     if (txUsers.getText().equals("")){
@@ -10986,6 +12115,7 @@ public class Controller implements Initializable {
                     }
 
                     pnUsersSelect.setVisible(false);
+                    tableUsersSelected.getItems().clear();
                 }
             });
 
@@ -11004,7 +12134,7 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "User Select Array Failed...", e);
         }
     }
 
@@ -11013,7 +12143,7 @@ public class Controller implements Initializable {
         HSSFCell prodCell;
 
         tableProducts.setVisible(true);
-        tableProductsSelected.getItems().clear();
+        //tableProductsSelected.getItems().clear();
         productCol.setCellValueFactory(new PropertyValueFactory<ProductTableView, String>("productName"));
         productColSelected.setCellValueFactory(new PropertyValueFactory<ProductTableView, String>("productName"));
 
@@ -11037,7 +12167,11 @@ public class Controller implements Initializable {
             for (int i = 1; i < lastRow; i++) {
 
                 prodCell = filtersheet.getRow(i).getCell(caseProductRef);
-                String productName = prodCell.getStringCellValue();
+                String productName = "";
+
+                if (prodCell != null) {
+                    productName = prodCell.getStringCellValue();
+                }
                 prodArray.add(productName);
             }
 
@@ -11090,15 +12224,14 @@ public class Controller implements Initializable {
                                     ProductTableView selectedProduct = tableProducts.getSelectionModel().getSelectedItem();
                                     //filteredAccounts.add(selectedAcc.getAccountName());
                                     tableProductsSelected.getItems().add(selectedProduct);
+                                    txtProductSelect.clear();
                                 }
-
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.log(Level.WARNING, "Unable To Add Product to Selected By Click...", e);
                             }
                         }
                     }
                 });
-
             });
 
             btnProductUpdateAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -11109,10 +12242,11 @@ public class Controller implements Initializable {
                         if (tableProducts.getSelectionModel().getSelectedItem() != null) {
                             ProductTableView selectedProduct = tableProducts.getSelectionModel().getSelectedItem();
                             tableProductsSelected.getItems().add(selectedProduct);
+                            txtProductSelect.clear();
                         }
 
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Unable To Add Product to Selected By Button...", e);
                     }
                 }
             });
@@ -11130,10 +12264,9 @@ public class Controller implements Initializable {
                             }
 
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            logger.log(Level.WARNING, "Unable To Remove Product to Selected By Click...", e);
                         }
                     }
-
                 }
             });
 
@@ -11146,9 +12279,8 @@ public class Controller implements Initializable {
                             ProductTableView selectedCust = tableProductsSelected.getSelectionModel().getSelectedItem();
                             tableProductsSelected.getItems().remove(selectedCust);
                         }
-
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Unable To Remove Product to Selected By Button...", e);
                     }
                 }
             });
@@ -11174,7 +12306,7 @@ public class Controller implements Initializable {
                         productsFiltered = (ArrayList) productsFiltered.stream().distinct().collect(Collectors.toList());
 
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Unable To Update Product List...", e);
                     }
 
                     if(txProducts.getText().equals("")){
@@ -11200,6 +12332,7 @@ public class Controller implements Initializable {
                     }
 
                     pnProductSelect.setVisible(false);
+                    tableProductsSelected.getItems().clear();
                 }
             });
 
@@ -11218,14 +12351,14 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Product Array Create Failed...", e);
         }
     }
 
     public void queueSelectArray() {
 
         tableQueue.setVisible(true);
-        tableQueueSelected.getItems().clear();
+        //tableQueueSelected.getItems().clear();
         queueCol.setCellValueFactory(new PropertyValueFactory<QueueTableView, String>("queueName"));
         queueColSelected.setCellValueFactory(new PropertyValueFactory<QueueTableView, String>("queueName"));
 
@@ -11276,15 +12409,14 @@ public class Controller implements Initializable {
                             if (tableQueue.getSelectionModel().getSelectedItem() != null) {
                                 QueueTableView selectedQue = tableQueue.getSelectionModel().getSelectedItem();
                                 tableQueueSelected.getItems().add(selectedQue);
+                                txtQueueSelect.clear();
                             }
-
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            logger.log(Level.WARNING, "Unable To Add Queue to Selected By Click...", e);
                         }
                     }
                 }
             });
-
         });
 
         btnQueueUpdateAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -11295,10 +12427,10 @@ public class Controller implements Initializable {
                     if (tableQueue.getSelectionModel().getSelectedItem() != null) {
                         QueueTableView selectedQue = tableQueue.getSelectionModel().getSelectedItem();
                         tableQueueSelected.getItems().add(selectedQue);
+                        txtQueueSelect.clear();
                     }
-
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.log(Level.WARNING, "Unable To Add User to Selected By Button...", e);
                 }
             }
         });
@@ -11314,12 +12446,10 @@ public class Controller implements Initializable {
                             QueueTableView selectedQueue = tableQueueSelected.getSelectionModel().getSelectedItem();
                             tableQueueSelected.getItems().remove(selectedQueue);
                         }
-
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Unable To Remove User to Selected By Click...", e);
                     }
                 }
-
             }
         });
 
@@ -11332,9 +12462,8 @@ public class Controller implements Initializable {
                         QueueTableView selectedQueue = tableQueueSelected.getSelectionModel().getSelectedItem();
                         tableQueueSelected.getItems().remove(selectedQueue);
                     }
-
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.log(Level.WARNING, "Unable To Remove User to Selected By Button...", e);
                 }
             }
         });
@@ -11354,15 +12483,12 @@ public class Controller implements Initializable {
 
                         QueueTableView addQue = tableQueueSelected.getItems().get(i);
                         queuesFiltered.add(addQue.getQueueName());
-
                     }
-
                     queuesFiltered = (ArrayList) queuesFiltered.stream().distinct().collect(Collectors.toList());
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    logger.log(Level.WARNING, "Unable To Update Queue List...", e);
                 }
-
                 if(txQueues.getText().equals("")){
                     txQueues.appendText(queuesFiltered.toString().replace("[", "").replace("]", ""));
                 }else{
@@ -11384,15 +12510,14 @@ public class Controller implements Initializable {
                 }
 
                 pnQueueSelect.setVisible(false);
+                tableQueueSelected.getItems().clear();
             }
         });
 
         btnQueueSelectClear.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-
                 tableQueueSelected.getItems().clear();
-
             }
         });
 
@@ -11403,7 +12528,6 @@ public class Controller implements Initializable {
             }
         });
     }
-
 
     public void accountArray() {
 
@@ -11487,12 +12611,11 @@ public class Controller implements Initializable {
                                 }
 
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.log(Level.WARNING, "Unable To Add Account to Selected By Click...", e);
                             }
                         }
                     }
                 });
-
             });
 
             btnFilterAccountUpdateAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -11504,9 +12627,8 @@ public class Controller implements Initializable {
                             AccountTableView selectedAcc = tableAccounts.getSelectionModel().getSelectedItem();
                             tableAccountsSelected.getItems().add(selectedAcc);
                         }
-
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Unable To Add Account to Selected By Button...", e);
                     }
                 }
             });
@@ -11522,12 +12644,10 @@ public class Controller implements Initializable {
                                 AccountTableView selectedCust = tableAccountsSelected.getSelectionModel().getSelectedItem();
                                 tableAccountsSelected.getItems().remove(selectedCust);
                             }
-
                         } catch (Exception e) {
-                            e.printStackTrace();
+                            logger.log(Level.WARNING, "Unable To Remove Account to Selected By Click...", e);
                         }
                     }
-
                 }
             });
 
@@ -11540,9 +12660,8 @@ public class Controller implements Initializable {
                             AccountTableView selectedCust = tableAccountsSelected.getSelectionModel().getSelectedItem();
                             tableAccountsSelected.getItems().remove(selectedCust);
                         }
-
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Unable To Add Account to Selected By Button...", e);
                     }
                 }
             });
@@ -11558,17 +12677,15 @@ public class Controller implements Initializable {
                     try {
 
                         selected = tableAccountsSelected.getItems().size();
-
                         for (int i = 0; i < selected; i++) {
 
                             AccountTableView addCust = tableAccountsSelected.getItems().get(i);
                             filteredAccounts.add(addCust.getAccountName());
                         }
-
                         filteredAccounts = (ArrayList) filteredAccounts.stream().distinct().collect(Collectors.toList());
 
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Unable To Update Account List...", e);
                     }
 
                     customerText.setText(filteredAccounts.toString().replace("[", "").replace("]", ""));
@@ -11584,7 +12701,7 @@ public class Controller implements Initializable {
             });
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.WARNING, "Unable To Build Account Array...", e);
         }
     }
 
@@ -11636,7 +12753,6 @@ public class Controller implements Initializable {
             pnProductsSave.setVisible(false);
             pnUsersSave.setVisible(false);
             pnUsersLoad.setVisible(false);
-
         }
         if (event.getSource() == txProducts) {
             pnUsersSelect.setVisible(false);
@@ -11716,9 +12832,10 @@ public class Controller implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("For any issues/requests please inform us:" + "\n" + "\n" +
                     "Alper Simsek"+ "    " + "asimsek@rbbn.com" + "\n" + "\n" +
-                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.10");
+                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.11");
             alert.showAndWait();
         }
+
         if (event.getSource() == btnUsersSaveAs){
             pnProductsSave.setVisible(false);
             pnQueuesSave.setVisible(false);
@@ -11770,8 +12887,6 @@ public class Controller implements Initializable {
             pnProductSelect.setVisible(false);
             txtQueuesSave.clear();
             saveQueueProfile();
-
-
         }
         if (event.getSource() == btnQueuesSaveClose){
             pnQueuesSave.setVisible(false);
@@ -11790,8 +12905,6 @@ public class Controller implements Initializable {
             pnProductsSave.setVisible(false);
             pnQueuesSave.setVisible(false);
             loadUserProfile();
-
-
         }
         if (event.getSource() == btnUsersLoadClose){
             pnUsersLoad.toBack();
@@ -11809,7 +12922,6 @@ public class Controller implements Initializable {
             pnUsersSelect.setVisible(false);
             pnProductSelect.setVisible(false);
             loadProductProfile();
-
 
         }
         if (event.getSource() == btnProductsLoadClose){
@@ -11835,6 +12947,49 @@ public class Controller implements Initializable {
             pnQueuesLoad.toBack();
             pnQueuesLoad.setVisible(false);
         }
+
+        if(event.getSource() == btnManClose){
+            apnManLogin.toBack();
+        }
+        if (event.getSource() == btnManLogin ){
+
+            checkManUser();
+        }
+        if (event.getSource() == txtpass){
+            txtpass.clear();
+        }
+        if (event.getSource() == btnUnlock && btnUnlock.getGlyphName().equals("LOCK")){
+            apnManLogin.toFront();
+            txtpass.requestFocus();
+
+            txtpass.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent event) {
+                    if (event.getCode() == KeyCode.ENTER){
+                        checkManUser();
+                    }
+                }
+            });
+        }
+    }
+
+    private void checkManUser(){
+
+        String password = "123456";
+
+        if (!txtpass.getText().equals("")){
+
+            String promptedpass = txtpass.getText();
+            if (promptedpass.equals(password)){
+                apnManLogin.toBack();
+                btnProjection.setVisible(true);
+                btnSkillSet.setVisible(true);
+                btnUnlock.setGlyphName("UNLOCK");
+            }
+            else{
+            }
+        }
+
     }
 
     private void loadQueueProfile(){
@@ -11871,7 +13026,7 @@ public class Controller implements Initializable {
                             try {
                                 s = new Scanner(queueProfileFile);
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.log(Level.WARNING, "Profile/Queues - No File Found...: ", e);
                             }
                             while (s.hasNextLine()) {
                                 txQueues.appendText(s.nextLine() + ",");
@@ -11892,7 +13047,6 @@ public class Controller implements Initializable {
                     }
                 });
             }});
-
     }
 
     private void loadProductProfile(){
@@ -11929,7 +13083,7 @@ public class Controller implements Initializable {
                             try {
                                 s = new Scanner(productProfileFile);
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.log(Level.WARNING, "Profile/Product - No File Found...: ", e);
                             }
                             while (s.hasNextLine()) {
                                 txProducts.appendText(s.nextLine() + ",");
@@ -11990,7 +13144,7 @@ public class Controller implements Initializable {
                                 try {
                                     s = new Scanner(userProfileFile);
                                 } catch (Exception e) {
-                                    e.printStackTrace();
+                                    logger.log(Level.WARNING, "Profile/User - No File Found...: ", e);
                                 }
                                 while (s.hasNextLine()) {
                                     txUsers.appendText(s.nextLine() + ",");
@@ -12051,7 +13205,7 @@ public class Controller implements Initializable {
                                 writer.close();
 
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.log(Level.WARNING, "Profile/Queues - No Folder...: ", e);
                             }
                         } else {
                             try {
@@ -12065,7 +13219,7 @@ public class Controller implements Initializable {
                                 writer.close();
 
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.log(Level.WARNING, "Profile/Queues - Not Able To Save...: ", e);
                             }
                         }
 
@@ -12080,7 +13234,6 @@ public class Controller implements Initializable {
                 }
             }
         });
-
     }
     private void saveProductProfile(){
 
@@ -12113,7 +13266,7 @@ public class Controller implements Initializable {
                                 writer.close();
 
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.log(Level.WARNING, "Profile/Product - No Folder...: ", e);
                             }
                         } else {
                             try {
@@ -12127,15 +13280,14 @@ public class Controller implements Initializable {
                                 writer.close();
 
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.log(Level.WARNING, "Profile/Product - Not Able To Save...: ", e);
                             }
                         }
-
                         pnProductsSave.toBack();
                         pnProductsSave.setVisible(false);
 
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Profile/Product - No File...: ", e);
                     }
                 }else {
                     alertUser(strSave);
@@ -12175,7 +13327,7 @@ public class Controller implements Initializable {
                                 writer.close();
 
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.log(Level.WARNING, "Profile/User - No Folder...: ", e);
                             }
                         } else {
                             try {
@@ -12189,7 +13341,7 @@ public class Controller implements Initializable {
                                 writer.close();
 
                             } catch (Exception e) {
-                                e.printStackTrace();
+                                logger.log(Level.WARNING, "Profile/User - Not Able To Save...: ", e);
                             }
                         }
 
@@ -12197,7 +13349,7 @@ public class Controller implements Initializable {
                         pnUsersSave.setVisible(false);
 
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.log(Level.WARNING, "Profile/User - No File...: ", e);
                     }
                 }
                 else{
@@ -12223,12 +13375,13 @@ public class Controller implements Initializable {
 
         List queues = Arrays.asList("Kandy NOC", "KBS Onboarding", "KBS Operations","KBS Support", "PS A2 Call Processing", "PS A2 Gateways", "PS A2 GENCOM", "PS A2 IMM",
                 "PS A2 OAM", "PS A2 WAM", "PS A6", "PS Billing", "PS C3","PS CBM SDM","PS CCA SST SAM21 Platform", "PS CICM","PS CM9520","PS Converged Intelligent Messaging (CIM)",
-                "PS CoreBase SW", "PS CoreHardware", "PS CPaaS", "PS CSLAN8600","PS DMS SS7", "PS EMT", "PS G5", "PS Gateways", "PS GENiUS", "PS GENView Analytics", "PS GVBM", "PS GVPP",
-                "PS GWC", "PS hiG Gateways","PS IN", "PS Kandy","PS Kandy Wrappers", "PS LI / TOPS","PS Lines Services", "PS MG15K G2 G6","PS MG9K", "PS NSP","PS OAM IEMS","PS OAM SESM",
-                "PS OAM SPFS","PS Ribbon Protect","PS RSM","PS SBC","PS SeGW","PS Signaling", "PS SIP Lines/SIP PBX","PS SPiDR CallP","PS SPiDR OAM","PS SPM MG4K","PS SST","PS Trunking",
-                "PS UT-SD","PS XLA","PS XPM V52","Tech-Ops ER Support","TS Asia","TS CALA","TS Converged Intelligent Messaging (CIM)","TS EDGE","TS EMEA","TS EMEA Marquee","TS EMEA PI",
-                "TS GTAC SERVICES","TS Japan Marquee","TS MEXICO","TS MNOC","TS NA","TS NA C15","TS NA DCO","TS NA Federal","TS NA G-Series","TS NA GTD5-5ESS","TS NA Marquee","TS NA Safari",
-                "TS NA Safari(GPS)","TS NA S-Series","TS NA Verizon Wireless","TS Non Technical","TS NSP","TS PSD","TS TAC-RESPONSE","TS TAQUA","TS UT-SD");
+                "PS CoreBase SW", "PS CoreHardware", "PS CPaaS", "PS CSLAN8600","PS DMS SS7", "PS DSI NFS","PS EMS","PS EMT", "PS G5", "PS Gateways", "PS GENiUS", "PS GENView Analytics", "PS GPU",
+                "PS GSX", "PS GVBM", "PS GVPP","PS GWC", "PS hiG Gateways","PS IN", "PS Intelligent Edge", "PS Kandy","PS Kandy Wrappers", "PS LI / TOPS","PS Lines Services", "PS MG15K G2 G6","PS MG9K",
+                "PS MRFP", "PS NSP","PS OAM IEMS","PS OAM SESM","PS OAM SPFS", "PS Protect Netscore","PS PSX","PS Ribbon Protect","PS RSM","PS SBC","PS SeGW", "PS SGX","PS Signaling", "PS SIP Lines/SIP PBX",
+                "PS SPiDR CallP","PS SPiDR OAM","PS SPM MG4K","PS SST","PS Trunking","PS UT-SD","PS XLA","PS XPM V52",
+                "Tech-Ops ER Support","TS Asia","TS CALA","TS Converged Intelligent Messaging (CIM)","TS EDGE","TS EMEA","TS EMEA Marquee","TS EMEA PI","TS GTAC SERVICES","TS Intelligent Edge","TS Japan Marquee",
+                "TS MEXICO","TS MNOC","TS NA","TS NA C15","TS NA DCO","TS NA Federal","TS NA G-Series","TS NA GTD5-5ESS","TS NA Marquee","TS NA Safari","TS NA Safari(GPS)","TS NA S-Series","TS NA Verizon Wireless",
+                "TS Non Technical","TS NSP","TS PSD","TS TAC-RESPONSE","TS TAQUA","TS UT-SD");
 
         queueArray.addAll(queues);
         Collections.sort(queueArray);
@@ -12240,19 +13393,38 @@ public class Controller implements Initializable {
         File repo2 = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings");
         File repo3 = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data");
         File repo4 = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Selection");
+        File repo5 = new File(System.getProperty("user.home") + "\\Documents\\CMT\\SkilLSet");
+        File repo6 = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Log");
+
 
         if (!repo.exists()) {
+            logger.info("CMT Folder Not Valid, creating folder...");
             new File(System.getProperty("user.home") + "\\Documents\\CMT").mkdir();
         }
 
         if (!repo2.exists()){
+            logger.info("Settings Folder Not Valid, creating folder...");
             new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings").mkdir();
         }
+
         if (!repo3.exists()){
+            logger.info("Data Folder Not Valid, creating folder...");
             new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data").mkdir();
         }
+
         if (!repo4.exists()){
+            logger.info("Selection Folder Not Valid, creating folder...");
             new File(System.getProperty("user.home") + "\\Documents\\CMT\\Selection").mkdir();
+        }
+
+        if (!repo5.exists()){
+            logger.info("SkillSet Folder Not Valid, creating folder...");
+            new File(System.getProperty("user.home") + "\\Documents\\CMT\\SkillSet").mkdir();
+        }
+
+        if (!repo6.exists()){
+            logger.info("Log Folder Not Valid, creating folder...");
+            new File(System.getProperty("user.home") + "\\Documents\\CMT\\Log").mkdir();
         }
 
         File[] fileList = repo.listFiles();
@@ -12276,9 +13448,1044 @@ public class Controller implements Initializable {
         }
     }
 
+    public void setButtons(){
+        btnProjection.setVisible(true);
+        btnSkillSet.setVisible(true);
+    }
+
+    @FXML
+    void handleRadioClick(MouseEvent event) {
+
+        if(event.getSource() == rdEngMyTeam){
+            rdEngMyTeam.setSelected(true);
+            rdEngOverall.setSelected(false);
+            engNameListAll.setVisible(false);
+            engNameList.setVisible(true);
+            engSkilLev.getItems().clear();
+            engSkillName.getItems().clear();
+            engSkilLev.setVisible(false);
+            engSkillName.setVisible(false);
+            engSkillMyTeam();
+        }
+        if(event.getSource() == rdEngOverall){
+            rdEngMyTeam.setSelected(false);
+            rdEngOverall.setSelected(true);
+            engNameList.setVisible(false);
+            engNameListAll.setVisible(true);
+            engSkilLev.getItems().clear();
+            engSkillName.getItems().clear();
+            engSkilLev.setVisible(false);
+            engSkillName.setVisible(false);
+            engSkillOverAllTeam();
+        }
+        if(event.getSource() == rdSkilMyTeam){
+            rdSkilMyTeam.setSelected(true);
+            rdSkillOverAll.setSelected(false);
+            skillNameList.setVisible(true);
+            skillNameListAll.setVisible(false);
+            skillLevelList.getItems().clear();
+            skillEngName.getItems().clear();
+            skillLevelList.setVisible(false);
+            skillEngName.setVisible(false);
+            btnSkillsExport.setVisible(false);
+            skillMyTeam();
+        }
+        if (event.getSource() == rdSkillOverAll){
+            rdSkilMyTeam.setSelected(false);
+            rdSkillOverAll.setSelected(true);
+            skillNameList.setVisible(false);
+            skillNameListAll.setVisible(true);
+            skillNameListAll.getItems().clear();
+            skillEngName.getItems().clear();
+            skillLevelList.setVisible(false);
+            skillEngName.setVisible(false);
+            btnSkillsExport.setVisible(false);
+            skillOverAllTeam();
+        }
+    }
+
+    private void engSkillMyTeam(){
+
+        txtSearchEng.clear();
+        int userarraysize = safeUserList.size();
+
+        ObservableList<String> users = FXCollections.observableArrayList();
+
+        for (int i = 0; i <userarraysize ; i++) {
+            users.add(safeUserList.get(i));
+        }
+
+        if (engNameList.getItems().size() == 0){
+            engNameList.getItems().addAll(users);
+        }
+        engNameList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        lblSearcEng.setVisible(true);
+        txtSearchEng.setVisible(true);
+
+        FilteredList<String> filteredEng = new FilteredList((ObservableList) users, p -> true);
+
+        txtSearchEng.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredEng.setPredicate(string -> {
+
+                engSkilLev.setVisible(false);
+                engSkillName.setVisible(false);
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseCustomerName = newValue.toLowerCase();
+
+                if (string.toLowerCase().contains(lowerCaseCustomerName)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+
+        engNameList.setItems(filteredEng);
+
+        engNameList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                engSkillName.getItems().clear();
+                selected = "";
+                selectedLevel = "";
+
+                selected = engNameList.getSelectionModel().getSelectedItem();
+                userSkillRef =0;
+                engSkilLev.getItems().clear();
+                levels.clear();
+                setLevels();
+                engSkilLev.setVisible(true);
+                engSkillName.setVisible(false);
+                engSkilLev.getItems().addAll(levels);
+
+                engSkilLev.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+                engSkilLev.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+
+                        engSkillName.getItems().clear();
+                        selectedLevel = engSkilLev.getSelectionModel().getSelectedItem();
+                        engSkillName.setVisible(true);
+
+                        try {
+
+                            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\SkillSet\\SkillsetProfiles.xls")));
+                            HSSFSheet sheet = workbook.getSheetAt(0);
+                            HSSFCell cellVal;
+
+                            int cellnum = sheet.getRow(0).getLastCellNum();
+                            int lastRow = sheet.getLastRowNum();
+                            expertLevel = new ArrayList<>();
+                            intLevel = new ArrayList<>();
+                            basicLevel = new ArrayList<>();
+                            noLevel = new ArrayList<>();
+
+                            for (int i = 1; i <cellnum ; i++) {
+                                String userNameColl = sheet.getRow(0).getCell(i).getStringCellValue();
+                                if (userNameColl.equals(selected)){
+                                    userSkillRef = i;
+                                }
+                            }
+
+                            for (int i = 1; i <lastRow ; i++) {
+
+                                cellVal = sheet.getRow(i).getCell(userSkillRef);
+                                int cellValue = 0;
+
+                                if (cellVal != null) {
+
+                                    if (cellVal.getCellType() == CellType.NUMERIC){
+                                        cellValue = (int) cellVal.getNumericCellValue();
+                                    }
+                                    else{
+                                        cellValue = Integer.parseInt(cellVal.getStringCellValue());
+                                    }
+
+                                    if (cellValue == 3) {
+                                        expertLevel.add(sheet.getRow(i).getCell(0).getStringCellValue());
+                                    }
+                                    if (cellValue == 2) {
+                                        intLevel.add(sheet.getRow(i).getCell(0).getStringCellValue());
+                                    }
+                                    if (cellValue == 1) {
+                                        basicLevel.add(sheet.getRow(i).getCell(0).getStringCellValue());
+                                    }
+                                    if (cellValue == 0) {
+                                        noLevel.add(sheet.getRow(i).getCell(0).getStringCellValue());
+                                    }
+                                }else {
+                                    noLevel.add(sheet.getRow(i).getCell(0).getStringCellValue());
+                                }
+                            }
+
+                        }catch (Exception e){
+                            logger.log(Level.WARNING, "SkillSet-EngMyteam Unable To Read Data...: ", e);
+                        }
+
+                        int expertSize = expertLevel.size();
+                        int intermSize = intLevel.size();
+                        int basicSize = basicLevel.size();
+                        int noSize = noLevel.size();
+
+                        ObservableList<String> skills = FXCollections.observableArrayList();
+
+                        if (selectedLevel.equals("EXPERT")){
+
+                            for (int i = 0; i <expertSize ; i++) {
+                                skills.addAll(expertLevel.get(i));
+                            }
+
+                            engSkillName.getItems().addAll(skills);
+                        }
+                        if (selectedLevel.equals("INTERMEDIATE")){
+
+                            for (int i = 0; i <intermSize ; i++) {
+                                skills.addAll(intLevel.get(i));
+                            }
+
+                            engSkillName.getItems().addAll(skills);
+                        }
+                        if (selectedLevel.equals("BEGINNER")){
+
+                            for (int i = 0; i <basicSize ; i++) {
+                                skills.addAll(basicLevel.get(i));
+                            }
+
+                            engSkillName.getItems().addAll(skills);
+                        }
+                        if (selectedLevel.equals("NONE")){
+
+                            for (int i = 0; i <noSize ; i++) {
+                                skills.addAll(noLevel.get(i));
+                            }
+                            engSkillName.getItems().addAll(skills);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void engSkillOverAllTeam(){
+
+        txtSearchEng.clear();
+        int readAllNum = readOverAllUsers.size();
+        ObservableList<String> users = FXCollections.observableArrayList();
+
+        for (int i = 0; i <readAllNum ; i++) {
+            users.add(readOverAllUsers.get(i));
+        }
+
+        if (engNameListAll.getItems().size() == 0) {
+            engNameListAll.getItems().addAll(users);
+        }
+
+        engNameListAll.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        lblSearcEng.setVisible(true);
+        txtSearchEng.setVisible(true);
+
+        FilteredList<String> filteredEng = new FilteredList((ObservableList) users, p -> true);
+
+        txtSearchEng.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredEng.setPredicate(string -> {
+
+                engSkilLev.setVisible(false);
+                engSkillName.setVisible(false);
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowerCaseCustomerName = newValue.toLowerCase();
+
+                if (string.toLowerCase().contains(lowerCaseCustomerName)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+
+        engNameListAll.setItems(filteredEng);
+        engNameListAll.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                engSkilLev.getItems().clear();
+                engSkillName.getItems().clear();
+                selected = "";
+                selectedLevel = "";
+                engSkilLev.setVisible(true);
+                engSkillName.setVisible(false);
+
+                selected = engNameListAll.getSelectionModel().getSelectedItem();
+                userSkillRef =0;
+                skillLevelList.getItems().clear();
+                levels.clear();
+                setLevels();
+                engSkilLev.getItems().addAll(levels);
+
+                engSkilLev.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+                engSkilLev.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+
+                        engSkillName.getItems().clear();
+                        selectedLevel = engSkilLev.getSelectionModel().getSelectedItem();
+                        engSkillName.setVisible(true);
+
+                        try {
+
+                            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\SkillSet\\SkillsetProfiles.xls")));
+                            HSSFSheet sheet = workbook.getSheetAt(0);
+                            HSSFCell cellVal;
+
+                            int cellnum = sheet.getRow(0).getLastCellNum();
+                            int lastRow = sheet.getLastRowNum();
+                            expertLevel = new ArrayList<>();
+                            intLevel = new ArrayList<>();
+                            basicLevel = new ArrayList<>();
+                            noLevel = new ArrayList<>();
+
+                            for (int i = 1; i <cellnum ; i++) {
+                                String userNameColl = sheet.getRow(0).getCell(i).getStringCellValue();
+                                if (userNameColl.equals(selected)){
+                                    userSkillRef = i;
+                                }
+                            }
+
+                            for (int i = 1; i <lastRow ; i++) {
+
+                                cellVal = sheet.getRow(i).getCell(userSkillRef);
+
+                                if (cellVal != null) {
+
+                                    int cellValue = 0;
+
+                                    if (cellVal.getCellType() == CellType.NUMERIC){
+                                        cellValue = (int) cellVal.getNumericCellValue();
+                                    }
+                                    else{
+                                        cellValue = Integer.parseInt(cellVal.getStringCellValue());
+                                    }
+
+                                    if (cellValue == 3) {
+                                        expertLevel.add(sheet.getRow(i).getCell(0).getStringCellValue());
+                                    }
+                                    if (cellValue == 2) {
+                                        intLevel.add(sheet.getRow(i).getCell(0).getStringCellValue());
+                                    }
+                                    if (cellValue == 1) {
+                                        basicLevel.add(sheet.getRow(i).getCell(0).getStringCellValue());
+                                    }
+                                    if (cellValue == 0) {
+                                        noLevel.add(sheet.getRow(i).getCell(0).getStringCellValue());
+                                    }
+                                }else {
+                                    noLevel.add(sheet.getRow(i).getCell(0).getStringCellValue());
+                                }
+                            }
+
+                        }catch (Exception e){
+                            logger.log(Level.WARNING, "SkillSet-Engteam Unable To Read Data...: ", e);
+                        }
+
+                        int expertSize = expertLevel.size();
+                        int intermSize = intLevel.size();
+                        int basicSize = basicLevel.size();
+                        int noSize = noLevel.size();
+
+                        ObservableList<String> skills = FXCollections.observableArrayList();
+
+                        if (selectedLevel.equals("EXPERT")){
+
+                            for (int i = 0; i <expertSize ; i++) {
+                                skills.addAll(expertLevel.get(i));
+                            }
+
+                            engSkillName.getItems().addAll(skills);
+                        }
+                        if (selectedLevel.equals("INTERMEDIATE")){
+
+                            for (int i = 0; i <intermSize ; i++) {
+                                skills.addAll(intLevel.get(i));
+                            }
+
+                            engSkillName.getItems().addAll(skills);
+                        }
+                        if (selectedLevel.equals("BEGINNER")){
+
+                            for (int i = 0; i <basicSize ; i++) {
+                                skills.addAll(basicLevel.get(i));
+                            }
+
+                            engSkillName.getItems().addAll(skills);
+                        }
+                        if (selectedLevel.equals("NONE")){
+
+                            for (int i = 0; i <noSize ; i++) {
+                                skills.addAll(noLevel.get(i));
+                            }
+
+                            engSkillName.getItems().addAll(skills);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void skillMyTeam(){
+
+        txtSearchSkill.clear();
+        readSkills();
+
+        int skillsAllSize = skillsAll.size();
+
+        ObservableList<String> skills = FXCollections.observableArrayList();
+        ObservableList<String> engins = FXCollections.observableArrayList();
+
+        for (int i = 0; i <skillsAllSize ; i++) {
+            skills.addAll(skillsAll.get(i));
+        }
+
+        if (skillNameList.getItems().size() == 0) {
+            skillNameList.getItems().addAll(skills);
+        }
+
+        skillNameList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        lblSearchSkill.setVisible(true);
+        txtSearchSkill.setVisible(true);
+
+        FilteredList<String> filteredSkill = new FilteredList((ObservableList) skills, p -> true);
+
+        txtSearchSkill.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredSkill.setPredicate(string -> {
+
+                skillLevelList.setVisible(false);
+                skillEngName.setVisible(false);
+                btnSkillsExport.setVisible(false);
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseCustomerName = newValue.toLowerCase();
+
+                if (string.toLowerCase().contains(lowerCaseCustomerName)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+
+        skillNameList.setItems(filteredSkill);
+
+        skillNameList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                selectedSkill = "";
+                selectedSkillLevel ="";
+                skillRef = 0;
+                skillLevelList.setVisible(true);
+                skillEngName.setVisible(false);
+                btnSkillsExport.setVisible(false);
+
+                selectedSkill = skillNameList.getSelectionModel().getSelectedItem();
+
+                skillLevelList.getItems().clear();
+                levels.clear();
+                setLevels();
+                skillLevelList.getItems().addAll(levels);
+
+                skillLevelList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+
+                        int compareNum = 0;
+
+                        skillsExpert = new ArrayList<>();
+                        skillsInterm = new ArrayList<>();
+                        skillsBegin = new ArrayList<>();
+                        skillsNone = new ArrayList<>();
+
+                        skillEngName.setVisible(true);
+                        btnSkillsExport.setVisible(true);
+
+                        selectedSkillLevel = skillLevelList.getSelectionModel().getSelectedItem();
+
+                        try {
+                            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\SkillSet\\SkillsetProfiles.xls")));
+                            HSSFSheet sheet = workbook.getSheetAt(0);
+                            HSSFCell cellVal;
+                            HSSFCell cellVal2;
+
+                            int cellnum = sheet.getRow(0).getLastCellNum();
+                            int lastRow = sheet.getLastRowNum();
+
+                            for (int i = 1; i <lastRow ; i++) {
+                                String skillNameColl = sheet.getRow(i).getCell(0).getStringCellValue();
+                                if (skillNameColl.equals(selectedSkill)){
+                                    skillRef = i;
+                                }
+                            }
+
+                            skillsExpert.clear();
+                            skillsInterm.clear();
+                            skillsBegin.clear();
+                            skillsNone.clear();
+
+                            for (int i = 1; i < cellnum ; i++) {
+
+                                cellVal = sheet.getRow(skillRef).getCell(i);
+
+                                if (cellVal != null) {
+
+                                    int cellValue = 0;
+
+                                    if (cellVal.getCellType() == CellType.NUMERIC) {
+                                        cellValue = (int) cellVal.getNumericCellValue();
+                                    } else {
+                                        cellValue = Integer.parseInt(cellVal.getStringCellValue());
+                                    }
+
+                                    if (cellValue == 3){
+
+                                        cellVal2 = sheet.getRow(0).getCell(i);
+                                        String engName = cellVal2.getStringCellValue();
+
+                                        if (readUserList.contains(engName)) {
+                                            skillsExpert.add(engName);
+                                        }
+                                    }
+                                    if (cellValue == 2){
+
+                                        cellVal2 = sheet.getRow(0).getCell(i);
+                                        String engName = cellVal2.getStringCellValue();
+
+                                        if (readUserList.contains(engName)) {
+                                            skillsInterm.add(engName);
+                                        }
+                                    }
+                                    if (cellValue == 1){
+
+                                        cellVal2 = sheet.getRow(0).getCell(i);
+                                        String engName = cellVal2.getStringCellValue();
+
+                                        if (readUserList.contains(engName)) {
+                                            skillsBegin.add(engName);
+                                        }
+                                    }
+                                    if (cellValue == 0){
+
+                                        cellVal2 = sheet.getRow(0).getCell(i);
+                                        String engName = cellVal2.getStringCellValue();
+
+                                        if (readUserList.contains(engName)) {
+                                            skillsNone.add(engName);
+                                        }
+                                    }
+                                }
+                                else {
+                                    cellVal2 = sheet.getRow(0).getCell(i);
+                                    String engName = cellVal2.getStringCellValue();
+                                    if (readUserList.contains(engName)) {
+                                        skillsNone.add(engName);
+                                    }
+                                }
+                            }
+
+                            if (selectedSkillLevel.equals("EXPERT")){
+
+                                engins.clear();
+                                engins.addAll(skillsExpert);
+                                skillEngName.getItems().clear();
+                                skillEngName.getItems().addAll(engins);
+                            }
+                            if (selectedSkillLevel.equals("INTERMEDIATE")){
+
+                                engins.clear();
+                                engins.addAll(skillsInterm);
+                                skillEngName.getItems().clear();
+                                skillEngName.getItems().addAll(engins);
+                            }
+                            if (selectedSkillLevel.equals("BEGINNER")){
+
+                                engins.clear();
+                                engins.addAll(skillsBegin);
+                                skillEngName.getItems().clear();
+                                skillEngName.getItems().addAll(engins);
+                            }
+                            if (selectedSkillLevel.equals("NONE")){
+
+                                engins.clear();
+                                engins.addAll(skillsNone);
+                                skillEngName.getItems().clear();
+                                skillEngName.getItems().addAll(engins);
+                            }
+
+                        }catch (Exception e){
+                            logger.log(Level.WARNING, "SkillSet-SkillMyTeam Unable To Read Data...: ", e);
+                        }
+
+                        btnSkillsExport.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+
+                                try {
+
+                                    FileChooser fileChooser = new FileChooser();
+                                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT Files (*.txt)", "*.txt");
+                                    fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Desktop"));
+                                    fileChooser.setInitialFileName(selectedSkill + "_" + selectedSkillLevel + "_Level_Engineers");
+
+                                    fileChooser.getExtensionFilters().add(extFilter);
+
+                                    Stage primaryStage = new Stage();
+
+                                    File file = fileChooser.showSaveDialog(primaryStage);
+
+                                    FileWriter writer = new FileWriter(file);
+
+                                    primaryStage.show();
+
+                                    if (file != null) {
+
+                                        int size = engins.size();
+                                        for (int i = 0; i < size; i++) {
+                                            String str = engins.get(i);
+                                            writer.write(str);
+                                            if (i < size - 1)
+                                                writer.write("\r"+"\n");
+                                        }
+                                        writer.close();
+                                    }
+
+                                    primaryStage.close();
+                                } catch (Exception e) {
+                                    logger.log(Level.WARNING, "SkillSet-SkillMyTeam Unable To Export Data...: ", e);
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    private void skillOverAllTeam(){
+
+        txtSearchSkill.clear();
+        readSkills();
+
+        int skillsAllSize = skillsAll.size();
+
+        ObservableList<String> skills = FXCollections.observableArrayList();
+        ObservableList<String> engins = FXCollections.observableArrayList();
+
+        for (int i = 0; i <skillsAllSize ; i++) {
+            skills.addAll(skillsAll.get(i));
+        }
+
+        if (skillNameListAll.getItems().size() == 0) {
+            skillNameListAll.getItems().addAll(skills);
+        }
+
+        skillNameListAll.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+
+        lblSearchSkill.setVisible(true);
+        txtSearchSkill.setVisible(true);
+
+        FilteredList<String> filteredSkill = new FilteredList((ObservableList) skills, p -> true);
+
+        txtSearchSkill.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredSkill.setPredicate(string -> {
+
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseCustomerName = newValue.toLowerCase();
+
+                if (string.toLowerCase().contains(lowerCaseCustomerName)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+
+        skillNameListAll.setItems(filteredSkill);
+
+        skillNameListAll.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                selectedSkill = "";
+                selectedSkillLevel ="";
+                skillRef = 0;
+
+                skillLevelList.setVisible(true);
+                skillEngName.setVisible(false);
+                btnSkillsExport.setVisible(false);
+
+                selectedSkill = skillNameListAll.getSelectionModel().getSelectedItem();
+
+                skillLevelList.getItems().clear();
+                levels.clear();
+                setLevels();
+                skillLevelList.getItems().addAll(levels);
+
+                skillLevelList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+
+                        int compareNum = 0;
+
+                        skillsExpert = new ArrayList<>();
+                        skillsInterm = new ArrayList<>();
+                        skillsBegin = new ArrayList<>();
+                        skillsNone = new ArrayList<>();
+
+                        skillEngName.setVisible(true);
+                        btnSkillsExport.setVisible(true);
+
+
+                        selectedSkillLevel = skillLevelList.getSelectionModel().getSelectedItem();
+
+                        try {
+                            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\SkillSet\\SkillsetProfiles.xls")));
+                            HSSFSheet sheet = workbook.getSheetAt(0);
+                            HSSFCell cellVal;
+                            HSSFCell cellVal2;
+
+                            int cellnum = sheet.getRow(0).getLastCellNum();
+                            int lastRow = sheet.getLastRowNum();
+
+                            for (int i = 1; i <lastRow ; i++) {
+                                String skillNameColl = sheet.getRow(i).getCell(0).getStringCellValue();
+                                if (skillNameColl.equals(selectedSkill)){
+                                    skillRef = i;
+                                }
+                            }
+
+                            skillsExpert.clear();
+                            skillsInterm.clear();
+                            skillsBegin.clear();
+                            skillsNone.clear();
+
+                            for (int i = 1; i < cellnum ; i++) {
+
+                                cellVal = sheet.getRow(skillRef).getCell(i);
+
+                                if (cellVal != null) {
+
+                                    int cellValue = 0;
+
+                                    if (cellVal.getCellType() == CellType.NUMERIC) {
+                                        cellValue = (int) cellVal.getNumericCellValue();
+                                    } else {
+                                        cellValue = Integer.parseInt(cellVal.getStringCellValue());
+                                    }
+
+                                    if (cellValue == 3){
+
+                                        cellVal2 = sheet.getRow(0).getCell(i);
+                                        String engName = cellVal2.getStringCellValue();
+
+                                        skillsExpert.add(engName);
+                                    }
+                                    if (cellValue == 2){
+
+                                        cellVal2 = sheet.getRow(0).getCell(i);
+                                        String engName = cellVal2.getStringCellValue();
+
+                                        skillsInterm.add(engName);
+                                    }
+                                    if (cellValue == 1){
+
+                                        cellVal2 = sheet.getRow(0).getCell(i);
+                                        String engName = cellVal2.getStringCellValue();
+
+                                        skillsBegin.add(engName);
+                                    }
+                                    if (cellValue == 0){
+
+                                        cellVal2 = sheet.getRow(0).getCell(i);
+                                        String engName = cellVal2.getStringCellValue();
+
+                                        skillsNone.add(engName);
+                                    }
+                                }
+                                else {
+                                    cellVal2 = sheet.getRow(0).getCell(i);
+                                    String engName = cellVal2.getStringCellValue();
+                                    skillsNone.add(engName);
+                                }
+                            }
+
+                            if (selectedSkillLevel.equals("EXPERT")){
+
+                                engins.clear();
+                                engins.addAll(skillsExpert);
+                                skillEngName.getItems().clear();
+                                skillEngName.getItems().addAll(engins);
+                            }
+                            if (selectedSkillLevel.equals("INTERMEDIATE")){
+
+                                engins.clear();
+                                engins.addAll(skillsInterm);
+                                skillEngName.getItems().clear();
+                                skillEngName.getItems().addAll(engins);
+                            }
+                            if (selectedSkillLevel.equals("BEGINNER")){
+
+                                engins.clear();
+                                engins.addAll(skillsBegin);
+                                skillEngName.getItems().clear();
+                                skillEngName.getItems().addAll(engins);
+                            }
+                            if (selectedSkillLevel.equals("NONE")){
+
+                                engins.clear();
+                                engins.addAll(skillsNone);
+                                skillEngName.getItems().clear();
+                                skillEngName.getItems().addAll(engins);
+                            }
+
+                        }catch (Exception e){
+                            logger.log(Level.WARNING, "SkillSet-SkillTeam Unable To Read Data...: ", e);
+                        }
+
+                        btnSkillsExport.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                            @Override
+                            public void handle(MouseEvent event) {
+
+                                try {
+
+                                    FileChooser fileChooser = new FileChooser();
+                                    FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT Files (*.txt)", "*.txt");
+                                    fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Desktop"));
+                                    fileChooser.setInitialFileName(selectedSkill + "_" + selectedSkillLevel + "_Level_Engineers");
+
+                                    fileChooser.getExtensionFilters().add(extFilter);
+
+                                    Stage primaryStage = new Stage();
+
+                                    File file = fileChooser.showSaveDialog(primaryStage);
+
+                                    FileWriter writer = new FileWriter(file);
+
+                                    primaryStage.show();
+
+                                    if (file != null) {
+
+                                        int size = engins.size();
+                                        for (int i = 0; i < size; i++) {
+                                            String str = engins.get(i);
+                                            writer.write(str);
+                                            if (i < size - 1)
+                                                writer.write("\r"+"\n");
+                                        }
+                                        writer.close();
+                                    }
+
+                                    primaryStage.close();
+                                } catch (Exception e) {
+                                    logger.log(Level.WARNING, "SkillSet-SkillTeam Unable To Export Data...: ", e);
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    private void readSkills(){
+
+        try {
+
+            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\SkillSet\\SkillsetProfiles.xls")));
+            HSSFSheet sheet = workbook.getSheetAt(0);
+            HSSFCell cellVal;
+
+            int skillRef = 0;
+            int lastRow = sheet.getLastRowNum();
+
+            skillsAll = new ArrayList<>();
+
+            for (int i = 1; i <lastRow ; i++) {
+
+                cellVal = sheet.getRow(i).getCell(skillRef);
+                String skill = cellVal.getStringCellValue();
+                skillsAll.add(skill);
+            }
+
+        } catch (Exception e){
+            logger.log(Level.WARNING, "SkillSet-Read Skills Failed...: ", e);
+        }
+    }
+
+    private void readUsers(){
+
+        File usersFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\SkillSet\\users.txt");
+
+        if (usersFile.isFile()) {
+
+            Scanner s = null;
+            try {
+                s = new Scanner(usersFile);
+            } catch (FileNotFoundException e) {
+                logger.log(Level.WARNING, "SkillSet-Read Users Failed...: ", e);
+            }
+            readUserList = new ArrayList<String>();
+            while (s.hasNextLine()) {
+                readUserList.add(s.nextLine());
+            }
+            s.close();
+        }
+    }
+
+    private void failSafeUsers(){
+
+        int size = readUserList.size();
+
+        safeUserList = new ArrayList<>();
+
+        for (int i = 0; i <size ; i++) {
+
+            if (readOverAllUsers.contains(readUserList.get(i))){
+                safeUserList.add(readUserList.get(i));
+            }
+        }
+    }
+
+    private void readAllUsers(){
+
+        try {
+            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\SkillSet\\SkillsetProfiles.xls")));
+            HSSFSheet sheet = workbook.getSheetAt(0);
+
+            int cellnum = sheet.getRow(0).getLastCellNum();
+            int lastRow = sheet.getLastRowNum();
+
+            readOverAllUsers = new ArrayList<>();
+            for (int i = 1; i <cellnum ; i++) {
+                String userNameColl = sheet.getRow(0).getCell(i).getStringCellValue();
+                readOverAllUsers.add(userNameColl);
+            }
+
+        }catch(Exception e){
+            logger.log(Level.WARNING, "SkillSet-Read All Users Failed...: ", e);
+        }
+    }
+
+    private void setLevels(){
+
+        ArrayList<String> level = new ArrayList<>();
+        List lev = Arrays.asList("EXPERT", "INTERMEDIATE", "BEGINNER", "NONE");
+        level.addAll(lev);
+        levels.addAll(level);
+    }
+
+    private void webViewShow(){
+
+        WebEngine project = projectWeb.getEngine();
+
+        try {
+            project.load(String.valueOf(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Forecast\\All_Products_Forecast_M.html").toURI().toURL()));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        btnProjectRight.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try{
+                    project.load(String.valueOf(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Forecast\\C3_Forecast_M_C3.html").toURI().toURL()));
+                    btnProjectLeft.setVisible(true);
+                    btnProjectRight.setVisible(false);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        btnProjectLeft.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    project.load(String.valueOf(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Forecast\\All_Products_Forecast_M.html").toURI().toURL()));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                btnProjectLeft.setVisible(false);
+                btnProjectRight.setVisible(true);
+            }
+        });
+    }
+
+    private void regionChoice(){
+
+        regChoice.setValue("EMEA");
+
+        HSSFCell regCell;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int lastRow = filtersheet.getLastRowNum();
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+
+
+            for (int i = 0; i < cellnum; i++) {
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+
+                if (filterColName.equals("Support Theater")) {
+                    caseRegionRef = i;
+                }
+            }
+
+            ArrayList<String> regionArray = new ArrayList<>();
+
+            for (int i = 1; i < lastRow; i++) {
+
+                regCell = filtersheet.getRow(i).getCell(caseRegionRef);
+                String regName = regCell.getStringCellValue();
+                regionArray.add(regName);
+            }
+
+            regionArray = (ArrayList) regionArray.stream().distinct().collect(Collectors.toList());
+            Collections.sort(regionArray);
+
+            int size = regionArray.size();
+
+            for (int i = 0; i < size; i++) {
+                regChoice.getItems().add(regionArray.get(i));
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        try{
+
+            fh = new FileHandler(System.getProperty("user.home") + "\\Documents\\CMT\\Log\\cmt_log", true);
+            fh.setFormatter(new SimpleFormatter());
+            fh.setLevel(Level.FINE);
+            logger.addHandler(fh);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        logger.info("Program Started");
         arrangeCMTFolder();
         readDefaultSettingFiles();
         setqueueArray();
@@ -12286,5 +14493,6 @@ public class Controller implements Initializable {
         myProductsPage();
         overviewPage();
         myCasesPage();
+        regionChoice();
     }
 }

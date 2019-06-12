@@ -3,6 +3,7 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,318 +13,326 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="920.0" prefWidth="600.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.CaseDetails">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="920.0" prefWidth="620.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.CaseDetails">
    <children>
-      <GridPane layoutX="14.0" layoutY="14.0" prefHeight="235.0" prefWidth="590.0" AnchorPane.bottomAnchor="510.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Case ID :" wrappingWidth="65.796875">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-            </Text>
-            <TextField fx:id="txtPrjCaseNum" editable="false" GridPane.columnIndex="1">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="3.0" />
-               </GridPane.margin>
-            </TextField>
-            <Text layoutX="10.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Severity :" wrappingWidth="63.796875" GridPane.columnIndex="2">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="20.0" />
-               </GridPane.margin>
-            </Text>
-            <TextField fx:id="txtPrjCaseSev" editable="false" layoutX="110.0" layoutY="10.0" GridPane.columnIndex="3" GridPane.columnSpan="2">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </TextField>
-            <Text layoutX="230.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status :" wrappingWidth="47.796875" GridPane.columnIndex="5">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="30.0" />
-               </GridPane.margin>
-            </Text>
-            <TextField fx:id="txtPrjCaseStat" editable="false" layoutX="290.0" layoutY="10.0" GridPane.columnIndex="6">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </TextField>
-            <Text layoutX="30.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Owner :" wrappingWidth="55.796875" GridPane.rowIndex="2">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-            </Text>
-            <TextField fx:id="txtPrjCaseOwner" editable="false" layoutX="90.0" layoutY="10.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="3.0" />
-               </GridPane.margin>
-            </TextField>
-            <Text layoutX="230.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hot List Reason :" wrappingWidth="106.796875" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="10.0" />
-               </GridPane.margin>
-            </Text>
-            <TextField fx:id="txtPrjHotListR" editable="false" layoutX="90.0" layoutY="10.0" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="2">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </TextField>
-            <Text layoutX="35.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subject :" wrappingWidth="55.796875" GridPane.rowIndex="4">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets />
-               </GridPane.margin>
-            </Text>
-            <TextField fx:id="txtPrjCaseSub" editable="false" layoutX="90.0" layoutY="50.0" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="4">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="3.0" />
-               </GridPane.margin>
-            </TextField>
-            <Text layoutX="280.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listed By :" wrappingWidth="61.796875" GridPane.rowIndex="6">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Text>
-            <TextField fx:id="txtPrjHotListB" editable="false" layoutX="70.0" layoutY="50.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <GridPane.margin>
-                  <Insets left="3.0" />
-               </GridPane.margin>
-            </TextField>
-            <Text layoutX="10.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product :" wrappingWidth="56.796875" GridPane.columnIndex="3" GridPane.rowIndex="6">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="3.0" />
-               </GridPane.margin>
-            </Text>
-            <TextField fx:id="txtPrjProd" editable="false" layoutX="73.0" layoutY="50.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="6">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </TextField>
-            <Text layoutX="10.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="List Date :" wrappingWidth="61.796875" GridPane.rowIndex="8">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Text>
-            <TextField fx:id="txtPrjHotListD" editable="false" layoutX="73.0" layoutY="10.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="3.0" />
-               </GridPane.margin>
-            </TextField>
-            <Text layoutX="10.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gating Date :" wrappingWidth="87.796875" GridPane.columnIndex="3" GridPane.rowIndex="8">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="3.0" />
-               </GridPane.margin>
-            </Text>
-            <TextField fx:id="txtPrjGateDate" editable="false" layoutX="73.0" layoutY="170.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="8">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="30.0" />
-               </GridPane.margin>
-            </TextField>
-            <Text layoutX="10.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account :" wrappingWidth="61.796875" GridPane.rowIndex="10">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Text>
-            <TextField fx:id="txtPrjAcc" editable="false" layoutX="73.0" layoutY="130.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="10">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </TextField>
-            <TextField fx:id="txtPrjAge" editable="false" layoutX="360.0" layoutY="170.0" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="10">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="40.0" right="30.0" />
-               </GridPane.margin>
-            </TextField>
-            <Text layoutX="273.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age :" wrappingWidth="39.796875" GridPane.columnIndex="3" GridPane.rowIndex="10">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="3.0" />
-               </GridPane.margin>
-            </Text>
-            <TextField fx:id="txtPrjReg" editable="false" layoutX="330.0" layoutY="210.0" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="10">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="60.0" />
-               </GridPane.margin>
-            </TextField>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Region :" wrappingWidth="56.796875" GridPane.columnIndex="5" GridPane.rowIndex="10">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="5.0" />
-               </GridPane.margin>
-            </Text>
-         </children>
-      </GridPane>
-      <GridPane layoutX="5.0" layoutY="235.0" prefHeight="264.0" prefWidth="583.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="250.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="456.0" minWidth="10.0" prefWidth="456.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hot List Comment :" wrappingWidth="131.796875" GridPane.rowIndex="1">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Text>
-            <TextArea fx:id="txtHotListComm" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2" />
-            <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Work Notes :" wrappingWidth="124.796875" GridPane.rowIndex="4">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Text>
-            <TextArea fx:id="txtPrjCaseComment" editable="false" layoutX="137.0" layoutY="20.0" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.rowSpan="2" />
-            <Text layoutX="10.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Notes :" wrappingWidth="132.796875" GridPane.rowIndex="7">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Text>
-            <TextArea fx:id="txtPrjNote" editable="false" layoutX="140.0" layoutY="130.0" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.rowSpan="2" />
-            <Text layoutX="10.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Personal Note :" wrappingWidth="132.796875" GridPane.rowIndex="10">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Text>
-            <TextArea fx:id="txtPrjAddNote" layoutX="140.0" layoutY="260.0" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="10" GridPane.rowSpan="2" />
-         </children>
-      </GridPane>
-      <GridPane layoutX="14.0" layoutY="612.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="815.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" />
-          <ColumnConstraints hgrow="SOMETIMES" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Button fx:id="btnPrjAddNote" graphicTextGap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handlePrjMouse" prefHeight="50.0" prefWidth="140.0" text="SAVE NOTE" GridPane.columnIndex="1">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <graphic>
-                  <FontAwesomeIconView fill="GREY" glyphName="PENCIL" size="20" />
-               </graphic>
-            </Button>
-            <Button fx:id="btnPrjClose" graphicTextGap="5.0" layoutX="190.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handlePrjMouse" prefHeight="50.0" prefWidth="140.0" text="CLOSE" GridPane.columnIndex="3">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <graphic>
-                  <FontAwesomeIconView fill="GREY" glyphName="CLOSE" size="20" />
-               </graphic>
-            </Button>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="* Work Notes data is covering only last 7 days!" wrappingWidth="467.13671875" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <GridPane.margin>
-                  <Insets left="65.0" />
-               </GridPane.margin>
-            </Text>
-            <Button fx:id="btnPrjDelNote" graphicTextGap="5.0" layoutX="235.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handlePrjMouse" prefHeight="50.0" prefWidth="140.0" text="DELETE NOTE" GridPane.columnIndex="5">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <graphic>
-                  <FontAwesomeIconView fill="GREY" glyphName="CLOSE" size="20" />
-               </graphic>
-            </Button>
-         </children>
-      </GridPane>
+      <ScrollPane prefHeight="920.0" prefWidth="620.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="920.0" prefWidth="600.0">
+               <children>
+                  <GridPane prefHeight="235.0" prefWidth="590.0" AnchorPane.bottomAnchor="510.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Case ID :" wrappingWidth="65.796875">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </Text>
+                        <TextField fx:id="txtPrjCaseNum" editable="false" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="3.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Text layoutX="10.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Severity :" wrappingWidth="63.796875" GridPane.columnIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="20.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <TextField fx:id="txtPrjCaseSev" editable="false" layoutX="110.0" layoutY="10.0" GridPane.columnIndex="3" GridPane.columnSpan="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                        <Text layoutX="230.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Status :" wrappingWidth="47.796875" GridPane.columnIndex="5">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="30.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <TextField fx:id="txtPrjCaseStat" editable="false" layoutX="290.0" layoutY="10.0" GridPane.columnIndex="6">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                        <Text layoutX="30.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Owner :" wrappingWidth="55.796875" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </Text>
+                        <TextField fx:id="txtPrjCaseOwner" editable="false" layoutX="90.0" layoutY="10.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="3.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Text layoutX="230.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hot List Reason :" wrappingWidth="106.796875" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="10.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <TextField fx:id="txtPrjHotListR" editable="false" layoutX="90.0" layoutY="10.0" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                        <Text layoutX="35.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subject :" wrappingWidth="55.796875" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </Text>
+                        <TextField fx:id="txtPrjCaseSub" editable="false" layoutX="90.0" layoutY="50.0" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="3.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Text layoutX="280.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Listed By :" wrappingWidth="61.796875" GridPane.rowIndex="6">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="txtPrjHotListB" editable="false" layoutX="70.0" layoutY="50.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <GridPane.margin>
+                              <Insets left="3.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Text layoutX="10.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product :" wrappingWidth="56.796875" GridPane.columnIndex="3" GridPane.rowIndex="6">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="3.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <TextField fx:id="txtPrjProd" editable="false" layoutX="73.0" layoutY="50.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="6">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                        <Text layoutX="10.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="List Date :" wrappingWidth="61.796875" GridPane.rowIndex="8">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="txtPrjHotListD" editable="false" layoutX="73.0" layoutY="10.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="8">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="3.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Text layoutX="10.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gating Date :" wrappingWidth="87.796875" GridPane.columnIndex="3" GridPane.rowIndex="8">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="3.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <TextField fx:id="txtPrjGateDate" editable="false" layoutX="73.0" layoutY="170.0" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="8">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="30.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Text layoutX="10.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Account :" wrappingWidth="61.796875" GridPane.rowIndex="10">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="txtPrjAcc" editable="false" layoutX="73.0" layoutY="130.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="10">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </TextField>
+                        <TextField fx:id="txtPrjAge" editable="false" layoutX="360.0" layoutY="170.0" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.rowIndex="10">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="40.0" right="30.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Text layoutX="273.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age :" wrappingWidth="39.796875" GridPane.columnIndex="3" GridPane.rowIndex="10">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="3.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <TextField fx:id="txtPrjReg" editable="false" layoutX="330.0" layoutY="210.0" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="10">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="60.0" />
+                           </GridPane.margin>
+                        </TextField>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Region :" wrappingWidth="56.796875" GridPane.columnIndex="5" GridPane.rowIndex="10">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin>
+                        </Text>
+                     </children>
+                  </GridPane>
+                  <GridPane prefHeight="264.0" prefWidth="583.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="250.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="130.0" minWidth="130.0" prefWidth="130.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="456.0" minWidth="10.0" prefWidth="456.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="10.0" minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="100.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hot List Comment :" wrappingWidth="131.796875" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <TextArea fx:id="txtHotListComm" editable="false" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2" />
+                        <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Work Notes :" wrappingWidth="124.796875" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <TextArea fx:id="txtPrjCaseComment" editable="false" layoutX="137.0" layoutY="20.0" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.rowSpan="2" />
+                        <Text layoutX="10.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Personal Memo :" wrappingWidth="132.796875" GridPane.rowIndex="7">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <TextArea fx:id="txtPrjNote" editable="false" layoutX="140.0" layoutY="130.0" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" GridPane.rowSpan="2" />
+                        <Text layoutX="10.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Personal Memo :" wrappingWidth="132.796875" GridPane.rowIndex="10">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <TextArea fx:id="txtPrjAddNote" layoutX="140.0" layoutY="260.0" prefHeight="200.0" prefWidth="200.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="10" GridPane.rowSpan="2" />
+                     </children>
+                  </GridPane>
+                  <GridPane AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="815.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="140.0" minWidth="140.0" prefWidth="140.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button fx:id="btnPrjAddNote" graphicTextGap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handlePrjMouse" prefHeight="50.0" prefWidth="140.0" text="Save Memo" GridPane.columnIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="GREY" glyphName="PENCIL" size="20" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnPrjClose" graphicTextGap="5.0" layoutX="190.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handlePrjMouse" prefHeight="50.0" prefWidth="140.0" text="Close" GridPane.columnIndex="3">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="GREY" glyphName="CLOSE" size="20" />
+                           </graphic>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="* Work Notes data is covering only last 7 days!" wrappingWidth="467.13671875" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <GridPane.margin>
+                              <Insets left="65.0" />
+                           </GridPane.margin>
+                        </Text>
+                        <Button fx:id="btnPrjDelNote" graphicTextGap="5.0" layoutX="235.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handlePrjMouse" prefHeight="50.0" prefWidth="140.0" text="Delete Memo" GridPane.columnIndex="5">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="GREY" glyphName="TRASH_ALT" size="20" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
    </children>
 </AnchorPane>
