@@ -22,7 +22,7 @@ public class Main extends Application {
 
             loader = new FXMLLoader(getClass().getResource("Main.fxml"));
             Parent root = loader.load();
-            primaryStage.setTitle("RBBN Case Management Tool Version 1.11");
+            primaryStage.setTitle("RBBN Case Management Tool Version 1.12");
             primaryStage.getIcons().add(new Image("home/image/rbbicon.png"));
             primaryStage.setScene(new Scene(root, 1280, 950));
             primaryStage.show();
@@ -35,7 +35,7 @@ public class Main extends Application {
 
             loader = new FXMLLoader(getClass().getResource("Main_2.fxml"));
             Parent root = loader.load();
-            primaryStage.setTitle("RBBN Case Management Tool Version 1.11");
+            primaryStage.setTitle("RBBN Case Management Tool Version 1.12");
             primaryStage.getIcons().add(new Image("home/image/rbbicon.png"));
             primaryStage.setScene(new Scene(root, 1000, 680));
             primaryStage.show();

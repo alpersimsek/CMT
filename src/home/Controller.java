@@ -116,7 +116,7 @@ public class Controller implements Initializable {
     @FXML
     private Button btnRegMJMissed;
     @FXML
-    private Button btnRegQueue;
+    private Button btnRegMNMissed;
     @FXML
     private Button btnRegUpdateToday;
     @FXML
@@ -124,9 +124,9 @@ public class Controller implements Initializable {
     @FXML
     private Button btnRegUpdateNull;
     @FXML
-    private Button btnRegCoOwnQueue;
+    private Button btnRegRTSQueue;
     @FXML
-    private Button btnRegCoQueueAssigned;
+    private Button btnRegGPSQueue;
     // Region Wars Finished
     @FXML
     private ChoiceBox<String> regChoice;
@@ -927,6 +927,9 @@ public class Controller implements Initializable {
     int regBCWIP;
     int regMJDueCases;
     int regMJMissedCases;
+    int regMNMissedCases;
+    int regRTSQueue;
+    int regGPSQueue;
     int regMJUpdated;
     int regMJDSCases;
     int regMJWIP;
@@ -1141,6 +1144,1455 @@ public class Controller implements Initializable {
             if (regInactiveCases == 0) {
                 alertUser(strAlert);
             }
+        }
+
+        if (event.getSource() == btnRegBCWIP) {
+            if (regBCWIP != 0) {
+                lblStatus.setText("BUSINESS CRITICAL WORK IN PROGRESS CASES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Business Critical";
+                initTableView(tableCases);
+                regionWIPCaseTableView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regBCWIP == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegBCWac) {
+            if (regBCWac != 0) {
+                lblStatus.setText("BC CASES PENDING CUSTOMER ACTION FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String columnSelect2 = "Currently Responsible";
+                String filter1 = "Business Critical";
+                String filter2 = "Customer action";
+                initTableView(tableCases);
+                regTwoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regBCWac == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegBCupdated) {
+            if (regBCupdated != 0) {
+                lblStatus.setText("BC CASES PENDING OWNER ACTION FOR "+ selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String columnSelect2 = "Currently Responsible";
+                String filter1 = "Business Critical";
+                String filter2 = "Customer updated";
+                initTableView(tableCases);
+                regTwoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regBCupdated == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegBCEngineering) {
+            if (regBCDSCases != 0) {
+                lblStatus.setText("BC CASES WITH ENGINEERING FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columSelect = "Severity";
+                String filter1 = "Business Critical";
+                initTableView(tableCases);
+                regEngineeringTableView(columSelect, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regBCDSCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegBCINACT) {
+            if (regBCInactiveCases != 0) {
+                lblStatus.setText("INACTIVE BC CASES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String filter1 = "Business Critical";
+                initTableView(tableCases);
+                regInactiveTable(columnSelect1, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regBCInactiveCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegMJWIP) {
+            if (regMJWIP != 0) {
+                lblStatus.setText("MAJOR WORK IN PROGRESS CASES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Major";
+                initTableView(tableCases);
+                regionWIPCaseTableView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regMJWIP == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegMJWac) {
+            if (regMJWAC != 0) {
+                lblStatus.setText("MAJOR CASES WITH CUSTOMER FOR" + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String columnSelect2 = "Currently Responsible";
+                String filter1 = "Major";
+                String filter2 = "Customer action";
+                initTableView(tableCases);
+                regTwoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regMJWAC == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegMJupdated) {
+            if (regMJUpdated != 0) {
+                lblStatus.setText("MAJOR CASES PENDING OWNER ACTION FOR" + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String columnSelect2 = "Currently Responsible";
+                String filter1 = "Major";
+                String filter2 = "Customer updated";
+                initTableView(tableCases);
+                regTwoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regMJUpdated == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegMJEngineering) {
+            if (regMJDSCases != 0) {
+                lblStatus.setText("MAJOR CASES WITH ENGINEERING FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columSelect = "Severity";
+                String filter1 = "Major";
+                initTableView(tableCases);
+                regEngineeringTableView(columSelect, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regMJDSCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegMJINACT) {
+            if (regMJInactiveCases != 0) {
+                lblStatus.setText("INACTIVE MAJOR CASES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String filter1 = "Major";
+                initTableView(tableCases);
+                regInactiveTable(columnSelect1, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regMJInactiveCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegBCDue) {
+            if (regBCDueCases != 0) {
+                lblStatus.setText("BC DUE CASES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Business Critical";
+                initTableView(tableCases);
+                regDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regBCDueCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegBCMissed) {
+            if (regBCMissedCases != 0) {
+                lblStatus.setText("BC CASES MISSED DUE FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Business Critical";
+                initTableView(tableCases);
+                regDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regBCMissedCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegMJDue) {
+            if (regMJDueCases != 0) {
+                lblStatus.setText("MAJOR DUE CASES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Major";
+                initTableView(tableCases);
+                regDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regMJDueCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegMJMissed) {
+            if (regMJMissedCases != 0) {
+                lblStatus.setText("MAJOR CASES MISSED DUE FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Major";
+                initTableView(tableCases);
+                regDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regMJMissedCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegMNMissed) {
+            if (regMNMissedCases != 0) {
+                lblStatus.setText("MINOR CASES MISSED DUE FOR" + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Minor";
+                initTableView(tableCases);
+                regDueFilterView(columnSelect, filter, tableCases, apnTableView, 180, false);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regMNMissedCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegRTSQueue) {
+            if (regRTSQueue != 0) {
+                lblStatus.setText("CASES IN RTS QUEUE FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnselect = "Case Owner";
+                String filter = "TS";
+                initTableView(tableCases);
+                regQueueView(columnselect, filter, tableCases, apnTableView, "Tech-Ops");
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regRTSQueue == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegGPSQueue) {
+            if (regGPSQueue != 0) {
+                lblStatus.setText("CASES IN GPS QUEUE FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String e2TableSelect = "Case Owner";
+                String e2TableSelect2 = "PS";
+                initTableView(tableCases);
+                regQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "");
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regGPSQueue == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegUpdateToday) {
+            if (regUpdateToday != 0) {
+                lblStatus.setText("NEXT CASE UPDATE TODAY FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Next Case Update";
+                initTableView(tableCases);
+                regCaseUpdateTableView(columnSelect, tableCases, apnTableView, true, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regUpdateToday == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegUpdateMissed) {
+            if (regUpdateMissed != 0) {
+                lblStatus.setText("NEXT CASE UPDATE MISSED FOR "+ selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Next Case Update";
+                initTableView(tableCases);
+                regCaseUpdateTableView(columnSelect, tableCases, apnTableView, false, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regUpdateMissed == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegUpdateNull) {
+            if (regUpdateNull != 0) {
+                lblStatus.setText("NEXT CASE UPDATE FIELD NOT SET CASES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Next Case Update";
+                initTableView(tableCases);
+                regCaseUpdateTableView(columnSelect, tableCases, apnTableView, false, false);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regUpdateNull == 0) {
+                alertUser(strAlert);
+            }
+        }
+    }
+
+    private void regQueueView(String columnSelect, String filter, TableView tableView, AnchorPane anchorpane, String overText) {
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(columnSelect)) {
+                    caseCellRef = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseCellRef2 = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Support Theater")) {
+                    caseRegionRef = i;
+                }
+
+            }
+            for (int k = 1; k < lastRow + 1; k++) {
+
+                cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                String cellValToCompare = cellVal.getStringCellValue();
+                cellVal2 = filtersheet.getRow(k).getCell(caseRegionRef);
+                String region = cellVal2.getStringCellValue();
+
+                if (region.equals(selectedRegion) && (!overText.equals(""))) {
+
+                    if (cellValToCompare.equals(filter) || cellValToCompare.startsWith(filter) || cellValToCompare.startsWith(overText)) {
+
+                        ArrayList<String> array = new ArrayList<>();
+                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                        while (iterCells.hasNext()) {
+                            HSSFCell cell = (HSSFCell) iterCells.next();
+                            array.add(cell.getStringCellValue());
+                        }
+
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                        LocalDate localDate = null;
+
+                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                        }
+
+                        int age;
+                        age = Integer.parseInt(array.get(caseCellRef2));
+
+                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                localDate, array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16),
+                                array.get(17)));
+
+                        tableView.getItems().addAll(observableList);
+                        caseCount++;
+                        if (tableView.getItems().size() >= caseCount + 1) {
+                            tableView.getItems().removeAll(observableList);
+                        }
+                    }
+                }
+            }
+            btnToExcel.setVisible(true);
+            anchorpane.toFront();
+
+            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    exportExcelAction(tableView);
+                }
+            });
+
+            menu = new ContextMenu();
+            String caseno = "";
+            menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
+            tableCases.setContextMenu(menu);
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
+
+            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+
+                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                        URL caseSearch = new URL(search);
+                        Desktop.getDesktop().browse(caseSearch.toURI());
+                    }catch (Exception e){
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                    }
+                }
+            });
+
+            // Selecting and Copy the Case Number to Clipboard
+            tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableView);
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
+                    }
+                }
+            });
+
+            btnBack.setVisible(true);
+            btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    apnRegCases.toFront();
+                    lblStatus.setText("REGION VIEW - CASES BASED ON " + selectedRegion +  " REGION");
+                    btnBack.setVisible(false);
+                    btnToExcel.setVisible(false);
+                    tableCases.getItems().clear();
+                }
+            });
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
+
+    private void regCaseUpdateTableView(String caseTableSelect, TableView<CaseTableView> tableCases, AnchorPane apnTableView, boolean b, boolean bool) {
+
+        int caseCount = 0;
+
+        LocalDate dateToday = LocalDate.now();
+        LocalDate caseUpdateDate = null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellValStat;
+            HSSFCell cellVal1;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(caseTableSelect)) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Status")) {
+                    caseStatRefCell = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Support Theater")) {
+                    caseRegionRef = i;
+                }
+            }
+
+            for (int k = 1; k < lastRow + 1; k++) {
+
+                cellVal = filtersheet.getRow(k).getCell(caseNextUpdateDateRef);
+                String cellValToCompare = cellVal.getStringCellValue();
+
+                cellValStat = filtersheet.getRow(k).getCell(caseStatRefCell);
+                String cellStat = cellValStat.getStringCellValue();
+
+                cellVal1 = filtersheet.getRow(k).getCell(caseRegionRef);
+                String region = cellVal1.getStringCellValue();
+
+                ArrayList<String> array = new ArrayList<>();
+                ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                if (!cellValToCompare.equals("NotSet")) {
+
+                    caseUpdateDate = LocalDate.parse(cellValToCompare, formatter);
+                } else {
+                    caseUpdateDate = null;
+                }
+
+                if (region.equals(selectedRegion)) {
+
+                    if ((b) && (bool)) {
+
+                        if ((caseUpdateDate != null)) {
+
+                            if (caseUpdateDate.compareTo(dateToday) == 0) {
+
+                                Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                while (iterCells.hasNext()) {
+                                    HSSFCell cell = (HSSFCell) iterCells.next();
+                                    array.add(cell.getStringCellValue());
+                                }
+
+                                int age = 0;
+                                age = Integer.parseInt(array.get(caseAgeRefCell));
+                                observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                        array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                        caseUpdateDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
+
+                                tableCases.getItems().addAll(observableList);
+                                caseCount++;
+                                if (tableCases.getItems().size() >= caseCount + 1) {
+                                    tableCases.getItems().removeAll(observableList);
+                                }
+                            }
+                        }
+                    }
+                    if ((!b) && (bool)) {
+
+                        if ((caseUpdateDate != null)) {
+
+                            if (caseUpdateDate.compareTo(dateToday) < 0) {
+
+                                Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                while (iterCells.hasNext()) {
+                                    HSSFCell cell = (HSSFCell) iterCells.next();
+                                    array.add(cell.getStringCellValue());
+                                }
+
+                                int age = 0;
+                                age = Integer.parseInt(array.get(caseAgeRefCell));
+                                observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                        array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                        caseUpdateDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
+
+                                tableCases.getItems().addAll(observableList);
+                                caseCount++;
+                                if (tableCases.getItems().size() >= caseCount + 1) {
+                                    tableCases.getItems().removeAll(observableList);
+                                }
+                            }
+                        }
+                    }
+                    if (!b && !bool) {
+
+                        if ((caseUpdateDate == null)) {
+
+                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                            while (iterCells.hasNext()) {
+                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                array.add(cell.getStringCellValue());
+                            }
+
+                            int age = 0;
+                            age = Integer.parseInt(array.get(caseAgeRefCell));
+                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    caseUpdateDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
+
+                            tableCases.getItems().addAll(observableList);
+                            caseCount++;
+                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                tableCases.getItems().removeAll(observableList);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            btnToExcel.setVisible(true);
+            apnTableView.toFront();
+
+            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    exportExcelAction(tableCases);
+                }
+            });
+            menu = new ContextMenu();
+            String caseno = "";
+            menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
+            tableCases.setContextMenu(menu);
+
+            // Select and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
+                    }
+
+                }
+            });
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
+
+            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+
+                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                        URL caseSearch = new URL(search);
+                        Desktop.getDesktop().browse(caseSearch.toURI());
+                    }catch (Exception e){
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                    }
+
+                }
+            });
+
+            btnBack.setVisible(true);
+            btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    apnRegCases.toFront();
+                    lblStatus.setText("REGION VIEW - CASES BASED ON " + selectedRegion +  " REGION");
+                    btnBack.setVisible(false);
+                    btnToExcel.setVisible(false);
+                    tableCases.getItems().clear();
+                }
+            });
+
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
+
+    private void regDueFilterView(String columnSelect, String filter, TableView<CaseTableView> tableCases, AnchorPane apnTableView, int ageDue, Boolean due) {
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+            HSSFCell cellVal3;
+            HSSFCell cellVal4;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(columnSelect)) {
+                    caseCellRef = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Status")) {
+                    caseStatRefCell = i;
+                }
+                if (filterColName.equals("Support Theater")) {
+                    caseRegionRef = i;
+                }
+            }
+            for (int k = 1; k < lastRow + 1; k++) {
+                cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                String cellValToCompare = cellVal.getStringCellValue();
+                cellVal2 = filtersheet.getRow(k).getCell(caseAgeRefCell);
+                String caseAge = cellVal2.getStringCellValue();
+                cellVal3 = filtersheet.getRow(k).getCell(caseStatRefCell);
+                String caseStatus = cellVal3.getStringCellValue();
+                int ageCase = Integer.parseInt(caseAge);
+                cellVal4 = filtersheet.getRow(k).getCell(caseRegionRef);
+                String region = cellVal4.getStringCellValue();
+
+                if (region.equals(selectedRegion)) {
+
+                    if (due) {
+
+                        if ((cellValToCompare.equals(filter) && ageCase <= ageDue) && ((!caseStatus.equals("Develop Solution") &&
+                                (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))))) {
+
+                            ArrayList<String> array = new ArrayList<>();
+                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                            while (iterCells.hasNext()) {
+                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                array.add(cell.getStringCellValue());
+                            }
+
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                            LocalDate localDate = null;
+
+                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                            }
+                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                    array.get(3), array.get(4), array.get(5), array.get(6), ageCase,
+                                    localDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
+
+                            tableCases.getItems().addAll(observableList);
+                            caseCount++;
+                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                tableCases.getItems().removeAll(observableList);
+                            }
+                        }
+                    } else {
+                        if ((cellValToCompare.equals(filter) && ageCase > ageDue) && ((!caseStatus.equals("Develop Solution") &&
+                                (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))))) {
+
+                            ArrayList<String> array = new ArrayList<>();
+                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                            while (iterCells.hasNext()) {
+                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                array.add(cell.getStringCellValue());
+                            }
+
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                            LocalDate localDate = null;
+
+                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                            }
+                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                    array.get(3), array.get(4), array.get(5), array.get(6), ageCase,
+                                    localDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
+
+                            tableCases.getItems().addAll(observableList);
+                            caseCount++;
+                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                tableCases.getItems().removeAll(observableList);
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            btnToExcel.setVisible(true);
+            apnTableView.toFront();
+
+            btnToExcel.setVisible(true);
+            apnTableView.toFront();
+
+            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    exportExcelAction(tableCases);
+                }
+            });
+
+            menu = new ContextMenu();
+            String caseno = "";
+            menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
+            tableCases.setContextMenu(menu);
+
+
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
+                    }
+                }
+            });
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
+
+            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+
+                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                        URL caseSearch = new URL(search);
+                        Desktop.getDesktop().browse(caseSearch.toURI());
+                    }catch (Exception e){
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                    }
+                }
+            });
+
+            btnBack.setVisible(true);
+            btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    apnRegCases.toFront();
+                    lblStatus.setText("REGION VIEW - CASES BASED ON " + selectedRegion +  " REGION");
+                    btnBack.setVisible(false);
+                    btnToExcel.setVisible(false);
+                    tableCases.getItems().clear();
+                }
+            });
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
+
+    private void regInactiveTable(String columnSelect1, String filter1, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+            HSSFCell cellVal3;
+            HSSFCell cellVal4;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(columnSelect1)) {
+                    caseCellRef = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Status")) {
+                    caseStatRefCell = i;
+                }
+                if (filterColName.equals("Support Theater")) {
+                    caseRegionRef = i;
+                }
+            }
+            for (int k = 1; k < lastRow + 1; k++) {
+                cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                String cellValToCompare = cellVal.getStringCellValue();
+                cellVal2 = filtersheet.getRow(k).getCell(caseCellRef2);
+                String cellValToCompare2 = cellVal2.getStringCellValue();
+                cellVal3 = filtersheet.getRow(k).getCell(caseStatRefCell);
+                String caseStatus = cellVal3.getStringCellValue();
+                cellVal4 = filtersheet.getRow(k).getCell(caseRegionRef);
+                String region = cellVal4.getStringCellValue();
+
+                if (region.equals(selectedRegion)) {
+
+                    if (cellValToCompare.equals(filter1) && (caseStatus.equals("Pending Closure") || caseStatus.equals("Future Availability"))) {
+                        ArrayList<String> array = new ArrayList<>();
+                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                        while (iterCells.hasNext()) {
+                            HSSFCell cell = (HSSFCell) iterCells.next();
+                            array.add(cell.getStringCellValue());
+                        }
+
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                        LocalDate localDate = null;
+
+                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                        }
+
+                        int age = 0;
+                        age = Integer.parseInt(array.get(caseAgeRefCell));
+                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                localDate, array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16),
+                                array.get(17)));
+
+                        tableCases.getItems().addAll(observableList);
+                        caseCount++;
+                        if (tableCases.getItems().size() >= caseCount + 1) {
+                            tableCases.getItems().removeAll(observableList);
+                        }
+                    }
+                }
+
+                btnToExcel.setVisible(true);
+                apnTableView.toFront();
+
+                btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        exportExcelAction(tableCases);
+                    }
+                });
+
+                menu = new ContextMenu();
+                String caseno = "";
+                menu.getItems().add(openCaseSFDC);
+                menu.getItems().add(openCaseDetails);
+                tableCases.setContextMenu(menu);
+
+                openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        myCaseDetails();
+                    }
+                });
+
+                openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        try {
+
+                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                            URL caseSearch = new URL(search);
+                            Desktop.getDesktop().browse(caseSearch.toURI());
+                        }catch (Exception e){
+                            logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                        }
+                    }
+                });
+
+                // Selecting and Copy the Case Number to Clipboard
+                tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        try {
+                            copyCaseNumberToClipboard(tableCases);
+                        } catch (Exception e) {
+                            logger.log(Level.WARNING, "Get Case Number Failed", e);
+                        }
+                    }
+                });
+
+                btnBack.setVisible(true);
+                btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        apnRegCases.toFront();
+                        lblStatus.setText("REGION VIEW - CASES BASED ON " + selectedRegion +  " REGION");
+                        btnBack.setVisible(false);
+                        btnToExcel.setVisible(false);
+                        tableCases.getItems().clear();
+                    }
+                });
+            }
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
+
+    private void regEngineeringTableView(String columnSelect, String filter1, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+            HSSFCell cellVal3;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(columnSelect)) {
+                    caseCellRef = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Status")) {
+                    caseStatRefCell = i;
+                }
+                if (filterColName.equals("Support Theater")) {
+                    caseRegionRef = i;
+                }
+            }
+            for (int k = 1; k < lastRow + 1; k++) {
+                cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                String cellValToCompare = cellVal.getStringCellValue();
+
+                cellVal2 = filtersheet.getRow(k).getCell(caseStatRefCell);
+                String caseStatus = cellVal2.getStringCellValue();
+
+                cellVal3 = filtersheet.getRow(k).getCell(caseRegionRef);
+                String region = cellVal3.getStringCellValue();
+
+                if (region.equals(selectedRegion)) {
+
+                    if (cellValToCompare.equals(filter1) && caseStatus.equals("Develop Solution") && (!caseStatus.equals("Pending Closure") || !caseStatus.equals("Future Availability"))) {
+                        ArrayList<String> array = new ArrayList<>();
+                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                        while (iterCells.hasNext()) {
+                            HSSFCell cell = (HSSFCell) iterCells.next();
+                            array.add(cell.getStringCellValue());
+                        }
+
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                        LocalDate localDate = null;
+
+                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                        }
+
+                        int age = 0;
+                        age = Integer.parseInt(array.get(caseAgeRefCell));
+                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                localDate, array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16),
+                                array.get(17)));
+
+                        tableCases.getItems().addAll(observableList);
+                        caseCount++;
+                        if (tableCases.getItems().size() >= caseCount + 1) {
+                            tableCases.getItems().removeAll(observableList);
+                        }
+                    }
+                }
+
+                btnToExcel.setVisible(true);
+                apnTableView.toFront();
+
+                btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        exportExcelAction(tableCases);
+                    }
+                });
+
+                menu = new ContextMenu();
+                String caseno = "";
+                menu.getItems().add(openCaseSFDC);
+                menu.getItems().add(openCaseDetails);
+                tableCases.setContextMenu(menu);
+
+                openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        myCaseDetails();
+                    }
+                });
+
+                openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        try {
+
+                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                            URL caseSearch = new URL(search);
+                            Desktop.getDesktop().browse(caseSearch.toURI());
+                        }catch (Exception e){
+                            logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                        }
+                    }
+                });
+
+                // Selecting and Copy the Case Number to Clipboard
+                tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        try {
+                            copyCaseNumberToClipboard(tableCases);
+                        } catch (Exception e) {
+                            logger.log(Level.WARNING, "Get Case Number Failed", e);
+                        }
+                    }
+                });
+
+                btnBack.setVisible(true);
+                btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        apnRegCases.toFront();
+                        lblStatus.setText("REGION VIEW - CASES BASED ON " + selectedRegion +  " REGION");
+                        btnBack.setVisible(false);
+                        btnToExcel.setVisible(false);
+                        tableCases.getItems().clear();
+                    }
+                });
+            }
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
+
+    private void regTwoFilterTableView(String columnSelect1, String columnSelect2, String filter1, String filter2, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+            HSSFCell cellVal3;
+            HSSFCell cellVal4;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(columnSelect1)) {
+                    caseCellRef = i;
+                }
+                if (filterColName.equals(columnSelect2)) {
+                    caseCellRef2 = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Status")) {
+                    caseStatRefCell = i;
+                }
+                if (filterColName.equals("Support Theater")) {
+                    caseRegionRef = i;
+                }
+            }
+            for (int k = 1; k < lastRow + 1; k++) {
+
+                cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                String cellValToCompare = cellVal.getStringCellValue();
+                cellVal2 = filtersheet.getRow(k).getCell(caseCellRef2);
+                String cellValToCompare2 = cellVal2.getStringCellValue();
+
+                cellVal4 = filtersheet.getRow(k).getCell(caseStatRefCell);
+                String caseStatus = cellVal4.getStringCellValue();
+
+                cellVal3 = filtersheet.getRow(k).getCell(caseRegionRef);
+                String region = cellVal3.getStringCellValue();
+
+                if (region.equals(selectedRegion)) {
+
+                    if ((cellValToCompare.equals(filter1) && cellValToCompare2.equals(filter2)) && ((!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")))) {
+                        ArrayList<String> array = new ArrayList<>();
+                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                        while (iterCells.hasNext()) {
+                            HSSFCell cell = (HSSFCell) iterCells.next();
+                            array.add(cell.getStringCellValue());
+                        }
+
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                        LocalDate localDate = null;
+
+                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                        }
+
+                        int age = 0;
+                        age = Integer.parseInt(array.get(caseAgeRefCell));
+                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                localDate, array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16),
+                                array.get(17)));
+
+                        tableCases.getItems().addAll(observableList);
+                        caseCount++;
+                        if (tableCases.getItems().size() >= caseCount + 1) {
+                            tableCases.getItems().removeAll(observableList);
+                        }
+                    }
+                }
+
+                btnToExcel.setVisible(true);
+                apnTableView.toFront();
+
+                btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        exportExcelAction(tableCases);
+                    }
+                });
+
+                menu = new ContextMenu();
+                String caseno = "";
+                menu.getItems().add(openCaseSFDC);
+                menu.getItems().add(openCaseDetails);
+                tableCases.setContextMenu(menu);
+
+                openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        myCaseDetails();
+                    }
+                });
+
+                openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        try {
+
+                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                            URL caseSearch = new URL(search);
+                            Desktop.getDesktop().browse(caseSearch.toURI());
+                        }catch (Exception e){
+                            logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                        }
+
+                    }
+                });
+
+                // Selecting and Copy the Case Number to Clipboard
+                tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        try {
+                            copyCaseNumberToClipboard(tableCases);
+                        } catch (Exception e) {
+                            logger.log(Level.WARNING, "Get Case Number Failed", e);
+                        }
+                    }
+                });
+
+                btnBack.setVisible(true);
+                btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        apnRegCases.toFront();
+                        lblStatus.setText("REGION VIEW - CASES BASED ON " + selectedRegion +  " REGION");
+                        btnBack.setVisible(false);
+                        btnToExcel.setVisible(false);
+                        tableCases.getItems().clear();
+                    }
+                });
+            }
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
+
+    private void regionWIPCaseTableView(String columnSelect, String filter, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+            HSSFCell cellVal3;
+
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(columnSelect)) {
+                    caseCellRef = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Status")) {
+                    caseStatRefCell = i;
+                }
+                if (filterColName.equals("Support Theater")) {
+                    caseRegionRef = i;
+                }
+            }
+            for (int k = 1; k < lastRow + 1; k++) {
+                cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                String cellValToCompare = cellVal.getStringCellValue();
+
+                cellVal2 = filtersheet.getRow(k).getCell(caseStatRefCell);
+                String caseStatus = cellVal2.getStringCellValue();
+
+                cellVal3 = filtersheet.getRow(k).getCell(caseRegionRef);
+                String region = cellVal3.getStringCellValue();
+
+                if (region.equals(selectedRegion)) {
+
+                    if (cellValToCompare.equals(filter) && (caseStatus.equals("Open / Assign") || caseStatus.equals("Isolate Fault")) && (!caseStatus.equals("Pending Closure") || !caseStatus.equals("Future Availability"))) {
+                        ArrayList<String> array = new ArrayList<>();
+                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                        while (iterCells.hasNext()) {
+                            HSSFCell cell = (HSSFCell) iterCells.next();
+                            array.add(cell.getStringCellValue());
+                        }
+
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                        LocalDate localDate = null;
+
+                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                        }
+
+                        int age = 0;
+                        age = Integer.parseInt(array.get(caseAgeRefCell));
+                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                localDate, array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16),
+                                array.get(17)));
+
+                        tableCases.getItems().addAll(observableList);
+                        caseCount++;
+                        if (tableCases.getItems().size() >= caseCount + 1) {
+                            tableCases.getItems().removeAll(observableList);
+                        }
+                    }
+                }
+
+                btnToExcel.setVisible(true);
+                apnTableView.toFront();
+
+                btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        exportExcelAction(tableCases);
+                    }
+                });
+
+                menu = new ContextMenu();
+                String caseno = "";
+                menu.getItems().add(openCaseSFDC);
+                menu.getItems().add(openCaseDetails);
+
+                tableCases.setContextMenu(menu);
+
+                openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        myCaseDetails();
+                    }
+                });
+
+                openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        try {
+
+                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                            URL caseSearch = new URL(search);
+                            Desktop.getDesktop().browse(caseSearch.toURI());
+                        }catch (Exception e){
+                            logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                        }
+
+                    }
+                });
+
+                // Selecting and Copy the Case Number to Clipboard
+                tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        try {
+                            copyCaseNumberToClipboard(tableCases);
+                        } catch (Exception e) {
+                            logger.log(Level.WARNING, "Get Case Number Failed", e);
+                        }
+                    }
+                });
+
+                btnBack.setVisible(true);
+                btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        apnRegCases.toFront();
+                        lblStatus.setText("REGION VIEW - CASES BASED ON " + selectedRegion +  " REGION");
+                        btnBack.setVisible(false);
+                        btnToExcel.setVisible(false);
+                        tableCases.getItems().clear();
+                    }
+                });
+            }
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
         }
     }
 
@@ -10568,10 +12020,8 @@ public class Controller implements Initializable {
         HSSFCell caseStat;
         HSSFCell ageCase;
         HSSFCell curResp;
-        HSSFCell cseQueue;
         HSSFCell caseUpdate;
-        HSSFCell CoOwnedCase;
-        HSSFCell CoOwnerQueue;
+        HSSFCell caseOwner;
 
         try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
 
@@ -10591,6 +12041,9 @@ public class Controller implements Initializable {
             regBCWIP = 0;
             regMJDueCases = 0;
             regMJMissedCases = 0;
+            regMNMissedCases = 0;
+            regRTSQueue = 0;
+            regGPSQueue = 0;
             regMJUpdated = 0;
             regMJDSCases = 0;
             regMJWIP = 0;
@@ -10615,183 +12068,200 @@ public class Controller implements Initializable {
 
                 switch (filterColName) {
                     case ("Case Number"):
-                        mycaseNumCellRef = i;
+                        caseNumCellRef = i;
                         break;
                     case ("Support Type"):
-                        mycaseSupTypeRefCell = i;
+                        caseSupTypeRefCell = i;
                         break;
                     case ("Status"):
-                        mycaseStatRefCell = i;
+                        caseStatRefCell = i;
                         break;
                     case ("Severity"):
-                        mycaseSevRefCell = i;
+                        caseSevRefCell = i;
                         break;
                     case ("Currently Responsible"):
-                        mycaseRespRefCell = i;
+                        caseRespRefCell = i;
                         break;
                     case ("Case Owner"):
-                        mycaseOwnerRefCell = i;
+                        caseOwnerRefCell = i;
                         break;
                     case ("Escalated By"):
-                        mycaseEscalatedRefCell = i;
+                        caseEscalatedRefCell = i;
                         break;
                     case ("Support Hotlist Level"):
-                        mycaseHotListRefCell = i;
+                        caseHotListRefCell = i;
                         break;
                     case ("Outage Follow-Up"):
-                        mycaseOutFolRefCell = i;
+                        caseOutFolRefCell = i;
                         break;
                     case ("Age (Days)"):
-                        mycaseAgeRefCell = i;
+                        caseAgeRefCell = i;
                         break;
                     case ("Next Case Update"):
-                        mycaseUpdateCell = i;
+                        caseNextUpdateDateRef = i;
                         break;
-                    case ("Co-Owner"):
-                        myCoOwnCaseRefCell = i;
+                    case ("Support Theater"):
+                        caseRegionRef = i;
                         break;
-                    case ("Co-Owner Queue"):
-                        myCoOwnQueueRefCell = i;
-                        break;
-                    case("Support Theater"):
-                        caseRegionRef =i;
                 }
             }
 
             for (int i = 1; i < lastRow + 1; i++) {
 
+                caseStat = filtersheet.getRow(i).getCell(caseStatRefCell);
+                String caseStatus = caseStat.getStringCellValue();
+
+                caseSev = filtersheet.getRow(i).getCell(caseSevRefCell);
+                String caseSever = caseSev.getStringCellValue();
+
+                curResp = filtersheet.getRow(i).getCell(caseRespRefCell);
+                String responsible = curResp.getStringCellValue();
+
+                caseOwner = filtersheet.getRow(i).getCell(caseOwnerRefCell);
+                String caseOwn = caseOwner.getStringCellValue();
+
+                escCases = filtersheet.getRow(i).getCell(caseEscalatedRefCell);
+                String escalatedCases = escCases.getStringCellValue();
+
+                hotList = filtersheet.getRow(i).getCell(caseHotListRefCell);
+                String strHotList = hotList.getStringCellValue();
+
+                outFollow = filtersheet.getRow(i).getCell(caseOutFolRefCell);
+                String followOut = outFollow.getStringCellValue();
+
                 region = filtersheet.getRow(i).getCell(caseRegionRef);
-                String rowRegion = region.getStringCellValue();
+                String reg = region.getStringCellValue();
 
-                caseStat = filtersheet.getRow(i).getCell(mycaseStatRefCell);
-                String mycaseStatus = caseStat.getStringCellValue();
+                ageCase = filtersheet.getRow(i).getCell(caseAgeRefCell);
+                String caseAge = ageCase.getStringCellValue();
+                int ageCaseNum = Integer.parseInt(caseAge);
 
-                caseSev = filtersheet.getRow(i).getCell(mycaseSevRefCell);
-                String mycaseSever = caseSev.getStringCellValue();
-
-                curResp = filtersheet.getRow(i).getCell(mycaseRespRefCell);
-                String myresponsible = curResp.getStringCellValue();
-
-                escCases = filtersheet.getRow(i).getCell(mycaseEscalatedRefCell);
-                String myescalatedCases = escCases.getStringCellValue();
-
-                hotList = filtersheet.getRow(i).getCell(mycaseHotListRefCell);
-                String mystrFltStatus = hotList.getStringCellValue();
-
-                outFollow = filtersheet.getRow(i).getCell(mycaseOutFolRefCell);
-                String myfollowOut = outFollow.getStringCellValue();
-
-                caseUpdate = filtersheet.getRow(i).getCell(mycaseUpdateCell);
-                String myCaseUpdate = caseUpdate.getStringCellValue();
+                caseUpdate = filtersheet.getRow(i).getCell(caseNextUpdateDateRef);
+                String caseupdate = caseUpdate.getStringCellValue();
 
                 LocalDate dateToday = LocalDate.now();
                 LocalDate caseUpdateDate = null;
 
-                if (rowRegion.equals(selectedRegion)){
+                if (reg.equals(selectedRegion)) {
 
-                    if (!myCaseUpdate.equals("NotSet")) {
+                    if (!caseupdate.equals("NotSet")) {
+
                         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                        caseUpdateDate = LocalDate.parse(myCaseUpdate, formatter);
+                        caseUpdateDate = LocalDate.parse(caseupdate, formatter);
                     }
 
-                    ageCase = filtersheet.getRow(i).getCell(mycaseAgeRefCell);
-                    String mycaseAge = ageCase.getStringCellValue();
-                    String myagenum = mycaseAge.replace(".0000000000", "");
-
-                    int ageCaseNum = Integer.parseInt(myagenum);
-
-                    if (!mystrFltStatus.equals("NotSet") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                    if (!strHotList.equals("NotSet") && !strHotList.equals("FALSE") && !caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                         regHotList++;
                     }
-                    if (myfollowOut.equals("1") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+
+                    if (caseOwn.startsWith("PS")) {
+                        regGPSQueue++;
+                    }
+
+                    if (caseOwn.startsWith("TS") || caseOwn.startsWith("Tech-Ops")) {
+                        regRTSQueue++;
+                    }
+
+                    if (followOut.equals("1") && !caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                         regOutFollow++;
                     }
-                    if (!myescalatedCases.equals("NotSet") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                    if (!escalatedCases.equals("NotSet") && !caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                         regEscCases++;
                     }
-                    if (mycaseSever.equals("Critical") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+
+                    if (caseSever.equals("Critical") && !caseStatus.equals("Pending Closure")) {
                         regE1Case++;
                     }
-                    if (mycaseSever.equals("E2") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+
+                    if (caseSever.equals("E2") && !caseStatus.equals("Pending Closure")) {
                         regE2Cases++;
                     }
 
-                    if (mycaseSever.equals("Business Critical")) {
-                        if (!mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                    if (caseSever.equals("Business Critical")) {
+                        if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                            if (!caseStatus.equals("Develop Solution")) {
+                                if (ageCaseNum < 15) {
+                                    regBCDueCases++;
+                                }
+                                if (ageCaseNum > 15) {
+                                    regBCMissedCases++;
+                                }
+                            } else {
+                                regBCDSCases++;
+                            }
                             regBCCases++;
-                        }
-                        if (mycaseStatus.equals("Open / Assign") || mycaseStatus.equals("Isolate Fault")) {
-                            regBCWIP++;
-                        }
-                        if (myresponsible.equals("Customer action")) {
-                            regBCWac++;
-                        }
-                        if (myresponsible.equals("Customer updated")) {
-                            regBCupdated++;
-                        }
-                        if ((mycaseStatus.equals("Open / Assign")) || (mycaseStatus.equals("Isolate Fault"))) {
-                            if (ageCaseNum <= 15) {
-                                regBCDueCases++;
-                            }
-                            if (ageCaseNum > 15) {
-                                regBCMissedCases++;
-                            }
-                        }
-                        if (mycaseStatus.equals("Develop Solution")) {
-                            regBCDSCases++;
-                        }
-                        if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                        } else {
                             regBCInactiveCases++;
                         }
+                        if (caseStatus.equals("Open / Assign") || (caseStatus.equals("Isolate Fault"))) {
+                            regBCWIP++;
+                        }
+                        if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                            if (responsible.equals("Customer action")) {
+                                regBCWac++;
+                            }
+                            if (responsible.equals("Customer updated")) {
+                                regBCupdated++;
+                            }
+                        }
                     }
-                    if (mycaseSever.equals("Major")) {
 
-                        if (mycaseStatus.equals("Develop Solution")) {
-                            regMJDSCases++;
-                        }
-                        if ((mycaseStatus.equals("Open / Assign")) || (mycaseStatus.equals("Isolate Fault"))) {
-                            if (ageCaseNum <= 30) {
-                                regMJDueCases++;
+                    if (caseSever.equals("Major")) {
+                        if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                            if (!caseStatus.equals("Develop Solution")) {
+                                if (ageCaseNum < 30) {
+                                    regMJDueCases++;
+                                }
+                                if (ageCaseNum > 30) {
+                                    regMJMissedCases++;
+                                }
+                            } else {
+                                regMJDSCases++;
                             }
-                            if (ageCaseNum > 30) {
-                                regMJMissedCases++;
-                            }
-                        }
-                        if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                        } else {
                             regMJInactiveCases++;
                         }
-                        if (myresponsible.equals("Customer action")) {
-                            regMJWAC++;
-                        }
-                        if (myresponsible.equals("Customer updated")) {
-                            regMJUpdated++;
-                        }
-                        if (mycaseStatus.equals("Open / Assign") || (mycaseStatus.equals("Isolate Fault"))) {
+                        if (caseStatus.equals("Open / Assign") || (caseStatus.equals("Isolate Fault"))) {
                             regMJWIP++;
                         }
+                        if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                            if (responsible.equals("Customer action")) {
+                                regMJWAC++;
+                            }
+                            if (responsible.equals("Customer updated")) {
+                                regMJUpdated++;
+                            }
+                        }
                     }
-                    if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                    if (caseSever.equals("Minor")) {
+                        if ((caseStatus.equals("Open / Assign")) || (caseStatus.equals("Isolate Fault"))) {
+                            if (ageCaseNum > 180) {
+                                regMNMissedCases++;
+                            }
+                        }
+                    }
+
+                    if (caseStatus.equals("Pending Closure") || caseStatus.equals("Future Availability")) {
                         regInactiveCases++;
-                    } else {
+                    }
+                    if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                         regWOHCases++;
                     }
 
                     if ((caseUpdateDate != null)) {
-
-                        if(!myCaseUpdate.equals("NotSet")) {
-
-                            if (caseUpdateDate.compareTo(dateToday) == 0) {
-                                regUpdateToday++;
-                            }
-                            if (caseUpdateDate.compareTo(dateToday) < 0) {
-                                regUpdateMissed++;
-                            }
+                        if (caseUpdateDate.compareTo(dateToday) == 0) {
+                            regUpdateToday++;
+                        }
+                        if (caseUpdateDate.compareTo(dateToday) < 0) {
+                            regUpdateMissed++;
                         }
                     }
-                    if (myCaseUpdate.equals("NotSet")) {
+
+                    if (caseupdate.equals("NotSet") && !caseStatus.equals("Pending Closure")) {
                         regUpdateNull++;
                     }
                 }
+
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -10818,14 +12288,13 @@ public class Controller implements Initializable {
         btnRegBCMissed.setText(String.valueOf(regBCMissedCases));
         btnRegMJDue.setText(String.valueOf(regMJDueCases));
         btnRegMJMissed.setText(String.valueOf(regMJMissedCases));
-        btnRegQueue.setText(String.valueOf(regQueuedCases));
         btnRegWOH.setText(String.valueOf(regWOHCases));
         btnRegUpdateToday.setText(String.valueOf(regUpdateToday));
         btnRegUpdateMissed.setText(String.valueOf(regUpdateMissed));
         btnRegUpdateNull.setText(String.valueOf(regUpdateNull));
-        btnRegCoOwnQueue.setText(String.valueOf(regCoOwnerQueueCases));
-        btnRegCoQueueAssigned.setText(String.valueOf(regCoOwnerQueueCasesAssigned));
-
+        btnRegMNMissed.setText(String.valueOf(regMNMissedCases));
+        btnRegRTSQueue.setText(String.valueOf(regRTSQueue));
+        btnRegGPSQueue.setText(String.valueOf(regGPSQueue));
     }
 
     private void myCasesPage() {
@@ -12832,7 +14301,7 @@ public class Controller implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("For any issues/requests please inform us:" + "\n" + "\n" +
                     "Alper Simsek"+ "    " + "asimsek@rbbn.com" + "\n" + "\n" +
-                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.11");
+                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.12");
             alert.showAndWait();
         }
 
@@ -12982,7 +14451,7 @@ public class Controller implements Initializable {
             String promptedpass = txtpass.getText();
             if (promptedpass.equals(password)){
                 apnManLogin.toBack();
-                btnProjection.setVisible(true);
+                //btnProjection.setVisible(true);
                 btnSkillSet.setVisible(true);
                 btnUnlock.setGlyphName("UNLOCK");
             }

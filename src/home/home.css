@@ -98,6 +98,13 @@
      -fx-padding: 0.416667em; /* 5 */
  }
 
+.choice-box {
+    -fx-background-color: white;
+    -fx-font-size: 14;
+    -fx-border-color: black;
+
+}
+
 /* scroll bar starts here */
 
 /* The increment and decrement button CSS class of scrollbar */
