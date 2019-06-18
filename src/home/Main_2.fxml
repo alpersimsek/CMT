@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
@@ -56,7 +57,7 @@
                         <FontAwesomeIconView fill="#ff007f" glyphName="HOME" size="21" />
                      </graphic>
                      <font>
-                        <Font size="20.0" />
+                        <Font size="18.0" />
                      </font>
                   </Button>
                   <Button fx:id="btnCases" alignment="BASELINE_LEFT" graphicTextGap="5.0" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="My Cases" textFill="WHITE">
@@ -64,7 +65,15 @@
                         <FontAwesomeIconView fill="#ff007f" glyphName="MEDKIT" size="21" />
                      </graphic>
                      <font>
-                        <Font size="20.0" />
+                        <Font size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnMyRegion" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="My Region" textFill="WHITE">
+                     <graphic>
+                        <FontAwesomeIconView fill="#ff007f" glyphName="GLOBE" size="21" />
+                     </graphic>
+                     <font>
+                        <Font size="18.0" />
                      </font>
                   </Button>
                   <Button fx:id="btnMyNotes" alignment="BASELINE_LEFT" graphicTextGap="5.0" layoutX="10.0" layoutY="210.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="MemoPad" textFill="WHITE">
@@ -72,7 +81,7 @@
                         <FontAwesomeIconView fill="#ff007f" glyphName="PENCIL_SQUARE_ALT" size="21" />
                      </graphic>
                      <font>
-                        <Font size="20.0" />
+                        <Font size="18.0" />
                      </font>
                   </Button>
                   <Button fx:id="btnProducts" alignment="BASELINE_LEFT" graphicTextGap="5.0" layoutX="10.0" layoutY="60.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="Products" textFill="WHITE">
@@ -80,7 +89,7 @@
                         <FontAwesomeIconView fill="#ff007f" glyphName="SUBWAY" size="21" />
                      </graphic>
                      <font>
-                        <Font size="20.0" />
+                        <Font size="18.0" />
                      </font>
                   </Button>
                   <Button fx:id="btnCustomers" alignment="BASELINE_LEFT" graphicTextGap="5.0" layoutX="10.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="Customers" textFill="WHITE">
@@ -88,7 +97,7 @@
                         <FontAwesomeIconView fill="#ff007f" glyphName="GROUP" size="21" />
                      </graphic>
                      <font>
-                        <Font size="20.0" />
+                        <Font size="18.0" />
                      </font>
                   </Button>
                   <Button fx:id="btnProjects" alignment="BASELINE_LEFT" graphicTextGap="5.0" layoutX="10.0" layoutY="160.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="Projects" textFill="WHITE">
@@ -96,7 +105,7 @@
                         <FontAwesomeIconView fill="#ff007f" glyphName="TH" size="21" />
                      </graphic>
                      <font>
-                        <Font size="20.0" />
+                        <Font size="18.0" />
                      </font>
                   </Button>
                   <Button fx:id="btnSettings" alignment="BASELINE_LEFT" graphicTextGap="5.0" layoutX="10.0" layoutY="260.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="Settings" textFill="WHITE">
@@ -104,7 +113,7 @@
                         <FontAwesomeIconView fill="#ff007f" glyphName="GEARS" size="21" />
                      </graphic>
                      <font>
-                        <Font size="20.0" />
+                        <Font size="18.0" />
                      </font>
                   </Button>
                   <Button fx:id="btnProjection" alignment="BASELINE_LEFT" graphicTextGap="10.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="Projection" textFill="WHITE" visible="false">
@@ -112,7 +121,7 @@
                         <FontAwesomeIconView fill="#ff007f" glyphName="COMPASS" size="21" />
                      </graphic>
                      <font>
-                        <Font size="20.0" />
+                        <Font size="18.0" />
                      </font>
                   </Button>
                   <Button fx:id="btnSkillSet" alignment="BASELINE_LEFT" graphicTextGap="5.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="SkillSet" textFill="WHITE" visible="false">
@@ -120,7 +129,7 @@
                         <FontAwesomeIconView fill="#ff007f" glyphName="CONNECTDEVELOP" size="20" />
                      </graphic>
                      <font>
-                        <Font size="20.0" />
+                        <Font size="18.0" />
                      </font>
                   </Button>
                   <Button fx:id="btnLoadData" alignment="BASELINE_LEFT" graphicTextGap="5.0" layoutX="10.0" layoutY="310.0" mnemonicParsing="false" onAction="#handleClicks" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="200.0" text="Refresh!" textFill="WHITE" visible="false">
@@ -136,7 +145,7 @@
                         <FontAwesomeIconView fill="#ff007f" glyphName="SIGN_IN" size="21" />
                      </graphic>
                      <font>
-                        <Font size="20.0" />
+                        <Font size="18.0" />
                      </font>
                   </Button>
                   <Label fx:id="lblRefreshText" prefHeight="200.0" prefWidth="200.0" textFill="WHITE" visible="false">
@@ -144,7 +153,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblDownload" prefHeight="55.0" prefWidth="436.0" text="  Off-Line..." textFill="#ff007f" />
+                  <Label fx:id="lblDownload" prefHeight="55.0" prefWidth="436.0" text="OFF-LINE" textFill="#ff007f" />
                   <ProgressBar fx:id="progressBar" blendMode="EXCLUSION" prefHeight="30.0" prefWidth="200.0" progress="0.0" stylesheets="@home.css" visible="false" />
                </children>
             </VBox>
@@ -157,317 +166,369 @@
       </AnchorPane>
       <StackPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
          <children>
-            <AnchorPane fx:id="apnProjection" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: WHITE;" stylesheets="@home.css">
+            <AnchorPane fx:id="apnRegCases" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css">
                <children>
-                  <AnchorPane prefHeight="3.0" prefWidth="850.0" AnchorPane.bottomAnchor="570.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <GridPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="5.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <children>
-                        <Button fx:id="btnForMM" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="MM" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="470.0" AnchorPane.topAnchor="0.0">
+                        <Button fx:id="btnRegE1Cases" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.rowIndex="3">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="26.0" />
                            </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="FIRE" size="34" />
+                           </graphic>
                         </Button>
-                        <Button fx:id="btnForOverAll" layoutX="7.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="OVERALL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="0.0">
+                        <Button fx:id="btnRegE2Cases" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="26.0" />
                            </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="CHAIN_BROKEN" size="34" />
+                           </graphic>
                         </Button>
-                        <Button fx:id="btnForIMS" layoutX="235.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="IMS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="0.0">
+                        <Button fx:id="btnRegOutFollow" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.rowIndex="6">
                            <font>
-                              <Font size="16.0" />
+                              <Font size="26.0" />
                            </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="FIRE_EXTINGUISHER" size="34" />
+                           </graphic>
                         </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="OVERVIEW" textAlignment="CENTER" wrappingWidth="199.775390625">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="10.0" layoutY="269.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOT LIST" textAlignment="CENTER" wrappingWidth="101.775390625" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                        <Button fx:id="btnRegEscalated" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="268.0" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="BULLHORN" size="34" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnRegHotIssues" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="9">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="BOLT" size="34" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="10.0" layoutY="463.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BC CASES" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.rowIndex="8" />
+                        <Button fx:id="btnRegBCCases" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="466.0" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.rowIndex="9">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="SUITCASE" size="34" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="10.0" layoutY="656.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INACTIVE" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                        <Button fx:id="btnRegInactive" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="664.0" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="12">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#f70000" glyphName="BED" size="34" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnRegWOH" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="183.0" layoutY="664.0" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.rowIndex="12">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="STACK_EXCHANGE" size="34" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="183.0" layoutY="656.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ACTIVE WOH" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.rowIndex="11" />
+                        <Text layoutX="10.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E1 FOLLOW-UP" textAlignment="CENTER" wrappingWidth="101.775390625" GridPane.rowIndex="5" />
+                        <Text layoutX="10.0" layoutY="445.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ESCALATED" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="E2" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CRITICAL" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.rowIndex="2" />
                      </children>
-                  </AnchorPane>
-                  <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                  </GridPane>
+                  <GridPane alignment="CENTER" prefHeight="149.0" prefWidth="580.0" stylesheets="@home.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="5.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <children>
-                        <WebView fx:id="projectWeb" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUSTOMER UPDATED" textAlignment="CENTER" wrappingWidth="116.775390625" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                        <Button fx:id="btnRegBCupdated" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="COMMENTING_ALT" size="32" />
+                           </graphic>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="BUSINESS CRITICAL CASES" textAlignment="CENTER" wrappingWidth="460.775390625">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnRegBCWac" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="COMMENT_ALT" size="32" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="10.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WITH CUSTOMER" textAlignment="CENTER" wrappingWidth="107.775390625" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Button fx:id="btnRegBCWIP" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="KEYBOARD_ALT" size="32" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnRegBCINACT" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="49.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="8" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BED" size="32" />
+                           </graphic>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="WORK IN PROGRESS" textAlignment="CENTER" wrappingWidth="111.775390625" GridPane.rowIndex="1" />
+                        <Text layoutX="400.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INACTIVE" textAlignment="CENTER" wrappingWidth="98.775390625" GridPane.columnIndex="8" GridPane.rowIndex="1" />
+                        <Button fx:id="btnRegBCEngineering" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BUG" size="32" />
+                           </graphic>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ENGINEERING" textAlignment="CENTER" wrappingWidth="98.775390625" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                      </children>
-                  </AnchorPane>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="apnSkills" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css">
-               <children>
-                  <SplitPane dividerPositions="0.16449511400651465, 0.44625407166123776, 0.7263843648208469" layoutX="78.0" layoutY="150.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="1230.0" style="-fx-background-color: WHITE;" AnchorPane.bottomAnchor="305.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <items>
-                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="210.0" style="-fx-background-color: WHITE;">
-                           <children>
-                              <GridPane layoutX="38.0" layoutY="62.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Engineers">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                    <RadioButton fx:id="rdEngMyTeam" mnemonicParsing="false" onMouseClicked="#handleRadioClick" text="My Team" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                    </RadioButton>
-                                    <RadioButton fx:id="rdEngOverall" layoutX="20.0" layoutY="97.0" mnemonicParsing="false" onMouseClicked="#handleRadioClick" text="Overall Team" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                    </RadioButton>
-                                    <Separator maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="5.0" prefWidth="210.0" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets top="60.0" />
-                                       </GridPane.margin>
-                                    </Separator>
-                                    <Text fx:id="lblSearcEng" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Engineer :" visible="false" wrappingWidth="144.1953125" GridPane.rowIndex="3">
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                    </Text>
-                                    <TextField fx:id="txtSearchEng" prefHeight="41.0" prefWidth="199.0" visible="false" GridPane.rowIndex="4">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                       <GridPane.margin>
-                                          <Insets left="5.0" right="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                    <Separator prefWidth="200.0" GridPane.rowIndex="4">
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                       <GridPane.margin>
-                                          <Insets top="60.0" />
-                                       </GridPane.margin>
-                                    </Separator>
-                                 </children>
-                              </GridPane>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: WHITE;">
-                           <children>
-                              <Text layoutX="14.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" AnchorPane.bottomAnchor="410.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Text>
-                              <ListView fx:id="engNameList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="337.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0" />
-                              <ListView fx:id="engNameListAll" layoutX="20.0" layoutY="70.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="337.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0" />
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: WHITE;">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Skill Level" AnchorPane.bottomAnchor="410.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Text>
-                              <ListView fx:id="engSkilLev" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="337.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0" />
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: WHITE;">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Skill Name" AnchorPane.bottomAnchor="410.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Text>
-                              <ListView fx:id="engSkillName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="337.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0" />
-                           </children>
-                        </AnchorPane>
-                     </items>
-                  </SplitPane>
-                  <SplitPane dividerPositions="0.1645, 0.4463, 0.7264" layoutX="88.0" layoutY="160.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="1230.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="305.0">
-                     <items>
-                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="210.0" style="-fx-background-color: WHITE;">
-                           <children>
-                              <GridPane layoutX="38.0" layoutY="62.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <columnConstraints>
-                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                 </columnConstraints>
-                                 <rowConstraints>
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                 </rowConstraints>
-                                 <children>
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Skills">
-                                       <font>
-                                          <Font name="System Bold" size="18.0" />
-                                       </font>
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                    <RadioButton fx:id="rdSkilMyTeam" mnemonicParsing="false" onMouseClicked="#handleRadioClick" text="My Team" GridPane.rowIndex="1">
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                    </RadioButton>
-                                    <RadioButton fx:id="rdSkillOverAll" layoutX="20.0" layoutY="97.0" mnemonicParsing="false" onMouseClicked="#handleRadioClick" text="Overall Team" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                    </RadioButton>
-                                    <Separator prefWidth="200.0" GridPane.rowIndex="2">
-                                       <GridPane.margin>
-                                          <Insets top="60.0" />
-                                       </GridPane.margin>
-                                    </Separator>
-                                    <Separator prefWidth="200.0" GridPane.rowIndex="4">
-                                       <GridPane.margin>
-                                          <Insets top="60.0" />
-                                       </GridPane.margin>
-                                    </Separator>
-                                    <Text fx:id="lblSearchSkill" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Skill :" visible="false" wrappingWidth="116.1953125" GridPane.rowIndex="3">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <GridPane.margin>
-                                          <Insets left="10.0" />
-                                       </GridPane.margin>
-                                    </Text>
-                                    <TextField fx:id="txtSearchSkill" prefHeight="41.0" prefWidth="199.0" visible="false" GridPane.rowIndex="4">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                       <GridPane.margin>
-                                          <Insets left="5.0" right="5.0" />
-                                       </GridPane.margin>
-                                    </TextField>
-                                 </children>
-                              </GridPane>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: WHITE;">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Skill Name" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Text>
-                              <ListView fx:id="skillNameList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="337.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0" />
-                              <ListView fx:id="skillNameListAll" layoutX="20.0" layoutY="70.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="337.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0" />
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: WHITE;">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Skill Level" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Text>
-                              <ListView fx:id="skillLevelList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="337.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0" />
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: WHITE;">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Engineer Name" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Text>
-                              <ListView fx:id="skillEngName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="337.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0" />
-                              <Button fx:id="btnSkillsExport" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="115.0" layoutY="18.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="29.0" prefWidth="77.0" text="Export" visible="false" AnchorPane.bottomAnchor="262.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="15.0">
-                                 <graphic>
-                                    <FontAwesomeIconView fill="GREY" glyphName="FILE_TEXT_ALT" size="16" />
-                                 </graphic>
-                              </Button>
-                           </children>
-                        </AnchorPane>
-                     </items>
-                  </SplitPane>
-               </children>
-            </AnchorPane>
-            <AnchorPane fx:id="apnManLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css">
-               <children>
-                  <Pane layoutX="140.0" layoutY="146.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="400.0" style="-fx-background-color: WHITE;" stylesheets="@home.css" AnchorPane.bottomAnchor="574.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="540.0" AnchorPane.topAnchor="146.0">
+                  </GridPane>
+                  <GridPane alignment="CENTER" prefHeight="148.0" prefWidth="580.0" stylesheets="@home.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="165.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
                      <children>
-                        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="400.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="125.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
-                              <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="User Name" wrappingWidth="173.13671875">
-                                 <font>
-                                    <Font name="Arial" size="14.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="20.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <Text layoutX="60.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="180.13671875" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font name="Arial" size="14.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="20.0" />
-                                 </GridPane.margin>
-                              </Text>
-                              <TextField editable="false" promptText="admin" text="admin" GridPane.columnIndex="1">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="10.0" right="10.0" />
-                                 </GridPane.margin>
-                              </TextField>
-                              <Button fx:id="btnManLogin" graphicTextGap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="40.0" prefWidth="80.0" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="150.0" />
-                                 </GridPane.margin>
-                                 <graphic>
-                                    <FontAwesomeIconView fill="GREY" glyphName="SIGN_IN" size="24" />
-                                 </graphic>
-                              </Button>
-                              <Button fx:id="btnManClose" graphicTextGap="5.0" layoutX="320.0" layoutY="345.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="40.0" prefWidth="80.0" text="Close" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="30.0" />
-                                 </GridPane.margin>
-                                 <graphic>
-                                    <FontAwesomeIconView fill="GREY" glyphName="CLOSE" size="24" />
-                                 </graphic>
-                              </Button>
-                              <PasswordField fx:id="txtpass" onMouseClicked="#handleMouseClicked" prefHeight="30.0" prefWidth="164.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                                 <GridPane.margin>
-                                    <Insets left="10.0" right="10.0" />
-                                 </GridPane.margin>
-                              </PasswordField>
-                           </children>
-                        </GridPane>
+                        <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CUSTOMER UPDATED" textAlignment="CENTER" wrappingWidth="117.775390625" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                        <Button fx:id="btnRegMJupdated" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="COMMENTING_ALT" size="32" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnRegMJWac" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="COMMENT_ALT" size="32" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="10.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WITH CUSTOMER" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="MAJOR CASES" textAlignment="CENTER" wrappingWidth="457.775390625">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnRegMJWIP" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="KEYBOARD_ALT" size="32" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnRegMJINACT" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="8" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BED" size="32" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="WORK IN PROGRESS" textAlignment="CENTER" wrappingWidth="110.775390625" GridPane.rowIndex="1" />
+                        <Text layoutX="400.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INACTIVE" textAlignment="CENTER" wrappingWidth="99.775390625" GridPane.columnIndex="8" GridPane.rowIndex="1" />
+                        <Button fx:id="btnRegMJEngineering" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="50.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BUG" size="32" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ENGINEERING" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                      </children>
-                  </Pane>
+                  </GridPane>
+                  <GridPane alignment="CENTER" layoutX="215.0" layoutY="298.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="540.0" stylesheets="@home.css" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="320.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="25.0" minHeight="25.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="100.0" minHeight="100.0" prefHeight="100.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Text layoutX="10.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MJ's COMING DUE" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                        <Button fx:id="btnRegMJDue" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="HOURGLASS_HALF" size="32" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnRegBCMissed" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BOMB" size="32" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="10.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BC MISSED DUE" textAlignment="CENTER" wrappingWidth="99.775390625" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CALENDAR AGE RESPONSIVENESS" textAlignment="CENTER" wrappingWidth="481.775390625">
+                           <font>
+                              <Font name="System Bold" size="16.0" />
+                           </font>
+                        </Text>
+                        <Button fx:id="btnRegBCDue" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="HOURGLASS_HALF" size="32" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BC's COMING DUE" textAlignment="CENTER" wrappingWidth="99.775390625" GridPane.rowIndex="1" />
+                        <Button fx:id="btnRegMJMissed" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="10.0" layoutY="50.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BOMB" size="32" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MJ's MISSED DUE" textAlignment="CENTER" wrappingWidth="99.775390625" GridPane.columnIndex="6" GridPane.rowIndex="1" />
+                        <Button fx:id="btnRegGPSQueue" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="8" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="TH_LIST" size="32" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnRegRTSQueue" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="6" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="TH_LIST" size="32" />
+                           </graphic>
+                        </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="RTS QUEUE" textAlignment="CENTER" wrappingWidth="97.775390625" GridPane.columnIndex="6" GridPane.rowIndex="3" />
+                        <Text layoutX="140.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GPS QUEUE" textAlignment="CENTER" wrappingWidth="82.775390625" GridPane.columnIndex="8" GridPane.rowIndex="3" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UPDATE TODAY" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.rowIndex="3" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UPDATE MISSED" textAlignment="CENTER" wrappingWidth="101.775390625" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="UPDATE NOT SET" textAlignment="CENTER" wrappingWidth="101.775390625" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                        <Button fx:id="btnRegUpdateToday" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="531.0" layoutY="79.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="CALENDAR" size="32" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnRegUpdateMissed" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="11.0" layoutY="258.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="CALENDAR_MINUS_ALT" size="32" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnRegUpdateNull" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="141.0" layoutY="258.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="4" GridPane.rowIndex="4">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="CALENDAR_TIMES_ALT" size="32" />
+                           </graphic>
+                        </Button>
+                        <Button fx:id="btnRegMNMissed" alignment="CENTER" contentDisplay="BOTTOM" graphicTextGap="0.0" layoutX="401.0" layoutY="79.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleRegClicks" prefHeight="100.0" prefWidth="100.0" text="0" GridPane.columnIndex="8" GridPane.rowIndex="2">
+                           <font>
+                              <Font size="26.0" />
+                           </font>
+                           <graphic>
+                              <FontAwesomeIconView fill="#4a4a4a" glyphName="BOMB" size="32" />
+                           </graphic>
+                        </Button>
+                        <Text layoutX="401.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="MN's MISSED DUE" textAlignment="CENTER" wrappingWidth="109.775390625" GridPane.columnIndex="8" GridPane.rowIndex="1">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </GridPane>
                </children>
             </AnchorPane>
             <AnchorPane fx:id="apnSettings" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleMouseClicked" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;">
@@ -483,6 +544,7 @@
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" />
                      </columnConstraints>
                      <rowConstraints>
+                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
@@ -553,17 +615,17 @@
                               <FontAwesomeIconView fill="GREY" glyphName="TRASH_ALT" size="22" />
                            </graphic>
                         </Button>
-                        <Button fx:id="btnSaveDefault" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="760.0" layoutY="490.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="40.0" prefWidth="132.0" text="Save Default" GridPane.columnIndex="1" GridPane.rowIndex="8">
+                        <Button fx:id="btnSaveDefault" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="760.0" layoutY="490.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="40.0" prefWidth="132.0" text="Save Default" GridPane.columnIndex="1" GridPane.rowIndex="9">
                            <graphic>
                               <FontAwesomeIconView fill="GREY" glyphName="SAVE" size="20" />
                            </graphic>
                         </Button>
-                        <Button fx:id="btnLoadDefault" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="250.0" layoutY="490.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="40.0" prefWidth="132.0" text="Load Default" GridPane.rowIndex="8">
+                        <Button fx:id="btnLoadDefault" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="250.0" layoutY="490.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="40.0" prefWidth="132.0" text="Load Default" GridPane.rowIndex="9">
                            <graphic>
                               <FontAwesomeIconView fill="GREY" glyphName="UPLOAD" size="20" />
                            </graphic>
                         </Button>
-                        <Button fx:id="btnClearAll" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="910.0" layoutY="370.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="40.0" prefWidth="132.0" text="Clear All" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="8">
+                        <Button fx:id="btnClearAll" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="910.0" layoutY="370.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="40.0" prefWidth="132.0" text="Clear All" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="9">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -619,6 +681,12 @@
                               <FontAwesomeIconView fill="GREY" glyphName="UPLOAD" size="22" />
                            </graphic>
                         </Button>
+                        <ChoiceBox fx:id="regChoice" prefHeight="32.0" prefWidth="115.0" stylesheets="@home.css" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Select Region :" wrappingWidth="115.705078125" GridPane.rowIndex="7">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Text>
                      </children>
                   </GridPane>
                   <Pane fx:id="pnProductSelect" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="300.0" prefWidth="845.0" style="-fx-background-color: #FFFFFF;" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="205.0">
@@ -1260,6 +1328,319 @@
                                     <Insets left="5.0" />
                                  </GridPane.margin>
                               </Text>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </Pane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="apnProjection" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: WHITE;" stylesheets="@home.css">
+               <children>
+                  <AnchorPane prefHeight="3.0" prefWidth="850.0" AnchorPane.bottomAnchor="570.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Button fx:id="btnForMM" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="MM" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="470.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnForOverAll" layoutX="7.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="OVERALL" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btnForIMS" layoutX="235.0" layoutY="6.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="IMS" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="360.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                     <children>
+                        <WebView fx:id="projectWeb" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="apnSkills" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css">
+               <children>
+                  <SplitPane dividerPositions="0.16449511400651465, 0.44625407166123776, 0.7263843648208469" layoutX="78.0" layoutY="150.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="1230.0" style="-fx-background-color: WHITE;" AnchorPane.bottomAnchor="305.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <items>
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="210.0" style="-fx-background-color: WHITE;">
+                           <children>
+                              <GridPane layoutX="38.0" layoutY="62.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Engineers">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="10.0" />
+                                       </GridPane.margin>
+                                    </Text>
+                                    <RadioButton fx:id="rdEngMyTeam" mnemonicParsing="false" onMouseClicked="#handleRadioClick" text="My Team" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets left="10.0" />
+                                       </GridPane.margin>
+                                    </RadioButton>
+                                    <RadioButton fx:id="rdEngOverall" layoutX="20.0" layoutY="97.0" mnemonicParsing="false" onMouseClicked="#handleRadioClick" text="Overall Team" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets left="10.0" />
+                                       </GridPane.margin>
+                                    </RadioButton>
+                                    <Separator maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="5.0" prefWidth="210.0" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets top="60.0" />
+                                       </GridPane.margin>
+                                    </Separator>
+                                    <Text fx:id="lblSearcEng" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Engineer :" visible="false" wrappingWidth="144.1953125" GridPane.rowIndex="3">
+                                       <GridPane.margin>
+                                          <Insets left="10.0" />
+                                       </GridPane.margin>
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                    </Text>
+                                    <TextField fx:id="txtSearchEng" prefHeight="41.0" prefWidth="199.0" visible="false" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                    <Separator prefWidth="200.0" GridPane.rowIndex="4">
+                                       <opaqueInsets>
+                                          <Insets />
+                                       </opaqueInsets>
+                                       <GridPane.margin>
+                                          <Insets top="60.0" />
+                                       </GridPane.margin>
+                                    </Separator>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: WHITE;">
+                           <children>
+                              <Text layoutX="14.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" AnchorPane.bottomAnchor="410.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Text>
+                              <ListView fx:id="engNameList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="337.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0" />
+                              <ListView fx:id="engNameListAll" layoutX="20.0" layoutY="70.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="337.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: WHITE;">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Skill Level" AnchorPane.bottomAnchor="410.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Text>
+                              <ListView fx:id="engSkilLev" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="337.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: WHITE;">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Skill Name" AnchorPane.bottomAnchor="410.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Text>
+                              <ListView fx:id="engSkillName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="337.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0" />
+                           </children>
+                        </AnchorPane>
+                     </items>
+                  </SplitPane>
+                  <SplitPane dividerPositions="0.1645, 0.4463, 0.7264" layoutX="88.0" layoutY="160.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="1230.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="305.0">
+                     <items>
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="303.0" prefWidth="210.0" style="-fx-background-color: WHITE;">
+                           <children>
+                              <GridPane layoutX="38.0" layoutY="62.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Skills">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="10.0" />
+                                       </GridPane.margin>
+                                    </Text>
+                                    <RadioButton fx:id="rdSkilMyTeam" mnemonicParsing="false" onMouseClicked="#handleRadioClick" text="My Team" GridPane.rowIndex="1">
+                                       <GridPane.margin>
+                                          <Insets left="10.0" />
+                                       </GridPane.margin>
+                                    </RadioButton>
+                                    <RadioButton fx:id="rdSkillOverAll" layoutX="20.0" layoutY="97.0" mnemonicParsing="false" onMouseClicked="#handleRadioClick" text="Overall Team" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets left="10.0" />
+                                       </GridPane.margin>
+                                    </RadioButton>
+                                    <Separator prefWidth="200.0" GridPane.rowIndex="2">
+                                       <GridPane.margin>
+                                          <Insets top="60.0" />
+                                       </GridPane.margin>
+                                    </Separator>
+                                    <Separator prefWidth="200.0" GridPane.rowIndex="4">
+                                       <GridPane.margin>
+                                          <Insets top="60.0" />
+                                       </GridPane.margin>
+                                    </Separator>
+                                    <Text fx:id="lblSearchSkill" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Skill :" visible="false" wrappingWidth="116.1953125" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="10.0" />
+                                       </GridPane.margin>
+                                    </Text>
+                                    <TextField fx:id="txtSearchSkill" prefHeight="41.0" prefWidth="199.0" visible="false" GridPane.rowIndex="4">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                       <GridPane.margin>
+                                          <Insets left="5.0" right="5.0" />
+                                       </GridPane.margin>
+                                    </TextField>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: WHITE;">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Skill Name" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Text>
+                              <ListView fx:id="skillNameList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="337.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0" />
+                              <ListView fx:id="skillNameListAll" layoutX="20.0" layoutY="70.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="337.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: WHITE;">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Skill Level" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Text>
+                              <ListView fx:id="skillLevelList" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="337.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0" />
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="10.0" layoutY="10.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: WHITE;">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Engineer Name" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Text>
+                              <ListView fx:id="skillEngName" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="394.0" prefWidth="337.0" visible="false" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="60.0" />
+                              <Button fx:id="btnSkillsExport" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="115.0" layoutY="18.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="29.0" prefWidth="77.0" text="Export" visible="false" AnchorPane.bottomAnchor="262.0" AnchorPane.leftAnchor="130.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="15.0">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="GREY" glyphName="FILE_TEXT_ALT" size="16" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                     </items>
+                  </SplitPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="apnManLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css">
+               <children>
+                  <Pane layoutX="140.0" layoutY="146.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="400.0" style="-fx-background-color: WHITE;" stylesheets="@home.css" AnchorPane.bottomAnchor="574.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="540.0" AnchorPane.topAnchor="146.0">
+                     <children>
+                        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="400.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="125.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="60.0" minHeight="60.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="User Name" wrappingWidth="173.13671875">
+                                 <font>
+                                    <Font name="Arial" size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <Text layoutX="60.0" layoutY="139.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="180.13671875" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="Arial" size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="20.0" />
+                                 </GridPane.margin>
+                              </Text>
+                              <TextField editable="false" promptText="admin" text="admin" GridPane.columnIndex="1">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Button fx:id="btnManLogin" graphicTextGap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="40.0" prefWidth="80.0" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="150.0" />
+                                 </GridPane.margin>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="GREY" glyphName="SIGN_IN" size="24" />
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btnManClose" graphicTextGap="5.0" layoutX="320.0" layoutY="345.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="40.0" prefWidth="80.0" text="Close" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="30.0" />
+                                 </GridPane.margin>
+                                 <graphic>
+                                    <FontAwesomeIconView fill="GREY" glyphName="CLOSE" size="24" />
+                                 </graphic>
+                              </Button>
+                              <PasswordField fx:id="txtpass" onMouseClicked="#handleMouseClicked" prefHeight="30.0" prefWidth="164.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                                 <GridPane.margin>
+                                    <Insets left="10.0" right="10.0" />
+                                 </GridPane.margin>
+                              </PasswordField>
                            </children>
                         </GridPane>
                      </children>
