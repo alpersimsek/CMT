@@ -63,10 +63,142 @@ import java.util.logging.*;
 
 public class Controller implements Initializable {
 
+    //Top Frame Definitions
+    @FXML
+    private Label lblStatus;
+    @FXML
+    private FontAwesomeIconView btnUnlock;
+    @FXML
+    private FontAwesomeIconView btnToExcel;
+    @FXML
+    private FontAwesomeIconView btnBack;
+    @FXML
+    private FontAwesomeIconView btnInfo;
+
+    //Left Frame Definitions
+    @FXML
+    private Button btnHome;
+    @FXML
+    private Button btnCases;
+    @FXML
+    private Button btnMyRegion;
+    @FXML
+    private Button btnMyNotes;
+    @FXML
+    private Button btnProducts;
+    @FXML
+    private Button btnCustomers;
+    @FXML
+    private Button btnProjects;
+    @FXML
+    private Button btnSettings;
+    @FXML
+    private Button btnProjection;
+    @FXML
+    private Button btnSkillSet;
+    @FXML
+    private Button btnLoadData;
+    @FXML
+    private Button btnLogin;
+    @FXML
+    private Label lblRefreshText;
+    @FXML
+    private Label lblDownload;
+    @FXML
+    private ProgressBar progressBar;
+
+    //Overview Page:
+    @FXML
+    private AnchorPane apnHome;
+
     private final static Logger logger = Logger.getLogger("CMT_Main_Logger");
     FileHandler fh;
 
     ExecutorService service = Executors.newSingleThreadExecutor();
+
+    //Account Page
+    @FXML
+    private AnchorPane apnAccounts;
+    @FXML
+    private Button btnAccE1Cases;
+    @FXML
+    private Button btnAccE2Cases;
+    @FXML
+    private Button btnAccOutFollow;
+    @FXML
+    private Button btnAccEscalated;
+    @FXML
+    private Button btnAccHotIssues;
+    @FXML
+    private Button btnAccBCCases;
+    @FXML
+    private Button btnAccInactive;
+    @FXML
+    private Button btnAccWOH;
+    @FXML
+    private Button btnAccBCupdated;
+    @FXML
+    private Button btnAccBCWac;
+    @FXML
+    private Button btnAccBCWIP;
+    @FXML
+    private Button btnAccBCINACT;
+    @FXML
+    private Button btnAccBCEngineering;
+    @FXML
+    private Button btnAccMJupdated;
+    @FXML
+    private Button btnAccMJWac;
+    @FXML
+    private Button btnAccMJWIP;
+    @FXML
+    private Button btnAccMJINACT;
+    @FXML
+    private Button btnAccMJEngineering;
+    @FXML
+    private Button btnAccMJDue;
+    @FXML
+    private Button btnAccBCMissed;
+    @FXML
+    private Button btnAccBCDue;
+    @FXML
+    private Button btnAccMJMissed;
+    @FXML
+    private Button btnaccGPSQueue;
+    @FXML
+    private Button btnAccRTSQueue;
+    @FXML
+    private Button btnAccUpdateToday;
+    @FXML
+    private Button btnAccUpdateMissed;
+    @FXML
+    private Button btnAccUpdateNull;
+    @FXML
+    private Button btnAccMNMissed;
+    @FXML
+    private Pane pnAccSelect;
+    @FXML
+    private TextField txAccounts;
+    @FXML
+    private TableView<AccountTableView> tableAcc;
+    @FXML
+    private TableColumn<AccountTableView, String> accCol;
+    @FXML
+    private Button btnAccUpdate;
+    @FXML
+    private TableView<AccountTableView> tableAccSelected;
+    @FXML
+    private TableColumn<AccountTableView, String> accColSelected;
+    @FXML
+    private TextField txtAccSelect;
+    @FXML
+    private Button btnAccSelectClose;
+    @FXML
+    private Button btnAccSelectClear;
+    @FXML
+    private Button btnAccUpdateAdd;
+    @FXML
+    private Button btnAccUpdateRemove;
 
     // Region Wars
     @FXML
@@ -127,7 +259,7 @@ public class Controller implements Initializable {
     private Button btnRegRTSQueue;
     @FXML
     private Button btnRegGPSQueue;
-    // Region Wars Finished
+
     @FXML
     private ChoiceBox<String> regChoice;
     @FXML
@@ -153,19 +285,21 @@ public class Controller implements Initializable {
     @FXML
     private Button btnForecastRun;
     @FXML
-    private Button btnRegClear;
-    @FXML
     private TextField txtUsersSave;
     @FXML
     private TextField txtProductsSave;
     @FXML
     private TextField txtQueuesSave;
     @FXML
+    private TextField txtAccountSave;
+    @FXML
     private Button btnUsersSaveAs;
     @FXML
     private Button btnProductsSaveAs;
     @FXML
     private Button btnQueuesSaveAs;
+    @FXML
+    private Button btnAccSaveAs;
     @FXML
     private Button btnUsersSaveClose;
     @FXML
@@ -175,13 +309,15 @@ public class Controller implements Initializable {
     @FXML
     private Button btnQueuesLoad;
     @FXML
-    private Button btnUserProfDelete;
+    private Button btnAccLoad;
     @FXML
-    private Button btnMyRegion;
+    private Button btnUserProfDelete;
     @FXML
     private Button btnProductProfDelete;
     @FXML
     private Button btnQueueProfDelete;
+    @FXML
+    private Button btnAccountProfDelete;
     @FXML
     private Button btnProductsSave;
     @FXML
@@ -189,9 +325,13 @@ public class Controller implements Initializable {
     @FXML
     private Button btnQueuesSave;
     @FXML
+    private Button btnAccountSave;
+    @FXML
     private Button btnUsersSave;
     @FXML
     private Button btnQueuesSaveClose;
+    @FXML
+    private Button btnAccountSaveClose;
     @FXML
     private Pane pnUsersSave;
     @FXML
@@ -199,19 +339,21 @@ public class Controller implements Initializable {
     @FXML
     private Pane pnQueuesSave;
     @FXML
+    private Pane pnAccountSave;
+    @FXML
     private Pane pnUsersLoad;
     @FXML
     private Pane pnProductsLoad;
     @FXML
     private Pane pnQueuesLoad;
     @FXML
+    private Pane pnAccountLoad;
+    @FXML
     private AnchorPane spnNote;
     @FXML
     private AnchorPane apnProjection;
     @FXML
     private Pane pnCaseDetailsNote;
-    @FXML
-    private ProgressBar progressBar;
     @FXML
     private AnchorPane apnTableView;
     @FXML
@@ -225,8 +367,6 @@ public class Controller implements Initializable {
     @FXML
     private AnchorPane apnMyCases;
     @FXML
-    private AnchorPane apnHome;
-    @FXML
     private AnchorPane apnProduct;
     @FXML
     private AnchorPane apnProjects;
@@ -236,12 +376,6 @@ public class Controller implements Initializable {
     private AnchorPane apnBrowser;
     @FXML
     private Pane browserLoginPane;
-    @FXML
-    private Label lblStatus;
-    @FXML
-    private Label lblRefreshText;
-    @FXML
-    private Label lblDownload;
     @FXML
     private TextField txUsers;
     @FXML
@@ -292,28 +426,6 @@ public class Controller implements Initializable {
     private Button btnViewNote;
     @FXML
     private Button btnViewComment;
-    @FXML
-    private Button btnHome;
-    @FXML
-    private Button btnCases;
-    @FXML
-    private Button btnProducts;
-    @FXML
-    private Button btnProjects;
-    @FXML
-    private Button btnCustomers;
-    @FXML
-    private Button btnMyNotes;
-    @FXML
-    private Button btnSettings;
-    @FXML
-    private Button btnProjection;
-    @FXML
-    private Button btnSkillSet;
-    @FXML
-    private Button btnLoadData;
-    @FXML
-    private Button btnLogin;
     @FXML
     private Button btnE1Cases;
     @FXML
@@ -477,6 +589,8 @@ public class Controller implements Initializable {
     @FXML
     private Button btnAccountClear;
     @FXML
+    private Button btnAccClear;
+    @FXML
     private Button btnCustomerLoad;
     @FXML
     private Button btnCustomerCritical;
@@ -508,14 +622,6 @@ public class Controller implements Initializable {
     private Button btnGatingPrevious;
     @FXML
     private Button btnProjectsAll;
-    @FXML
-    private FontAwesomeIconView btnBack;
-    @FXML
-    private FontAwesomeIconView btnInfo;
-    @FXML
-    private FontAwesomeIconView btnToExcel;
-    @FXML
-    private FontAwesomeIconView btnUnlock;
     @FXML
     private TableView<CaseTableView> tableCases;
     @FXML
@@ -729,6 +835,10 @@ public class Controller implements Initializable {
     @FXML
     private Button btnQueueLoadClose;
     @FXML
+    private Button btnAccountProfLoad;
+    @FXML
+    private Button btnAccountLoadClose;
+    @FXML
     private ListView caseNoteList;
     @FXML
     private ListView userProfileList;
@@ -736,6 +846,8 @@ public class Controller implements Initializable {
     private ListView productProfileList;
     @FXML
     private ListView queueProfileList;
+    @FXML
+    private ListView accountProfileList;
     @FXML
     private TextArea txtShowCaseNotes;
     @FXML
@@ -828,9 +940,11 @@ public class Controller implements Initializable {
     ArrayList<String> settingsUsers = new ArrayList<>();
     ArrayList<String> settingsQueue = new ArrayList<>();
     ArrayList<String> settingsProducts = new ArrayList<>();
+    ArrayList<String> settingsAccounts = new ArrayList<>();
     ArrayList<String> filteredAccounts = new ArrayList<String>();
     ArrayList<String> usersFiltered = new ArrayList<String>();
     ArrayList<String> productsFiltered = new ArrayList<String>();
+    ArrayList<String> accountsFiltered = new ArrayList<String>();
     ArrayList<String> queuesFiltered = new ArrayList<String>();
     ArrayList<String> queueArray = new ArrayList<>();
     ArrayList<String> selectedCase = new ArrayList<>();
@@ -912,6 +1026,42 @@ public class Controller implements Initializable {
     int MJds = 0;
     int MJpc = 0;
     int MJwip = 0;
+
+    //Accounts Page Variables
+
+    int accHotList;
+    int accOutFollow;
+    int accEscCases;
+    int accBCCases;
+    int accInactiveCases;
+    int accBCDueCases;
+    int accBCMissedCases;
+    int accBCDSCases;
+    int accBCInactiveCases;
+    int accBCWIP;
+    int accMJDueCases;
+    int accMJMissedCases;
+    int accMNMissedCases;
+    int accRTSQueue;
+    int accGPSQueue;
+    int accMJUpdated;
+    int accMJDSCases;
+    int accMJWIP;
+    int accQueuedCases;
+    int accCoOwnerQueueCases;
+    int accCoOwnerQueueCasesAssigned;
+    int accE1Case;
+    int accE2Cases;
+    int accBCupdated;
+    int accBCWac;
+    int accMJWAC;
+    int accMJInactiveCases;
+    int accWOHCases;
+    int accUpdateToday;
+    int accUpdateMissed;
+    int accUpdateNull;
+    int accCoOwnCase;
+    int accCoOwnQueue;
 
     //Region Page variables
 
@@ -1027,6 +1177,322 @@ public class Controller implements Initializable {
     String strSave = "PLEASE PROMPT A PROFILE NAME";
     String strLoadProf = "THERE IS NO USER PROFILE SAVED!";
 
+
+    @FXML
+    void handleAccClicks(ActionEvent event) {
+
+        //Create the Account Based Tables on related tile click
+        if (event.getSource() == btnAccE1Cases){
+            if (accE1Case != 0){
+                lblStatus.setText("CRITICAL CASES (" + txAccounts.getText()+")");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter1 = "Critical";
+                initTableView(tableCases);
+                accOneFilterTableView(columnSelect, filter1, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccE2Cases){
+            if (accE2Cases != 0){
+                lblStatus.setText("E2 CASES (" + txAccounts.getText()+")");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter1 = "E2";
+                initTableView(tableCases);
+                accOneFilterTableView(columnSelect, filter1, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccOutFollow){
+            if (accOutFollow != 0){
+                lblStatus.setText("OUTAGE FOLLOW-UP CASES (" + txAccounts.getText()+")");
+                tableCases.getItems().clear();
+                String columnSelect = "Outage Follow-Up";
+                String filter1 = "1";
+                initTableView(tableCases);
+                accOneFilterTableView(columnSelect, filter1, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccEscalated){
+            if (accEscCases != 0){
+                lblStatus.setText("ESCALATED CASES (" + txAccounts.getText()+")");
+                tableCases.getItems().clear();
+                String columnSelect = "Escalated By";
+                String filter1 = "NotSet";
+                initTableView(tableCases);
+                accOneFilterTableView(columnSelect, filter1, tableCases, apnTableView, false);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccBCCases){
+            if (accBCCases != 0){
+                lblStatus.setText("BC CASES (" + txAccounts.getText()+")");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter1 = "Business Critical";
+                initTableView(tableCases);
+                accOneFilterTableView(columnSelect, filter1, tableCases, apnTableView, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccHotIssues){
+            if (accHotList != 0){
+                lblStatus.setText("HOT ISSUES (" + txAccounts.getText()+")");
+                tableCases.getItems().clear();
+                String columnSelect = "Support Hotlist Level";
+                String filter1 = "NotSet";
+                initTableView(tableCases);
+                accOneFilterTableView(columnSelect, filter1, tableCases, apnTableView, false);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccWOH){
+            if (accWOHCases != 0){
+                lblStatus.setText("ACTIVE CASES (" + txAccounts.getText()+")");
+                tableCases.getItems().clear();
+                initTableView(tableCases);
+                accOverviewWOHView(true);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccInactive){
+            if (accInactiveCases != 0){
+                lblStatus.setText("INACTIVE CASES (" + txAccounts.getText()+")");
+                tableCases.getItems().clear();
+                initTableView(tableCases);
+                accOverviewWOHView(false);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccBCWIP){
+            if (accBCWIP != 0){
+                lblStatus.setText("BC WORK IN PROGRESS CASES (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Business Critical";
+                initTableView(tableCases);
+                accWIPCaseTableView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccBCWac) {
+            if (accBCWac != 0) {
+                lblStatus.setText("BC CASES PENDING CUSTOMER ACTION (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String columnSelect2 = "Currently Responsible";
+                String filter1 = "Business Critical";
+                String filter2 = "Customer action";
+                initTableView(tableCases);
+                accTwoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccBCupdated) {
+            if (accBCupdated != 0) {
+                lblStatus.setText("BC CASES PENDING OWNER ACTION ("+ txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String columnSelect2 = "Currently Responsible";
+                String filter1 = "Business Critical";
+                String filter2 = "Customer updated";
+                initTableView(tableCases);
+                accTwoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccBCEngineering) {
+            if (accBCDSCases != 0) {
+                lblStatus.setText("BC CASES WITH ENGINEERING (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columSelect = "Severity";
+                String filter1 = "Business Critical";
+                initTableView(tableCases);
+                accEngineeringTableView(columSelect, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccBCINACT) {
+            if (accBCInactiveCases != 0) {
+                lblStatus.setText("INACTIVE BC CASES (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String filter1 = "Business Critical";
+                initTableView(tableCases);
+                accInactiveTable(columnSelect1, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccMJWIP) {
+            if (accMJWIP != 0) {
+                lblStatus.setText("MAJOR WORK IN PROGRESS CASES (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Major";
+                initTableView(tableCases);
+                accWIPCaseTableView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccMJWac) {
+            if (accMJWAC != 0) {
+                lblStatus.setText("MAJOR CASES WITH CUSTOMER (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String columnSelect2 = "Currently Responsible";
+                String filter1 = "Major";
+                String filter2 = "Customer action";
+                initTableView(tableCases);
+                accTwoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccMJupdated) {
+            if (accMJUpdated != 0) {
+                lblStatus.setText("MAJOR CASES PENDING OWNER ACTION (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String columnSelect2 = "Currently Responsible";
+                String filter1 = "Major";
+                String filter2 = "Customer updated";
+                initTableView(tableCases);
+                accTwoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccMJEngineering) {
+            if (accMJDSCases != 0) {
+                lblStatus.setText("MAJOR CASES WITH ENGINEERING (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columSelect = "Severity";
+                String filter1 = "Major";
+                initTableView(tableCases);
+                accEngineeringTableView(columSelect, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccMJINACT) {
+            if (accMJInactiveCases != 0) {
+                lblStatus.setText("INACTIVE MAJOR CASES (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String filter1 = "Major";
+                initTableView(tableCases);
+                accInactiveTable(columnSelect1, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccBCDue) {
+            if (accBCDueCases != 0) {
+                lblStatus.setText("BC DUE CASES (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Business Critical";
+                initTableView(tableCases);
+                accDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccBCMissed) {
+            if (accBCMissedCases != 0) {
+                lblStatus.setText("BC CASES MISSED DUE (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Business Critical";
+                initTableView(tableCases);
+                accDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccMJDue) {
+            if (accMJDueCases != 0) {
+                lblStatus.setText("MAJOR DUE CASES (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Major";
+                initTableView(tableCases);
+                accDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccMJMissed) {
+            if (accMJMissedCases != 0) {
+                lblStatus.setText("MAJOR CASES MISSED DUE (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Major";
+                initTableView(tableCases);
+                accDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccMNMissed) {
+            if (accMNMissedCases != 0) {
+                lblStatus.setText("MINOR CASES MISSED DUE (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Minor";
+                initTableView(tableCases);
+                accDueFilterView(columnSelect, filter, tableCases, apnTableView, 180, false);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+
+        if (event.getSource() == btnAccRTSQueue) {
+            if (accRTSQueue != 0) {
+                lblStatus.setText("CASES IN RTS QUEUE (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnselect = "Case Owner";
+                String filter = "TS";
+                initTableView(tableCases);
+                accQueueView(columnselect, filter, tableCases, apnTableView, "Tech-Ops");
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnaccGPSQueue) {
+            if (accGPSQueue != 0) {
+                lblStatus.setText("CASES IN GPS QUEUE (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String e2TableSelect = "Case Owner";
+                String e2TableSelect2 = "PS";
+                initTableView(tableCases);
+                accQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "GPS");
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccUpdateToday) {
+            if (accUpdateToday != 0) {
+                lblStatus.setText("NEXT CASE UPDATE TODAY (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect = "Next Case Update";
+                initTableView(tableCases);
+                accCaseUpdateTableView(columnSelect, tableCases, apnTableView, true, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccUpdateMissed) {
+            if (accUpdateMissed != 0) {
+                lblStatus.setText("NEXT CASE UPDATE MISSED ("+ txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect = "Next Case Update";
+                initTableView(tableCases);
+                accCaseUpdateTableView(columnSelect, tableCases, apnTableView, false, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccUpdateNull) {
+            if (accUpdateNull != 0) {
+                lblStatus.setText("NEXT CASE UPDATE FIELD NOT SET CASES (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect = "Next Case Update";
+                initTableView(tableCases);
+                accCaseUpdateTableView(columnSelect, tableCases, apnTableView, false, false);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+    }
 
     @FXML
     void handleRegClicks(ActionEvent event) {
@@ -1401,7 +1867,7 @@ public class Controller implements Initializable {
                 String e2TableSelect = "Case Owner";
                 String e2TableSelect2 = "PS";
                 initTableView(tableCases);
-                regQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "");
+                regQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "GPS");
                 tableCases.scrollToColumnIndex(0);
             }
             if (regGPSQueue == 0) {
@@ -1451,7 +1917,152 @@ public class Controller implements Initializable {
             }
         }
     }
+    private void accQueueView(String columnSelect, String filter, TableView tableView, AnchorPane anchorpane, String overText) {
 
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(columnSelect)) {
+                    caseCellRef = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseCellRef2 = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Account Name")) {
+                    caseAccountRef = i;
+                }
+            }
+
+            ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
+            int accfiltnum = setAcc.size();
+
+            for (int i = 0; i <accfiltnum ; i++) {
+
+                for (int k = 1; k < lastRow + 1; k++) {
+
+                    cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                    String cellValToCompare = cellVal.getStringCellValue();
+                    cellVal2 = filtersheet.getRow(k).getCell(caseAccountRef);
+                    String acc = cellVal2.getStringCellValue();
+
+                    if (acc.equals(setAcc.get(i)) && (!overText.equals(""))) {
+
+                        if (cellValToCompare.equals(filter) || cellValToCompare.startsWith(filter) || cellValToCompare.startsWith(overText)) {
+
+                            ArrayList<String> array = new ArrayList<>();
+                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                            while (iterCells.hasNext()) {
+                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                array.add(cell.getStringCellValue());
+                            }
+
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                            LocalDate localDate = null;
+
+                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                            }
+
+                            int age;
+                            age = Integer.parseInt(array.get(caseCellRef2));
+
+                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    localDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
+
+                            tableView.getItems().addAll(observableList);
+                            caseCount++;
+                            if (tableView.getItems().size() >= caseCount + 1) {
+                                tableView.getItems().removeAll(observableList);
+                            }
+                        }
+                    }
+                }
+            }
+            btnToExcel.setVisible(true);
+            anchorpane.toFront();
+
+            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    exportExcelAction(tableView);
+                }
+            });
+
+            menu = new ContextMenu();
+            String caseno = "";
+            menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
+            tableCases.setContextMenu(menu);
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
+
+            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+
+                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                        URL caseSearch = new URL(search);
+                        Desktop.getDesktop().browse(caseSearch.toURI());
+                    }catch (Exception e){
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                    }
+                }
+            });
+
+            // Selecting and Copy the Case Number to Clipboard
+            tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableView);
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
+                    }
+                }
+            });
+
+            btnBack.setVisible(true);
+            btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    apnAccounts.toFront();
+                    lblStatus.setText("ACCOUNT(S) VIEW ( " + txAccounts.getText() + ")");
+                    btnBack.setVisible(false);
+                    btnToExcel.setVisible(false);
+                    tableCases.getItems().clear();
+                }
+            });
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
     private void regQueueView(String columnSelect, String filter, TableView tableView, AnchorPane anchorpane, String overText) {
 
         int caseCount = 0;
@@ -1588,6 +2199,224 @@ public class Controller implements Initializable {
                     tableCases.getItems().clear();
                 }
             });
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
+
+    private void accCaseUpdateTableView(String caseTableSelect, TableView<CaseTableView> tableCases, AnchorPane apnTableView, boolean b, boolean bool) {
+        int caseCount = 0;
+
+        LocalDate dateToday = LocalDate.now();
+        LocalDate caseUpdateDate = null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellValStat;
+            HSSFCell cellVal1;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(caseTableSelect)) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Status")) {
+                    caseStatRefCell = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Account Name")) {
+                    caseAccountRef = i;
+                }
+            }
+
+            ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
+            int accfiltnum = setAcc.size();
+
+            for (int i = 0; i < accfiltnum; i++) {
+
+                for (int k = 1; k < lastRow + 1; k++) {
+
+                    cellVal = filtersheet.getRow(k).getCell(caseNextUpdateDateRef);
+                    String cellValToCompare = cellVal.getStringCellValue();
+
+                    cellValStat = filtersheet.getRow(k).getCell(caseStatRefCell);
+                    String cellStat = cellValStat.getStringCellValue();
+
+                    cellVal1 = filtersheet.getRow(k).getCell(caseAccountRef);
+                    String acc = cellVal1.getStringCellValue();
+
+                    ArrayList<String> array = new ArrayList<>();
+                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                    if (!cellValToCompare.equals("NotSet")) {
+
+                        caseUpdateDate = LocalDate.parse(cellValToCompare, formatter);
+                    } else {
+                        caseUpdateDate = null;
+                    }
+
+                    if (acc.equals(setAcc.get(i))) {
+
+                        if ((b) && (bool)) {
+
+                            if ((caseUpdateDate != null)) {
+
+                                if (caseUpdateDate.compareTo(dateToday) == 0) {
+
+                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                    while (iterCells.hasNext()) {
+                                        HSSFCell cell = (HSSFCell) iterCells.next();
+                                        array.add(cell.getStringCellValue());
+                                    }
+
+                                    int age = 0;
+                                    age = Integer.parseInt(array.get(caseAgeRefCell));
+                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                            array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                            caseUpdateDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
+
+                                    tableCases.getItems().addAll(observableList);
+                                    caseCount++;
+                                    if (tableCases.getItems().size() >= caseCount + 1) {
+                                        tableCases.getItems().removeAll(observableList);
+                                    }
+                                }
+                            }
+                        }
+                        if ((!b) && (bool)) {
+
+                            if ((caseUpdateDate != null)) {
+
+                                if (caseUpdateDate.compareTo(dateToday) < 0) {
+
+                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                    while (iterCells.hasNext()) {
+                                        HSSFCell cell = (HSSFCell) iterCells.next();
+                                        array.add(cell.getStringCellValue());
+                                    }
+
+                                    int age = 0;
+                                    age = Integer.parseInt(array.get(caseAgeRefCell));
+                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                            array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                            caseUpdateDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
+
+                                    tableCases.getItems().addAll(observableList);
+                                    caseCount++;
+                                    if (tableCases.getItems().size() >= caseCount + 1) {
+                                        tableCases.getItems().removeAll(observableList);
+                                    }
+                                }
+                            }
+                        }
+                        if (!b && !bool) {
+
+                            if ((caseUpdateDate == null)) {
+
+                                Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                while (iterCells.hasNext()) {
+                                    HSSFCell cell = (HSSFCell) iterCells.next();
+                                    array.add(cell.getStringCellValue());
+                                }
+
+                                int age = 0;
+                                age = Integer.parseInt(array.get(caseAgeRefCell));
+                                observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                        array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                        caseUpdateDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
+
+                                tableCases.getItems().addAll(observableList);
+                                caseCount++;
+                                if (tableCases.getItems().size() >= caseCount + 1) {
+                                    tableCases.getItems().removeAll(observableList);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            btnToExcel.setVisible(true);
+            apnTableView.toFront();
+
+            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    exportExcelAction(tableCases);
+                }
+            });
+            menu = new ContextMenu();
+            String caseno = "";
+            menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
+            tableCases.setContextMenu(menu);
+
+            // Select and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
+                    }
+
+                }
+            });
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
+
+            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+
+                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                        URL caseSearch = new URL(search);
+                        Desktop.getDesktop().browse(caseSearch.toURI());
+                    }catch (Exception e){
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                    }
+
+                }
+            });
+
+            btnBack.setVisible(true);
+            btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    apnAccounts.toFront();
+                    lblStatus.setText("ACCOUNT(S) VIEW ( " + txAccounts.getText() +  ")");
+                    btnBack.setVisible(false);
+                    btnToExcel.setVisible(false);
+                    tableCases.getItems().clear();
+                }
+            });
+
         } catch (Exception e) {
             logger.log(Level.WARNING, "Create Table Failed!", e);
         }
@@ -1807,6 +2636,203 @@ public class Controller implements Initializable {
         }
     }
 
+    private void accDueFilterView(String columnSelect, String filter, TableView<CaseTableView> tableCases, AnchorPane apnTableView, int ageDue, Boolean due) {
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+            HSSFCell cellVal3;
+            HSSFCell cellVal4;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(columnSelect)) {
+                    caseCellRef = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Status")) {
+                    caseStatRefCell = i;
+                }
+                if (filterColName.equals("Account Name")) {
+                    caseAccountRef = i;
+                }
+            }
+
+            ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
+            int accfiltnum = setAcc.size();
+
+            for (int i = 0; i <accfiltnum ; i++) {
+
+                for (int k = 1; k < lastRow + 1; k++) {
+                    cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                    String cellValToCompare = cellVal.getStringCellValue();
+                    cellVal2 = filtersheet.getRow(k).getCell(caseAgeRefCell);
+                    String caseAge = cellVal2.getStringCellValue();
+                    cellVal3 = filtersheet.getRow(k).getCell(caseStatRefCell);
+                    String caseStatus = cellVal3.getStringCellValue();
+                    int ageCase = Integer.parseInt(caseAge);
+                    cellVal4 = filtersheet.getRow(k).getCell(caseAccountRef);
+                    String acc = cellVal4.getStringCellValue();
+
+                    if (acc.equals(setAcc.get(i))) {
+
+                        if (due) {
+
+                            if ((cellValToCompare.equals(filter) && ageCase <= ageDue) && ((!caseStatus.equals("Develop Solution") &&
+                                    (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))))) {
+
+                                ArrayList<String> array = new ArrayList<>();
+                                ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                while (iterCells.hasNext()) {
+                                    HSSFCell cell = (HSSFCell) iterCells.next();
+                                    array.add(cell.getStringCellValue());
+                                }
+
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                LocalDate localDate = null;
+
+                                if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                    localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                }
+                                observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                        array.get(3), array.get(4), array.get(5), array.get(6), ageCase,
+                                        localDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
+
+                                tableCases.getItems().addAll(observableList);
+                                caseCount++;
+                                if (tableCases.getItems().size() >= caseCount + 1) {
+                                    tableCases.getItems().removeAll(observableList);
+                                }
+                            }
+                        } else {
+                            if ((cellValToCompare.equals(filter) && ageCase > ageDue) && ((!caseStatus.equals("Develop Solution") &&
+                                    (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))))) {
+
+                                ArrayList<String> array = new ArrayList<>();
+                                ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                while (iterCells.hasNext()) {
+                                    HSSFCell cell = (HSSFCell) iterCells.next();
+                                    array.add(cell.getStringCellValue());
+                                }
+
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                LocalDate localDate = null;
+
+                                if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                    localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                }
+                                observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                        array.get(3), array.get(4), array.get(5), array.get(6), ageCase,
+                                        localDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
+
+                                tableCases.getItems().addAll(observableList);
+                                caseCount++;
+                                if (tableCases.getItems().size() >= caseCount + 1) {
+                                    tableCases.getItems().removeAll(observableList);
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            btnToExcel.setVisible(true);
+            apnTableView.toFront();
+
+            btnToExcel.setVisible(true);
+            apnTableView.toFront();
+
+            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    exportExcelAction(tableCases);
+                }
+            });
+
+            menu = new ContextMenu();
+            String caseno = "";
+            menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
+            tableCases.setContextMenu(menu);
+
+
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
+                    }
+                }
+            });
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
+
+            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+
+                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                        URL caseSearch = new URL(search);
+                        Desktop.getDesktop().browse(caseSearch.toURI());
+                    }catch (Exception e){
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                    }
+                }
+            });
+
+            btnBack.setVisible(true);
+            btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    apnAccounts.toFront();
+                    lblStatus.setText("ACCOUNT(S) VIEW (" +txAccounts.getText() + ")");
+                    btnBack.setVisible(false);
+                    btnToExcel.setVisible(false);
+                    tableCases.getItems().clear();
+                }
+            });
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
+
     private void regDueFilterView(String columnSelect, String filter, TableView<CaseTableView> tableCases, AnchorPane apnTableView, int ageDue, Boolean due) {
 
         int caseCount = 0;
@@ -1997,6 +3023,160 @@ public class Controller implements Initializable {
         }
     }
 
+    private void accInactiveTable(String columnSelect1, String filter1, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+            HSSFCell cellVal3;
+            HSSFCell cellVal4;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(columnSelect1)) {
+                    caseCellRef = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Status")) {
+                    caseStatRefCell = i;
+                }
+                if (filterColName.equals("Account Name")) {
+                    caseAccountRef = i;
+                }
+            }
+
+            ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
+            int accfiltnum = setAcc.size();
+
+            for (int i = 0; i <accfiltnum ; i++) {
+
+                for (int k = 1; k < lastRow + 1; k++) {
+                    cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                    String cellValToCompare = cellVal.getStringCellValue();
+                    cellVal2 = filtersheet.getRow(k).getCell(caseCellRef2);
+                    String cellValToCompare2 = cellVal2.getStringCellValue();
+                    cellVal3 = filtersheet.getRow(k).getCell(caseStatRefCell);
+                    String caseStatus = cellVal3.getStringCellValue();
+                    cellVal4 = filtersheet.getRow(k).getCell(caseAccountRef);
+                    String acc = cellVal4.getStringCellValue();
+
+                    if (acc.equals(setAcc.get(i))) {
+
+                        if (cellValToCompare.equals(filter1) && (caseStatus.equals("Pending Closure") || caseStatus.equals("Future Availability"))) {
+                            ArrayList<String> array = new ArrayList<>();
+                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                            while (iterCells.hasNext()) {
+                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                array.add(cell.getStringCellValue());
+                            }
+
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                            LocalDate localDate = null;
+
+                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                            }
+
+                            int age = 0;
+                            age = Integer.parseInt(array.get(caseAgeRefCell));
+                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    localDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
+
+                            tableCases.getItems().addAll(observableList);
+                            caseCount++;
+                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                tableCases.getItems().removeAll(observableList);
+                            }
+                        }
+                    }
+                }
+            }
+
+            btnToExcel.setVisible(true);
+            apnTableView.toFront();
+
+            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    exportExcelAction(tableCases);
+                }
+            });
+
+            menu = new ContextMenu();
+            String caseno = "";
+            menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
+            tableCases.setContextMenu(menu);
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
+
+            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+
+                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                        URL caseSearch = new URL(search);
+                        Desktop.getDesktop().browse(caseSearch.toURI());
+                    }catch (Exception e){
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                    }
+                }
+            });
+
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
+                    }
+                }
+            });
+
+            btnBack.setVisible(true);
+            btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    apnRegCases.toFront();
+                    lblStatus.setText("ACCOUNT(S) VIEW (" + txAccounts.getText() +  ")");
+                    btnBack.setVisible(false);
+                    btnToExcel.setVisible(false);
+                    tableCases.getItems().clear();
+                }
+            });
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
+
     private void regInactiveTable(String columnSelect1, String filter1, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
 
         int caseCount = 0;
@@ -2140,6 +3320,160 @@ public class Controller implements Initializable {
                     }
                 });
             }
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
+
+    private void accEngineeringTableView(String columnSelect, String filter1, TableView<CaseTableView> tableCases, AnchorPane apnTableView){
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+            HSSFCell cellVal3;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(columnSelect)) {
+                    caseCellRef = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Status")) {
+                    caseStatRefCell = i;
+                }
+                if (filterColName.equals("Account Name")) {
+                    caseAccountRef = i;
+                }
+            }
+
+            ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
+            int accfiltnum = setAcc.size();
+
+            for (int i = 0; i < accfiltnum; i++) {
+
+                for (int k = 1; k < lastRow + 1; k++) {
+                    cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                    String cellValToCompare = cellVal.getStringCellValue();
+
+                    cellVal2 = filtersheet.getRow(k).getCell(caseStatRefCell);
+                    String caseStatus = cellVal2.getStringCellValue();
+
+                    cellVal3 = filtersheet.getRow(k).getCell(caseAccountRef);
+                    String acc = cellVal3.getStringCellValue();
+
+                    if (acc.equals(setAcc.get(i))) {
+
+                        if (cellValToCompare.equals(filter1) && caseStatus.equals("Develop Solution") && (!caseStatus.equals("Pending Closure") || !caseStatus.equals("Future Availability"))) {
+                            ArrayList<String> array = new ArrayList<>();
+                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                            while (iterCells.hasNext()) {
+                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                array.add(cell.getStringCellValue());
+                            }
+
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                            LocalDate localDate = null;
+
+                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                            }
+
+                            int age = 0;
+                            age = Integer.parseInt(array.get(caseAgeRefCell));
+                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    localDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
+
+                            tableCases.getItems().addAll(observableList);
+                            caseCount++;
+                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                tableCases.getItems().removeAll(observableList);
+                            }
+                        }
+                    }
+                }
+            }
+
+            btnToExcel.setVisible(true);
+            apnTableView.toFront();
+
+            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    exportExcelAction(tableCases);
+                }
+            });
+
+            menu = new ContextMenu();
+            String caseno = "";
+            menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
+            tableCases.setContextMenu(menu);
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
+
+            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+
+                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                        URL caseSearch = new URL(search);
+                        Desktop.getDesktop().browse(caseSearch.toURI());
+                    }catch (Exception e){
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                    }
+                }
+            });
+
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
+                    }
+                }
+            });
+
+            btnBack.setVisible(true);
+            btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    apnAccounts.toFront();
+                    lblStatus.setText("ACCOUNT(S) VIEW (" + txAccounts.getText() +  ")");
+                    btnBack.setVisible(false);
+                    btnToExcel.setVisible(false);
+                    tableCases.getItems().clear();
+                }
+            });
         } catch (Exception e) {
             logger.log(Level.WARNING, "Create Table Failed!", e);
         }
@@ -2292,6 +3626,166 @@ public class Controller implements Initializable {
         }
     }
 
+    private void accTwoFilterTableView(String columnSelect1, String columnSelect2, String filter1, String filter2, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+            HSSFCell cellVal3;
+            HSSFCell cellVal4;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(columnSelect1)) {
+                    caseCellRef = i;
+                }
+                if (filterColName.equals(columnSelect2)) {
+                    caseCellRef2 = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Status")) {
+                    caseStatRefCell = i;
+                }
+                if (filterColName.equals("Account Name")) {
+                    caseAccountRef = i;
+                }
+            }
+
+            ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
+            int accfiltnum = setAcc.size();
+
+            for (int i = 0; i <accfiltnum ; i++) {
+
+                for (int k = 1; k < lastRow + 1; k++) {
+
+                    cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                    String cellValToCompare = cellVal.getStringCellValue();
+                    cellVal2 = filtersheet.getRow(k).getCell(caseCellRef2);
+                    String cellValToCompare2 = cellVal2.getStringCellValue();
+
+                    cellVal4 = filtersheet.getRow(k).getCell(caseStatRefCell);
+                    String caseStatus = cellVal4.getStringCellValue();
+
+                    cellVal3 = filtersheet.getRow(k).getCell(caseAccountRef);
+                    String acc = cellVal3.getStringCellValue();
+
+                    if (acc.equals(setAcc.get(i))) {
+
+                        if ((cellValToCompare.equals(filter1) && cellValToCompare2.equals(filter2)) && ((!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")))) {
+                            ArrayList<String> array = new ArrayList<>();
+                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                            while (iterCells.hasNext()) {
+                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                array.add(cell.getStringCellValue());
+                            }
+
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                            LocalDate localDate = null;
+
+                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                            }
+
+                            int age = 0;
+                            age = Integer.parseInt(array.get(caseAgeRefCell));
+                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    localDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
+
+                            tableCases.getItems().addAll(observableList);
+                            caseCount++;
+                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                tableCases.getItems().removeAll(observableList);
+                            }
+                        }
+                    }
+                }
+            }
+
+            btnToExcel.setVisible(true);
+            apnTableView.toFront();
+
+            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    exportExcelAction(tableCases);
+                }
+            });
+
+            menu = new ContextMenu();
+            String caseno = "";
+            menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
+            tableCases.setContextMenu(menu);
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
+
+            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+
+                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                        URL caseSearch = new URL(search);
+                        Desktop.getDesktop().browse(caseSearch.toURI());
+                    }catch (Exception e){
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                    }
+                }
+            });
+
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
+                    }
+                }
+            });
+
+            btnBack.setVisible(true);
+            btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    apnAccounts.toFront();
+                    lblStatus.setText("ACCOUNT(S) VIEW (" + txAccounts.getText() +  ")");
+                    btnBack.setVisible(false);
+                    btnToExcel.setVisible(false);
+                    tableCases.getItems().clear();
+                }
+            });
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
+
     private void regTwoFilterTableView(String columnSelect1, String columnSelect2, String filter1, String filter2, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
 
         int caseCount = 0;
@@ -2413,7 +3907,6 @@ public class Controller implements Initializable {
                         }catch (Exception e){
                             logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
                         }
-
                     }
                 });
 
@@ -2444,6 +3937,164 @@ public class Controller implements Initializable {
         } catch (Exception e) {
             logger.log(Level.WARNING, "Create Table Failed!", e);
         }
+    }
+
+    private void accWIPCaseTableView(String columnSelect, String filter, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+            HSSFCell cellVal3;
+
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(columnSelect)) {
+                    caseCellRef = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Status")) {
+                    caseStatRefCell = i;
+                }
+                if (filterColName.equals("Account Name")) {
+                    caseAccountRef = i;
+                }
+            }
+
+            ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
+            int accfiltnum = setAcc.size();
+
+            for (int i = 0; i <accfiltnum ; i++) {
+
+                for (int k = 1; k < lastRow + 1; k++) {
+                    cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                    String cellValToCompare = cellVal.getStringCellValue();
+
+                    cellVal2 = filtersheet.getRow(k).getCell(caseStatRefCell);
+                    String caseStatus = cellVal2.getStringCellValue();
+
+                    cellVal3 = filtersheet.getRow(k).getCell(caseAccountRef);
+                    String acc = cellVal3.getStringCellValue();
+
+                    if (acc.equals(setAcc.get(i))) {
+
+                        if (cellValToCompare.equals(filter) && (caseStatus.equals("Open / Assign") || caseStatus.equals("Isolate Fault")) && (!caseStatus.equals("Pending Closure") || !caseStatus.equals("Future Availability"))) {
+                            ArrayList<String> array = new ArrayList<>();
+                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                            while (iterCells.hasNext()) {
+                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                array.add(cell.getStringCellValue());
+                            }
+
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                            LocalDate localDate = null;
+
+                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                            }
+
+                            int age = 0;
+                            age = Integer.parseInt(array.get(caseAgeRefCell));
+                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    localDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
+
+                            tableCases.getItems().addAll(observableList);
+                            caseCount++;
+                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                tableCases.getItems().removeAll(observableList);
+                            }
+                        }
+                    }
+                }
+            }
+
+            btnToExcel.setVisible(true);
+            apnTableView.toFront();
+
+            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    exportExcelAction(tableCases);
+                }
+            });
+
+            menu = new ContextMenu();
+            String caseno = "";
+            menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
+
+            tableCases.setContextMenu(menu);
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
+
+            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+
+                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                        URL caseSearch = new URL(search);
+                        Desktop.getDesktop().browse(caseSearch.toURI());
+                    }catch (Exception e){
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                    }
+
+                }
+            });
+
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
+                    }
+                }
+            });
+
+            btnBack.setVisible(true);
+            btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    apnAccounts.toFront();
+                    lblStatus.setText("ACCOUNT(S) VIEW (" +txAccounts.getText() + ")");
+                    btnBack.setVisible(false);
+                    btnToExcel.setVisible(false);
+                    tableCases.getItems().clear();
+                }
+            });
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+
     }
 
     private void regionWIPCaseTableView(String columnSelect, String filter, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
@@ -2593,6 +4244,197 @@ public class Controller implements Initializable {
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
+
+    private void accOverviewWOHView(Boolean bool){
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+            HSSFCell cellVal3;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+
+                if (filterColName.equals("Age (Days)")) {
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Status")) {
+                    caseStatRefCell = i;
+                }
+                if (filterColName.equals("Account Name")) {
+                    caseAccountRef = i;
+                }
+            }
+
+            ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
+            int accfiltnum = setAcc.size();
+
+            for (int j = 0; j < accfiltnum; j++) {
+
+                for (int k = 1; k < lastRow + 1; k++) {
+                    cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                    String cellValToCompare = cellVal.getStringCellValue();
+                    cellVal2 = filtersheet.getRow(k).getCell(caseStatRefCell);
+                    String caseStatus = cellVal2.getStringCellValue();
+                    cellVal3 = filtersheet.getRow(k).getCell(caseAccountRef);
+                    String acc = cellVal3.getStringCellValue();
+
+                    if (acc.equals(setAcc.get(j))) {
+
+                        if (!bool) {
+
+                            if (caseStatus.equals("Pending Closure") || caseStatus.equals("Future Availability")) {
+                                ArrayList<String> array = new ArrayList<>();
+                                ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                while (iterCells.hasNext()) {
+                                    HSSFCell cell = (HSSFCell) iterCells.next();
+                                    array.add(cell.getStringCellValue());
+                                }
+
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                LocalDate localDate = null;
+
+                                if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                    localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                }
+
+                                int age = 0;
+                                age = Integer.parseInt(array.get(caseAgeRefCell));
+                                observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                        array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                        localDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
+
+                                tableCases.getItems().addAll(observableList);
+                                caseCount++;
+                                if (tableCases.getItems().size() >= caseCount + 1) {
+                                    tableCases.getItems().removeAll(observableList);
+                                }
+                            }
+
+                        } else {
+
+                            if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                                ArrayList<String> array = new ArrayList<>();
+                                ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                while (iterCells.hasNext()) {
+                                    HSSFCell cell = (HSSFCell) iterCells.next();
+                                    array.add(cell.getStringCellValue());
+                                }
+
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                LocalDate localDate = null;
+
+                                if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                    localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                }
+
+                                int age = 0;
+                                age = Integer.parseInt(array.get(caseAgeRefCell));
+                                observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                        array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                        localDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
+
+                                tableCases.getItems().addAll(observableList);
+                                caseCount++;
+                                if (tableCases.getItems().size() >= caseCount + 1) {
+                                    tableCases.getItems().removeAll(observableList);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            btnToExcel.setVisible(true);
+            apnTableView.toFront();
+
+            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    exportExcelAction(tableCases);
+                }
+            });
+
+            menu = new ContextMenu();
+            String caseno = "";
+            menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
+            tableCases.setContextMenu(menu);
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
+
+            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+
+                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                        URL caseSearch = new URL(search);
+                        Desktop.getDesktop().browse(caseSearch.toURI());
+                    }catch (Exception e){
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                    }
+                }
+            });
+
+            // Selecting and Copy the Case Number to Clipboard
+            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableCases);
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
+                    }
+                }
+            });
+
+            btnBack.setVisible(true);
+            btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    apnAccounts.toFront();
+                    lblStatus.setText("ACCOUNTS(S) VIEW - " + txAccounts.getText() + ")");
+                    btnBack.setVisible(false);
+                    btnToExcel.setVisible(false);
+                    tableCases.getItems().clear();
+                }
+            });
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 
@@ -2964,6 +4806,200 @@ public class Controller implements Initializable {
         }
     }
 
+    private void accOneFilterTableView(String columnSelect, String filter1, TableView tableCases, AnchorPane apnTableView, Boolean bool) {
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+            HSSFCell cellVal3;
+
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(columnSelect)) {
+                    caseCellRef = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseAgeRefCell = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Status")) {
+                    caseStatRefCell = i;
+                }
+                if (filterColName.equals("Account Name")) {
+                    caseAccountRef = i;
+                }
+
+            }
+
+            ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
+            int accfiltnum = setAcc.size();
+
+            for (int j = 0; j < accfiltnum; j++) {
+
+                for (int k = 1; k < lastRow + 1; k++) {
+                    cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                    String cellValToCompare = cellVal.getStringCellValue();
+                    cellVal2 = filtersheet.getRow(k).getCell(caseStatRefCell);
+                    String caseStatus = cellVal2.getStringCellValue();
+                    cellVal3 = filtersheet.getRow(k).getCell(caseAccountRef);
+                    String acc = cellVal3.getStringCellValue();
+
+
+                    if (acc.equals(setAcc.get(j))) {
+                        if (!bool) {
+                            if (!cellValToCompare.equals(filter1) && !caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                                ArrayList<String> array = new ArrayList<>();
+                                ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                while (iterCells.hasNext()) {
+                                    HSSFCell cell = (HSSFCell) iterCells.next();
+                                    array.add(cell.getStringCellValue());
+                                }
+
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                LocalDate localDate = null;
+
+                                if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                    localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                }
+
+                                int age = 0;
+                                age = Integer.parseInt(array.get(caseAgeRefCell));
+                                observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                        array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                        localDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
+
+                                tableCases.getItems().addAll(observableList);
+                                caseCount++;
+                                if (tableCases.getItems().size() >= caseCount + 1) {
+                                    tableCases.getItems().removeAll(observableList);
+                                }
+                            }
+                        } else {
+                            if (cellValToCompare.equals(filter1) && (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability"))) {
+                                ArrayList<String> array = new ArrayList<>();
+                                ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                while (iterCells.hasNext()) {
+                                    HSSFCell cell = (HSSFCell) iterCells.next();
+                                    array.add(cell.getStringCellValue());
+                                }
+
+                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                LocalDate localDate = null;
+
+                                if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                    localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                }
+
+                                int age = 0;
+                                age = Integer.parseInt(array.get(caseAgeRefCell));
+                                observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                        array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                        localDate, array.get(9), array.get(10),
+                                        array.get(11), array.get(12), array.get(13),
+                                        array.get(14), array.get(15), array.get(16),
+                                        array.get(17)));
+
+                                tableCases.getItems().addAll(observableList);
+                                caseCount++;
+                                if (tableCases.getItems().size() >= caseCount + 1) {
+                                    tableCases.getItems().removeAll(observableList);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                btnToExcel.setVisible(true);
+                apnTableView.toFront();
+
+                btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        exportExcelAction(tableCases);
+                    }
+                });
+
+                menu = new ContextMenu();
+                String caseno = "";
+                menu.getItems().add(openCaseSFDC);
+                menu.getItems().add(openCaseDetails);
+                tableCases.setContextMenu(menu);
+
+                openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        myCaseDetails();
+                    }
+                });
+
+                openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        try {
+
+                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str=" + getCaseNumber(tableCases, caseno);
+
+                            URL caseSearch = new URL(search);
+                            Desktop.getDesktop().browse(caseSearch.toURI());
+                        } catch (Exception e) {
+                            logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                        }
+
+                    }
+                });
+
+                // Selecting and Copy the Case Number to Clipboard
+                tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        try {
+                            copyCaseNumberToClipboard(tableCases);
+                        } catch (Exception e) {
+                            logger.log(Level.WARNING, "Get Case Number Failed", e);
+                        }
+                    }
+                });
+
+                btnBack.setVisible(true);
+                btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        apnAccounts.toFront();
+
+                        ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
+                        lblStatus.setText("ACCOUNT(S) VIEW (" +txAccounts.getText()+")" );
+                        btnBack.setVisible(false);
+                        btnToExcel.setVisible(false);
+                        tableCases.getItems().clear();
+                    }
+                });
+
+            }
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
 
     @FXML
     private void handleClicks(ActionEvent event) throws IOException, InvalidFormatException {
@@ -3014,14 +5050,11 @@ public class Controller implements Initializable {
         }
 
         if (event.getSource() == btnCustomers) {
-            lblStatus.setText("CUSTOMER VIEW");
-            tableCustomers.setVisible(false);
-            apnCustomers.toFront();
-            btnCustomerLoad.setVisible(false);
-            btnBack.setVisible(false);
+            lblStatus.setText("ACCOUNT(S) VIEW");
+            apnAccounts.toFront();
             btnToExcel.setVisible(false);
-            pnAccountSelect.setVisible(false);
-            accountArray();
+            btnBack.setVisible(false);
+            accountsPage();
         }
 
         if (event.getSource() == btnCustomerLoad) {
@@ -3127,7 +5160,6 @@ public class Controller implements Initializable {
             if (outFollow == 0) {
                 alertUser(strAlert);
             }
-
         }
 
         if (event.getSource() == btnEscalated) {
@@ -4424,10 +6456,7 @@ public class Controller implements Initializable {
     private void workGroupDown(){
 
         WebEngine webEngineWork = webWorkGroup.getEngine();
-
-
         webEngineWork.load("http://gbpldb350.genband.com:8080/apex/f?p=101:53:9655403298134::NO:::");
-
     }
 
 
@@ -7614,7 +9643,7 @@ public class Controller implements Initializable {
     }
 
 
-    private void writeDefaultSettingsToFile(String userFilter, String queueFilter, String productFilter) {
+    private void writeDefaultSettingsToFile(String userFilter, String queueFilter, String productFilter, String regionFilter, String accountFilter) {
 
         ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
         ArrayList<String> setUser2 = new ArrayList();
@@ -7721,6 +9750,39 @@ public class Controller implements Initializable {
         } catch (Exception e) {
             logger.log(Level.WARNING, "Products Default Settings Save Failed!", e);
         }
+
+        ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
+        int accArraySize = setAcc.size();
+
+        settingsAccounts = (ArrayList<String>) setAcc.stream().distinct().collect(Collectors.toList());
+        Collections.sort(settingsAccounts);
+
+        try {
+
+            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_account_default_settings.txt"));
+            int size = settingsAccounts.size();
+            for (int i = 0; i < size; i++) {
+                String str = settingsAccounts.get(i);
+                writer.write(str);
+                if (i < size - 1)
+                    writer.write("\n");
+            }
+            writer.close();
+
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Account Default Settings Save Failed!", e);
+        }
+
+        try {
+
+            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_region_default_settings.txt"));
+            String str = regChoice.getValue().toString();
+            writer.write(str);
+            writer.close();
+
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "Region Default Settings Save Failed!", e);
+        }
     }
 
     private void readTimeStamp(){
@@ -7767,6 +9829,8 @@ public class Controller implements Initializable {
         File settingUsersFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_user_default_settings.txt");
         File settingQueueFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_queueu_default_settings.txt");
         File settingProductsFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_product_default_settings.txt");
+        File settingAccountsFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_account_default_settings.txt");
+        File settingRegionFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_region_default_settings.txt");
 
         if (settingUsersFile.isFile()) {
 
@@ -7818,6 +9882,44 @@ public class Controller implements Initializable {
             s.close();
 
             txProducts.setText(readProductList.stream().collect(Collectors.joining(", ")));
+        }
+
+        if (settingAccountsFile.isFile()) {
+
+            Scanner s = null;
+            try {
+                s = new Scanner(settingAccountsFile);
+            } catch (FileNotFoundException e) {
+                logger.log(Level.WARNING, "No Saved Account List", e);
+            }
+            ArrayList<String> readAccountList = new ArrayList<String>();
+            while (s.hasNextLine()) {
+                readAccountList.add(s.nextLine());
+            }
+            s.close();
+
+            txAccounts.setText(readAccountList.stream().collect(Collectors.joining(", ")));
+        }
+
+        if (settingRegionFile.isFile()) {
+
+            System.out.println("1");
+
+            Scanner s = null;
+            try {
+                s = new Scanner(settingRegionFile);
+            } catch (FileNotFoundException e) {
+                logger.log(Level.WARNING, "No Saved Region List", e);
+            }
+            ArrayList<String> readRegion = new ArrayList<String>();
+            while (s.hasNextLine()) {
+                readRegion.add(s.nextLine());
+            }
+            s.close();
+
+            System.out.println(readRegion.get(0));
+
+            regChoice.setValue(readRegion.get(0));
         }
     }
 
@@ -11735,6 +13837,307 @@ public class Controller implements Initializable {
         return fields;
     }
 
+    private void accountsPage(){
+
+        HSSFCell account;
+        HSSFCell hotList;
+        HSSFCell outFollow;
+        HSSFCell escCases;
+        HSSFCell caseSev;
+        HSSFCell caseStat;
+        HSSFCell ageCase;
+        HSSFCell curResp;
+        HSSFCell caseUpdate;
+        HSSFCell caseOwner;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+
+            accHotList = 0;
+            accOutFollow = 0;
+            accEscCases = 0;
+            accBCCases = 0;
+            accInactiveCases = 0;
+            accBCDueCases = 0;
+            accBCMissedCases = 0;
+            accBCDSCases = 0;
+            accBCInactiveCases = 0;
+            accBCWIP = 0;
+            accMJDueCases = 0;
+            accMJMissedCases = 0;
+            accMNMissedCases = 0;
+            accRTSQueue = 0;
+            accGPSQueue = 0;
+            accMJUpdated = 0;
+            accMJDSCases = 0;
+            accMJWIP = 0;
+            accQueuedCases = 0;
+            accCoOwnerQueueCases = 0;
+            accCoOwnerQueueCasesAssigned = 0;
+            accE1Case = 0;
+            accE2Cases = 0;
+            accBCupdated = 0;
+            accBCWac = 0;
+            accMJWAC = 0;
+            accMJInactiveCases = 0;
+            accWOHCases = 0;
+            accUpdateToday = 0;
+            accUpdateMissed = 0;
+            accUpdateNull = 0;
+            accCoOwnCase = 0;
+            accCoOwnQueue = 0;
+
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+
+            for (int i = 0; i < cellnum; i++) {
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+
+                switch (filterColName) {
+                    case ("Case Number"):
+                        caseNumCellRef = i;
+                        break;
+                    case ("Support Type"):
+                        caseSupTypeRefCell = i;
+                        break;
+                    case ("Status"):
+                        caseStatRefCell = i;
+                        break;
+                    case ("Severity"):
+                        caseSevRefCell = i;
+                        break;
+                    case ("Currently Responsible"):
+                        caseRespRefCell = i;
+                        break;
+                    case ("Case Owner"):
+                        caseOwnerRefCell = i;
+                        break;
+                    case ("Escalated By"):
+                        caseEscalatedRefCell = i;
+                        break;
+                    case ("Support Hotlist Level"):
+                        caseHotListRefCell = i;
+                        break;
+                    case ("Outage Follow-Up"):
+                        caseOutFolRefCell = i;
+                        break;
+                    case ("Age (Days)"):
+                        caseAgeRefCell = i;
+                        break;
+                    case ("Next Case Update"):
+                        caseNextUpdateDateRef = i;
+                        break;
+                    case ("Account Name"):
+                        caseAccountRef = i;
+                        break;
+                }
+            }
+
+            if (!txAccounts.getText().isEmpty()) {
+
+                ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
+                int accfiltnum = setAcc.size();
+
+                lblStatus.setText("ACCOUNT(S) VIEW:" + txAccounts.getText() + ")");
+
+                if ((!setAcc.isEmpty())) {
+
+                    for (int j = 0; j < accfiltnum; j++) {
+
+                        for (int i = 1; i < lastRow + 1; i++) {
+
+                            caseStat = filtersheet.getRow(i).getCell(caseStatRefCell);
+                            String caseStatus = caseStat.getStringCellValue();
+
+                            caseSev = filtersheet.getRow(i).getCell(caseSevRefCell);
+                            String caseSever = caseSev.getStringCellValue();
+
+                            curResp = filtersheet.getRow(i).getCell(caseRespRefCell);
+                            String responsible = curResp.getStringCellValue();
+
+                            caseOwner = filtersheet.getRow(i).getCell(caseOwnerRefCell);
+                            String caseOwn = caseOwner.getStringCellValue();
+
+                            escCases = filtersheet.getRow(i).getCell(caseEscalatedRefCell);
+                            String escalatedCases = escCases.getStringCellValue();
+
+                            hotList = filtersheet.getRow(i).getCell(caseHotListRefCell);
+                            String strHotList = hotList.getStringCellValue();
+
+                            outFollow = filtersheet.getRow(i).getCell(caseOutFolRefCell);
+                            String followOut = outFollow.getStringCellValue();
+
+                            account = filtersheet.getRow(i).getCell(caseAccountRef);
+                            String acc = account.getStringCellValue();
+
+                            ageCase = filtersheet.getRow(i).getCell(caseAgeRefCell);
+                            String caseAge = ageCase.getStringCellValue();
+                            int ageCaseNum = Integer.parseInt(caseAge);
+
+                            caseUpdate = filtersheet.getRow(i).getCell(caseNextUpdateDateRef);
+                            String caseupdate = caseUpdate.getStringCellValue();
+
+                            LocalDate dateToday = LocalDate.now();
+                            LocalDate caseUpdateDate = null;
+
+                            if (acc.equals(setAcc.get(j))) {
+
+                                if (!caseupdate.equals("NotSet")) {
+
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                    caseUpdateDate = LocalDate.parse(caseupdate, formatter);
+                                }
+
+                                if (!strHotList.equals("NotSet") && !strHotList.equals("FALSE") && !caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                                    accHotList++;
+                                }
+
+                                if (caseOwn.startsWith("PS")) {
+                                    accGPSQueue++;
+                                }
+
+                                if (caseOwn.startsWith("TS") || caseOwn.startsWith("Tech-Ops")) {
+                                    accRTSQueue++;
+                                }
+
+                                if (followOut.equals("1") && !caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                                    accOutFollow++;
+                                }
+                                if (!escalatedCases.equals("NotSet") && !caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                                    accEscCases++;
+                                }
+
+                                if (caseSever.equals("Critical") && !caseStatus.equals("Pending Closure")) {
+                                    accE1Case++;
+                                }
+
+                                if (caseSever.equals("E2") && !caseStatus.equals("Pending Closure")) {
+                                    accE2Cases++;
+                                }
+
+                                if (caseSever.equals("Business Critical")) {
+                                    if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                                        if (!caseStatus.equals("Develop Solution")) {
+                                            if (ageCaseNum < 15) {
+                                                accBCDueCases++;
+                                            }
+                                            if (ageCaseNum > 15) {
+                                                accBCMissedCases++;
+                                            }
+                                        } else {
+                                            accBCDSCases++;
+                                        }
+                                        accBCCases++;
+                                    } else {
+                                        accBCInactiveCases++;
+                                    }
+                                    if (caseStatus.equals("Open / Assign") || (caseStatus.equals("Isolate Fault"))) {
+                                        accBCWIP++;
+                                    }
+                                    if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                                        if (responsible.equals("Customer action")) {
+                                            accBCWac++;
+                                        }
+                                        if (responsible.equals("Customer updated")) {
+                                            accBCupdated++;
+                                        }
+                                    }
+                                }
+
+                                if (caseSever.equals("Major")) {
+                                    if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                                        if (!caseStatus.equals("Develop Solution")) {
+                                            if (ageCaseNum < 30) {
+                                                accMJDueCases++;
+                                            }
+                                            if (ageCaseNum > 30) {
+                                                accMJMissedCases++;
+                                            }
+                                        } else {
+                                            accMJDSCases++;
+                                        }
+                                    } else {
+                                        accMJInactiveCases++;
+                                    }
+                                    if (caseStatus.equals("Open / Assign") || (caseStatus.equals("Isolate Fault"))) {
+                                        accMJWIP++;
+                                    }
+                                    if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                                        if (responsible.equals("Customer action")) {
+                                            accMJWAC++;
+                                        }
+                                        if (responsible.equals("Customer updated")) {
+                                            accMJUpdated++;
+                                        }
+                                    }
+                                }
+                                if (caseSever.equals("Minor")) {
+                                    if ((caseStatus.equals("Open / Assign")) || (caseStatus.equals("Isolate Fault"))) {
+                                        if (ageCaseNum > 180) {
+                                            accMNMissedCases++;
+                                        }
+                                    }
+                                }
+
+                                if (caseStatus.equals("Pending Closure") || caseStatus.equals("Future Availability")) {
+                                    accInactiveCases++;
+                                }
+                                if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                                    accWOHCases++;
+                                }
+
+                                if ((caseUpdateDate != null)) {
+                                    if (caseUpdateDate.compareTo(dateToday) == 0) {
+                                        accUpdateToday++;
+                                    }
+                                    if (caseUpdateDate.compareTo(dateToday) < 0) {
+                                        accUpdateMissed++;
+                                    }
+                                }
+
+                                if (caseupdate.equals("NotSet") && !caseStatus.equals("Pending Closure")) {
+                                    accUpdateNull++;
+                                }
+                            }
+                        }
+                    }
+                    /* Updating the button text from digested data */
+                    btnAccHotIssues.setText(String.valueOf(accHotList));
+                    btnAccOutFollow.setText(String.valueOf(this.accOutFollow));
+                    btnAccEscalated.setText(String.valueOf(accEscCases));
+                    btnAccBCCases.setText(String.valueOf(accBCCases));
+                    btnAccInactive.setText(String.valueOf(accInactiveCases));
+                    btnAccBCDue.setText(String.valueOf(accBCDueCases));
+                    btnAccBCMissed.setText(String.valueOf(accBCMissedCases));
+                    btnAccBCWac.setText(String.valueOf(accBCWac));
+                    btnAccBCupdated.setText(String.valueOf(accBCupdated));
+                    btnAccBCEngineering.setText(String.valueOf(accBCDSCases));
+                    btnAccBCINACT.setText(String.valueOf(accBCInactiveCases));
+                    btnAccBCWIP.setText(String.valueOf(accBCWIP));
+                    btnAccMJDue.setText(String.valueOf(accMJDueCases));
+                    btnAccMJMissed.setText(String.valueOf(accMJMissedCases));
+                    btnAccMJWac.setText(String.valueOf(accMJWAC));
+                    btnAccMJupdated.setText(String.valueOf(accMJUpdated));
+                    btnAccMJEngineering.setText(String.valueOf(accMJDSCases));
+                    btnAccMJINACT.setText(String.valueOf(accMJInactiveCases));
+                    btnAccMJWIP.setText(String.valueOf(accMJWIP));
+                    btnaccGPSQueue.setText(String.valueOf(accGPSQueue));
+                    btnAccRTSQueue.setText(String.valueOf(accRTSQueue));
+                    btnAccE1Cases.setText(String.valueOf(accE1Case));
+                    btnAccE2Cases.setText(String.valueOf(accE2Cases));
+                    btnAccWOH.setText(String.valueOf(accWOHCases));
+                    btnAccUpdateToday.setText(String.valueOf(accUpdateToday));
+                    btnAccUpdateMissed.setText(String.valueOf(accUpdateMissed));
+                    btnAccUpdateNull.setText(String.valueOf(accUpdateNull));
+                    btnAccMNMissed.setText(String.valueOf(accMNMissedCases));
+                }
+            }
+
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
     private void overviewPage() {
 
         HSSFCell filtHotList;
@@ -13607,6 +16010,222 @@ public class Controller implements Initializable {
         }
     }
 
+    private void accountSelectArray(){
+
+        tableAcc.setVisible(true);
+        accCol.setCellValueFactory(new PropertyValueFactory<AccountTableView, String>("accountName"));
+        accColSelected.setCellValueFactory(new PropertyValueFactory<AccountTableView, String>("accountName"));
+
+        HSSFCell accCell;
+
+        try {
+
+            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")));
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int lastRow = filtersheet.getLastRowNum();
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+
+            for (int i = 0; i < cellnum; i++) {
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+
+                if (filterColName.equals("Account Name")) {
+                    caseAccountRef = i;
+                }
+            }
+
+            ArrayList<String> accArray = new ArrayList<>();
+
+            for (int i = 1; i < lastRow; i++) {
+
+                accCell = filtersheet.getRow(i).getCell(caseAccountRef);
+                String productName = "";
+
+                if (accCell != null) {
+                    productName = accCell.getStringCellValue();
+                }
+                accArray.add(productName);
+            }
+
+            accArray = (ArrayList) accArray.stream().distinct().collect(Collectors.toList());
+            Collections.sort(accArray);
+
+            ObservableList<AccountTableView> accList = FXCollections.observableArrayList();
+
+            int arraysize = accArray.size();
+
+            for (int i = 0; i < arraysize; i++) {
+
+                accList.add(new AccountTableView(accArray.get(i)));
+            }
+
+            FilteredList<AccountTableView> filteredAccounts = new FilteredList((ObservableList) accList, p -> true);
+            txtAccSelect.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredAccounts.setPredicate(accountTableView -> {
+
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+
+                    String lowerCaseCustomerName = newValue.toLowerCase();
+
+                    if (accountTableView.getAccountName().toLowerCase().contains(lowerCaseCustomerName)) {
+                        return true;
+                    }
+                    return false;
+                });
+            });
+
+            SortedList<AccountTableView> sortedProducts = new SortedList<>(filteredAccounts);
+            sortedProducts.comparatorProperty().bind(tableAcc.comparatorProperty());
+
+            tableAcc.setItems(filteredAccounts);
+            tableAcc.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            tableAcc.getSelectionModel().setCellSelectionEnabled(true);
+
+            tableAcc.getFocusModel().focusedCellProperty().addListener((obs, newVal, oldVal) -> {
+
+                tableAcc.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+
+                        if (event.getClickCount() > 1) {
+                            try {
+
+                                if (tableAcc.getSelectionModel().getSelectedItem() != null) {
+                                    AccountTableView selectedAccount = tableAcc.getSelectionModel().getSelectedItem();
+                                    //filteredAccounts.add(selectedAcc.getAccountName());
+                                    tableAccSelected.getItems().add(selectedAccount);
+                                }
+                            } catch (Exception e) {
+                                logger.log(Level.WARNING, "Unable To Add Account to Selected By Click...", e);
+                            }
+                        }
+                    }
+                });
+            });
+
+            btnAccUpdateAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+
+                        if (tableAcc.getSelectionModel().getSelectedItem() != null) {
+                            AccountTableView selectedAccount = tableAcc.getSelectionModel().getSelectedItem();
+                            tableAccSelected.getItems().add(selectedAccount);
+                            txtAccSelect.clear();
+                        }
+
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Unable To Add Account to Selected By Button...", e);
+                    }
+                }
+            });
+
+            tableAccSelected.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+
+                    if (event.getClickCount() > 1) {
+                        try {
+
+                            if (tableAccSelected.getSelectionModel().getSelectedCells() != null) {
+                                AccountTableView selectedAcc = tableAccSelected.getSelectionModel().getSelectedItem();
+                                tableAccSelected.getItems().remove(selectedAcc);
+                            }
+
+                        } catch (Exception e) {
+                            logger.log(Level.WARNING, "Unable To Remove Product to Selected By Click...", e);
+                        }
+                    }
+                }
+            });
+
+            btnAccUpdateRemove.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+
+                        if (tableAccSelected.getSelectionModel().getSelectedCells() != null) {
+                            AccountTableView selectedCust = tableAccSelected.getSelectionModel().getSelectedItem();
+                            tableAccSelected.getItems().remove(selectedCust);
+                        }
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Unable To Remove Product to Selected By Button...", e);
+                    }
+                }
+            });
+
+            btnAccSelectClear.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    tableAccSelected.getItems().clear();
+                }
+            });
+
+            btnAccSelectClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    pnAccSelect.setVisible(false);
+                }
+            });
+
+            btnAccUpdate.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+
+                    int selected = 0;
+                    accountsFiltered = new ArrayList<>();
+
+                    try {
+
+                        selected = tableAccSelected.getItems().size();
+
+                        for (int i = 0; i < selected; i++) {
+
+                            AccountTableView addAcc = tableAccSelected.getItems().get(i);
+                            accountsFiltered.add(addAcc.getAccountName());
+
+                        }
+
+                        accountsFiltered = (ArrayList) accountsFiltered.stream().distinct().collect(Collectors.toList());
+
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Unable To Update Product List...", e);
+                    }
+
+                    if(txAccounts.getText().equals("")){
+                        txAccounts.setText(accountsFiltered.toString().replace("[", "").replace("]", ""));
+                    }else{
+
+                        ArrayList<String> selAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
+
+                        int selSize = selAcc.size();
+                        int accFSize = accountsFiltered.size();
+
+                        for (int i = 0; i < selSize ; i++) {
+
+                            if (accountsFiltered.contains(selAcc.get(i))){
+                                accountsFiltered.remove(selAcc.get(i));
+                                accFSize--;
+                            }
+                        }
+
+                        if (accFSize != 0) {
+                            txAccounts.appendText(", " + accountsFiltered.toString().replace("[", "").replace("]", ""));
+                        }
+                    }
+
+                    pnAccSelect.setVisible(false);
+                    tableAccSelected.getItems().clear();
+                }
+            });
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     private void productSelectArray() {
 
         HSSFCell prodCell;
@@ -14208,6 +16827,7 @@ public class Controller implements Initializable {
             pnUsersSave.setVisible(false);
             pnProductsSave.setVisible(false);
             pnProductsLoad.setVisible(false);
+            pnAccountSelect.setVisible(false);
             userSelectArray();
             txtUserSelect.requestFocus();
         }
@@ -14222,6 +16842,9 @@ public class Controller implements Initializable {
             pnProductsSave.setVisible(false);
             pnUsersSave.setVisible(false);
             pnUsersLoad.setVisible(false);
+            pnAccSelect.setVisible(false);
+            pnAccountLoad.setVisible(false);
+            pnAccountSave.setVisible(false);
         }
         if (event.getSource() == txProducts) {
             pnUsersSelect.setVisible(false);
@@ -14233,6 +16856,7 @@ public class Controller implements Initializable {
             pnUsersSave.setVisible(false);
             pnProductsSave.setVisible(false);
             pnProductsLoad.setVisible(false);
+            pnAccSelect.setVisible(false);
             productSelectArray();
             txtProductSelect.requestFocus();
         }
@@ -14247,8 +16871,25 @@ public class Controller implements Initializable {
             pnUsersSave.setVisible(false);
             pnProductsSave.setVisible(false);
             pnProductsLoad.setVisible(false);
+            pnAccSelect.setVisible(false);
             queueSelectArray();
             txtQueueSelect.requestFocus();
+        }
+
+        if (event.getSource() == txAccounts){
+            pnUsersSelect.setVisible(false);
+            pnProductSelect.setVisible(false);
+            pnQueueSelect.setVisible(false);
+            pnAccSelect.setVisible(true);
+            pnQueuesSave.setVisible(false);
+            pnQueuesLoad.setVisible(false);
+            pnUsersLoad.setVisible(false);
+            pnUsersSave.setVisible(false);
+            pnProductsSave.setVisible(false);
+            pnProductsLoad.setVisible(false);
+            accountSelectArray();
+            txtAccSelect.requestFocus();
+
         }
         if (event.getSource() == btnUsersClear) {
             pnUsersSelect.setVisible(false);
@@ -14257,13 +16898,17 @@ public class Controller implements Initializable {
         if (event.getSource() == btnProductsClear) {
             pnProductSelect.setVisible(false);
             txProducts.clear();
-            txtUserSelect.clear();
         }
         if (event.getSource() == btnQueueClear) {
             pnQueueSelect.setVisible(false);
             txQueues.clear();
-            txtUserSelect.clear();
         }
+
+        if (event.getSource() == btnAccountClear){
+            pnAccSelect.setVisible(false);
+            txAccounts.clear();
+        }
+
         if (event.getSource() == btnAccountClear) {
 
             btnCustomerLoad.setVisible(false);
@@ -14279,13 +16924,17 @@ public class Controller implements Initializable {
             txUsers.clear();
             txProducts.clear();
             txQueues.clear();
+            txAccounts.clear();
+            regChoice.setValue("NotSet");
         }
         if (event.getSource() == btnSaveDefault) {
             String userFilter = txUsers.getText();
             String queueFilter = txQueues.getText();
             String productFilter = txProducts.getText();
+            String accountFilter = txAccounts.getText();
+            String regionFilter = regChoice.getValue();
 
-            writeDefaultSettingsToFile(userFilter, queueFilter, productFilter);
+            writeDefaultSettingsToFile(userFilter, queueFilter, productFilter,regionFilter, accountFilter);
         }
 
         if (event.getSource() == btnLoadDefault) {
@@ -14301,7 +16950,7 @@ public class Controller implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("For any issues/requests please inform us:" + "\n" + "\n" +
                     "Alper Simsek"+ "    " + "asimsek@rbbn.com" + "\n" + "\n" +
-                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.12");
+                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.13");
             alert.showAndWait();
         }
 
@@ -14316,6 +16965,7 @@ public class Controller implements Initializable {
             pnProductSelect.setVisible(false);
             pnUsersSave.toFront();
             pnUsersSave.setVisible(true);
+            pnAccountLoad.setVisible(false);
             txtUsersSave.clear();
             saveUserProfile();
 
@@ -14335,6 +16985,7 @@ public class Controller implements Initializable {
             pnQueueSelect.setVisible(false);
             pnUsersSelect.setVisible(false);
             pnProductSelect.setVisible(false);
+            pnAccountLoad.setVisible(false);
             txtProductsSave.clear();
             saveProductProfile();
 
@@ -14354,12 +17005,35 @@ public class Controller implements Initializable {
             pnQueueSelect.setVisible(false);
             pnUsersSelect.setVisible(false);
             pnProductSelect.setVisible(false);
+            pnAccountLoad.setVisible(false);
             txtQueuesSave.clear();
             saveQueueProfile();
         }
         if (event.getSource() == btnQueuesSaveClose){
             pnQueuesSave.setVisible(false);
             pnQueuesSave.toBack();
+        }
+
+
+        if (event.getSource() == btnAccSaveAs){
+            pnAccountSave.toFront();
+            pnAccountSave.setVisible(true);
+            pnQueuesSave.setVisible(false);
+            pnUsersSave.setVisible(false);
+            pnProductsSave.setVisible(false);
+            pnUsersLoad.setVisible(false);
+            pnQueuesLoad.setVisible(false);
+            pnProductsLoad.setVisible(false);
+            pnQueueSelect.setVisible(false);
+            pnUsersSelect.setVisible(false);
+            pnProductSelect.setVisible(false);
+            pnAccountLoad.setVisible(false);
+            txtQueuesSave.clear();
+            saveAccountProfile();
+        }
+        if (event.getSource() == btnAccountSaveClose){
+            pnAccountSave.setVisible(false);
+            pnAccountSave.toBack();
         }
         if (event.getSource() == btnUsersLoad){
 
@@ -14373,6 +17047,7 @@ public class Controller implements Initializable {
             pnUsersSave.setVisible(false);
             pnProductsSave.setVisible(false);
             pnQueuesSave.setVisible(false);
+            pnAccountLoad.setVisible(false);
             loadUserProfile();
         }
         if (event.getSource() == btnUsersLoadClose){
@@ -14390,6 +17065,7 @@ public class Controller implements Initializable {
             pnQueueSelect.setVisible(false);
             pnUsersSelect.setVisible(false);
             pnProductSelect.setVisible(false);
+            pnAccountLoad.setVisible(false);
             loadProductProfile();
 
         }
@@ -14409,12 +17085,32 @@ public class Controller implements Initializable {
             pnQueueSelect.setVisible(false);
             pnUsersSelect.setVisible(false);
             pnProductSelect.setVisible(false);
+            pnAccountLoad.setVisible(false);
             loadQueueProfile();
+
+        }
+        if (event.getSource() == btnAccLoad){
+            pnAccountLoad.toFront();
+            pnAccountLoad.setVisible(true);
+            pnQueuesLoad.setVisible(false);
+            pnUsersLoad.setVisible(false);
+            pnProductsLoad.setVisible(false);
+            pnUsersSave.setVisible(false);
+            pnProductsSave.setVisible(false);
+            pnQueuesSave.setVisible(false);
+            pnQueueSelect.setVisible(false);
+            pnUsersSelect.setVisible(false);
+            pnProductSelect.setVisible(false);
+            loadAccountProfile();
 
         }
         if (event.getSource() == btnQueueLoadClose){
             pnQueuesLoad.toBack();
             pnQueuesLoad.setVisible(false);
+        }
+        if (event.getSource() == btnAccountLoadClose){
+            pnAccountLoad.toBack();
+            pnAccountLoad.setVisible(false);
         }
 
         if(event.getSource() == btnManClose){
@@ -14444,7 +17140,7 @@ public class Controller implements Initializable {
 
     private void checkManUser(){
 
-        String password = "123456";
+        String password = "654123";
 
         if (!txtpass.getText().equals("")){
 
@@ -14458,7 +17154,62 @@ public class Controller implements Initializable {
             else{
             }
         }
+    }
 
+    private void loadAccountProfile(){
+        accountProfileList.getItems().clear();
+        ObservableList<String> accountProfiles = FXCollections.observableArrayList();
+
+        ArrayList<File> files = new ArrayList<>();
+        File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Account");
+        File[] fileList = repo.listFiles();
+
+        for (int i = 0 ; i < fileList.length ; i++) {
+            accountProfiles.addAll(fileList[i].getName());
+        }
+
+        accountProfileList.getItems().addAll(accountProfiles);
+        accountProfileList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        accountProfileList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                String selectedProfile = accountProfileList.getSelectionModel().getSelectedItem().toString();
+
+                btnAccountProfLoad.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+
+                        File accountProfileFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Account\\" + selectedProfile);
+
+                        txAccounts.clear();
+
+                        if (accountProfileFile.isFile()) {
+                            Scanner s = null;
+                            try {
+                                s = new Scanner(accountProfileFile);
+                            } catch (Exception e) {
+                                logger.log(Level.WARNING, "Profile/Account - No File Found...: ", e);
+                            }
+                            while (s.hasNextLine()) {
+                                txAccounts.appendText(s.nextLine() + ",");
+                            }
+                            s.close();
+                            pnAccountLoad.toBack();
+                            pnAccountLoad.setVisible(false);
+                        }
+                    }
+                });
+
+                btnAccountProfDelete.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        File accountFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Account\\" + selectedProfile);
+                        accountFile.delete();
+                        accountProfileList.getItems().remove(selectedProfile);
+                    }
+                });
+            }});
     }
 
     private void loadQueueProfile(){
@@ -14641,6 +17392,68 @@ public class Controller implements Initializable {
             pnUsersLoad.setVisible(false);
         }
 
+    }
+
+    private void saveAccountProfile(){
+
+        ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
+
+        btnAccountSave.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (!txtAccountSave.getText().isEmpty()) {
+
+                    try {
+
+                        File accProfFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Account\\" + txtAccountSave.getText());
+
+                        if (!accProfFile.exists()) {
+                            try {
+
+                                new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile").mkdir();
+                                new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Account").mkdir();
+                                FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Account\\" + txtAccountSave.getText()));
+
+                                int size = setAcc.size();
+
+                                for (int i = 0; i < size; i++) {
+
+                                    writer.write(setAcc.get(i) + "\n");
+
+                                }
+                                writer.close();
+
+                            } catch (Exception e) {
+                                logger.log(Level.WARNING, "Profile/Account - No Folder...: ", e);
+                            }
+                        } else {
+                            try {
+
+                                FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Account\\" + txtAccountSave.getText()));
+                                int size = setAcc.size();
+                                for (int i = 0; i < size; i++) {
+
+                                    writer.write(setAcc.get(i) + "\n");
+                                }
+                                writer.close();
+
+                            } catch (Exception e) {
+                                logger.log(Level.WARNING, "Profile/Account - Not Able To Save...: ", e);
+                            }
+                        }
+
+                        pnAccountSave.toBack();
+                        pnAccountSave.setVisible(false);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else{
+                    alertUser(strSave);
+                }
+            }
+        });
     }
 
     private void saveQueueProfile(){
@@ -15956,12 +18769,12 @@ public class Controller implements Initializable {
 
         logger.info("Program Started");
         arrangeCMTFolder();
-        readDefaultSettingFiles();
         setqueueArray();
         readTimeStamp();
         myProductsPage();
         overviewPage();
         myCasesPage();
         regionChoice();
+        readDefaultSettingFiles();
     }
 }

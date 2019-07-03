@@ -246,7 +246,7 @@ public class MyCaseDetails implements Initializable {
 
             for (int i = 0; i < arraySize; i += 2) {
 
-                txtMyCaseDetComm.appendText("===============" + "\n" + caseCommentArray.get(i)+ "\n" + "\n" + caseCommentArray.get(i+1) + "\n");
+                txtMyCaseDetComm.appendText("==================================================================" + "\n" + caseCommentArray.get(i)+ "\n" + "\n" + caseCommentArray.get(i+1) + "\n");
             }
             txtMyCaseDetComm.positionCaret(txtMyCaseDetComm.getLength());
 
@@ -269,7 +269,7 @@ public class MyCaseDetails implements Initializable {
                     new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes").mkdir();
 
                     FileWriter writer = new FileWriter(caseNoteFile);
-                    writer.write("=====================" + "\n" + LocalTime.now().format(dtf) + "           " + LocalDate.now() + "\n" + "\n" +
+                    writer.write("========================================================================" + "\n" + LocalTime.now().format(dtf) + "           " + LocalDate.now() + "\n" + "\n" +
                             txtMyCaseDetAddNote.getText() + "\n" + "\n");
 
                     writer.close();
@@ -277,7 +277,7 @@ public class MyCaseDetails implements Initializable {
                 } else {
 
                     FileWriter writer = new FileWriter(caseNoteFile, true);
-                    writer.append("=====================" + "\n" + LocalTime.now().format(dtf) + "           " + LocalDate.now() + "\n" + "\n" + txtMyCaseDetAddNote.getText() + "\n" + "\n");
+                    writer.append("====================================================================================" + "\n" + LocalTime.now().format(dtf) + "           " + LocalDate.now() + "\n" + "\n" + txtMyCaseDetAddNote.getText() + "\n" + "\n");
                     writer.close();
                 }
 
