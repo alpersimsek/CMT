@@ -178,11 +178,21 @@ public class Controller implements Initializable {
     @FXML
     private Pane pnAccSelect;
     @FXML
+    private Pane pnWGSelect;
+    @FXML
     private TextField txAccounts;
     @FXML
     private TableView<AccountTableView> tableAcc;
     @FXML
+    private TableView<WorkGroupTableView> tableWG;
+    @FXML
+    private TableView<WorkGroupTableView> tableWGSelected;
+    @FXML
     private TableColumn<AccountTableView, String> accCol;
+    @FXML
+    private TableColumn<WorkGroupTableView, String> WGCol;
+    @FXML
+    private TableColumn<WorkGroupTableView, String> WGColSelected;
     @FXML
     private Button btnAccUpdate;
     @FXML
@@ -199,6 +209,18 @@ public class Controller implements Initializable {
     private Button btnAccUpdateAdd;
     @FXML
     private Button btnAccUpdateRemove;
+    @FXML
+    private TextField txtWGSelect;
+    @FXML
+    private Button btnWGSelectClose;
+    @FXML
+    private Button btnWGSelectClear;
+    @FXML
+    private Button btnWGUpdateAdd;
+    @FXML
+    private Button btnWGUpdateRemove;
+    @FXML
+    private Button btnWGUpdate;
 
     // Region Wars
     @FXML
@@ -384,6 +406,8 @@ public class Controller implements Initializable {
     public TextField customerText;
     @FXML
     private TextField txQueues;
+    @FXML
+    private TextField txWorkGroup;
     @FXML
     Text txtEscalated;
     @FXML
@@ -865,6 +889,8 @@ public class Controller implements Initializable {
     @FXML
     private WebView webviewTest;
     @FXML
+    private WebView wvWG;
+    @FXML
     private WebView projectWeb;
     @FXML
     private TextField txtpass;
@@ -942,6 +968,8 @@ public class Controller implements Initializable {
     ArrayList<String> settingsProducts = new ArrayList<>();
     ArrayList<String> settingsAccounts = new ArrayList<>();
     ArrayList<String> filteredAccounts = new ArrayList<String>();
+    ArrayList<String> filteredWGs = new ArrayList<String>();
+    ArrayList<String> WgFiltered = new ArrayList<String>();
     ArrayList<String> usersFiltered = new ArrayList<String>();
     ArrayList<String> productsFiltered = new ArrayList<String>();
     ArrayList<String> accountsFiltered = new ArrayList<String>();
@@ -956,6 +984,8 @@ public class Controller implements Initializable {
     MenuItem openCaseDetails = new MenuItem("View Details...");
 
     //Case Ref Cells
+    int caseWGRef = 0;
+    int caseVPref = 0;
     int caseAccountRef = 0;
     int caseNumCellRef = 0;
     int caseSupTypeRefCell = 0;
@@ -3165,7 +3195,7 @@ public class Controller implements Initializable {
             btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent event) {
-                    apnRegCases.toFront();
+                    apnAccounts.toFront();
                     lblStatus.setText("ACCOUNT(S) VIEW (" + txAccounts.getText() +  ")");
                     btnBack.setVisible(false);
                     btnToExcel.setVisible(false);
@@ -6452,13 +6482,6 @@ public class Controller implements Initializable {
             regionCases();
         }
     }
-
-    private void workGroupDown(){
-
-        WebEngine webEngineWork = webWorkGroup.getEngine();
-        webEngineWork.load("http://gbpldb350.genband.com:8080/apex/f?p=101:53:9655403298134::NO:::");
-    }
-
 
     private void caseNoteTable(){
 
@@ -9903,8 +9926,6 @@ public class Controller implements Initializable {
 
         if (settingRegionFile.isFile()) {
 
-            System.out.println("1");
-
             Scanner s = null;
             try {
                 s = new Scanner(settingRegionFile);
@@ -9916,9 +9937,6 @@ public class Controller implements Initializable {
                 readRegion.add(s.nextLine());
             }
             s.close();
-
-            System.out.println(readRegion.get(0));
-
             regChoice.setValue(readRegion.get(0));
         }
     }
@@ -16009,6 +16027,227 @@ public class Controller implements Initializable {
             logger.log(Level.WARNING, "User Select Array Failed...", e);
         }
     }
+    private void workGroupSelect(){
+        tableWG.setVisible(true);
+        tableWGSelected.setVisible(true);
+        WGCol.setCellValueFactory(new PropertyValueFactory<WorkGroupTableView, String>("workGroupName"));
+        WGColSelected.setCellValueFactory(new PropertyValueFactory<WorkGroupTableView, String>("workGroupName"));
+
+        HSSFCell wgCell;
+
+        try{
+            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Workgroup\\WorkGroup.xls")));
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int lastRow = filtersheet.getLastRowNum();
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+
+            for (int i = 0; i < cellnum; i++) {
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+
+                if (filterColName.equals("Workgroup Name")) {
+                    caseWGRef = i;
+                }
+                if (filterColName.equals("Vp Current")) {
+                    caseVPref = i;
+                }
+
+            }
+
+            ArrayList<String> wgArray = new ArrayList<>();
+
+            for (int i = 1; i < lastRow; i++) {
+
+                String vpName = filtersheet.getRow(i).getCell(caseVPref).getStringCellValue();
+
+                if (vpName.equals("Dave Murphy")) {
+
+                    wgCell = filtersheet.getRow(i).getCell(caseWGRef);
+                    String workgroupName = "";
+
+                    if (wgCell != null) {
+                        workgroupName = wgCell.getStringCellValue();
+                    }
+                    wgArray.add(workgroupName);
+                }
+            }
+
+            wgArray = (ArrayList) wgArray.stream().distinct().collect(Collectors.toList());
+            Collections.sort(wgArray);
+
+            ObservableList<WorkGroupTableView> wgList = FXCollections.observableArrayList();
+            int arraysize = wgArray.size();
+
+            for (int i = 0; i < arraysize; i++) {
+
+                wgList.add(new WorkGroupTableView(wgArray.get(i)));
+            }
+
+            FilteredList<WorkGroupTableView> filteredWorkGroups = new FilteredList((ObservableList) wgList, p -> true);
+            txtWGSelect.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredWorkGroups.setPredicate(workGroupTableView -> {
+
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+
+                    String lowerCaseCustomerName = newValue.toLowerCase();
+
+                    if (workGroupTableView.getWorkGroupName().toLowerCase().contains(lowerCaseCustomerName)) {
+                        return true;
+                    }
+                    return false;
+                });
+            });
+
+            SortedList<WorkGroupTableView> sortedWGs = new SortedList<>(filteredWorkGroups);
+            sortedWGs.comparatorProperty().bind(tableWG.comparatorProperty());
+
+            tableWG.setItems(filteredWorkGroups);
+            tableWG.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+            tableWG.getSelectionModel().setCellSelectionEnabled(true);
+
+            tableWG.getFocusModel().focusedCellProperty().addListener((obs, newVal, oldVal) -> {
+
+                tableWG.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+
+                        if (event.getClickCount() > 1) {
+                            try {
+
+                                if (tableWG.getSelectionModel().getSelectedItem() != null) {
+                                    WorkGroupTableView selectedWG = tableWG.getSelectionModel().getSelectedItem();
+                                    //filteredAccounts.add(selectedAcc.getAccountName());
+                                    tableWGSelected.getItems().add(selectedWG);
+                                }
+                            } catch (Exception e) {
+                                logger.log(Level.WARNING, "Unable To Add WG to Selected By Click...", e);
+                            }
+                        }
+                    }
+                });
+            });
+
+            btnWGUpdateAdd.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+
+                        if (tableWG.getSelectionModel().getSelectedItem() != null) {
+                            WorkGroupTableView selectedWG = tableWG.getSelectionModel().getSelectedItem();
+                            tableWGSelected.getItems().add(selectedWG);
+                            txtWGSelect.clear();
+                        }
+
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Unable To Add WG to Selected By Button...", e);
+                    }
+                }
+            });
+
+            tableWGSelected.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+
+                    if (event.getClickCount() > 1) {
+                        try {
+
+                            if (tableWGSelected.getSelectionModel().getSelectedCells() != null) {
+                                WorkGroupTableView selectedWg = tableWGSelected.getSelectionModel().getSelectedItem();
+                                tableWGSelected.getItems().remove(selectedWg);
+                            }
+
+                        } catch (Exception e) {
+                            logger.log(Level.WARNING, "Unable To Remove WG to Selected By Click...", e);
+                        }
+                    }
+                }
+            });
+
+            btnWGUpdateRemove.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+
+                        if (tableWGSelected.getSelectionModel().getSelectedCells() != null) {
+                            WorkGroupTableView selectedWg = tableWGSelected.getSelectionModel().getSelectedItem();
+                            tableWGSelected.getItems().remove(selectedWg);
+                        }
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Unable To Remove WG to Selected By Button...", e);
+                    }
+                }
+            });
+
+            btnWGSelectClear.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    tableWGSelected.getItems().clear();
+                }
+            });
+
+            btnWGSelectClose.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    pnWGSelect.setVisible(false);
+                }
+            });
+
+            btnWGUpdate.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+
+                    int selected = 0;
+                     WgFiltered= new ArrayList<>();
+
+                    try {
+
+                        selected = tableWGSelected.getItems().size();
+
+                        for (int i = 0; i < selected; i++) {
+
+                            WorkGroupTableView addWg = tableWGSelected.getItems().get(i);
+                            WgFiltered.add(addWg.getWorkGroupName());
+
+                        }
+
+                        WgFiltered = (ArrayList) WgFiltered.stream().distinct().collect(Collectors.toList());
+
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Unable To Update Product List...", e);
+                    }
+
+                    if(txWorkGroup.getText().equals("")){
+                        txWorkGroup.setText(WgFiltered.toString().replace("[", "").replace("]", ""));
+                    }else{
+
+                        ArrayList<String> selWg = new ArrayList<>(Arrays.asList(txWorkGroup.getText().split(",\\s*")));
+
+                        int selSize = selWg.size();
+                        int wgFSize = WgFiltered.size();
+
+                        for (int i = 0; i < selSize ; i++) {
+
+                            if (WgFiltered.contains(selWg.get(i))){
+                                WgFiltered.remove(selWg.get(i));
+                                wgFSize--;
+                            }
+                        }
+
+                        if (wgFSize != 0) {
+                            txWorkGroup.appendText(", " + WgFiltered.toString().replace("[", "").replace("]", ""));
+                        }
+                    }
+
+                    pnWGSelect.setVisible(false);
+                    tableWGSelected.getItems().clear();
+                }
+            });
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 
     private void accountSelectArray(){
 
@@ -16827,7 +17066,8 @@ public class Controller implements Initializable {
             pnUsersSave.setVisible(false);
             pnProductsSave.setVisible(false);
             pnProductsLoad.setVisible(false);
-            pnAccountSelect.setVisible(false);
+            pnAccSelect.setVisible(false);
+            pnWGSelect.setVisible(false);
             userSelectArray();
             txtUserSelect.requestFocus();
         }
@@ -16845,6 +17085,7 @@ public class Controller implements Initializable {
             pnAccSelect.setVisible(false);
             pnAccountLoad.setVisible(false);
             pnAccountSave.setVisible(false);
+            pnWGSelect.setVisible(false);
         }
         if (event.getSource() == txProducts) {
             pnUsersSelect.setVisible(false);
@@ -16857,6 +17098,7 @@ public class Controller implements Initializable {
             pnProductsSave.setVisible(false);
             pnProductsLoad.setVisible(false);
             pnAccSelect.setVisible(false);
+            pnWGSelect.setVisible(false);
             productSelectArray();
             txtProductSelect.requestFocus();
         }
@@ -16872,6 +17114,7 @@ public class Controller implements Initializable {
             pnProductsSave.setVisible(false);
             pnProductsLoad.setVisible(false);
             pnAccSelect.setVisible(false);
+            pnWGSelect.setVisible(false);
             queueSelectArray();
             txtQueueSelect.requestFocus();
         }
@@ -16887,9 +17130,24 @@ public class Controller implements Initializable {
             pnUsersSave.setVisible(false);
             pnProductsSave.setVisible(false);
             pnProductsLoad.setVisible(false);
+            pnWGSelect.setVisible(false);
             accountSelectArray();
             txtAccSelect.requestFocus();
-
+        }
+        if (event.getSource() == txWorkGroup){
+            pnUsersSelect.setVisible(false);
+            pnProductSelect.setVisible(false);
+            pnQueueSelect.setVisible(false);
+            pnAccSelect.setVisible(false);
+            pnQueuesSave.setVisible(false);
+            pnQueuesLoad.setVisible(false);
+            pnUsersLoad.setVisible(false);
+            pnUsersSave.setVisible(false);
+            pnProductsSave.setVisible(false);
+            pnProductsLoad.setVisible(false);
+            pnWGSelect.setVisible(true);
+            workGroupSelect();
+            txtWGSelect.requestFocus();
         }
         if (event.getSource() == btnUsersClear) {
             pnUsersSelect.setVisible(false);
@@ -16904,7 +17162,7 @@ public class Controller implements Initializable {
             txQueues.clear();
         }
 
-        if (event.getSource() == btnAccountClear){
+        if (event.getSource() == btnAccClear){
             pnAccSelect.setVisible(false);
             txAccounts.clear();
         }
@@ -17013,7 +17271,6 @@ public class Controller implements Initializable {
             pnQueuesSave.setVisible(false);
             pnQueuesSave.toBack();
         }
-
 
         if (event.getSource() == btnAccSaveAs){
             pnAccountSave.toFront();
