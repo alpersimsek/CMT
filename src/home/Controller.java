@@ -36,7 +36,6 @@ import javafx.scene.web.WebView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
@@ -49,7 +48,6 @@ import org.apache.poi.ss.usermodel.Font;
 import java.io.*;
 import java.net.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.List;
@@ -111,10 +109,8 @@ public class Controller implements Initializable {
     @FXML
     private AnchorPane apnHome;
 
-    private final static Logger logger = Logger.getLogger("CMT_Main_Logger");
+    public final static Logger logger = Logger.getLogger("CMT_Main_Logger");
     FileHandler fh;
-
-    ExecutorService service = Executors.newSingleThreadExecutor();
 
     //Account Page
     @FXML
@@ -180,7 +176,11 @@ public class Controller implements Initializable {
     @FXML
     private Pane pnWGSelect;
     @FXML
+    private Pane pnWGNames;
+    @FXML
     private TextField txAccounts;
+    @FXML
+    private TextArea txtWGNames;
     @FXML
     private TableView<AccountTableView> tableAcc;
     @FXML
@@ -767,6 +767,8 @@ public class Controller implements Initializable {
     @FXML
     private Button btnQueueClear;
     @FXML
+    private Button btnWGClear;
+    @FXML
     private TextField txtUserSelect;
     @FXML
     private TextField txtProductSelect;
@@ -958,18 +960,32 @@ public class Controller implements Initializable {
 
     ObservableList<String> levels = FXCollections.observableArrayList();
 
-    Timeline time = new Timeline();
-    Timeline timeData = new Timeline();
+    static String rootFolder;
+    static String settingsFolder;
+    static String dataFolder;
+    static String selectionFolder;
+    static String skillSetFolder;
+    static String logFolder;
+    static String noteFolder;
+    static String detailsFolder;
+    static File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT");
 
+    Timeline timeData = new Timeline();
+    CMTFolder folderArrange = new CMTFolder();
+    DownData downData = new DownData();
 
     WebView browserLogin = new WebView();
     ArrayList<String> settingsUsers = new ArrayList<>();
     ArrayList<String> settingsQueue = new ArrayList<>();
     ArrayList<String> settingsProducts = new ArrayList<>();
     ArrayList<String> settingsAccounts = new ArrayList<>();
+    ArrayList<String> settingsWorkGroups = new ArrayList<>();
     ArrayList<String> filteredAccounts = new ArrayList<String>();
     ArrayList<String> filteredWGs = new ArrayList<String>();
     ArrayList<String> WgFiltered = new ArrayList<String>();
+    ArrayList<String> setWG = new ArrayList<String>();
+    ArrayList<String> setWgNames = new ArrayList<String>();
+    ArrayList<String> setUsers = new ArrayList<String>();
     ArrayList<String> usersFiltered = new ArrayList<String>();
     ArrayList<String> productsFiltered = new ArrayList<String>();
     ArrayList<String> accountsFiltered = new ArrayList<String>();
@@ -985,6 +1001,7 @@ public class Controller implements Initializable {
 
     //Case Ref Cells
     int caseWGRef = 0;
+    int caseWGNameRef = 0;
     int caseVPref = 0;
     int caseAccountRef = 0;
     int caseNumCellRef = 0;
@@ -1951,7 +1968,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -2056,7 +2073,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -2097,7 +2114,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -2196,7 +2213,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -2242,7 +2259,7 @@ public class Controller implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
 
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -2424,7 +2441,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -2461,7 +2478,7 @@ public class Controller implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
 
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -2638,7 +2655,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -2670,7 +2687,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -2837,7 +2854,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -2867,7 +2884,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + " \\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3027,7 +3044,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -3056,7 +3073,7 @@ public class Controller implements Initializable {
     private void accInactiveTable(String columnSelect1, String filter1, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3169,7 +3186,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -3211,7 +3228,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3316,7 +3333,7 @@ public class Controller implements Initializable {
                     public void handle(ActionEvent event) {
                         try {
 
-                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                            String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                             URL caseSearch = new URL(search);
                             Desktop.getDesktop().browse(caseSearch.toURI());
@@ -3359,7 +3376,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3471,7 +3488,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -3513,7 +3530,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3617,7 +3634,7 @@ public class Controller implements Initializable {
                     public void handle(ActionEvent event) {
                         try {
 
-                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                            String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                             URL caseSearch = new URL(search);
                             Desktop.getDesktop().browse(caseSearch.toURI());
@@ -3660,7 +3677,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3778,7 +3795,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -3820,7 +3837,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -3930,7 +3947,7 @@ public class Controller implements Initializable {
                     public void handle(ActionEvent event) {
                         try {
 
-                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                            String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                             URL caseSearch = new URL(search);
                             Desktop.getDesktop().browse(caseSearch.toURI());
@@ -3973,7 +3990,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -4087,7 +4104,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -4131,7 +4148,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -4237,7 +4254,7 @@ public class Controller implements Initializable {
                     public void handle(ActionEvent event) {
                         try {
 
-                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                            String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                             URL caseSearch = new URL(search);
                             Desktop.getDesktop().browse(caseSearch.toURI());
@@ -4281,7 +4298,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -4429,7 +4446,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -4472,7 +4489,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -4613,7 +4630,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -4655,7 +4672,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -4796,7 +4813,7 @@ public class Controller implements Initializable {
                     public void handle(ActionEvent event) {
                         try {
 
-                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                            String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                             URL caseSearch = new URL(search);
                             Desktop.getDesktop().browse(caseSearch.toURI());
@@ -4840,7 +4857,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -4988,7 +5005,7 @@ public class Controller implements Initializable {
                     public void handle(ActionEvent event) {
                         try {
 
-                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str=" + getCaseNumber(tableCases, caseno);
+                            String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str=" + getCaseNumber(tableCases, caseno);
 
                             URL caseSearch = new URL(search);
                             Desktop.getDesktop().browse(caseSearch.toURI());
@@ -5069,7 +5086,7 @@ public class Controller implements Initializable {
             btnPrjNewNote.setVisible(false);
             btnPrjDelNote.setVisible(false);
             txtPrjNoteView.setVisible(false);
-            parseProjectData();
+            downData.parseProjectData();
             projectsPage();
             initProjectTable();
             tableProjects.getItems().clear();
@@ -5117,6 +5134,7 @@ public class Controller implements Initializable {
             btnToExcel.setVisible(false);
             btnBack.setVisible(false);
             apnSettings.toFront();
+            System.out.println(System.getenv("USERPROFILE"));
         }
 
         if (event.getSource() == btnProjection){
@@ -5144,7 +5162,7 @@ public class Controller implements Initializable {
 
         if (event.getSource() == btnLoadData) {
             //Download the related reports to work on them
-            downloadCSV();
+            downData.downloadCSV();
         }
 
         if (event.getSource() == btnE1Cases) {
@@ -6489,7 +6507,7 @@ public class Controller implements Initializable {
         ObservableList<String> Notes = FXCollections.observableArrayList();
 
         ArrayList<String> details = new ArrayList<String>();
-        File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes");
+        File repo = new File(noteFolder);
 
         if (!repo.exists()){
             //alertNoNoteUser();
@@ -6521,7 +6539,7 @@ public class Controller implements Initializable {
                         if (caseNoteList.getItems().size() > 0) {
 
                             String selectedCase = caseNoteList.getSelectionModel().getSelectedItem().toString();
-                            File caseDetails = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\" + selectedCase);
+                            File caseDetails = new File(detailsFolder + "\\" + selectedCase);
 
                             ClipboardContent content = new ClipboardContent();
                             content.putString(selectedCase);
@@ -6572,7 +6590,7 @@ public class Controller implements Initializable {
 
                             txtShowCaseNotes.clear();
 
-                            File caseNote = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + selectedCase);
+                            File caseNote = new File(noteFolder + "\\" + selectedCase);
 
                             if (caseNote.isFile()) {
                                 Scanner s = null;
@@ -6594,7 +6612,7 @@ public class Controller implements Initializable {
 
                                     txtShowCaseNotes.clear();
 
-                                    File caseNote = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + selectedCase);
+                                    File caseNote = new File(noteFolder+ "\\" + selectedCase);
 
                                     if (caseNote.isFile()) {
                                         Scanner s = null;
@@ -6636,8 +6654,8 @@ public class Controller implements Initializable {
                             btnDelNote.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                 @Override
                                 public void handle(MouseEvent event) {
-                                    File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\" + selectedCase);
-                                    File caseDetail = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\" + selectedCase);
+                                    File caseNoteFile = new File(noteFolder + "\\" + selectedCase);
+                                    File caseDetail = new File(detailsFolder + "\\" + selectedCase);
 
                                     caseNoteFile.delete();
                                     caseDetail.delete();
@@ -6768,7 +6786,7 @@ public class Controller implements Initializable {
                         ObservableList<String> availProd = FXCollections.observableArrayList();
 
                         try {
-                            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_user_prod.xls")));
+                            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_user_prod.xls")));
                             HSSFSheet sheet = workbook.getSheetAt(0);
                             HSSFCell cellVal;
 
@@ -6962,7 +6980,7 @@ public class Controller implements Initializable {
 
         try {
 
-            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\SkillSet\\users.txt"));
+            FileWriter writer = new FileWriter(new File(skillSetFolder + "\\users.txt"));
             int size = settingsUsers.size();
             for (int i = 0; i < size; i++) {
                 String str = settingsUsers.get(i);
@@ -7013,23 +7031,18 @@ public class Controller implements Initializable {
 
         try {
 
-            File caseDetailsFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\" + caseview.getCaseNumber());
+            File caseDetailsFile = new File(detailsFolder + "\\" + caseview.getCaseNumber());
 
-            if (!caseDetailsFile.exists()) {
+            File caseSelFile = new File(detailsFolder + "\\" + caseview.getCaseNumber());
 
-                new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails").mkdir();
+            FileWriter writer = new FileWriter(caseSelFile);
+
+            for (int i = 0; i < selectedsize; i++) {
+
+                writer.write(selectedCase.get(i) + "\n");
             }
 
-                File caseSelFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\" + caseview.getCaseNumber());
-
-                FileWriter writer = new FileWriter(caseSelFile);
-
-                for (int i = 0; i < selectedsize; i++) {
-
-                    writer.write(selectedCase.get(i) + "\n");
-                }
-
-                writer.close();
+            writer.close();
 
         }catch (Exception e){
             logger.log(Level.WARNING, "Not Able To Save Case Details...: ", e);;
@@ -7042,7 +7055,7 @@ public class Controller implements Initializable {
 
         tableCustomers.setVisible(true);
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -7238,7 +7251,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -7267,7 +7280,7 @@ public class Controller implements Initializable {
 
         tableCustomers.setVisible(true);
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -7444,7 +7457,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCustomers, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCustomers, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -7471,7 +7484,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -7647,7 +7660,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -7687,7 +7700,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -7866,7 +7879,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -7905,7 +7918,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -8042,7 +8055,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -8082,7 +8095,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -8225,7 +8238,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -8266,7 +8279,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -8402,7 +8415,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -8442,7 +8455,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -8610,7 +8623,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -8649,7 +8662,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -8819,7 +8832,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -8852,89 +8865,6 @@ public class Controller implements Initializable {
         } catch (Exception e) {
             logger.log(Level.WARNING, "Create Table Failed!", e);
         }
-    }
-
-    private void downloadCSV() {
-
-        String filename1 = "cmt_projects.csv";
-        String filename2 = "cmt_user_prod.csv";
-        String filename3 = "cmt_case_data_V2.csv";
-        String filename4 = "cmt_comments.csv";
-        String newLoc2 = "https://na8.salesforce.com/00OC0000006r1xS?export=1&enc=UTF-8&xf=csv?filename=" + filename2;
-        String newLoc = "https://na8.salesforce.com/00OC0000007My3o?export=1&enc=UTF-8&xf=csv?filename=" + filename1;
-        String newLoc3 = "https://na8.salesforce.com/00OC00000076uIg?export=1&enc=UTF-8&xf=csv?filename=" + filename3;
-        String newLoc4 = "https://na8.salesforce.com/00OC0000006r5ig?export=1&enc=UTF-8&xf=csv?filename=" + filename4;
-
-        try {
-
-            FileUtils.copyURLToFile(new URL(newLoc2), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_user_prod.csv"));
-
-        } catch (Exception e) {
-            logger.log(Level.WARNING, "Could not Download User/Product File", e);
-        }
-
-        //Downloaded User Data...Now Parsing...
-        logger.info("User Data Download Completed! Now Parsing...");
-        parseUserData();
-
-        try {
-
-            FileUtils.copyURLToFile(new URL(newLoc), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.csv"));
-
-        } catch (Exception e) {
-            logger.log(Level.WARNING, "Could not Download Projects File", e);
-        }
-
-        //Downloaded Project Data...Now Parsing...
-        logger.info("Project Data Download Completed! Now Parsing...");
-
-        parseProjectData();
-
-        try{
-
-            FileUtils.copyURLToFile(new URL(newLoc3), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V2.csv"));
-            LocalDate refreshDate = LocalDate.now();
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-
-            String dataDate = "Data Time Stamp is:" + "\n" + LocalTime.now().format(dtf).toString() + "\n" + refreshDate.toString();
-
-            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_data_Date.txt"));
-            writer.write(dataDate);
-            writer.close();
-
-        }catch (Exception e){
-            logger.log(Level.WARNING, "Case Data Download Failed...", e);
-        }
-
-        //Downloaded Case Data...Now Parsing...
-        logger.info("Case Data Download Completed! Now Parsing...");
-
-        parseData();
-
-        try{
-
-            FileUtils.copyURLToFile(new URL(newLoc4), new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_comments.csv"));
-
-        }catch (Exception e){
-            logger.log(Level.WARNING, "Could not Download Work Notes File", e);
-        }
-
-        logger.info("Comment Data Download Completed! Now Parsing...");
-        parseComments();
-        logger.info("Account Rectify...");
-        rectifyAccountNames();
-
-        time = new Timeline();
-        time.setCycleCount(Timeline.INDEFINITE);
-        time.getKeyFrames().add(new KeyFrame(Duration.minutes(5), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                time.stop();
-                logger.info("Time-Out! Downloading Latest Reports!...");
-                service.submit(Controller.this::downloadCSV);
-            }
-        }));
-        time.playFromStart();
     }
 
     private void connectOkta() {
@@ -8987,7 +8917,7 @@ public class Controller implements Initializable {
                         }
                         if (webEngine.getLocation().contains("salesforce.com/500") || webEngine.getLocation().contains("salesforce.com/home")){
 
-                                //webEngine.getLocation().equals("https://na8.salesforce.com/500/o") || webEngine.getLocation().equals("https://na8.salesforce.com/home/home.jsp") ||
+                                //webEngine.getLocation().equals("https://rbbn.my.salesforce.com/500/o") || webEngine.getLocation().equals("https://rbbn.my.salesforce.com/home/home.jsp") ||
                                 //webEngine.getLocation().equals("https://na104.salesforce.com/500/o") || webEngine.getLocation().equals("https://na104.salesforce.com/home/home.jsp")) {
 
                             progressBar.setProgress(0.80);
@@ -8998,12 +8928,13 @@ public class Controller implements Initializable {
                             lblDownload.setText("CONNECTED - ONLINE");
                             logger.info("Connected to SalesForce, starting report download...");
                             lblDownload.setText("Downloading New Data!");
-                            downloadCSV();
+                            downData.downloadCSV();
                             readTimeStamp();
                             lblDownload.setText("CONNECTED - ONLINE!");
                             progressBar.setProgress(1);
                             apnMyCases.toFront();
                             myCasesPage();
+                            regionChoice();
                             lblStatus.setText("MY CASES");
                         }
                     }
@@ -9017,7 +8948,7 @@ public class Controller implements Initializable {
         HSSFCell theater;
         HSSFCell supHotReason;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_projects.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
@@ -9203,10 +9134,10 @@ public class Controller implements Initializable {
         ArrayList<String> details = new ArrayList<String>();
         ObservableList<String> caseNotes = FXCollections.observableArrayList();
 
-        File rep = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\Project");
+        File rep = new File(noteFolder + "\\Project");
 
         if (!rep.exists()){
-            new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\Project").mkdir();
+            new File(noteFolder + "\\Project").mkdir();
         }else {
             File[] fileList = rep.listFiles();
 
@@ -9230,7 +9161,7 @@ public class Controller implements Initializable {
                         txtPrjNoteView.clear();
 
                         String selected = lstPrjNotes.getSelectionModel().getSelectedItem().toString();
-                        File prjCase = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\Project\\" + selected);
+                        File prjCase = new File(noteFolder + "\\Project\\" + selected);
 
                         if (prjCase.isFile()) {
                             Scanner s = null;
@@ -9252,7 +9183,7 @@ public class Controller implements Initializable {
                             @Override
                             public void handle(MouseEvent event) {
 
-                                File caseNoteFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Notes\\Project\\" + selected);
+                                File caseNoteFile = new File(noteFolder + "\\Project\\" + selected);
                                 caseNoteFile.delete();
 
                                 lstPrjNotes.getItems().remove(selected);
@@ -9305,7 +9236,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_projects.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -9582,7 +9513,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumberProjects(tableView, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumberProjects(tableView, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -9666,7 +9597,7 @@ public class Controller implements Initializable {
     }
 
 
-    private void writeDefaultSettingsToFile(String userFilter, String queueFilter, String productFilter, String regionFilter, String accountFilter) {
+    private void writeDefaultSettingsToFile(String userFilter, String queueFilter, String productFilter, String regionFilter, String accountFilter, String wgFilter) {
 
         ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
         ArrayList<String> setUser2 = new ArrayList();
@@ -9689,7 +9620,7 @@ public class Controller implements Initializable {
 
         try {
 
-            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_user_default_settings.txt"));
+            FileWriter writer = new FileWriter(new File(settingsFolder + "\\cmt_user_default_settings.txt"));
             int size = settingsUsers.size();
             for (int i = 0; i < size; i++) {
                 String str = settingsUsers.get(i);
@@ -9725,7 +9656,7 @@ public class Controller implements Initializable {
 
         try {
 
-            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_queueu_default_settings.txt"));
+            FileWriter writer = new FileWriter(new File(settingsFolder + "\\cmt_queueu_default_settings.txt"));
             int size = settingsQueue.size();
             for (int i = 0; i < size; i++) {
                 String str = settingsQueue.get(i);
@@ -9760,7 +9691,7 @@ public class Controller implements Initializable {
 
         try {
 
-            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_product_default_settings.txt"));
+            FileWriter writer = new FileWriter(new File(settingsFolder + "\\cmt_product_default_settings.txt"));
             int size = settingsProducts.size();
             for (int i = 0; i < size; i++) {
                 String str = settingsProducts.get(i);
@@ -9782,7 +9713,7 @@ public class Controller implements Initializable {
 
         try {
 
-            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_account_default_settings.txt"));
+            FileWriter writer = new FileWriter(new File(settingsFolder + "\\cmt_account_default_settings.txt"));
             int size = settingsAccounts.size();
             for (int i = 0; i < size; i++) {
                 String str = settingsAccounts.get(i);
@@ -9798,7 +9729,7 @@ public class Controller implements Initializable {
 
         try {
 
-            FileWriter writer = new FileWriter(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_region_default_settings.txt"));
+            FileWriter writer = new FileWriter(new File(settingsFolder + "\\cmt_region_default_settings.txt"));
             String str = regChoice.getValue().toString();
             writer.write(str);
             writer.close();
@@ -9806,11 +9737,31 @@ public class Controller implements Initializable {
         } catch (Exception e) {
             logger.log(Level.WARNING, "Region Default Settings Save Failed!", e);
         }
+
+        ArrayList<String> setWg = new ArrayList<>(Arrays.asList(txWorkGroup.getText().split(",\\s*")));
+        settingsWorkGroups = (ArrayList<String>) setWg.stream().distinct().collect(Collectors.toList());
+        Collections.sort(settingsWorkGroups);
+
+        try {
+
+            FileWriter writer = new FileWriter(new File(settingsFolder + "\\cmt_wg_default_settings.txt"));
+            int size = settingsWorkGroups.size();
+            for (int i = 0; i < size; i++) {
+                String str = settingsWorkGroups.get(i);
+                writer.write(str);
+                if (i < size - 1)
+                    writer.write("\n");
+            }
+            writer.close();
+
+        } catch (Exception e) {
+            logger.log(Level.WARNING, "WG Default Settings Save Failed!", e);
+        }
     }
 
     private void readTimeStamp(){
 
-        File timeStampFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_data_Date.txt");
+        File timeStampFile = new File(dataFolder + "\\cmt_data_Date.txt");
 
         if (timeStampFile.isFile()){
             Scanner s = null;
@@ -9849,11 +9800,12 @@ public class Controller implements Initializable {
 
         // Load Already Saved Settings File if there are any
 
-        File settingUsersFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_user_default_settings.txt");
-        File settingQueueFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_queueu_default_settings.txt");
-        File settingProductsFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_product_default_settings.txt");
-        File settingAccountsFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_account_default_settings.txt");
-        File settingRegionFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\cmt_region_default_settings.txt");
+        File settingUsersFile = new File(settingsFolder + "\\cmt_user_default_settings.txt");
+        File settingQueueFile = new File(settingsFolder + "\\cmt_queueu_default_settings.txt");
+        File settingProductsFile = new File(settingsFolder + "\\cmt_product_default_settings.txt");
+        File settingAccountsFile = new File(settingsFolder + "\\cmt_account_default_settings.txt");
+        File settingRegionFile = new File(settingsFolder + "\\cmt_region_default_settings.txt");
+        File settingWGFile = new File(settingsFolder + "\\cmt_wg_default_settings.txt");
 
         if (settingUsersFile.isFile()) {
 
@@ -9939,6 +9891,23 @@ public class Controller implements Initializable {
             s.close();
             regChoice.setValue(readRegion.get(0));
         }
+
+        if (settingWGFile.isFile()) {
+
+            Scanner s = null;
+            try {
+                s = new Scanner(settingWGFile);
+            } catch (FileNotFoundException e) {
+                logger.log(Level.WARNING, "No Saved Account List", e);
+            }
+            ArrayList<String> readWgList = new ArrayList<String>();
+            while (s.hasNextLine()) {
+                readWgList.add(s.nextLine());
+            }
+            s.close();
+
+            txWorkGroup.setText(readWgList.stream().collect(Collectors.joining(", ")));
+        }
     }
 
     private void caseUpdateTableView(String caseTableSelect, TableView<CaseTableView> tableCases, AnchorPane apnTableView, boolean b, boolean bool) {
@@ -9950,7 +9919,7 @@ public class Controller implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
 
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -10117,7 +10086,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -10154,7 +10123,7 @@ public class Controller implements Initializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
 
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -10188,11 +10157,16 @@ public class Controller implements Initializable {
                 }
             }
 
-            if ((!txUsers.getText().isEmpty())) {
+            if ((!txUsers.getText().isEmpty()) || (!txWorkGroup.getText().isEmpty())) {
 
-                ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
+                setUsers = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
 
-                int userfiltnum = setUser.size();
+                if(!txtWGNames.getText().isEmpty()) {
+                    setWgNames.removeAll(setUsers);
+                    setUsers.addAll(setWgNames);
+                }
+
+                int userfiltnum = setUsers.size();
 
                 for (int i = 0; i < userfiltnum; i++) {
 
@@ -10220,7 +10194,7 @@ public class Controller implements Initializable {
 
                         if ((b) && (bool)) {
 
-                            if (((caseUser.equals(setUser.get(i)) || coOwner.equals(setUser.get(i)))&& !cellValToCompare.equals("NotSet"))) {
+                            if (((caseUser.equals(setUsers.get(i)) || coOwner.equals(setUsers.get(i)))&& !cellValToCompare.equals("NotSet"))) {
 
                                 if ( caseUpdateDate.compareTo(dateToday) == 0) {
 
@@ -10249,7 +10223,7 @@ public class Controller implements Initializable {
                         }
                         if ((!b) && (bool)) {
 
-                            if (((caseUser.equals(setUser.get(i)) || coOwner.equals(setUser.get(i)))&& !cellValToCompare.equals("NotSet"))) {
+                            if (((caseUser.equals(setUsers.get(i)) || coOwner.equals(setUsers.get(i)))&& !cellValToCompare.equals("NotSet"))) {
 
                                 if (caseUpdateDate.compareTo(dateToday) < 0) {
 
@@ -10278,7 +10252,7 @@ public class Controller implements Initializable {
                         }
                         if (!b && !bool) {
 
-                            if (((caseUser.equals(setUser.get(i)) || coOwner.equals(setUser.get(i))) && cellValToCompare.equals("NotSet"))) {
+                            if (((caseUser.equals(setUsers.get(i)) || coOwner.equals(setUsers.get(i))) && cellValToCompare.equals("NotSet"))) {
 
                                 Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
                                 while (iterCells.hasNext()) {
@@ -10346,7 +10320,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -10399,7 +10373,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -10560,7 +10534,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -10611,7 +10585,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -10724,7 +10698,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -10775,7 +10749,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -10808,13 +10782,18 @@ public class Controller implements Initializable {
                 }
             }
 
-            if ((!txUsers.getText().isEmpty())) {
+            if ((!txUsers.getText().isEmpty() || !txWorkGroup.getText().isEmpty())) {
 
-                ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
+                setUsers = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
                 //ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
                 //ArrayList<String> mergedOwner = new ArrayList<>();
 
-                int userfiltnum = setUser.size();
+                if (!txWorkGroup.getText().isEmpty()) {
+                    setWgNames.removeAll(setUsers);
+                    setUsers.addAll(setWgNames);
+                }
+
+                int userfiltnum = setUsers.size();
                 //int userqueuenum = setQueu.size();
 
                 /*if (!setUser.isEmpty()) {
@@ -10833,7 +10812,7 @@ public class Controller implements Initializable {
                 //int mergedUserNum = mergedOwner.size();
 
 
-                if ((!setUser.isEmpty())) {
+                if ((!setUsers.isEmpty())) {
 
                     for (int j = 0; j < userfiltnum; j++) {
 
@@ -10849,7 +10828,7 @@ public class Controller implements Initializable {
                             String coOwner = cellVal4.getStringCellValue();
 
                             if (b) {
-                                if (((caseUser.equals(setUser.get(j)) || (coOwner.equals(setUser.get(j)))) && cellValToCompare.equals(filter)) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
+                                if (((caseUser.equals(setUsers.get(j)) || (coOwner.equals(setUsers.get(j)))) && cellValToCompare.equals(filter)) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
 
                                     ArrayList<String> array = new ArrayList<>();
                                     ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
@@ -10885,7 +10864,7 @@ public class Controller implements Initializable {
                                     }
                                 }
                             } else {
-                                if (((caseUser.equals(setUser.get(j)) || coOwner.equals(setUser.get(j)))&& !cellValToCompare.equals(filter)) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
+                                if (((caseUser.equals(setUsers.get(j)) || coOwner.equals(setUsers.get(j)))&& !cellValToCompare.equals(filter)) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
 
                                     ArrayList<String> array = new ArrayList<>();
                                     ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
@@ -10961,7 +10940,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -11010,7 +10989,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -11039,13 +11018,18 @@ public class Controller implements Initializable {
                 }
             }
 
-            if ((!txUsers.getText().isEmpty())) {
+            if ((!txUsers.getText().isEmpty() || !txWorkGroup.getText().isEmpty())) {
 
-                ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
+                setUsers = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
                 //ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
                 //ArrayList<String> mergedOwner = new ArrayList<>();
 
-                int userfiltnum = setUser.size();
+                if (!txtWGNames.getText().isEmpty()) {
+                    setWgNames.removeAll(setUsers);
+                    setUsers.addAll(setWgNames);
+                }
+
+                int userfiltnum = setUsers.size();
                 //int userqueuenum = setQueu.size();
 
                 /*if (!setUser.isEmpty()) {
@@ -11064,7 +11048,7 @@ public class Controller implements Initializable {
                 int mergedUserNum = mergedOwner.size();
                 */
 
-                if ((!setUser.isEmpty())) {
+                if ((!setUsers.isEmpty())) {
 
                     for (int j = 0; j < userfiltnum; j++) {
 
@@ -11078,7 +11062,7 @@ public class Controller implements Initializable {
                             String coOwner = cellVal2.getStringCellValue();
 
                             if (b) {
-                                if ((caseUser.equals(setUser.get(j)) || coOwner.equals(setUser.get(j))) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
+                                if ((caseUser.equals(setUsers.get(j)) || coOwner.equals(setUsers.get(j))) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
 
                                     ArrayList<String> array = new ArrayList<>();
                                     ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
@@ -11114,7 +11098,7 @@ public class Controller implements Initializable {
                                     }
                                 }
                             } else {
-                                if ((caseUser.equals(setUser.get(j)) || coOwner.equals(setUser.get(j))) && (caseStatus.equals("Pending Closure") || (caseStatus.equals("Future Availability")))) {
+                                if ((caseUser.equals(setUsers.get(j)) || coOwner.equals(setUsers.get(j))) && (caseStatus.equals("Pending Closure") || (caseStatus.equals("Future Availability")))) {
 
                                     ArrayList<String> array = new ArrayList<>();
                                     ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
@@ -11191,7 +11175,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -11242,7 +11226,7 @@ public class Controller implements Initializable {
 
         ArrayList<String> caseCommentArray = new ArrayList();
 
-        try(HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_comments.xls")))){
+        try(HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_comments.xls")))){
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int mycaseNumCellRef = 0;
@@ -11340,7 +11324,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -11373,13 +11357,18 @@ public class Controller implements Initializable {
                 }
             }
 
-            if ((!txUsers.getText().isEmpty())) {
+            if ((!txUsers.getText().isEmpty() || !txWorkGroup.getText().isEmpty())) {
 
-                ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
+                setUsers = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
                 //ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
                 //ArrayList<String> mergedOwner = new ArrayList<>();
 
-                int userfiltnum = setUser.size();
+                if(!txtWGNames.getText().isEmpty()) {
+                    setWgNames.removeAll(setUsers);
+                    setUsers.addAll(setWgNames);
+                }
+
+                int userfiltnum = setUsers.size();
                 //int userqueuenum = setQueu.size();
 
                 /*if (!setUser.isEmpty()) {
@@ -11398,7 +11387,7 @@ public class Controller implements Initializable {
                 int mergedUserNum = mergedOwner.size();
                    */
 
-                if ((!setUser.isEmpty())) {
+                if ((!setUsers.isEmpty())) {
 
                     for (int j = 0; j < userfiltnum; j++) {
 
@@ -11413,7 +11402,7 @@ public class Controller implements Initializable {
                             cellVal4 = filtersheet.getRow(i).getCell(myCoOwnCaseRefCell);
                             String coOwner = cellVal4.getStringCellValue();
 
-                            if ((caseUser.equals(setUser.get(j)) || coOwner.equals(setUser.get(j))) && cellToCompare.equals(filter) && (caseStatus.equals("Open / Assign") || (caseStatus.equals("Isolate Fault")))) {
+                            if ((caseUser.equals(setUsers.get(j)) || coOwner.equals(setUsers.get(j))) && cellToCompare.equals(filter) && (caseStatus.equals("Open / Assign") || (caseStatus.equals("Isolate Fault")))) {
 
                                 ArrayList<String> array = new ArrayList<>();
                                 ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
@@ -11489,7 +11478,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -11538,7 +11527,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -11575,13 +11564,18 @@ public class Controller implements Initializable {
                 }
             }
 
-            if ((!txUsers.getText().isEmpty())) {
+            if ((!txUsers.getText().isEmpty() || !txWorkGroup.getText().isEmpty())) {
 
-                ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
+                setUsers = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
                 //ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
                 //ArrayList<String> mergedOwner = new ArrayList<>();
 
-                int userfiltnum = setUser.size();
+                if (!txtWGNames.getText().isEmpty()) {
+                    setWgNames.removeAll(setUsers);
+                    setUsers.addAll(setWgNames);
+                }
+
+                int userfiltnum = setUsers.size();
                 //int userqueuenum = setQueu.size();
 
                 /*if (!setUser.isEmpty()) {
@@ -11601,7 +11595,7 @@ public class Controller implements Initializable {
                 */
 
 
-                if ((!setUser.isEmpty())) {
+                if ((!setUsers.isEmpty())) {
 
                     for (int j = 0; j < userfiltnum; j++) {
 
@@ -11619,7 +11613,7 @@ public class Controller implements Initializable {
                             String coOwner = cellVal5.getStringCellValue();
 
 
-                            if ((caseUser.equals(setUser.get(j)) || coOwner.equals(setUser.get(j))) && cellToCompare.equals(filter1) && responsible.equals(filter2) &&
+                            if ((caseUser.equals(setUsers.get(j)) || coOwner.equals(setUsers.get(j))) && cellToCompare.equals(filter1) && responsible.equals(filter2) &&
                                     (!caseStatus.equals("Pending Closure") || (!caseStatus.equals("Future Availability")))) {
 
                                 ArrayList<String> array = new ArrayList<>();
@@ -11696,7 +11690,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -11744,7 +11738,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -11774,13 +11768,18 @@ public class Controller implements Initializable {
                 }
             }
 
-            if ((!txUsers.getText().isEmpty())) {
+            if ((!txUsers.getText().isEmpty() || !txWorkGroup.getText().isEmpty())) {
 
-                ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
+                setUsers = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
                 //ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
                 //ArrayList<String> mergedOwner = new ArrayList<>();
 
-                int userfiltnum = setUser.size();
+                if(!txtWGNames.getText().isEmpty()) {
+                    setWgNames.removeAll(setUsers);
+                    setUsers.addAll(setWgNames);
+                }
+
+                int userfiltnum = setUsers.size();
                 //int userqueuenum = setQueu.size();
 
                 /*if (!setUser.isEmpty()) {
@@ -11799,7 +11798,7 @@ public class Controller implements Initializable {
                 int mergedUserNum = mergedOwner.size();
                 */
 
-                if ((!setUser.isEmpty())) {
+                if ((!setUsers.isEmpty())) {
 
                     for (int j = 0; j < userfiltnum; j++) {
 
@@ -11814,7 +11813,7 @@ public class Controller implements Initializable {
                             cellVal4 = filtersheet.getRow(i).getCell(myCoOwnCaseRefCell);
                             String coOwner = cellVal4.getStringCellValue();
 
-                            if ((caseUser.equals(setUser.get(j)) || coOwner.equals(setUser.get(j))) && cellToCompare.equals(filter) &&
+                            if ((caseUser.equals(setUsers.get(j)) || coOwner.equals(setUsers.get(j))) && cellToCompare.equals(filter) &&
                                     (caseStatus.equals("Pending Closure") || caseStatus.equals("Future Availability"))) {
 
                                 ArrayList<String> array = new ArrayList<>();
@@ -11891,7 +11890,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -11941,7 +11940,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -11975,13 +11974,20 @@ public class Controller implements Initializable {
                 }
             }
 
-            if ((!txUsers.getText().isEmpty())) {
+            if ((!txUsers.getText().isEmpty() || !txWorkGroup.getText().isEmpty())) {
 
-                ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
+                setUsers = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
+                //ArrayList<String> setQueu = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
+                //ArrayList<String> mergedOwner = new ArrayList<>();
 
-                int userfiltnum = setUser.size();
+                if(!txtWGNames.getText().isEmpty()) {
+                    setWgNames.removeAll(setUsers);
+                    setUsers.addAll(setWgNames);
+                }
 
-                if ((!setUser.isEmpty())) {
+                int userfiltnum = setUsers.size();
+
+                if ((!setUsers.isEmpty())) {
 
                     for (int j = 0; j < userfiltnum; j++) {
 
@@ -12002,7 +12008,7 @@ public class Controller implements Initializable {
 
                                 if (b) {
 
-                                    if (((caseUser.equals(setUser.get(j))  || coOwner.equals(setUser.get(j))) && compAge <= dueDay) && ((caseStatus.equals("Open / Assign") ||
+                                    if (((caseUser.equals(setUsers.get(j))  || coOwner.equals(setUsers.get(j))) && compAge <= dueDay) && ((caseStatus.equals("Open / Assign") ||
                                             (caseStatus.equals("Isolate Fault"))))) {
 
                                         ArrayList<String> array = new ArrayList<>();
@@ -12039,7 +12045,7 @@ public class Controller implements Initializable {
                                         }
                                     }
                                 } else {
-                                    if (((caseUser.equals(setUser.get(j))  || coOwner.equals(setUser.get(j))) && compAge > dueDay) && ((caseStatus.equals("Open / Assign") ||
+                                    if (((caseUser.equals(setUsers.get(j))  || coOwner.equals(setUsers.get(j))) && compAge > dueDay) && ((caseStatus.equals("Open / Assign") ||
                                             (caseStatus.equals("Isolate Fault"))))) {
 
                                         ArrayList<String> array = new ArrayList<>();
@@ -12118,7 +12124,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -12167,7 +12173,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -12297,7 +12303,7 @@ public class Controller implements Initializable {
                     public void handle(ActionEvent event) {
                         try {
 
-                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                            String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                             URL caseSearch = new URL(search);
                             Desktop.getDesktop().browse(caseSearch.toURI());
@@ -12341,7 +12347,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -12440,7 +12446,7 @@ public class Controller implements Initializable {
                     public void handle(ActionEvent event) {
                         try {
 
-                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                            String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                             URL caseSearch = new URL(search);
                             Desktop.getDesktop().browse(caseSearch.toURI());
@@ -12484,7 +12490,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -12579,7 +12585,7 @@ public class Controller implements Initializable {
                     public void handle(ActionEvent event) {
                         try {
 
-                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                            String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                             URL caseSearch = new URL(search);
                             Desktop.getDesktop().browse(caseSearch.toURI());
@@ -12623,7 +12629,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -12717,7 +12723,7 @@ public class Controller implements Initializable {
                     public void handle(ActionEvent event) {
                         try {
 
-                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                            String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                             URL caseSearch = new URL(search);
                             Desktop.getDesktop().browse(caseSearch.toURI());
@@ -12760,7 +12766,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -12856,7 +12862,7 @@ public class Controller implements Initializable {
                     public void handle(ActionEvent event) {
                         try {
 
-                            String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                            String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                             URL caseSearch = new URL(search);
                             Desktop.getDesktop().browse(caseSearch.toURI());
@@ -12899,7 +12905,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -13031,7 +13037,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -13073,7 +13079,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -13163,7 +13169,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -13205,7 +13211,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -13356,7 +13362,7 @@ public class Controller implements Initializable {
                 public void handle(ActionEvent event) {
                     try {
 
-                        String search = "https://na8.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
 
                         URL caseSearch = new URL(search);
                         Desktop.getDesktop().browse(caseSearch.toURI());
@@ -13517,209 +13523,13 @@ public class Controller implements Initializable {
         fileOut.close();
     }
 
-    /* Creating XLS File from CSV File downloaded*/
-    private void parseData() {
-
-        try {
-
-            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V2.csv");
-
-            HSSFWorkbook workBook = new HSSFWorkbook();
-            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V2.xls";
-            HSSFSheet sheet = workBook.createSheet("Data");
-            CreationHelper helper = workBook.getCreationHelper();
-
-            int r = 0;
-
-            CsvParserSettings settings = new CsvParserSettings();
-            settings.setMaxCharsPerColumn(100000);
-            settings.getFormat().setLineSeparator("\n");
-
-            CsvParser parser = new CsvParser(settings);
-            parser.beginParsing(csvfile);
-
-            String[] row;
-
-            while ((row = parser.parseNext()) != null) {
-
-                Row frow = sheet.createRow((short) r++);
-                for (int i = 0; i <row.length ; i++) {
-                    frow.createCell(i).setCellValue(helper.createRichTextString(row[i]));
-                }
-            }
-
-            parser.stopParsing();
-
-            int lastRow = sheet.getLastRowNum();
-            for (int i = 0; i < 7; i++) {
-                sheet.removeRow(sheet.getRow(lastRow - i));
-            }
-
-            FileOutputStream fileOutputStream = new FileOutputStream(xlsFileAddress);
-            workBook.write(fileOutputStream);
-            fileOutputStream.close();
-
-        }catch (Exception e) {
-            logger.log(Level.WARNING, "Parse Case Data Failed! Refer to Exception", e);
-        }
-
-        /*try {
-            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V2.csv");
-
-            HSSFWorkbook workBook = new HSSFWorkbook();
-
-            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\cmt_case_data_V2.xls";
-            HSSFSheet sheet = workBook.createSheet("Data");
-
-            BufferedReader br = new BufferedReader(new FileReader(csvfile));
-            String line;
-
-            int RowNum = 0;
-
-            while ((line = br.readLine()) != null) {
-                line = line.replaceAll("^\"|\"$", "");
-                line = line.replaceAll(".0000000000", "");
-
-                String[] fields = parseCsvLine(line);
-
-                HSSFRow currentRow = sheet.createRow(RowNum);
-                for (int i = 0; i < fields.length; i++) {
-                    currentRow.createCell(i).setCellValue(fields[i]);
-                    if (currentRow.getCell(i).getStringCellValue().isEmpty() || currentRow.getCell(i).getStringCellValue().equals("FALSE")) {
-                        currentRow.getCell(i).setCellValue("NotSet");
-                    }
-                }
-                RowNum++;
-            }
-
-            int lastRow = sheet.getLastRowNum();
-
-            for (int i = 0; i < 7; i++) {
-                sheet.removeRow(sheet.getRow(lastRow - i));
-            }
-
-            FileOutputStream fileOutputStream = new FileOutputStream(xlsFileAddress);
-            workBook.write(fileOutputStream);
-            fileOutputStream.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-    }
-
-    private void rectifyAccountNames(){
-
-        HSSFCell account;
-        HSSFCell cellVal;
-        HSSFCell age;
-
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V2.xls")))) {
-            HSSFSheet filtersheet = workbook.getSheetAt(0);
-
-            int cellnum = filtersheet.getRow(0).getLastCellNum();
-            int lastRow = filtersheet.getLastRowNum();
-
-            int row = 0;
-
-            for (int i = 0; i < cellnum; i++) {
-
-                String filterColName = filtersheet.getRow(0).getCell(i).toString();
-
-                switch (filterColName) {
-                    case ("Account Name"):
-                        caseNumCellRef = i;
-                        break;
-                    case ("Age (Days)"):
-                        mycaseAgeRefCell = i;
-                        break;
-                }
-            }
-
-            for (int i = 1; i < lastRow + 1; i++) {
-
-                account = filtersheet.getRow(i).getCell(caseNumCellRef);
-                String caseStatus = account.getStringCellValue();
-                caseStatus = caseStatus.replace(",", "");
-                account.setCellValue(caseStatus);
-
-                age = filtersheet.getRow(i).getCell(mycaseAgeRefCell);
-                String ageVal = age.getStringCellValue();
-                ageVal = ageVal.replace(".0000000000", "");
-                age.setCellValue(ageVal);
-
-                for (int j = 0; j < cellnum; j ++){
-
-                    cellVal = filtersheet.getRow(i).getCell(j);
-                    String cellValue = cellVal.getStringCellValue();
-
-                    if (cellValue.equals("")){
-                        cellValue = "NotSet";
-                        cellVal.setCellValue(cellValue);
-                    }
-                }
-            }
-
-            FileOutputStream output_file =new FileOutputStream(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls"));
-            workbook.write(output_file);
-            output_file.close();
-
-        }catch (Exception e){
-            logger.log(Level.WARNING, "Rectify account names failed, please refer to exception", e);
-        }
-    }
-
-    private void parseProjectData(){
-
-        try {
-
-            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.csv");
-            HSSFWorkbook workBook = new HSSFWorkbook();
-            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.xls";
-            HSSFSheet sheet = workBook.createSheet("Projects");
-            CreationHelper helper = workBook.getCreationHelper();
-
-            int r = 0;
-
-            CsvParserSettings settings = new CsvParserSettings();
-            settings.setMaxCharsPerColumn(100000);
-            settings.getFormat().setLineSeparator("\n");
-
-            CsvParser parser = new CsvParser(settings);
-            parser.beginParsing(csvfile);
-
-            String[] row;
-            while ((row = parser.parseNext()) != null) {
-
-                Row frow = sheet.createRow((short) r++);
-                for (int i = 0; i <row.length ; i++) {
-                    frow.createCell(i).setCellValue(helper.createRichTextString(row[i]));
-                }
-            }
-
-            parser.stopParsing();
-
-            int lastRow = sheet.getLastRowNum();
-
-            for (int i = 0; i < 5; i++) {
-                sheet.removeRow(sheet.getRow(lastRow - i));
-            }
-
-            FileOutputStream fileOutputStream = new FileOutputStream(xlsFileAddress);
-            workBook.write(fileOutputStream);
-            fileOutputStream.close();
-
-        }catch (Exception e) {
-            logger.log(Level.WARNING, "Project Data parse failed...", e);
-        }
-        //parseProjectDetailsData();
-    }
-
     private void parseProjectDetailsData(){
 
         try {
 
-            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_project_details.csv");
+            File csvfile = new File(dataFolder + "\\cmt_project_details.csv");
             HSSFWorkbook workBook = new HSSFWorkbook();
-            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_project_details.xls";
+            String xlsFileAddress = dataFolder + "\\cmt_project_details.xls";
             HSSFSheet sheet = workBook.createSheet("Project Details");
             CreationHelper helper = workBook.getCreationHelper();
 
@@ -13758,102 +13568,7 @@ public class Controller implements Initializable {
         }
     }
 
-    private void parseUserData() {
-        try {
-            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_user_prod.csv");
 
-            HSSFWorkbook workBook = new HSSFWorkbook();
-
-            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_user_prod.xls";
-            HSSFSheet sheet = workBook.createSheet("UserProd");
-
-            BufferedReader br = new BufferedReader(new FileReader(csvfile));
-            String line;
-
-            int RowNum = 0;
-
-            while ((line = br.readLine()) != null) {
-                //line = line.replace("Ã©n", "e");
-                line = line.replaceAll("^\"|\"$", "");
-
-                String[] fields = parseCsvLine(line);
-
-                HSSFRow currentRow = sheet.createRow(RowNum);
-                for (int i = 0; i < fields.length; i++) {
-                    currentRow.createCell(i).setCellValue(fields[i]);
-                }
-                RowNum++;
-            }
-
-            int lastRow = sheet.getLastRowNum();
-
-            for (int i = 0; i < 7; i++) {
-                sheet.removeRow(sheet.getRow(lastRow - i));
-            }
-            FileOutputStream fileOutputStream = new FileOutputStream(xlsFileAddress);
-            workBook.write(fileOutputStream);
-            fileOutputStream.close();
-
-        } catch (Exception e) {
-            logger.log(Level.WARNING, "User Data parse failed...", e);
-        }
-    }
-
-    private void parseComments(){
-        try {
-
-            File csvfile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_comments.csv");
-
-            HSSFWorkbook workBook = new HSSFWorkbook();
-            String xlsFileAddress = System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_comments.xls";
-            HSSFSheet sheet = workBook.createSheet("Survey");
-            CreationHelper helper = workBook.getCreationHelper();
-
-            int r = 0;
-
-            CsvParserSettings settings = new CsvParserSettings();
-            settings.setMaxCharsPerColumn(100000);
-            settings.getFormat().setLineSeparator("\n");
-
-            CsvParser parser = new CsvParser(settings);
-            parser.beginParsing(csvfile);
-
-            String[] row;
-            while ((row = parser.parseNext()) != null) {
-
-                Row frow = sheet.createRow((short) r++);
-                for (int i = 0; i <row.length ; i++) {
-                    frow.createCell(i).setCellValue(helper.createRichTextString(row[i]));
-                }
-            }
-
-            parser.stopParsing();
-
-            int lastRow = sheet.getLastRowNum();
-            for (int i = 0; i < 7; i++) {
-                sheet.removeRow(sheet.getRow(lastRow - i));
-            }
-
-            FileOutputStream fileOutputStream = new FileOutputStream(xlsFileAddress);
-            workBook.write(fileOutputStream);
-            fileOutputStream.close();
-
-        }catch (Exception e) {
-            logger.log(Level.WARNING, "Work Note Parse Failed...", e);
-        }
-    }
-
-    // Splitting the CSV File for reading
-    private String[] parseCsvLine(String line) throws IOException {
-
-        Pattern p = Pattern.compile("\",\"");
-        //Pattern p = Pattern.compile(",(?=([^\"]*\"[^\"]*\")*(?![^\"]*\"))");
-
-        // Split input with the pattern
-        String[] fields = p.split(line);
-
-        return fields;
-    }
 
     private void accountsPage(){
 
@@ -13868,7 +13583,7 @@ public class Controller implements Initializable {
         HSSFCell caseUpdate;
         HSSFCell caseOwner;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
             HSSFSheet filtersheet = workbook.getSheetAt(0);
 
             accHotList = 0;
@@ -14168,7 +13883,7 @@ public class Controller implements Initializable {
         HSSFCell caseOwner;
         HSSFCell caseUpdate;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
             HSSFSheet filtersheet = workbook.getSheetAt(0);
 
             hotlist = 0;
@@ -14444,7 +14159,7 @@ public class Controller implements Initializable {
         HSSFCell caseUpdate;
         HSSFCell caseOwner;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
@@ -14733,7 +14448,7 @@ public class Controller implements Initializable {
         HSSFCell myCoOwnedCase;
         HSSFCell myCoOwnerQueue;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
@@ -14817,9 +14532,18 @@ public class Controller implements Initializable {
 
             /* Creating Input Data Arrays from Setttings Page */
 
-            if (!txUsers.getText().isEmpty()) {
+
+            wgToNames();
+
+            if (!txUsers.getText().isEmpty()||!txWorkGroup.getText().isEmpty()) {
 
                 ArrayList<String> setUser = new ArrayList<>(Arrays.asList(txUsers.getText().split(",\\s*")));
+
+                if (!txWorkGroup.getText().isEmpty()){
+                    setWgNames.removeAll(setUser);
+                    setUser.addAll(setWgNames);
+                }
+
                 int userfiltnum = setUser.size();
 
                 if ((!setUser.isEmpty())) {
@@ -14854,8 +14578,6 @@ public class Controller implements Initializable {
 
                             mycaseUpdate = filtersheet.getRow(i).getCell(mycaseUpdateCell);
                             String myCaseUpdate = mycaseUpdate.getStringCellValue();
-
-
 
                             LocalDate dateToday = LocalDate.now();
                             LocalDate caseUpdateDate = null;
@@ -15054,7 +14776,7 @@ public class Controller implements Initializable {
         HSSFCell mycaseUpdate;
         HSSFCell productName;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
@@ -15481,8 +15203,8 @@ public class Controller implements Initializable {
         content.putString(data1);
         Clipboard.getSystemClipboard().setContent(content);
         saveCaseDetails(caseview);
-
     }
+
     private void copyCaseNumberToClipboardProjects(TableView<ProjectTableView> tableCases) {
 
         TablePosition tablePosition = (TablePosition) tableCases.getSelectionModel().getSelectedCells().get(0);
@@ -15496,7 +15218,7 @@ public class Controller implements Initializable {
 
         HSSFCell cellVal;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_projects.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_projects.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -15536,7 +15258,7 @@ public class Controller implements Initializable {
 
         try {
 
-            File caseSelFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\CaseDetails\\" + "caseSelProject");
+            File caseSelFile = new File(detailsFolder + "\\" + "caseSelProject");
             BufferedWriter br = new BufferedWriter(new FileWriter(caseSelFile));
             StringBuilder sb = new StringBuilder();
 
@@ -15592,7 +15314,12 @@ public class Controller implements Initializable {
         try {
             FileChooser fileChooser = new FileChooser();
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XLS files (*.xls)", "*.xls");
-            fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Desktop"));
+            try {
+                fileChooser.setInitialDirectory(new File(rootFolder));
+            } catch (Exception e){
+                logger.log(Level.WARNING, "Unable To Export Table to Excel To Desktop, Using defaults...", e);
+                fileChooser.setInitialDirectory(new File(rootFolder));
+            }
 
             fileChooser.getExtensionFilters().add(extFilter);
 
@@ -15616,7 +15343,12 @@ public class Controller implements Initializable {
         try {
             FileChooser fileChooser = new FileChooser();
             FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XLS files (*.xls)", "*.xls");
-            fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "\\Desktop"));
+            try {
+                fileChooser.setInitialDirectory(new File(rootFolder));
+            } catch (Exception e){
+                logger.log(Level.WARNING, "Unable To Export Table to Excel To Desktop, Using defaults...", e);
+                fileChooser.setInitialDirectory(new File(rootFolder));
+            }
 
             fileChooser.getExtensionFilters().add(extFilter);
 
@@ -15651,7 +15383,7 @@ public class Controller implements Initializable {
         HSSFCell status;
         HSSFCell outFollow;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
@@ -15812,7 +15544,7 @@ public class Controller implements Initializable {
 
         try {
 
-            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_user_prod.xls")));
+            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_user_prod.xls")));
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -16036,7 +15768,7 @@ public class Controller implements Initializable {
         HSSFCell wgCell;
 
         try{
-            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Workgroup\\WorkGroup.xls")));
+            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(rootFolder + "\\Workgroup\\WorkGroup.xls")));
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -16241,8 +15973,71 @@ public class Controller implements Initializable {
 
                     pnWGSelect.setVisible(false);
                     tableWGSelected.getItems().clear();
+                    wgToNames();
                 }
             });
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void wgToNames(){
+
+        HSSFCell wgCell;
+        HSSFCell wgUser;
+
+        try {
+            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(rootFolder + "\\Workgroup\\WorkGroup.xls")));
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int lastRow = filtersheet.getLastRowNum();
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+
+            setWG = new ArrayList<>();
+
+            if (!txWorkGroup.getText().isEmpty()) {
+
+                setWG = new ArrayList<>(Arrays.asList(txWorkGroup.getText().split(",\\s*")));
+            }
+
+            int userfiltnum = setWG.size();
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+
+                if (filterColName.equals("Workgroup Name")) {
+                    caseWGRef = i;
+                }
+                if (filterColName.equals("Display Name")) {
+                    caseWGNameRef = i;
+                }
+            }
+
+            setWgNames = new ArrayList<>();
+
+            for (int i = 0; i < userfiltnum ; i++) {
+
+                for (int j = 1; j <lastRow ; j++) {
+
+                    wgCell = filtersheet.getRow(j).getCell(caseWGRef);
+                    String work = wgCell.getStringCellValue();
+
+                    if (work.equals(setWG.get(i))) {
+
+                        wgUser = filtersheet.getRow(j).getCell(caseWGNameRef);
+                        String user = wgUser.getStringCellValue();
+                        setWgNames.add(user);
+                    }
+                }
+            }
+
+            pnWGNames.setVisible(true);
+            int wgToNamesArraySize = setWgNames.size();
+            txtWGNames.clear();
+            for (int i = 0; i <wgToNamesArraySize ; i++) {
+                txtWGNames.appendText(setWgNames.get(i)+",");
+            }
 
         }catch (Exception e){
             e.printStackTrace();
@@ -16259,7 +16054,7 @@ public class Controller implements Initializable {
 
         try {
 
-            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")));
+            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")));
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -16476,7 +16271,7 @@ public class Controller implements Initializable {
 
         try {
 
-            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_user_prod.xls")));
+            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_user_prod.xls")));
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -16864,7 +16659,7 @@ public class Controller implements Initializable {
         customerCol.setCellValueFactory(new PropertyValueFactory<AccountTableView, String>("accountName"));
         customerSelectedCol.setCellValueFactory(new PropertyValueFactory<AccountTableView, String>("accountName"));
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
@@ -17161,6 +16956,13 @@ public class Controller implements Initializable {
             pnQueueSelect.setVisible(false);
             txQueues.clear();
         }
+        if (event.getSource() == btnWGClear) {
+            pnWGSelect.setVisible(false);
+            txWorkGroup.clear();
+            txtWGNames.clear();
+            pnWGNames.setVisible(false);
+            pnWGNames.toBack();
+        }
 
         if (event.getSource() == btnAccClear){
             pnAccSelect.setVisible(false);
@@ -17183,6 +16985,8 @@ public class Controller implements Initializable {
             txProducts.clear();
             txQueues.clear();
             txAccounts.clear();
+            txWorkGroup.clear();
+            txtWGNames.setText("");
             regChoice.setValue("NotSet");
         }
         if (event.getSource() == btnSaveDefault) {
@@ -17191,8 +16995,9 @@ public class Controller implements Initializable {
             String productFilter = txProducts.getText();
             String accountFilter = txAccounts.getText();
             String regionFilter = regChoice.getValue();
+            String workGroupFilter = txtWGNames.getText();
 
-            writeDefaultSettingsToFile(userFilter, queueFilter, productFilter,regionFilter, accountFilter);
+            writeDefaultSettingsToFile(userFilter, queueFilter, productFilter,regionFilter, accountFilter, workGroupFilter);
         }
 
         if (event.getSource() == btnLoadDefault) {
@@ -17208,7 +17013,7 @@ public class Controller implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("For any issues/requests please inform us:" + "\n" + "\n" +
                     "Alper Simsek"+ "    " + "asimsek@rbbn.com" + "\n" + "\n" +
-                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.13");
+                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.15");
             alert.showAndWait();
         }
 
@@ -17418,7 +17223,7 @@ public class Controller implements Initializable {
         ObservableList<String> accountProfiles = FXCollections.observableArrayList();
 
         ArrayList<File> files = new ArrayList<>();
-        File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Account");
+        File repo = new File(rootFolder + "\\Profile\\Account");
         File[] fileList = repo.listFiles();
 
         for (int i = 0 ; i < fileList.length ; i++) {
@@ -17437,7 +17242,7 @@ public class Controller implements Initializable {
                     @Override
                     public void handle(MouseEvent event) {
 
-                        File accountProfileFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Account\\" + selectedProfile);
+                        File accountProfileFile = new File(rootFolder + "\\Profile\\Account\\" + selectedProfile);
 
                         txAccounts.clear();
 
@@ -17461,7 +17266,7 @@ public class Controller implements Initializable {
                 btnAccountProfDelete.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        File accountFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Profile\\Account\\" + selectedProfile);
+                        File accountFile = new File(rootFolder + "\\Profile\\Account\\" + selectedProfile);
                         accountFile.delete();
                         accountProfileList.getItems().remove(selectedProfile);
                     }
@@ -17926,66 +17731,6 @@ public class Controller implements Initializable {
         Collections.sort(queueArray);
     }
 
-    private void arrangeCMTFolder() {
-
-        File repo = new File(System.getProperty("user.home") + "\\Documents\\CMT");
-        File repo2 = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings");
-        File repo3 = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data");
-        File repo4 = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Selection");
-        File repo5 = new File(System.getProperty("user.home") + "\\Documents\\CMT\\SkilLSet");
-        File repo6 = new File(System.getProperty("user.home") + "\\Documents\\CMT\\Log");
-
-
-        if (!repo.exists()) {
-            logger.info("CMT Folder Not Valid, creating folder...");
-            new File(System.getProperty("user.home") + "\\Documents\\CMT").mkdir();
-        }
-
-        if (!repo2.exists()){
-            logger.info("Settings Folder Not Valid, creating folder...");
-            new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings").mkdir();
-        }
-
-        if (!repo3.exists()){
-            logger.info("Data Folder Not Valid, creating folder...");
-            new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data").mkdir();
-        }
-
-        if (!repo4.exists()){
-            logger.info("Selection Folder Not Valid, creating folder...");
-            new File(System.getProperty("user.home") + "\\Documents\\CMT\\Selection").mkdir();
-        }
-
-        if (!repo5.exists()){
-            logger.info("SkillSet Folder Not Valid, creating folder...");
-            new File(System.getProperty("user.home") + "\\Documents\\CMT\\SkillSet").mkdir();
-        }
-
-        if (!repo6.exists()){
-            logger.info("Log Folder Not Valid, creating folder...");
-            new File(System.getProperty("user.home") + "\\Documents\\CMT\\Log").mkdir();
-        }
-
-        File[] fileList = repo.listFiles();
-
-        for (int i = 0; i < fileList.length; i++) {
-
-            if (fileList[i].getName().equals("cmt_product_default_settings.txt")
-                    || fileList[i].getName().equals("cmt_queueu_default_settings.txt") ||
-                    fileList[i].getName().equals("cmt_user_default_settings.txt")) {
-
-                File oldone = new File(System.getProperty("user.home") + "\\Documents\\CMT\\"+fileList[i].getName());
-                oldone.renameTo(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Settings\\"+fileList[i].getName()));
-            }
-            if (fileList[i].getName().equals("cmt_case_data_V2.csv") || fileList[i].getName().equals("cmt_case_data_V2.xls") || fileList[i].getName().equals("cmt_case_data_V3.xls") ||
-                    fileList[i].getName().equals("cmt_comments.csv") || fileList[i].getName().equals("cmt_comments.xls") || fileList[i].getName().equals("cmt_projects.csv") ||
-                    fileList[i].getName().equals("cmt_projects.xls")|| fileList[i].getName().equals("cmt_user_prod.csv") || fileList[i].getName().equals("cmt_user_prod.xls")){
-
-                File oldone2 = new File(System.getProperty("user.home") + "\\Documents\\CMT\\"+fileList[i].getName());
-                oldone2.renameTo(new File(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\"+fileList[i].getName()));
-            }
-        }
-    }
 
     public void setButtons(){
         btnProjection.setVisible(true);
@@ -18846,7 +18591,7 @@ public class Controller implements Initializable {
 
         try {
 
-            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\SkillSet\\SkillsetProfiles.xls")));
+            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(skillSetFolder + "\\SkillsetProfiles.xls")));
             HSSFSheet sheet = workbook.getSheetAt(0);
             HSSFCell cellVal;
 
@@ -18869,7 +18614,7 @@ public class Controller implements Initializable {
 
     private void readUsers(){
 
-        File usersFile = new File(System.getProperty("user.home") + "\\Documents\\CMT\\SkillSet\\users.txt");
+        File usersFile = new File(skillSetFolder + "\\users.txt");
 
         if (usersFile.isFile()) {
 
@@ -18904,7 +18649,7 @@ public class Controller implements Initializable {
     private void readAllUsers(){
 
         try {
-            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\SkillSet\\SkillsetProfiles.xls")));
+            HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(skillSetFolder + "\\SkillsetProfiles.xls")));
             HSSFSheet sheet = workbook.getSheetAt(0);
 
             int cellnum = sheet.getRow(0).getLastCellNum();
@@ -18972,7 +18717,7 @@ public class Controller implements Initializable {
 
         HSSFCell regCell;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(System.getProperty("user.home") + "\\Documents\\CMT\\Data\\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int lastRow = filtersheet.getLastRowNum();
@@ -19013,9 +18758,11 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        folderArrange.arrangeCMTFolder();
+
         try{
 
-            fh = new FileHandler(System.getProperty("user.home") + "\\Documents\\CMT\\Log\\cmt_log", true);
+            fh = new FileHandler(logFolder + "\\cmt_log", true);
             fh.setFormatter(new SimpleFormatter());
             fh.setLevel(Level.FINE);
             logger.addHandler(fh);
@@ -19025,7 +18772,6 @@ public class Controller implements Initializable {
         }
 
         logger.info("Program Started");
-        arrangeCMTFolder();
         setqueueArray();
         readTimeStamp();
         myProductsPage();

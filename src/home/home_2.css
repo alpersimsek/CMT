@@ -28,7 +28,7 @@
 
    -fx-text-fill: white;
    -fx-font-weight: bold;
-   -fx-font-size: 12 ;
+   -fx-font-size: 10 ;
    -fx-alignment: CENTER_LEFT;
 }
 
@@ -36,7 +36,7 @@
 
   -fx-text-fill: #000000;
   -fx-alignment: CENTER_LEFT;
-  -fx-font-size: 12 ;
+  -fx-font-size: 10 ;
 }
 
 .list-cell:odd {
@@ -59,7 +59,7 @@
 .table-view .cell{
   -fx-text-fill: #000000;
   -fx-alignment: CENTER_LEFT;
-  -fx-font-size: 12 ;
+  -fx-font-size: 10 ;
 
 }
 

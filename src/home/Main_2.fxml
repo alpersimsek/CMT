@@ -29,7 +29,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1000.0" stylesheets="@home.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.Controller">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1000.0" stylesheets="@home_2.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="home.Controller">
    <children>
       <Pane layoutX="200.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="850.0" style="-fx-background-color: #1D1F21;" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -154,7 +154,7 @@
                      </font>
                   </Label>
                   <Label fx:id="lblDownload" prefHeight="55.0" prefWidth="436.0" text="OFF-LINE" textFill="#ff007f" />
-                  <ProgressBar fx:id="progressBar" blendMode="EXCLUSION" prefHeight="30.0" prefWidth="200.0" progress="0.0" stylesheets="@home.css" visible="false" />
+                  <ProgressBar fx:id="progressBar" blendMode="EXCLUSION" prefHeight="30.0" prefWidth="200.0" progress="0.0" stylesheets="@home_2.css" visible="false" />
                </children>
             </VBox>
             <ImageView fitHeight="56.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="694.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -166,7 +166,7 @@
       </AnchorPane>
       <StackPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
          <children>
-            <AnchorPane fx:id="apnSettings" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleMouseClicked" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css">
+            <AnchorPane fx:id="apnSettings" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleMouseClicked" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home_2.css">
                <children>
                   <Pane fx:id="pnAccountSave" layoutX="695.0" layoutY="390.0" prefHeight="100.0" prefWidth="345.0" style="-fx-background-color: #FFFFFF; -fx-border-color: GRAY; -fx-border-width: 1;" visible="false" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="425.0">
                      <children>
@@ -282,6 +282,8 @@
                         <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -336,17 +338,17 @@
                               <Font size="11.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnSaveDefault" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="760.0" layoutY="490.0" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="60.0" prefWidth="255.0" text="Save All As Default" GridPane.columnIndex="1" GridPane.rowIndex="11">
+                        <Button fx:id="btnSaveDefault" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="760.0" layoutY="490.0" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="60.0" prefWidth="255.0" text="Save All As Default" GridPane.columnIndex="1" GridPane.rowIndex="13">
                            <graphic>
                               <FontAwesomeIconView fill="GREY" glyphName="SAVE" size="20" />
                            </graphic>
                         </Button>
-                        <Button fx:id="btnLoadDefault" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="250.0" layoutY="490.0" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="60.0" prefWidth="255.0" text="Load Default Settings" GridPane.rowIndex="11">
+                        <Button fx:id="btnLoadDefault" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="250.0" layoutY="490.0" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="60.0" prefWidth="255.0" text="Load Default Settings" GridPane.rowIndex="13">
                            <graphic>
                               <FontAwesomeIconView fill="GREY" glyphName="UPLOAD" size="20" />
                            </graphic>
                         </Button>
-                        <Button fx:id="btnClearAll" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="910.0" layoutY="370.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="60.0" prefWidth="162.0" text="Clear All" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="11">
+                        <Button fx:id="btnClearAll" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="910.0" layoutY="370.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="60.0" prefWidth="162.0" text="Clear All" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="13">
                            <graphic>
                               <FontAwesomeIconView fill="GREY" glyphName="TRASH_ALT" size="20" />
                            </graphic>
@@ -399,23 +401,23 @@
                               <Font size="11.0" />
                            </font>
                         </Button>
-                        <ChoiceBox fx:id="regChoice" prefHeight="32.0" prefWidth="150.0" stylesheets="@home.css" GridPane.columnSpan="2" GridPane.rowIndex="7">
+                        <ChoiceBox fx:id="regChoice" prefHeight="32.0" prefWidth="150.0" stylesheets="@home_2.css" GridPane.columnSpan="2" GridPane.rowIndex="9">
                            <GridPane.margin>
                               <Insets left="120.0" />
                            </GridPane.margin>
                         </ChoiceBox>
-                        <Text layoutX="10.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Region :" wrappingWidth="115.705078125" GridPane.rowIndex="7">
+                        <Text layoutX="10.0" layoutY="321.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Select Region :" wrappingWidth="115.705078125" GridPane.rowIndex="9">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Accounts :" wrappingWidth="237.705078125" GridPane.rowIndex="8">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Accounts :" wrappingWidth="237.705078125" GridPane.rowIndex="10">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Text>
-                        <TextField fx:id="txAccounts" editable="false" onMouseClicked="#handleMouseClicked" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="379.0" GridPane.columnSpan="3" GridPane.rowIndex="9" />
-                        <Button fx:id="btnAccLoad" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="670.0" layoutY="340.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="50.0" prefWidth="118.0" text="Load Accounts" GridPane.columnIndex="4" GridPane.rowIndex="9">
+                        <TextField fx:id="txAccounts" editable="false" onMouseClicked="#handleMouseClicked" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="379.0" GridPane.columnSpan="3" GridPane.rowIndex="11" />
+                        <Button fx:id="btnAccLoad" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="670.0" layoutY="340.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="50.0" prefWidth="118.0" text="Load Accounts" GridPane.columnIndex="4" GridPane.rowIndex="11">
                            <graphic>
                               <FontAwesomeIconView fill="GREY" glyphName="UPLOAD" size="22" />
                            </graphic>
@@ -423,7 +425,7 @@
                               <Font size="11.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnAccSaveAs" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="810.0" layoutY="340.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="50.0" prefWidth="118.0" text="Save Accounts" GridPane.columnIndex="5" GridPane.rowIndex="9">
+                        <Button fx:id="btnAccSaveAs" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="810.0" layoutY="340.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="50.0" prefWidth="118.0" text="Save Accounts" GridPane.columnIndex="5" GridPane.rowIndex="11">
                            <graphic>
                               <FontAwesomeIconView fill="GREY" glyphName="SAVE" size="22" />
                            </graphic>
@@ -431,7 +433,7 @@
                               <Font size="11.0" />
                            </font>
                         </Button>
-                        <Button fx:id="btnAccClear" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="950.0" layoutY="340.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="50.0" prefWidth="118.0" text="Clear Field" GridPane.columnIndex="6" GridPane.rowIndex="9">
+                        <Button fx:id="btnAccClear" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="950.0" layoutY="340.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="50.0" prefWidth="118.0" text="Clear Field" GridPane.columnIndex="6" GridPane.rowIndex="11">
                            <graphic>
                               <FontAwesomeIconView fill="GREY" glyphName="TRASH_ALT" size="22" />
                            </graphic>
@@ -439,9 +441,28 @@
                               <Font size="11.0" />
                            </font>
                         </Button>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="WorkGroups:" wrappingWidth="237.705078125" GridPane.rowIndex="7">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <TextField fx:id="txWorkGroup" editable="false" layoutX="10.0" layoutY="250.0" onMouseClicked="#handleMouseClicked" onMouseEntered="#handleMouseOver" prefHeight="50.0" prefWidth="379.0" GridPane.columnSpan="3" GridPane.rowIndex="8" />
+                        <Button fx:id="btnWGClear" alignment="BASELINE_CENTER" contentDisplay="RIGHT" graphicTextGap="10.0" layoutX="731.0" layoutY="250.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onMouseClicked="#handleMouseClicked" prefHeight="50.0" prefWidth="118.0" text="Clear Field" GridPane.columnIndex="4" GridPane.rowIndex="8">
+                           <graphic>
+                              <FontAwesomeIconView fill="GREY" glyphName="TRASH_ALT" size="22" />
+                           </graphic>
+                           <font>
+                              <Font size="11.0" />
+                           </font>
+                        </Button>
+                        <Pane fx:id="pnWGNames" prefHeight="200.0" prefWidth="200.0" visible="false" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="8" GridPane.rowSpan="2">
+                           <children>
+                              <TextArea fx:id="txtWGNames" layoutX="-3.0" layoutY="-4.0" prefHeight="110.0" prefWidth="236.0" wrapText="true" />
+                           </children>
+                        </Pane>
                      </children>
                   </GridPane>
-                  <Pane fx:id="pnUsersSave" layoutX="725.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="350.0" style="-fx-background-color: #FFFFFF; -fx-border-color: GRAY; -fx-border-width: 1;" stylesheets="@home.css" visible="false" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="130.0">
+                  <Pane fx:id="pnUsersSave" layoutX="725.0" layoutY="195.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="350.0" style="-fx-background-color: #FFFFFF; -fx-border-color: GRAY; -fx-border-width: 1;" stylesheets="@home_2.css" visible="false" AnchorPane.leftAnchor="500.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="130.0">
                      <children>
                         <GridPane prefHeight="80.0" prefWidth="340.0">
                            <columnConstraints>
@@ -506,6 +527,7 @@
                               <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="35.0" vgrow="SOMETIMES" />
+                              <RowConstraints />
                            </rowConstraints>
                            <children>
                               <TableView fx:id="tableAcc" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="310.0" GridPane.rowIndex="1" GridPane.rowSpan="5">
@@ -1060,6 +1082,7 @@
                               <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES" />
                               <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" vgrow="SOMETIMES" />
+                              <RowConstraints />
                            </rowConstraints>
                            <children>
                               <TableView fx:id="tableQueue" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="310.0" GridPane.rowIndex="1" GridPane.rowSpan="5">
@@ -1135,7 +1158,7 @@
                   </Pane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apnAccounts" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css">
+            <AnchorPane fx:id="apnAccounts" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home_2.css">
                <children>
                   <GridPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="5.0">
                      <columnConstraints>
@@ -1237,7 +1260,7 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CRITICAL" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                  <GridPane alignment="CENTER" prefHeight="149.0" prefWidth="580.0" stylesheets="@home.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="5.0">
+                  <GridPane alignment="CENTER" prefHeight="149.0" prefWidth="580.0" stylesheets="@home_2.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="5.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
@@ -1307,7 +1330,7 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ENGINEERING" textAlignment="CENTER" wrappingWidth="98.775390625" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <GridPane alignment="CENTER" prefHeight="148.0" prefWidth="580.0" stylesheets="@home.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="165.0">
+                  <GridPane alignment="CENTER" prefHeight="148.0" prefWidth="580.0" stylesheets="@home_2.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="165.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
@@ -1377,7 +1400,7 @@
                         <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ENGINEERING" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <GridPane alignment="CENTER" layoutX="215.0" layoutY="298.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="540.0" stylesheets="@home.css" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="320.0">
+                  <GridPane alignment="CENTER" layoutX="215.0" layoutY="298.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="540.0" stylesheets="@home_2.css" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="320.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
@@ -1620,7 +1643,7 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CRITICAL" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                  <GridPane alignment="CENTER" prefHeight="149.0" prefWidth="580.0" stylesheets="@home.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="5.0">
+                  <GridPane alignment="CENTER" prefHeight="149.0" prefWidth="580.0" stylesheets="@home_2.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="5.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
@@ -1690,7 +1713,7 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ENGINEERING" textAlignment="CENTER" wrappingWidth="98.775390625" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <GridPane alignment="CENTER" prefHeight="150.0" prefWidth="580.0" stylesheets="@home.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="165.0">
+                  <GridPane alignment="CENTER" prefHeight="150.0" prefWidth="580.0" stylesheets="@home_2.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="165.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
@@ -1760,7 +1783,7 @@
                         <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ENGINEERING" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <GridPane alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="540.0" stylesheets="@home.css" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="320.0">
+                  <GridPane alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="540.0" stylesheets="@home_2.css" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="320.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
@@ -1847,29 +1870,29 @@
                <children>
                   <TableView fx:id="tableCases" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <columns>
-                        <TableColumn fx:id="NumberCol" editable="false" maxWidth="105.0" minWidth="105.0" prefWidth="105.0" resizable="false" text="Case Number" />
-                        <TableColumn fx:id="SeverityCol" maxWidth="110.0" minWidth="110.0" prefWidth="110.0" resizable="false" text="Severity" />
+                        <TableColumn fx:id="NumberCol" editable="false" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" resizable="false" text="Case Number" />
+                        <TableColumn fx:id="SeverityCol" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" resizable="false" text="Severity" />
                         <TableColumn fx:id="StatusCol" maxWidth="150.0" minWidth="80.0" text="Status" />
-                        <TableColumn fx:id="OwnerCol" maxWidth="200.0" minWidth="80.0" text="Owner" />
-                        <TableColumn fx:id="CoOwnerCol" maxWidth="250.0" minWidth="80.0" prefWidth="150.0" text="Co-Owner" />
-                        <TableColumn fx:id="CoOwnerQueueCol" maxWidth="150.0" minWidth="80.0" text="Co-Owner Queue" />
+                        <TableColumn fx:id="OwnerCol" maxWidth="200.0" minWidth="80.0" prefWidth="80.0" text="Owner" />
+                        <TableColumn fx:id="CoOwnerCol" maxWidth="200.0" minWidth="80.0" prefWidth="80.0" text="Co-Owner" />
+                        <TableColumn fx:id="CoOwnerQueueCol" maxWidth="150.0" minWidth="80.0" prefWidth="80.0" text="Co-Owner Queue" />
                         <TableColumn fx:id="ResponsibleCol" maxWidth="200.0" minWidth="100.0" prefWidth="100.0" text="Responsible" />
-                        <TableColumn fx:id="AgeCol" maxWidth="80.0" minWidth="50.0" prefWidth="60.0" resizable="false" text="Age" />
-                        <TableColumn fx:id="NextUpdateCol" maxWidth="80.0" minWidth="80.0" resizable="false" text="Update" />
-                        <TableColumn fx:id="EscalatedByCol" maxWidth="200.0" minWidth="80.0" text="Escalated By" />
-                        <TableColumn fx:id="HotListCol" maxWidth="120.0" minWidth="80.0" text="Hot List" />
-                        <TableColumn fx:id="OutFollowCol" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" text="E1 Follow" />
-                        <TableColumn fx:id="SupportTypeCol" maxWidth="150.0" minWidth="80.0" text="Type" />
+                        <TableColumn fx:id="AgeCol" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" resizable="false" text="Age" />
+                        <TableColumn fx:id="NextUpdateCol" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" resizable="false" text="Update" />
+                        <TableColumn fx:id="EscalatedByCol" maxWidth="150.0" minWidth="60.0" prefWidth="60.0" text="Escalated By" />
+                        <TableColumn fx:id="HotListCol" maxWidth="120.0" minWidth="50.0" prefWidth="50.0" text="Hot List" />
+                        <TableColumn fx:id="OutFollowCol" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" resizable="false" text="E1 Follow" />
+                        <TableColumn fx:id="SupportTypeCol" maxWidth="150.0" minWidth="80.0" prefWidth="80.0" text="Type" />
                         <TableColumn fx:id="ProductCol" maxWidth="300.0" minWidth="80.0" text="Product" />
                         <TableColumn fx:id="SubjectCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="200.0" text="Subject" />
                         <TableColumn fx:id="AccountCol" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="200.0" text="Account" />
-                        <TableColumn fx:id="RegionCol" maxWidth="150.0" minWidth="100.0" prefWidth="100.0" text="Region" />
-                        <TableColumn fx:id="SecurityCol" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="Security" />
+                        <TableColumn fx:id="RegionCol" maxWidth="100.0" minWidth="60.0" prefWidth="60.0" text="Region" />
+                        <TableColumn fx:id="SecurityCol" maxWidth="40.0" minWidth="40.0" prefWidth="40.0" resizable="false" text="Security" />
                      </columns>
                   </TableView>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apnRegCases" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css">
+            <AnchorPane fx:id="apnRegCases" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home_2.css">
                <children>
                   <GridPane alignment="CENTER" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="5.0">
                      <columnConstraints>
@@ -1971,7 +1994,7 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CRITICAL" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                  <GridPane alignment="CENTER" prefHeight="149.0" prefWidth="580.0" stylesheets="@home.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="5.0">
+                  <GridPane alignment="CENTER" prefHeight="149.0" prefWidth="580.0" stylesheets="@home_2.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="5.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
@@ -2041,7 +2064,7 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ENGINEERING" textAlignment="CENTER" wrappingWidth="98.775390625" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <GridPane alignment="CENTER" prefHeight="148.0" prefWidth="580.0" stylesheets="@home.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="165.0">
+                  <GridPane alignment="CENTER" prefHeight="148.0" prefWidth="580.0" stylesheets="@home_2.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="165.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
@@ -2111,7 +2134,7 @@
                         <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ENGINEERING" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <GridPane alignment="CENTER" layoutX="215.0" layoutY="298.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="540.0" stylesheets="@home.css" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="320.0">
+                  <GridPane alignment="CENTER" layoutX="215.0" layoutY="298.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="540.0" stylesheets="@home_2.css" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="320.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
@@ -2234,7 +2257,7 @@
                   </GridPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apnProjection" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: WHITE;" stylesheets="@home.css">
+            <AnchorPane fx:id="apnProjection" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: WHITE;" stylesheets="@home_2.css">
                <children>
                   <AnchorPane prefHeight="3.0" prefWidth="850.0" AnchorPane.bottomAnchor="570.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -2262,7 +2285,7 @@
                   </AnchorPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apnSkills" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css">
+            <AnchorPane fx:id="apnSkills" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home_2.css">
                <children>
                   <SplitPane dividerPositions="0.16449511400651465, 0.44625407166123776, 0.7263843648208469" layoutX="78.0" layoutY="150.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="460.0" prefWidth="1230.0" style="-fx-background-color: WHITE;" AnchorPane.bottomAnchor="305.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <items>
@@ -2472,11 +2495,11 @@
                   </SplitPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apnManLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css">
+            <AnchorPane fx:id="apnManLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home_2.css">
                <children>
-                  <Pane layoutX="140.0" layoutY="146.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="400.0" style="-fx-background-color: WHITE;" stylesheets="@home.css" AnchorPane.bottomAnchor="574.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="540.0" AnchorPane.topAnchor="146.0">
+                  <Pane layoutX="140.0" layoutY="146.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="400.0" style="-fx-background-color: WHITE;" stylesheets="@home_2.css" AnchorPane.bottomAnchor="574.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="540.0" AnchorPane.topAnchor="146.0">
                      <children>
-                        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="400.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home.css">
+                        <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="130.0" prefWidth="400.0" style="-fx-background-color: #FFFFFF;" stylesheets="@home_2.css">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="125.0" />
                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -2855,7 +2878,7 @@
                   </AnchorPane>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apnProjects" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: WHITE;" stylesheets="@home.css">
+            <AnchorPane fx:id="apnProjects" minHeight="-Infinity" minWidth="-Infinity" prefHeight="610.0" prefWidth="850.0" style="-fx-background-color: WHITE;" stylesheets="@home_2.css">
                <children>
                   <GridPane layoutX="14.0" layoutY="26.0" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="25.0">
                      <columnConstraints>
@@ -3131,7 +3154,7 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CRITICAL" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                  <GridPane alignment="CENTER" prefHeight="149.0" prefWidth="580.0" stylesheets="@home.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="5.0">
+                  <GridPane alignment="CENTER" prefHeight="149.0" prefWidth="580.0" stylesheets="@home_2.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="5.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
@@ -3201,7 +3224,7 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ENGINEERING" textAlignment="CENTER" wrappingWidth="98.775390625" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <GridPane alignment="CENTER" prefHeight="150.0" prefWidth="580.0" stylesheets="@home.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="165.0">
+                  <GridPane alignment="CENTER" prefHeight="150.0" prefWidth="580.0" stylesheets="@home_2.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="165.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
@@ -3271,7 +3294,7 @@
                         <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ENGINEERING" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <GridPane alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="540.0" stylesheets="@home.css" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="320.0">
+                  <GridPane alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="540.0" stylesheets="@home_2.css" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="320.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
@@ -3492,7 +3515,7 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CRITICAL" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                  <GridPane alignment="CENTER" prefHeight="149.0" prefWidth="580.0" stylesheets="@home.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="5.0">
+                  <GridPane alignment="CENTER" prefHeight="149.0" prefWidth="580.0" stylesheets="@home_2.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="5.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
@@ -3562,7 +3585,7 @@
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ENGINEERING" textAlignment="CENTER" wrappingWidth="98.775390625" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <GridPane alignment="CENTER" prefHeight="148.0" prefWidth="580.0" stylesheets="@home.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="165.0">
+                  <GridPane alignment="CENTER" prefHeight="148.0" prefWidth="580.0" stylesheets="@home_2.css" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="165.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
@@ -3632,7 +3655,7 @@
                         <Text layoutX="270.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ENGINEERING" textAlignment="CENTER" wrappingWidth="100.775390625" GridPane.columnIndex="6" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <GridPane alignment="CENTER" layoutX="215.0" layoutY="298.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="540.0" stylesheets="@home.css" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="320.0">
+                  <GridPane alignment="CENTER" layoutX="215.0" layoutY="298.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="276.0" prefWidth="540.0" stylesheets="@home_2.css" AnchorPane.leftAnchor="260.0" AnchorPane.topAnchor="320.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="20.0" minWidth="20.0" prefWidth="20.0" />
