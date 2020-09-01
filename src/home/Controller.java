@@ -1014,9 +1014,11 @@ public class Controller implements Initializable {
     int caseEscalatedRefCell = 0;
     int caseSupHotListRRef = 0;
     int caseRegionRef;
+    int rbnDaysRegRefCell = 0;
     int caseHotListRefCell = 0;
     int caseOutFolRefCell = 0;
     int caseAgeRefCell = 0;
+    int rbbnDaysRefCell = 0;
     int mycaseNumCellRef = 0;
     int mycaseSupTypeRefCell = 0;
     int mycaseStatRefCell = 0;
@@ -1030,6 +1032,7 @@ public class Controller implements Initializable {
     int mycaseUpdateCell = 0;
     int myCoOwnCaseRefCell = 0;
     int myCoOwnQueueRefCell = 0;
+    int myRbbnDaysRefCell = 0;
 
     int caseCellRef = 0;
     int caseCellRef2 = 0;
@@ -1043,6 +1046,7 @@ public class Controller implements Initializable {
     int customerEsc = 0;
     int customerBC = 0;
     int customerWoh = 0;
+    int rbnDaysRefCell=0;
 
     //Overview Page # variables
     int e1Cases = 0;
@@ -2696,6 +2700,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal2;
             HSSFCell cellVal3;
             HSSFCell cellVal4;
+            HSSFCell cellVal5;
 
             for (int i = 0; i < cellnum; i++) {
 
@@ -2715,6 +2720,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Account Name")) {
                     caseAccountRef = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
 
             ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
@@ -2732,12 +2740,15 @@ public class Controller implements Initializable {
                     int ageCase = Integer.parseInt(caseAge);
                     cellVal4 = filtersheet.getRow(k).getCell(caseAccountRef);
                     String acc = cellVal4.getStringCellValue();
+                    cellVal5 = filtersheet.getRow(k).getCell(rbbnDaysRefCell);
+                    String ribdays = cellVal5.getStringCellValue();
+                    int ribDays = Integer.parseInt(ribdays);
 
                     if (acc.equals(setAcc.get(i))) {
 
                         if (due) {
 
-                            if ((cellValToCompare.equals(filter) && ageCase <= ageDue) && ((!caseStatus.equals("Develop Solution") &&
+                            if ((cellValToCompare.equals(filter) && ribDays <= ageDue) && ((!caseStatus.equals("Develop Solution") &&
                                     (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))))) {
 
                                 ArrayList<String> array = new ArrayList<>();
@@ -2771,7 +2782,7 @@ public class Controller implements Initializable {
                                 }
                             }
                         } else {
-                            if ((cellValToCompare.equals(filter) && ageCase > ageDue) && ((!caseStatus.equals("Develop Solution") &&
+                            if ((cellValToCompare.equals(filter) && ribDays > ageDue) && ((!caseStatus.equals("Develop Solution") &&
                                     (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))))) {
 
                                 ArrayList<String> array = new ArrayList<>();
@@ -2884,7 +2895,7 @@ public class Controller implements Initializable {
 
         int caseCount = 0;
 
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + " \\cmt_case_data_V3.xls")))) {
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
             HSSFSheet filtersheet = workbook.getSheetAt(0);
             int cellnum = filtersheet.getRow(0).getLastCellNum();
@@ -2893,6 +2904,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal2;
             HSSFCell cellVal3;
             HSSFCell cellVal4;
+            HSSFCell cellVal5;
 
             for (int i = 0; i < cellnum; i++) {
 
@@ -2912,6 +2924,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Support Theater")) {
                     caseRegionRef = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRegRefCell = i;
+                }
             }
             for (int k = 1; k < lastRow + 1; k++) {
                 cellVal = filtersheet.getRow(k).getCell(caseCellRef);
@@ -2923,12 +2938,15 @@ public class Controller implements Initializable {
                 int ageCase = Integer.parseInt(caseAge);
                 cellVal4 = filtersheet.getRow(k).getCell(caseRegionRef);
                 String region = cellVal4.getStringCellValue();
+                cellVal5 = filtersheet.getRow(k).getCell(rbnDaysRegRefCell);
+                String rbDays = cellVal5.getStringCellValue();
+                int rbbnDays = Integer.parseInt(rbDays);
 
                 if (region.equals(selectedRegion)) {
 
                     if (due) {
 
-                        if ((cellValToCompare.equals(filter) && ageCase <= ageDue) && ((!caseStatus.equals("Develop Solution") &&
+                        if ((cellValToCompare.equals(filter) && rbbnDays <= ageDue) && ((!caseStatus.equals("Develop Solution") &&
                                 (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))))) {
 
                             ArrayList<String> array = new ArrayList<>();
@@ -2962,7 +2980,7 @@ public class Controller implements Initializable {
                             }
                         }
                     } else {
-                        if ((cellValToCompare.equals(filter) && ageCase > ageDue) && ((!caseStatus.equals("Develop Solution") &&
+                        if ((cellValToCompare.equals(filter) && rbbnDays > ageDue) && ((!caseStatus.equals("Develop Solution") &&
                                 (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))))) {
 
                             ArrayList<String> array = new ArrayList<>();
@@ -2995,7 +3013,6 @@ public class Controller implements Initializable {
                                 tableCases.getItems().removeAll(observableList);
                             }
                         }
-
                     }
                 }
             }
@@ -5057,6 +5074,8 @@ public class Controller implements Initializable {
             btnBack.setVisible(false);
             apnHome.toFront();
             apnHome.toFront();
+            downData.parseData();
+            downData.rectifyAccountNames();
             overviewPage();
         }
 
@@ -5134,7 +5153,6 @@ public class Controller implements Initializable {
             btnToExcel.setVisible(false);
             btnBack.setVisible(false);
             apnSettings.toFront();
-            System.out.println(System.getenv("USERPROFILE"));
         }
 
         if (event.getSource() == btnProjection){
@@ -7709,6 +7727,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal2;
             HSSFCell cellVal3;
             HSSFCell cellVal4;
+            HSSFCell cellVal5;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -7727,6 +7746,9 @@ public class Controller implements Initializable {
                 }
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
+                }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
                 }
             }
 
@@ -7749,10 +7771,12 @@ public class Controller implements Initializable {
                             String caseStatus = cellVal3.getStringCellValue();
                             cellVal4 = filtersheet.getRow(i).getCell(mycaseAgeRefCell);
                             int compAge = Integer.parseInt(cellVal4.getStringCellValue());
-
+                            cellVal5 = filtersheet.getRow(i).getCell(rbnDaysRefCell);
+                            String rbday = cellVal5.getStringCellValue();
+                            int ribDays = Integer.parseInt(rbday);
 
                             if (b) {
-                                if ((productName.equals(setProd.get(j)) && cellToCompare.equals(filter) && compAge < dueDay) &&
+                                if ((productName.equals(setProd.get(j)) && cellToCompare.equals(filter) && ribDays <= dueDay) &&
                                         (!caseStatus.equals("Pending Closure") || !caseStatus.equals("Future Availability"))) {
 
                                     ArrayList<String> array = new ArrayList<>();
@@ -7789,7 +7813,7 @@ public class Controller implements Initializable {
                                     }
                                 }
                             } else {
-                                if ((productName.equals(setProd.get(j)) && cellToCompare.equals(filter) && compAge > dueDay)
+                                if ((productName.equals(setProd.get(j)) && cellToCompare.equals(filter) && ribDays > dueDay)
                                         && (!caseStatus.equals("Pending Closure") || !caseStatus.equals("Future Availability"))) {
 
                                     ArrayList<String> array = new ArrayList<>();
@@ -11950,6 +11974,8 @@ public class Controller implements Initializable {
             HSSFCell cellVal3;
             HSSFCell cellVal4;
             HSSFCell cellVal5;
+            HSSFCell cellVal6;
+
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -11971,6 +11997,9 @@ public class Controller implements Initializable {
                 }
                 if (filterColName.equals("Co-Owner")){
                     myCoOwnCaseRefCell = i;
+                }
+                if (filterColName.equals("Days by Ribbon (days)")){
+                    myRbbnDaysRefCell = i;
                 }
             }
 
@@ -12003,12 +12032,16 @@ public class Controller implements Initializable {
                             int compAge = Integer.parseInt(cellVal4.getStringCellValue());
                             cellVal5 = filtersheet.getRow(i).getCell(myCoOwnCaseRefCell);
                             String coOwner = cellVal5.getStringCellValue();
+                            cellVal6 = filtersheet.getRow(i).getCell(myRbbnDaysRefCell);
+                            String rbbnDays = cellVal6.getStringCellValue();
+                            int myRbbnDays = Integer.parseInt(rbbnDays);
+
 
                             if ((cellToCompare.equals(filter))) {
 
                                 if (b) {
 
-                                    if (((caseUser.equals(setUsers.get(j))  || coOwner.equals(setUsers.get(j))) && compAge <= dueDay) && ((caseStatus.equals("Open / Assign") ||
+                                    if (((caseUser.equals(setUsers.get(j))  || coOwner.equals(setUsers.get(j))) && myRbbnDays <= dueDay) && ((caseStatus.equals("Open / Assign") ||
                                             (caseStatus.equals("Isolate Fault"))))) {
 
                                         ArrayList<String> array = new ArrayList<>();
@@ -12045,7 +12078,7 @@ public class Controller implements Initializable {
                                         }
                                     }
                                 } else {
-                                    if (((caseUser.equals(setUsers.get(j))  || coOwner.equals(setUsers.get(j))) && compAge > dueDay) && ((caseStatus.equals("Open / Assign") ||
+                                    if (((caseUser.equals(setUsers.get(j))  || coOwner.equals(setUsers.get(j))) && myRbbnDays > dueDay) && ((caseStatus.equals("Open / Assign") ||
                                             (caseStatus.equals("Isolate Fault"))))) {
 
                                         ArrayList<String> array = new ArrayList<>();
@@ -13219,6 +13252,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal;
             HSSFCell cellVal2;
             HSSFCell cellVal3;
+            HSSFCell cellVal4;
 
             for (int i = 0; i < cellnum; i++) {
 
@@ -13235,6 +13269,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbbnDaysRefCell = i;
+                }
             }
             for (int k = 1; k < lastRow + 1; k++) {
                 cellVal = filtersheet.getRow(k).getCell(caseCellRef);
@@ -13244,10 +13281,13 @@ public class Controller implements Initializable {
                 cellVal3 = filtersheet.getRow(k).getCell(caseStatRefCell);
                 String caseStatus = cellVal3.getStringCellValue();
                 int ageCase = Integer.parseInt(caseAge);
+                cellVal4 = filtersheet.getRow(k).getCell(rbbnDaysRefCell);
+                String rbnDays = cellVal4.getStringCellValue();
+                int rbbnAge = Integer.parseInt(rbnDays);
 
                 if (due) {
 
-                    if ((cellValToCompare.equals(filter) && ageCase <= ageDue) && ((!caseStatus.equals("Develop Solution") &&
+                    if ((cellValToCompare.equals(filter) && rbbnAge <= ageDue) && ((!caseStatus.equals("Develop Solution") &&
                             (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))))) {
 
                         ArrayList<String> array = new ArrayList<>();
@@ -13281,7 +13321,7 @@ public class Controller implements Initializable {
                         }
                     }
                 } else {
-                    if ((cellValToCompare.equals(filter) && ageCase > ageDue) && ((!caseStatus.equals("Develop Solution") &&
+                    if ((cellValToCompare.equals(filter) && rbbnAge > ageDue) && ((!caseStatus.equals("Develop Solution") &&
                             (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))))) {
 
                         ArrayList<String> array = new ArrayList<>();
@@ -13400,10 +13440,10 @@ public class Controller implements Initializable {
         headerArray.add("Severity");
         headerArray.add("Status");
         headerArray.add("Owner");
-        headerArray.add("Co-Owner");
-        headerArray.add("Co-Owner Queue");
+        headerArray.add("Customer Interface");
         headerArray.add("Responsible");
-        headerArray.add("Age");
+        headerArray.add("RBBN Age");
+        headerArray.add("Open Days");
         headerArray.add("Next Update Date");
         headerArray.add("Escalated By");
         headerArray.add("Hot List");
@@ -13582,6 +13622,7 @@ public class Controller implements Initializable {
         HSSFCell curResp;
         HSSFCell caseUpdate;
         HSSFCell caseOwner;
+        HSSFCell rbnDays;
 
         try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
             HSSFSheet filtersheet = workbook.getSheetAt(0);
@@ -13663,6 +13704,9 @@ public class Controller implements Initializable {
                     case ("Account Name"):
                         caseAccountRef = i;
                         break;
+                    case ("Days by Ribbon (days)"):
+                        rbnDaysRefCell = i;
+                        break;
                 }
             }
 
@@ -13706,6 +13750,10 @@ public class Controller implements Initializable {
                             ageCase = filtersheet.getRow(i).getCell(caseAgeRefCell);
                             String caseAge = ageCase.getStringCellValue();
                             int ageCaseNum = Integer.parseInt(caseAge);
+
+                            rbnDays = filtersheet.getRow(i).getCell(rbnDaysRefCell);
+                            String ribdays = rbnDays.getStringCellValue();
+                            int ribDays = Integer.parseInt(ribdays);
 
                             caseUpdate = filtersheet.getRow(i).getCell(caseNextUpdateDateRef);
                             String caseupdate = caseUpdate.getStringCellValue();
@@ -13751,10 +13799,10 @@ public class Controller implements Initializable {
                                 if (caseSever.equals("Business Critical")) {
                                     if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                                         if (!caseStatus.equals("Develop Solution")) {
-                                            if (ageCaseNum < 15) {
+                                            if (ribDays <= 15) {
                                                 accBCDueCases++;
                                             }
-                                            if (ageCaseNum > 15) {
+                                            if (ribDays > 15) {
                                                 accBCMissedCases++;
                                             }
                                         } else {
@@ -13780,10 +13828,10 @@ public class Controller implements Initializable {
                                 if (caseSever.equals("Major")) {
                                     if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                                         if (!caseStatus.equals("Develop Solution")) {
-                                            if (ageCaseNum < 30) {
+                                            if (ribDays <= 30) {
                                                 accMJDueCases++;
                                             }
-                                            if (ageCaseNum > 30) {
+                                            if (ribDays > 30) {
                                                 accMJMissedCases++;
                                             }
                                         } else {
@@ -13806,7 +13854,7 @@ public class Controller implements Initializable {
                                 }
                                 if (caseSever.equals("Minor")) {
                                     if ((caseStatus.equals("Open / Assign")) || (caseStatus.equals("Isolate Fault"))) {
-                                        if (ageCaseNum > 180) {
+                                        if (ribDays > 180) {
                                             accMNMissedCases++;
                                         }
                                     }
@@ -13882,6 +13930,7 @@ public class Controller implements Initializable {
         HSSFCell curResp;
         HSSFCell caseOwner;
         HSSFCell caseUpdate;
+        HSSFCell rbnDays;
 
         try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
             HSSFSheet filtersheet = workbook.getSheetAt(0);
@@ -13955,6 +14004,9 @@ public class Controller implements Initializable {
                     case ("Next Case Update"):
                         caseNextUpdateDateRef = i;
                         break;
+                    case ("Days by Ribbon (days)"):
+                        rbnDaysRefCell = i;
+                        break;
                 }
             }
 
@@ -13984,6 +14036,10 @@ public class Controller implements Initializable {
                 ageCase = filtersheet.getRow(i).getCell(caseAgeRefCell);
                 String caseAge = ageCase.getStringCellValue();
                 int ageCaseNum = Integer.parseInt(caseAge);
+
+                rbnDays = filtersheet.getRow(i).getCell(rbnDaysRefCell);
+                String rbbnAge = rbnDays.getStringCellValue();
+                int ribDays = Integer.parseInt(rbbnAge);
 
                 caseUpdate = filtersheet.getRow(i).getCell(caseNextUpdateDateRef);
                 String caseupdate = caseUpdate.getStringCellValue();
@@ -14027,10 +14083,10 @@ public class Controller implements Initializable {
                 if (caseSever.equals("Business Critical")) {
                     if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                         if (!caseStatus.equals("Develop Solution")) {
-                            if (ageCaseNum < 15) {
+                            if (ribDays <= 15) {
                                 bcDue++;
                             }
-                            if (ageCaseNum > 15) {
+                            if (ribDays > 15) {
                                 misBCdue++;
                             }
                         } else {
@@ -14056,10 +14112,10 @@ public class Controller implements Initializable {
                 if (caseSever.equals("Major")) {
                     if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                         if (!caseStatus.equals("Develop Solution")) {
-                            if (ageCaseNum < 30) {
+                            if (ribDays <= 30) {
                                 dueMJday++;
                             }
-                            if (ageCaseNum > 30) {
+                            if (ribDays > 30) {
                                 misMJdue++;
                             }
                         } else {
@@ -14082,7 +14138,7 @@ public class Controller implements Initializable {
                 }
                 if (caseSever.equals("Minor")) {
                     if ((caseStatus.equals("Open / Assign")) || (caseStatus.equals("Isolate Fault"))) {
-                        if (ageCaseNum > 180) {
+                        if (ribDays > 180) {
                             misMNdue++;
                         }
                     }
@@ -14158,6 +14214,7 @@ public class Controller implements Initializable {
         HSSFCell curResp;
         HSSFCell caseUpdate;
         HSSFCell caseOwner;
+        HSSFCell rbnAge;
 
         try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
@@ -14239,6 +14296,9 @@ public class Controller implements Initializable {
                     case ("Support Theater"):
                         caseRegionRef = i;
                         break;
+                    case ("Days by Ribbon (days)"):
+                        rbnDaysRegRefCell = i;
+                        break;
                 }
             }
 
@@ -14271,6 +14331,10 @@ public class Controller implements Initializable {
                 ageCase = filtersheet.getRow(i).getCell(caseAgeRefCell);
                 String caseAge = ageCase.getStringCellValue();
                 int ageCaseNum = Integer.parseInt(caseAge);
+
+                rbnAge = filtersheet.getRow(i).getCell(rbnDaysRegRefCell);
+                String rbnDays = rbnAge.getStringCellValue();
+                int ribDays = Integer.parseInt(rbnDays);
 
                 caseUpdate = filtersheet.getRow(i).getCell(caseNextUpdateDateRef);
                 String caseupdate = caseUpdate.getStringCellValue();
@@ -14316,10 +14380,10 @@ public class Controller implements Initializable {
                     if (caseSever.equals("Business Critical")) {
                         if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                             if (!caseStatus.equals("Develop Solution")) {
-                                if (ageCaseNum < 15) {
+                                if (ribDays <= 15) {
                                     regBCDueCases++;
                                 }
-                                if (ageCaseNum > 15) {
+                                if (ribDays > 15) {
                                     regBCMissedCases++;
                                 }
                             } else {
@@ -14345,10 +14409,10 @@ public class Controller implements Initializable {
                     if (caseSever.equals("Major")) {
                         if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                             if (!caseStatus.equals("Develop Solution")) {
-                                if (ageCaseNum < 30) {
+                                if (ribDays <= 30) {
                                     regMJDueCases++;
                                 }
-                                if (ageCaseNum > 30) {
+                                if (ribDays > 30) {
                                     regMJMissedCases++;
                                 }
                             } else {
@@ -14371,7 +14435,7 @@ public class Controller implements Initializable {
                     }
                     if (caseSever.equals("Minor")) {
                         if ((caseStatus.equals("Open / Assign")) || (caseStatus.equals("Isolate Fault"))) {
-                            if (ageCaseNum > 180) {
+                            if (ribDays > 180) {
                                 regMNMissedCases++;
                             }
                         }
@@ -14447,6 +14511,7 @@ public class Controller implements Initializable {
         HSSFCell mycaseUpdate;
         HSSFCell myCoOwnedCase;
         HSSFCell myCoOwnerQueue;
+        HSSFCell myRbbnDays;
 
         try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
@@ -14527,11 +14592,13 @@ public class Controller implements Initializable {
                     case ("Co-Owner Queue"):
                         myCoOwnQueueRefCell = i;
                         break;
+                    case ("Days by Ribbon (days)"):
+                         myRbbnDaysRefCell= i;
+                        break;
                 }
             }
 
             /* Creating Input Data Arrays from Setttings Page */
-
 
             wgToNames();
 
@@ -14592,6 +14659,10 @@ public class Controller implements Initializable {
                             String myagenum = mycaseAge.replace(".0000000000", "");
                             int ageCaseNum = Integer.parseInt(myagenum);
 
+                            myRbbnDays = filtersheet.getRow(i).getCell(myRbbnDaysRefCell);
+                            String myRbnDays = myRbbnDays.getStringCellValue();
+                            int myRibDays = Integer.parseInt(myRbnDays);
+
                             if (caseuser.equals(setUser.get(j)) || coOwner.equals(setUser.get(j))) {
 
                                 if (!mystrFltStatus.equals("NotSet") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
@@ -14624,10 +14695,10 @@ public class Controller implements Initializable {
                                         myBCupdated++;
                                     }
                                     if ((mycaseStatus.equals("Open / Assign")) || (mycaseStatus.equals("Isolate Fault"))) {
-                                        if (ageCaseNum <= 15) {
+                                        if (myRibDays <= 15) {
                                             myBCDueCases++;
                                         }
-                                        if (ageCaseNum > 15) {
+                                        if (myRibDays > 15) {
                                             myBCMissedCases++;
                                         }
                                     }
@@ -14645,10 +14716,10 @@ public class Controller implements Initializable {
                                         myMJDSCases++;
                                     }
                                     if ((mycaseStatus.equals("Open / Assign")) || (mycaseStatus.equals("Isolate Fault"))) {
-                                        if (ageCaseNum <= 30) {
+                                        if (myRibDays <= 30) {
                                             myMJDueCases++;
                                         }
-                                        if (ageCaseNum > 30) {
+                                        if (myRibDays > 30) {
                                             myMJMissedCases++;
                                         }
                                     }
@@ -14775,6 +14846,8 @@ public class Controller implements Initializable {
         HSSFCell caseQueue;
         HSSFCell mycaseUpdate;
         HSSFCell productName;
+        HSSFCell caseRbnDays;
+
 
         try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
@@ -14850,6 +14923,9 @@ public class Controller implements Initializable {
                     case ("Support Product"):
                         caseProductRef = i;
                         break;
+                    case ("Days by Ribbon (days)"):
+                        rbbnDaysRefCell = i;
+                        break;
                 }
             }
 
@@ -14907,6 +14983,10 @@ public class Controller implements Initializable {
                             String myagenum = mycaseAge.replace(".0000000000", "");
                             int ageCaseNum = Integer.parseInt(myagenum);
 
+                            caseRbnDays = filtersheet.getRow(i).getCell(rbnDaysRefCell);
+                            String prodRbnDays = caseRbnDays.getStringCellValue();
+                            int prdRbnDays = Integer.parseInt(prodRbnDays);
+
                             if (productCellStr.equals(setProducts.get(j))) {
 
                                 if (!mystrFltStatus.equals("NotSet") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
@@ -14944,9 +15024,9 @@ public class Controller implements Initializable {
                                     }
 
                                     if (!mycaseStatus.equals("Develop Solution") || !mycaseStatus.equals("Future Availability") || !mycaseStatus.equals("Pending Closure")) {
-                                        if (ageCaseNum < 15) {
+                                        if (prdRbnDays <= 15) {
                                             prodBCDueCases++;
-                                        } if (ageCaseNum > 15) {
+                                        } if (prdRbnDays > 15) {
                                             prodBCMissedCases++;
                                         }
                                     }
@@ -14966,9 +15046,9 @@ public class Controller implements Initializable {
                                     }
 
                                     if (!mycaseStatus.equals("Develop Solution") || !mycaseStatus.equals("Future Availability") || !mycaseStatus.equals("Pending Closure")) {
-                                        if (ageCaseNum < 30) {
+                                        if (prdRbnDays < 30) {
                                             prodMJDueCases++;
-                                        } if (ageCaseNum > 30) {
+                                        } if (prdRbnDays > 30) {
                                             prodMJMissedCases++;
                                         }
                                     }
@@ -17013,7 +17093,7 @@ public class Controller implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("For any issues/requests please inform us:" + "\n" + "\n" +
                     "Alper Simsek"+ "    " + "asimsek@rbbn.com" + "\n" + "\n" +
-                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.15");
+                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.16.1");
             alert.showAndWait();
         }
 

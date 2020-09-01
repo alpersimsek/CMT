@@ -35,7 +35,7 @@ public class DownData {
     ExecutorService service = Executors.newSingleThreadExecutor();
     int caseNumCellRefData = 0;
     int mycaseAgeRefCellData = 0;
-
+    int rbbnAgeRefCell = 0;
 
     public void downloadCSV() {
 
@@ -45,7 +45,7 @@ public class DownData {
         String filename4 = "cmt_comments.csv";
         String newLoc2 = "https://rbbn.my.salesforce.com/00OC0000006r1xS?export=1&enc=UTF-8&xf=csv?filename=" + filename2;
         String newLoc = "https://rbbn.my.salesforce.com/00OC0000007My3o?export=1&enc=UTF-8&xf=csv?filename=" + filename1;
-        String newLoc3 = "https://rbbn.my.salesforce.com/00OC00000076uIg?export=1&enc=UTF-8&xf=csv?filename=" + filename3;
+        String newLoc3 = "https://rbbn.my.salesforce.com/00O3b000006o4Ul?export=1&enc=UTF-8&xf=csv?filename=" + filename3;
         String newLoc4 = "https://rbbn.my.salesforce.com/00OC0000006r5ig?export=1&enc=UTF-8&xf=csv?filename=" + filename4;
 
         try {
@@ -265,7 +265,7 @@ public class DownData {
     }
 
     /* Creating XLS File from CSV File downloaded*/
-    private void parseData() {
+    public void parseData() {
 
         try {
 
@@ -352,11 +352,12 @@ public class DownData {
             e.printStackTrace();
         }*/
     }
-    private void rectifyAccountNames(){
+    public void rectifyAccountNames(){
 
         HSSFCell account;
         HSSFCell cellVal;
         HSSFCell age;
+        HSSFCell rbbnAge;
 
         try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V2.xls")))) {
             HSSFSheet filtersheet = workbook.getSheetAt(0);
@@ -377,6 +378,9 @@ public class DownData {
                     case ("Age (Days)"):
                         mycaseAgeRefCellData = i;
                         break;
+                    case ("Days by Ribbon (days)"):
+                        rbbnAgeRefCell = i;
+                        break;
                 }
             }
 
@@ -391,6 +395,12 @@ public class DownData {
                 String ageVal = age.getStringCellValue();
                 ageVal = ageVal.replace(".0000000000", "");
                 age.setCellValue(ageVal);
+
+
+                rbbnAge = filtersheet.getRow(i).getCell(rbbnAgeRefCell);
+                String rbbage = rbbnAge.getStringCellValue();
+                rbbage = rbbage.replaceAll("\\..*$", "");
+                rbbnAge.setCellValue(rbbage);
 
                 for (int j = 0; j < cellnum; j ++){
 

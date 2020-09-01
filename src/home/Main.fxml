@@ -1705,11 +1705,11 @@
                         <TableColumn fx:id="SeverityCol" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Severity" />
                         <TableColumn fx:id="StatusCol" maxWidth="120.0" minWidth="120.0" prefWidth="120.0" resizable="false" text="Status" />
                         <TableColumn fx:id="OwnerCol" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Owner" />
-                        <TableColumn fx:id="CoOwnerCol" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Co-Owner" />
-                        <TableColumn fx:id="CoOwnerQueueCol" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Co-Owner Queue" />
-                        <TableColumn fx:id="ResponsibleCol" maxWidth="150.0" minWidth="80.0" prefWidth="150.0" text="Responsible" />
-                        <TableColumn fx:id="AgeCol" maxWidth="35.0" minWidth="35.0" prefWidth="35.0" resizable="false" text="Age" />
-                        <TableColumn fx:id="NextUpdateCol" maxWidth="80.0" minWidth="80.0" resizable="false" text="Update" />
+                        <TableColumn fx:id="CoOwnerCol" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Cust. Int." />
+                        <TableColumn fx:id="CoOwnerQueueCol" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Responsible" />
+                        <TableColumn fx:id="ResponsibleCol" maxWidth="100.0" minWidth="50.0" prefWidth="75.0" text="RBBN Days" />
+                        <TableColumn fx:id="AgeCol" maxWidth="100.0" minWidth="50.0" prefWidth="75.0" resizable="true" text="Open Days" />
+                        <TableColumn fx:id="NextUpdateCol" maxWidth="80.0" minWidth="80.0" resizable="false" text="Update Date" />
                         <TableColumn fx:id="EscalatedByCol" maxWidth="180.0" minWidth="100.0" prefWidth="100.0" text="Escalated By" />
                         <TableColumn fx:id="HotListCol" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" resizable="false" text="Hot List" />
                         <TableColumn fx:id="OutFollowCol" maxWidth="70.0" minWidth="70.0" prefWidth="70.0" resizable="false" text="E1 Follow" />
