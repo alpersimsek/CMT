@@ -158,6 +158,28 @@ public class Controller implements Initializable {
     @FXML
     private Button btnAccBCDue;
     @FXML
+    private Button btnAccBCQueue;
+    @FXML
+    private Button btnAccMJQueue;
+    @FXML
+    private Button btnRegMJQueue;
+    @FXML
+    private Button btnAccMNQueue;
+    @FXML
+    private Button btnAccMNMissed;
+    @FXML
+    private Button btnAccMNDue;
+    @FXML
+    private Button btnAccMNINACT;
+    @FXML
+    private Button btnAccMNEngineering;
+    @FXML
+    private Button btnAccMNupdated;
+    @FXML
+    private Button btnAccMNWac;
+    @FXML
+    private Button btnAccMNWIP;
+    @FXML
     private Button btnAccMJMissed;
     @FXML
     private Button btnaccGPSQueue;
@@ -169,8 +191,6 @@ public class Controller implements Initializable {
     private Button btnAccUpdateMissed;
     @FXML
     private Button btnAccUpdateNull;
-    @FXML
-    private Button btnAccMNMissed;
     @FXML
     private Pane pnAccSelect;
     @FXML
@@ -281,7 +301,22 @@ public class Controller implements Initializable {
     private Button btnRegRTSQueue;
     @FXML
     private Button btnRegGPSQueue;
-
+    @FXML
+    private Button btnRegBCQueue;
+    @FXML
+    private Button btnRegMNupdated;
+    @FXML
+    private Button btnRegMNWac;
+    @FXML
+    private Button btnRegMNWIP;
+    @FXML
+    private Button btnRegMNINACT;
+    @FXML
+    private Button btnRegMNEngineering;
+    @FXML
+    private Button btnRegMNDue;
+    @FXML
+    private Button btnRegMNQueue;
     @FXML
     private ChoiceBox<String> regChoice;
     @FXML
@@ -527,7 +562,29 @@ public class Controller implements Initializable {
     @FXML
     private Button btnMyBCDue;
     @FXML
+    private Button btnMyBCQueue;
+    @FXML
+    private Button btnMyMJQueue;
+    @FXML
+    private Button btnMyMNupdated;
+    @FXML
+    private Button btnMyMNWac;
+    @FXML
+    private Button btnMyMNWIP;
+    @FXML
+    private Button btnMyMNINACT;
+    @FXML
+    private Button btnMyMNEngineering;
+    @FXML
+    private Button btnMyMNDue;
+    @FXML
+    private Button btnMyMNQueue;
+    @FXML
+    private Button btnMyMNMissed;
+    @FXML
     private Button btnBCMissed;
+    @FXML
+    private Button btnBCQueue;
     @FXML
     private Button btnMyBCMissed;
     @FXML
@@ -537,7 +594,23 @@ public class Controller implements Initializable {
     @FXML
     private Button btnMJMissed;
     @FXML
+    private Button btnMJQueue;
+    @FXML
+    private Button btnMNWIP;
+    @FXML
+    private Button btnMNWac;
+    @FXML
+    private Button btnMNupdated;
+    @FXML
+    private Button btnMNEngineering;
+    @FXML
+    private Button btnMNINACT;
+    @FXML
+    private Button btnMNDue;
+    @FXML
     private Button btnMNMissed;
+    @FXML
+    private Button btnMNQueue;
     @FXML
     private Button btnUpdateToday;
     @FXML
@@ -610,6 +683,26 @@ public class Controller implements Initializable {
     private Button btnPSQueueProd;
     @FXML
     private Button btnTSQueueProd;
+    @FXML
+    private Button btnBCQueueProd;
+    @FXML
+    private Button btnMJQueueProd;
+    @FXML
+    private Button btnMNupdatedProd;
+    @FXML
+    private Button btnMNWacProd;
+    @FXML
+    private Button btnMNWIPProd;
+    @FXML
+    private Button btnMNINACTProd;
+    @FXML
+    private Button btnMNEngineeringProd;
+    @FXML
+    private Button btnMNDueProd;
+    @FXML
+    private Button btnMNQueueProd;
+    @FXML
+    private Button btnMNMissedProd;
     @FXML
     private Button btnAccountClear;
     @FXML
@@ -1069,14 +1162,24 @@ public class Controller implements Initializable {
     int BCds = 0;
     int BCpc = 0;
     int BCwip = 0;
+    int bcQueue = 0;
+    int mjQueue = 0;
+    int mnQueue = 0;
     int dueMJday = 0;
+    int dueMNday = 0;
     int misMJdue = 0;
     int misMNdue = 0;
     int custActMJ = 0;
+    int custActMN = 0;
     int custRpdMJ = 0;
+    int custRpdMN = 0;
     int MJds = 0;
+    int MNpc = 0;
+    int MNds = 0;
     int MJpc = 0;
+
     int MJwip = 0;
+    int MNwip = 0;
 
     //Accounts Page Variables
 
@@ -1113,6 +1216,15 @@ public class Controller implements Initializable {
     int accUpdateNull;
     int accCoOwnCase;
     int accCoOwnQueue;
+    int accBCQueue;
+    int accMJQueue;
+    int accMNQueue;
+    int accMNWIP;
+    int accMNWAC;
+    int accMNUpdated;
+    int accMNEng;
+    int accMNInact;
+    int accMNDue;
 
     //Region Page variables
 
@@ -1149,6 +1261,16 @@ public class Controller implements Initializable {
     int regUpdateNull;
     int regCoOwnCase;
     int regCoOwnQueue;
+    int regBCQueue;
+    int regMJQueue;
+    int regMNQueue;
+    int regMNWIP;
+    int regMNWAC;
+    int regMNUpdated;
+    int regMNEng;
+    int regMNInact;
+    int regMNDue;
+    int regMNMissed;
 
     //My Page # variables
     int myHotList = 0;
@@ -1181,6 +1303,16 @@ public class Controller implements Initializable {
     int myUpdateNull = 0;
     int myCoOwnCase = 0;
     int myCoOwnQueue = 0;
+    int myBCInQueue = 0;
+    int myMJInQueue = 0;
+    int myMNInQueue = 0;
+    int myMNUpdated = 0;
+    int myMNWAC = 0;
+    int myMNWIP = 0;
+    int myMNEng = 0;
+    int myMNDue = 0;
+    int myMNMissed = 0;
+    int myMNINAct = 0;
 
     //Product Page # variables
     int prodHotList = 0;
@@ -1211,6 +1343,16 @@ public class Controller implements Initializable {
     int prodUpdateNull = 0;
     int prodQueuePS = 0;
     int prodQueueTS = 0;
+    int prodBCQueue = 0;
+    int prodMJQueue = 0;
+    int prodMNQueue = 0;
+    int prodMNWIP = 0;
+    int prodMNWAC = 0;
+    int prodMNInact = 0;
+    int prodMNUpdated = 0;
+    int prodMNEng = 0;
+    int prodMNDue = 0;
+    int prodMNMissed = 0;
 
     //Project Page Variables
     int prjAmericas = 0;
@@ -1387,6 +1529,17 @@ public class Controller implements Initializable {
                 tableCases.scrollToColumnIndex(0);
             }
         }
+        if (event.getSource() == btnAccMNWIP) {
+            if (accMNWIP != 0) {
+                lblStatus.setText("MINOR WORK IN PROGRESS CASES (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Minor";
+                initTableView(tableCases);
+                accWIPCaseTableView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
         if (event.getSource() == btnAccMJWac) {
             if (accMJWAC != 0) {
                 lblStatus.setText("MAJOR CASES WITH CUSTOMER (" + txAccounts.getText() + ")");
@@ -1394,6 +1547,19 @@ public class Controller implements Initializable {
                 String columnSelect1 = "Severity";
                 String columnSelect2 = "Currently Responsible";
                 String filter1 = "Major";
+                String filter2 = "Customer action";
+                initTableView(tableCases);
+                accTwoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccMNWac) {
+            if (accMNWAC != 0) {
+                lblStatus.setText("MINOR CASES WITH CUSTOMER (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String columnSelect2 = "Currently Responsible";
+                String filter1 = "Minor";
                 String filter2 = "Customer action";
                 initTableView(tableCases);
                 accTwoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
@@ -1413,12 +1579,36 @@ public class Controller implements Initializable {
                 tableCases.scrollToColumnIndex(0);
             }
         }
+        if (event.getSource() == btnAccMNupdated) {
+            if (accMNUpdated != 0) {
+                lblStatus.setText("MINOR CASES PENDING OWNER ACTION (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String columnSelect2 = "Currently Responsible";
+                String filter1 = "Minor";
+                String filter2 = "Customer updated";
+                initTableView(tableCases);
+                accTwoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
         if (event.getSource() == btnAccMJEngineering) {
             if (accMJDSCases != 0) {
                 lblStatus.setText("MAJOR CASES WITH ENGINEERING (" + txAccounts.getText() + ")");
                 tableCases.getItems().clear();
                 String columSelect = "Severity";
                 String filter1 = "Major";
+                initTableView(tableCases);
+                accEngineeringTableView(columSelect, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccMNEngineering) {
+            if (accMNEng != 0) {
+                lblStatus.setText("MINOR CASES WITH ENGINEERING (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columSelect = "Severity";
+                String filter1 = "Minor";
                 initTableView(tableCases);
                 accEngineeringTableView(columSelect, filter1, tableCases, apnTableView);
                 tableCases.scrollToColumnIndex(0);
@@ -1435,6 +1625,17 @@ public class Controller implements Initializable {
                 tableCases.scrollToColumnIndex(0);
             }
         }
+        if (event.getSource() == btnAccMNINACT) {
+            if (accMNInact != 0) {
+                lblStatus.setText("INACTIVE MINOR CASES (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String filter1 = "Minor";
+                initTableView(tableCases);
+                accInactiveTable(columnSelect1, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
         if (event.getSource() == btnAccBCDue) {
             if (accBCDueCases != 0) {
                 lblStatus.setText("BC DUE CASES (" + txAccounts.getText() + ")");
@@ -1442,7 +1643,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Business Critical";
                 initTableView(tableCases);
-                accDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
+                accDueFilterView(columnSelect, filter, tableCases, apnTableView, 5, true);
                 tableCases.scrollToColumnIndex(0);
             }
         }
@@ -1453,7 +1654,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Business Critical";
                 initTableView(tableCases);
-                accDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
+                accDueFilterView(columnSelect, filter, tableCases, apnTableView, 5, false);
                 tableCases.scrollToColumnIndex(0);
             }
         }
@@ -1463,6 +1664,17 @@ public class Controller implements Initializable {
                 tableCases.getItems().clear();
                 String columnSelect = "Severity";
                 String filter = "Major";
+                initTableView(tableCases);
+                accDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccMNDue) {
+            if (accMNDue != 0) {
+                lblStatus.setText("MINOR DUE CASES (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Minor";
                 initTableView(tableCases);
                 accDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, true);
                 tableCases.scrollToColumnIndex(0);
@@ -1475,7 +1687,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Major";
                 initTableView(tableCases);
-                accDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
+                accDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
                 tableCases.scrollToColumnIndex(0);
             }
         }
@@ -1486,30 +1698,64 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Minor";
                 initTableView(tableCases);
-                accDueFilterView(columnSelect, filter, tableCases, apnTableView, 180, false);
+                accDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
                 tableCases.scrollToColumnIndex(0);
             }
         }
 
         if (event.getSource() == btnAccRTSQueue) {
             if (accRTSQueue != 0) {
-                lblStatus.setText("CASES IN RTS QUEUE (" + txAccounts.getText() + ")");
+                lblStatus.setText("CASES IN RTS QUEUE FOR: " + txAccounts.getText());
                 tableCases.getItems().clear();
                 String columnselect = "Case Owner";
                 String filter = "TS";
                 initTableView(tableCases);
-                accQueueView(columnselect, filter, tableCases, apnTableView, "Tech-Ops");
+                accQueueView(columnselect, filter, tableCases, apnTableView, "Tech-Ops", "All");
                 tableCases.scrollToColumnIndex(0);
             }
         }
         if (event.getSource() == btnaccGPSQueue) {
             if (accGPSQueue != 0) {
-                lblStatus.setText("CASES IN GPS QUEUE (" + txAccounts.getText() + ")");
+                lblStatus.setText("CASES IN GPS QUEUE FOR: " + txAccounts.getText());
                 tableCases.getItems().clear();
                 String e2TableSelect = "Case Owner";
                 String e2TableSelect2 = "PS";
                 initTableView(tableCases);
-                accQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "GPS");
+                accQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "GPS", "All");
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+
+        if (event.getSource() == btnAccBCQueue) {
+            if (accBCQueue != 0) {
+                lblStatus.setText("BC CASES IN GPS QUEUE For (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String e2TableSelect = "Case Owner";
+                String e2TableSelect2 = "PS";
+                initTableView(tableCases);
+                accQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "GPS", "BC");
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccMJQueue) {
+            if (accMJQueue != 0) {
+                lblStatus.setText("MAJOR CASES IN GPS QUEUE For (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String e2TableSelect = "Case Owner";
+                String e2TableSelect2 = "PS";
+                initTableView(tableCases);
+                accQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "GPS", "Major");
+                tableCases.scrollToColumnIndex(0);
+            }
+        }
+        if (event.getSource() == btnAccMNQueue) {
+            if (accMNQueue != 0) {
+                lblStatus.setText("MINOR CASES IN GPS QUEUE For (" + txAccounts.getText() + ")");
+                tableCases.getItems().clear();
+                String e2TableSelect = "Case Owner";
+                String e2TableSelect2 = "PS";
+                initTableView(tableCases);
+                accQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "GPS", "Minor");
                 tableCases.scrollToColumnIndex(0);
             }
         }
@@ -1756,6 +2002,20 @@ public class Controller implements Initializable {
                 alertUser(strAlert);
             }
         }
+        if (event.getSource() == btnRegMNWIP) {
+            if (regMNWIP != 0) {
+                lblStatus.setText("MINOR WORK IN PROGRESS CASES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Minor";
+                initTableView(tableCases);
+                regionWIPCaseTableView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regMNWIP == 0) {
+                alertUser(strAlert);
+            }
+        }
 
         if (event.getSource() == btnRegMJWac) {
             if (regMJWAC != 0) {
@@ -1770,6 +2030,23 @@ public class Controller implements Initializable {
                 tableCases.scrollToColumnIndex(0);
             }
             if (regMJWAC == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegMNWac) {
+            if (regMNWAC != 0) {
+                lblStatus.setText("MINOR CASES WITH CUSTOMER FOR" + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String columnSelect2 = "Currently Responsible";
+                String filter1 = "Minor";
+                String filter2 = "Customer action";
+                initTableView(tableCases);
+                regTwoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regMNWAC == 0) {
                 alertUser(strAlert);
             }
         }
@@ -1790,6 +2067,22 @@ public class Controller implements Initializable {
                 alertUser(strAlert);
             }
         }
+        if (event.getSource() == btnRegMNupdated) {
+            if (regMNUpdated != 0) {
+                lblStatus.setText("MINOR CASES PENDING OWNER ACTION FOR" + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String columnSelect2 = "Currently Responsible";
+                String filter1 = "Minor";
+                String filter2 = "Customer updated";
+                initTableView(tableCases);
+                regTwoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regMNWAC == 0) {
+                alertUser(strAlert);
+            }
+        }
 
         if (event.getSource() == btnRegMJEngineering) {
             if (regMJDSCases != 0) {
@@ -1802,6 +2095,20 @@ public class Controller implements Initializable {
                 tableCases.scrollToColumnIndex(0);
             }
             if (regMJDSCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+        if (event.getSource() == btnRegMNEngineering) {
+            if (regMNEng != 0) {
+                lblStatus.setText("MINOR CASES WITH ENGINEERING FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columSelect = "Severity";
+                String filter1 = "Minor";
+                initTableView(tableCases);
+                regEngineeringTableView(columSelect, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regMNEng == 0) {
                 alertUser(strAlert);
             }
         }
@@ -1820,6 +2127,20 @@ public class Controller implements Initializable {
                 alertUser(strAlert);
             }
         }
+        if (event.getSource() == btnRegMNINACT) {
+            if (regMNInact != 0) {
+                lblStatus.setText("INACTIVE MINOR CASES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String filter1 = "Minor";
+                initTableView(tableCases);
+                regInactiveTable(columnSelect1, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regMNInact == 0) {
+                alertUser(strAlert);
+            }
+        }
 
         if (event.getSource() == btnRegBCDue) {
             if (regBCDueCases != 0) {
@@ -1828,7 +2149,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Business Critical";
                 initTableView(tableCases);
-                regDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
+                regDueFilterView(columnSelect, filter, tableCases, apnTableView, 5, true);
                 tableCases.scrollToColumnIndex(0);
             }
             if (regBCDueCases == 0) {
@@ -1843,7 +2164,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Business Critical";
                 initTableView(tableCases);
-                regDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
+                regDueFilterView(columnSelect, filter, tableCases, apnTableView, 5, false);
                 tableCases.scrollToColumnIndex(0);
             }
             if (regBCMissedCases == 0) {
@@ -1858,10 +2179,25 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Major";
                 initTableView(tableCases);
-                regDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, true);
+                regDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
                 tableCases.scrollToColumnIndex(0);
             }
             if (regMJDueCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegMNDue) {
+            if (regMNDue != 0) {
+                lblStatus.setText("MAJOR DUE CASES FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Minor";
+                initTableView(tableCases);
+                regDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regMNDue == 0) {
                 alertUser(strAlert);
             }
         }
@@ -1873,7 +2209,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Major";
                 initTableView(tableCases);
-                regDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
+                regDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
                 tableCases.scrollToColumnIndex(0);
             }
             if (regMJMissedCases == 0) {
@@ -1882,16 +2218,16 @@ public class Controller implements Initializable {
         }
 
         if (event.getSource() == btnRegMNMissed) {
-            if (regMNMissedCases != 0) {
+            if (regMNMissed != 0) {
                 lblStatus.setText("MINOR CASES MISSED DUE FOR" + selectedRegion + " REGION");
                 tableCases.getItems().clear();
                 String columnSelect = "Severity";
                 String filter = "Minor";
                 initTableView(tableCases);
-                regDueFilterView(columnSelect, filter, tableCases, apnTableView, 180, false);
+                regDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
                 tableCases.scrollToColumnIndex(0);
             }
-            if (regMNMissedCases == 0) {
+            if (regMNMissed == 0) {
                 alertUser(strAlert);
             }
         }
@@ -1903,7 +2239,8 @@ public class Controller implements Initializable {
                 String columnselect = "Case Owner";
                 String filter = "TS";
                 initTableView(tableCases);
-                regQueueView(columnselect, filter, tableCases, apnTableView, "Tech-Ops");
+                String severity = "All";
+                regQueueView(columnselect, filter, tableCases, apnTableView, "Tech-Ops", severity);
                 tableCases.scrollToColumnIndex(0);
             }
             if (regRTSQueue == 0) {
@@ -1918,10 +2255,59 @@ public class Controller implements Initializable {
                 String e2TableSelect = "Case Owner";
                 String e2TableSelect2 = "PS";
                 initTableView(tableCases);
-                regQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "GPS");
+                String severity = "All";
+                regQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "GPS", severity);
                 tableCases.scrollToColumnIndex(0);
             }
             if (regGPSQueue == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegBCQueue) {
+            if (regBCQueue != 0) {
+                lblStatus.setText("BC CASES IN GPS QUEUE FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String e2TableSelect = "Case Owner";
+                String e2TableSelect2 = "Business Critical";
+                initTableView(tableCases);
+                String severity = "Business Critical";
+                regQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "BC In Queue", severity);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regBCQueue == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegMJQueue) {
+            if (regMJQueue != 0) {
+                lblStatus.setText("MJ CASES IN GPS QUEUE FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String e2TableSelect = "Case Owner";
+                String e2TableSelect2 = "Major";
+                initTableView(tableCases);
+                String severity = "Major";
+                regQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "Major In Queue", severity);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regMJQueue == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnRegMNQueue) {
+            if (regMNQueue != 0) {
+                lblStatus.setText("MN CASES IN GPS QUEUE FOR " + selectedRegion + " REGION");
+                tableCases.getItems().clear();
+                String e2TableSelect = "Case Owner";
+                String e2TableSelect2 = "Minor";
+                initTableView(tableCases);
+                String severity = "Minor";
+                regQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "Minor In Queue", severity);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (regMNQueue == 0) {
                 alertUser(strAlert);
             }
         }
@@ -1968,7 +2354,7 @@ public class Controller implements Initializable {
             }
         }
     }
-    private void accQueueView(String columnSelect, String filter, TableView tableView, AnchorPane anchorpane, String overText) {
+    private void accQueueView(String columnSelect, String filter, TableView tableView, AnchorPane anchorpane, String overText, String sev) {
 
         int caseCount = 0;
 
@@ -1979,6 +2365,8 @@ public class Controller implements Initializable {
             int lastRow = filtersheet.getLastRowNum();
             HSSFCell cellVal;
             HSSFCell cellVal2;
+            HSSFCell cellVal3;
+            HSSFCell cellVal4;
 
             for (int i = 0; i < cellnum; i++) {
 
@@ -1995,6 +2383,12 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Account Name")) {
                     caseAccountRef = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
+                if (filterColName.equals("Severity")){
+                    caseSevRefCell = i;
+                }
             }
 
             ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
@@ -2008,43 +2402,164 @@ public class Controller implements Initializable {
                     String cellValToCompare = cellVal.getStringCellValue();
                     cellVal2 = filtersheet.getRow(k).getCell(caseAccountRef);
                     String acc = cellVal2.getStringCellValue();
+                    cellVal3 = filtersheet.getRow(k).getCell(rbnDaysRefCell);
+                    String rbDays = cellVal3.getStringCellValue();
+                    int ribDays = Integer.parseInt(rbDays);
+                    cellVal4 = filtersheet.getRow(k).getCell(caseSevRefCell);
+                    String severity = cellVal4.getStringCellValue();
 
-                    if (acc.equals(setAcc.get(i)) && (!overText.equals(""))) {
+                    if (acc.equals(setAcc.get(i))) {
 
-                        if (cellValToCompare.equals(filter) || cellValToCompare.startsWith(filter) || cellValToCompare.startsWith(overText)) {
+                        switch (sev) {
+                            case ("All"):
+                                if (cellValToCompare.equals(filter) || cellValToCompare.startsWith(filter) || cellValToCompare.startsWith(overText)) {
 
-                            ArrayList<String> array = new ArrayList<>();
-                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+                                    ArrayList<String> array = new ArrayList<>();
+                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
-                            while (iterCells.hasNext()) {
-                                HSSFCell cell = (HSSFCell) iterCells.next();
-                                array.add(cell.getStringCellValue());
-                            }
+                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                    while (iterCells.hasNext()) {
+                                        HSSFCell cell = (HSSFCell) iterCells.next();
+                                        array.add(cell.getStringCellValue());
+                                    }
 
-                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                            LocalDate localDate = null;
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                    LocalDate localDate = null;
 
-                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
 
-                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
-                            }
+                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                    }
 
-                            int age;
-                            age = Integer.parseInt(array.get(caseCellRef2));
+                                    int age;
+                                    age = Integer.parseInt(array.get(caseCellRef2));
 
-                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
-                                    localDate, array.get(9), array.get(10),
-                                    array.get(11), array.get(12), array.get(13),
-                                    array.get(14), array.get(15), array.get(16),
-                                    array.get(17)));
+                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                            array.get(3), array.get(4), array.get(5), ribDays, age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
 
-                            tableView.getItems().addAll(observableList);
-                            caseCount++;
-                            if (tableView.getItems().size() >= caseCount + 1) {
-                                tableView.getItems().removeAll(observableList);
-                            }
+                                    tableView.getItems().addAll(observableList);
+                                    caseCount++;
+                                    if (tableView.getItems().size() >= caseCount + 1) {
+                                        tableView.getItems().removeAll(observableList);
+                                    }
+                                }
+                                break;
+                            case ("BC"):
+                                if (severity.equals("Business Critical") && (cellValToCompare.startsWith("PS") || cellValToCompare.startsWith("TS") || cellValToCompare.startsWith("Tech-Ops"))) {
+
+                                    ArrayList<String> array = new ArrayList<>();
+                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                    while (iterCells.hasNext()) {
+                                        HSSFCell cell = (HSSFCell) iterCells.next();
+                                        array.add(cell.getStringCellValue());
+                                    }
+
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                    LocalDate localDate = null;
+
+                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                    }
+
+                                    int age;
+                                    age = Integer.parseInt(array.get(caseCellRef2));
+
+                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                            array.get(3), array.get(4), array.get(5), ribDays, age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
+
+                                    tableView.getItems().addAll(observableList);
+                                    caseCount++;
+                                    if (tableView.getItems().size() >= caseCount + 1) {
+                                        tableView.getItems().removeAll(observableList);
+                                    }
+                                }
+                                break;
+                            case ("Major"):
+                                if (severity.equals("Major") && (cellValToCompare.startsWith("PS") || cellValToCompare.startsWith("TS") || cellValToCompare.startsWith("Tech-Ops"))) {
+
+                                    ArrayList<String> array = new ArrayList<>();
+                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                    while (iterCells.hasNext()) {
+                                        HSSFCell cell = (HSSFCell) iterCells.next();
+                                        array.add(cell.getStringCellValue());
+                                    }
+
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                    LocalDate localDate = null;
+
+                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                    }
+
+                                    int age;
+                                    age = Integer.parseInt(array.get(caseCellRef2));
+
+                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                            array.get(3), array.get(4), array.get(5), ribDays, age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
+
+                                    tableView.getItems().addAll(observableList);
+                                    caseCount++;
+                                    if (tableView.getItems().size() >= caseCount + 1) {
+                                        tableView.getItems().removeAll(observableList);
+                                    }
+                                }
+                                break;
+                            case("Minor"):
+
+                                if (severity.equals("Minor") && (cellValToCompare.startsWith("PS") || cellValToCompare.startsWith("TS") || cellValToCompare.startsWith("Tech-Ops"))) {
+
+                                    ArrayList<String> array = new ArrayList<>();
+                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                    while (iterCells.hasNext()) {
+                                        HSSFCell cell = (HSSFCell) iterCells.next();
+                                        array.add(cell.getStringCellValue());
+                                    }
+
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                    LocalDate localDate = null;
+
+                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                    }
+
+                                    int age;
+                                    age = Integer.parseInt(array.get(caseCellRef2));
+
+                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                            array.get(3), array.get(4), array.get(5), ribDays, age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
+
+                                    tableView.getItems().addAll(observableList);
+                                    caseCount++;
+                                    if (tableView.getItems().size() >= caseCount + 1) {
+                                        tableView.getItems().removeAll(observableList);
+                                    }
+                                }
+                                break;
                         }
                     }
                 }
@@ -2114,7 +2629,7 @@ public class Controller implements Initializable {
             logger.log(Level.WARNING, "Create Table Failed!", e);
         }
     }
-    private void regQueueView(String columnSelect, String filter, TableView tableView, AnchorPane anchorpane, String overText) {
+    private void regQueueView(String columnSelect, String filter, TableView tableView, AnchorPane anchorpane, String overText, String severity) {
 
         int caseCount = 0;
 
@@ -2125,6 +2640,8 @@ public class Controller implements Initializable {
             int lastRow = filtersheet.getLastRowNum();
             HSSFCell cellVal;
             HSSFCell cellVal2;
+            HSSFCell cellVal3;
+            HSSFCell cellVal4;
 
             for (int i = 0; i < cellnum; i++) {
 
@@ -2141,6 +2658,12 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Support Theater")) {
                     caseRegionRef = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
+                if (filterColName.equals("Severity")){
+                    caseSevRefCell = i;
+                }
 
             }
             for (int k = 1; k < lastRow + 1; k++) {
@@ -2149,42 +2672,163 @@ public class Controller implements Initializable {
                 String cellValToCompare = cellVal.getStringCellValue();
                 cellVal2 = filtersheet.getRow(k).getCell(caseRegionRef);
                 String region = cellVal2.getStringCellValue();
+                cellVal3 = filtersheet.getRow(k).getCell(rbnDaysRefCell);
+                String rbDays = cellVal3.getStringCellValue();
+                int ribDays = Integer.parseInt(rbDays);
+                cellVal4 = filtersheet.getRow(k).getCell(caseSevRefCell);
+                String sever = cellVal4.getStringCellValue();
 
                 if (region.equals(selectedRegion) && (!overText.equals(""))) {
 
-                    if (cellValToCompare.equals(filter) || cellValToCompare.startsWith(filter) || cellValToCompare.startsWith(overText)) {
+                    if (severity.equals("All")) {
 
-                        ArrayList<String> array = new ArrayList<>();
-                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+                        if (cellValToCompare.equals(filter) || cellValToCompare.startsWith(filter) || cellValToCompare.startsWith(overText)) {
 
-                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
-                        while (iterCells.hasNext()) {
-                            HSSFCell cell = (HSSFCell) iterCells.next();
-                            array.add(cell.getStringCellValue());
+                            ArrayList<String> array = new ArrayList<>();
+                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                            while (iterCells.hasNext()) {
+                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                array.add(cell.getStringCellValue());
+                            }
+
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                            LocalDate localDate = null;
+
+                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                            }
+
+                            int age;
+                            age = Integer.parseInt(array.get(caseCellRef2));
+
+                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                    array.get(3), array.get(4), array.get(5), ribDays, age,
+                                    localDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
+
+                            tableView.getItems().addAll(observableList);
+                            caseCount++;
+                            if (tableView.getItems().size() >= caseCount + 1) {
+                                tableView.getItems().removeAll(observableList);
+                            }
+                        }
+                    }
+                    if (severity.equals("Business Critical")){
+
+                        if(sever.equals("Business Critical") && (cellValToCompare.startsWith("PS") || cellValToCompare.startsWith("TS") || cellValToCompare.startsWith("Tech-Ops"))){
+
+                            ArrayList<String> array = new ArrayList<>();
+                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                            while (iterCells.hasNext()) {
+                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                array.add(cell.getStringCellValue());
+                            }
+
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                            LocalDate localDate = null;
+
+                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                            }
+
+                            int age;
+                            age = Integer.parseInt(array.get(caseCellRef2));
+
+                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                    array.get(3), array.get(4), array.get(5), ribDays, age,
+                                    localDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
+
+                            tableView.getItems().addAll(observableList);
+                            caseCount++;
+                            if (tableView.getItems().size() >= caseCount + 1) {
+                                tableView.getItems().removeAll(observableList);
+                            }
                         }
 
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                        LocalDate localDate = null;
+                    }
+                    if (severity.equals("Major")){
+                        if((sever.equals("Major") && (cellValToCompare.startsWith("PS") || cellValToCompare.startsWith("TS") || cellValToCompare.startsWith("Tech-Ops")))){
 
-                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+                            ArrayList<String> array = new ArrayList<>();
+                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                            while (iterCells.hasNext()) {
+                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                array.add(cell.getStringCellValue());
+                            }
+
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                            LocalDate localDate = null;
+
+                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                            }
+
+                            int age;
+                            age = Integer.parseInt(array.get(caseCellRef2));
+
+                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                    array.get(3), array.get(4), array.get(5), ribDays, age,
+                                    localDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
+
+                            tableView.getItems().addAll(observableList);
+                            caseCount++;
+                            if (tableView.getItems().size() >= caseCount + 1) {
+                                tableView.getItems().removeAll(observableList);
+                            }
                         }
+                    }
+                    if (severity.equals("Minor")){
+                        if(sever.equals("Minor") && (cellValToCompare.startsWith("PS") || cellValToCompare.startsWith("TS") || cellValToCompare.startsWith("Tech-Ops"))){
 
-                        int age;
-                        age = Integer.parseInt(array.get(caseCellRef2));
+                            ArrayList<String> array = new ArrayList<>();
+                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), array.get(5), array.get(6), age,
-                                localDate, array.get(9), array.get(10),
-                                array.get(11), array.get(12), array.get(13),
-                                array.get(14), array.get(15), array.get(16),
-                                array.get(17)));
+                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                            while (iterCells.hasNext()) {
+                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                array.add(cell.getStringCellValue());
+                            }
 
-                        tableView.getItems().addAll(observableList);
-                        caseCount++;
-                        if (tableView.getItems().size() >= caseCount + 1) {
-                            tableView.getItems().removeAll(observableList);
+                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                            LocalDate localDate = null;
+
+                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                            }
+
+                            int age;
+                            age = Integer.parseInt(array.get(caseCellRef2));
+
+                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                    array.get(3), array.get(4), array.get(5), ribDays, age,
+                                    localDate, array.get(9), array.get(10),
+                                    array.get(11), array.get(12), array.get(13),
+                                    array.get(14), array.get(15), array.get(16),
+                                    array.get(17)));
+
+                            tableView.getItems().addAll(observableList);
+                            caseCount++;
+                            if (tableView.getItems().size() >= caseCount + 1) {
+                                tableView.getItems().removeAll(observableList);
+                            }
                         }
                     }
                 }
@@ -2250,7 +2894,7 @@ public class Controller implements Initializable {
                     tableCases.getItems().clear();
                 }
             });
-        } catch (Exception e) {
+        }catch (Exception e) {
             logger.log(Level.WARNING, "Create Table Failed!", e);
         }
     }
@@ -2271,6 +2915,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal;
             HSSFCell cellValStat;
             HSSFCell cellVal1;
+            HSSFCell cellVal2;
 
             for (int i = 0; i < cellnum; i++) {
 
@@ -2286,6 +2931,9 @@ public class Controller implements Initializable {
                 }
                 if (filterColName.equals("Account Name")) {
                     caseAccountRef = i;
+                }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
                 }
             }
 
@@ -2331,8 +2979,10 @@ public class Controller implements Initializable {
 
                                     int age = 0;
                                     age = Integer.parseInt(array.get(caseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                            array.get(3), array.get(4), array.get(5), ribDays, age,
                                             caseUpdateDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -2360,8 +3010,10 @@ public class Controller implements Initializable {
 
                                     int age = 0;
                                     age = Integer.parseInt(array.get(caseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                            array.get(3), array.get(4), array.get(5), ribDays, age,
                                             caseUpdateDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -2387,8 +3039,10 @@ public class Controller implements Initializable {
 
                                 int age = 0;
                                 age = Integer.parseInt(array.get(caseAgeRefCell));
+                                int ribDays = 0;
+                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                        array.get(3), array.get(4), array.get(5), ribDays, age,
                                         caseUpdateDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -2490,6 +3144,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal;
             HSSFCell cellValStat;
             HSSFCell cellVal1;
+            HSSFCell cellVal2;
 
             for (int i = 0; i < cellnum; i++) {
 
@@ -2505,6 +3160,9 @@ public class Controller implements Initializable {
                 }
                 if (filterColName.equals("Support Theater")) {
                     caseRegionRef = i;
+                }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
                 }
             }
 
@@ -2545,8 +3203,11 @@ public class Controller implements Initializable {
 
                                 int age = 0;
                                 age = Integer.parseInt(array.get(caseAgeRefCell));
+                                int ribDays = 0;
+                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                        array.get(3), array.get(4), array.get(5), ribDays, age,
                                         caseUpdateDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -2574,8 +3235,12 @@ public class Controller implements Initializable {
 
                                 int age = 0;
                                 age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                                int ribDays = 0;
+                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                        array.get(3), array.get(4), array.get(5), ribDays, age,
                                         caseUpdateDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -2601,8 +3266,12 @@ public class Controller implements Initializable {
 
                             int age = 0;
                             age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                            int ribDays = 0;
+                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                             observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    array.get(3), array.get(4), array.get(5), ribDays, age,
                                     caseUpdateDate, array.get(9), array.get(10),
                                     array.get(11), array.get(12), array.get(13),
                                     array.get(14), array.get(15), array.get(16),
@@ -2769,7 +3438,7 @@ public class Controller implements Initializable {
 
                                 }
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6), ageCase,
+                                        array.get(3), array.get(4), array.get(5), ribDays, ageCase,
                                         localDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -2803,7 +3472,7 @@ public class Controller implements Initializable {
 
                                 }
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6), ageCase,
+                                        array.get(3), array.get(4), array.get(5), ribDays, ageCase,
                                         localDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -2967,7 +3636,7 @@ public class Controller implements Initializable {
 
                             }
                             observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                    array.get(3), array.get(4), array.get(5), array.get(6), ageCase,
+                                    array.get(3), array.get(4), array.get(5), rbbnDays, ageCase,
                                     localDate, array.get(9), array.get(10),
                                     array.get(11), array.get(12), array.get(13),
                                     array.get(14), array.get(15), array.get(16),
@@ -3001,7 +3670,7 @@ public class Controller implements Initializable {
 
                             }
                             observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                    array.get(3), array.get(4), array.get(5), array.get(6), ageCase,
+                                    array.get(3), array.get(4), array.get(5), rbbnDays, ageCase,
                                     localDate, array.get(9), array.get(10),
                                     array.get(11), array.get(12), array.get(13),
                                     array.get(14), array.get(15), array.get(16),
@@ -3099,6 +3768,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal2;
             HSSFCell cellVal3;
             HSSFCell cellVal4;
+            HSSFCell cellVal5;
 
             for (int i = 0; i < cellnum; i++) {
 
@@ -3117,6 +3787,9 @@ public class Controller implements Initializable {
                 }
                 if (filterColName.equals("Account Name")) {
                     caseAccountRef = i;
+                }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
                 }
             }
 
@@ -3158,8 +3831,12 @@ public class Controller implements Initializable {
 
                             int age = 0;
                             age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                            int ribDays = 0;
+                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                             observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    array.get(3), array.get(4), array.get(5), ribDays, age,
                                     localDate, array.get(9), array.get(10),
                                     array.get(11), array.get(12), array.get(13),
                                     array.get(14), array.get(15), array.get(16),
@@ -3254,6 +3931,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal2;
             HSSFCell cellVal3;
             HSSFCell cellVal4;
+            HSSFCell cellVal5;
 
             for (int i = 0; i < cellnum; i++) {
 
@@ -3272,6 +3950,9 @@ public class Controller implements Initializable {
                 }
                 if (filterColName.equals("Support Theater")) {
                     caseRegionRef = i;
+                }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
                 }
             }
             for (int k = 1; k < lastRow + 1; k++) {
@@ -3307,8 +3988,11 @@ public class Controller implements Initializable {
 
                         int age = 0;
                         age = Integer.parseInt(array.get(caseAgeRefCell));
+                        int ribDays = 0;
+                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                array.get(3), array.get(4), array.get(5), ribDays, age,
                                 localDate, array.get(9), array.get(10),
                                 array.get(11), array.get(12), array.get(13),
                                 array.get(14), array.get(15), array.get(16),
@@ -3401,6 +4085,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal;
             HSSFCell cellVal2;
             HSSFCell cellVal3;
+            HSSFCell cellVal5;
 
             for (int i = 0; i < cellnum; i++) {
 
@@ -3419,6 +4104,9 @@ public class Controller implements Initializable {
                 }
                 if (filterColName.equals("Account Name")) {
                     caseAccountRef = i;
+                }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
                 }
             }
 
@@ -3460,8 +4148,12 @@ public class Controller implements Initializable {
 
                             int age = 0;
                             age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                            int ribDays = 0;
+                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                             observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    array.get(3), array.get(4), array.get(5), ribDays, age,
                                     localDate, array.get(9), array.get(10),
                                     array.get(11), array.get(12), array.get(13),
                                     array.get(14), array.get(15), array.get(16),
@@ -3555,6 +4247,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal;
             HSSFCell cellVal2;
             HSSFCell cellVal3;
+            HSSFCell cellVal5;
 
             for (int i = 0; i < cellnum; i++) {
 
@@ -3608,8 +4301,12 @@ public class Controller implements Initializable {
 
                         int age = 0;
                         age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                        int ribDays = 0;
+                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                array.get(3), array.get(4), array.get(5), ribDays, age,
                                 localDate, array.get(9), array.get(10),
                                 array.get(11), array.get(12), array.get(13),
                                 array.get(14), array.get(15), array.get(16),
@@ -3703,6 +4400,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal2;
             HSSFCell cellVal3;
             HSSFCell cellVal4;
+            HSSFCell cellVal5;
 
             for (int i = 0; i < cellnum; i++) {
 
@@ -3767,8 +4465,12 @@ public class Controller implements Initializable {
 
                             int age = 0;
                             age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                            int ribDays = 0;
+                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                             observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    array.get(3), array.get(4), array.get(5), ribDays, age,
                                     localDate, array.get(9), array.get(10),
                                     array.get(11), array.get(12), array.get(13),
                                     array.get(14), array.get(15), array.get(16),
@@ -3863,6 +4565,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal2;
             HSSFCell cellVal3;
             HSSFCell cellVal4;
+            HSSFCell cellVal5;
 
             for (int i = 0; i < cellnum; i++) {
 
@@ -3885,6 +4588,10 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Support Theater")) {
                     caseRegionRef = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
+
             }
             for (int k = 1; k < lastRow + 1; k++) {
 
@@ -3921,8 +4628,12 @@ public class Controller implements Initializable {
 
                         int age = 0;
                         age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                        int ribDays = 0;
+                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                array.get(3), array.get(4), array.get(5), ribDays, age,
                                 localDate, array.get(9), array.get(10),
                                 array.get(11), array.get(12), array.get(13),
                                 array.get(14), array.get(15), array.get(16),
@@ -4015,6 +4726,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal;
             HSSFCell cellVal2;
             HSSFCell cellVal3;
+            HSSFCell cellVal5;
 
 
             for (int i = 0; i < cellnum; i++) {
@@ -4035,6 +4747,10 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Account Name")) {
                     caseAccountRef = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
+
             }
 
             ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
@@ -4075,8 +4791,12 @@ public class Controller implements Initializable {
 
                             int age = 0;
                             age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                            int ribDays = 0;
+                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                             observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    array.get(3), array.get(4), array.get(5), ribDays, age,
                                     localDate, array.get(9), array.get(10),
                                     array.get(11), array.get(12), array.get(13),
                                     array.get(14), array.get(15), array.get(16),
@@ -4173,6 +4893,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal;
             HSSFCell cellVal2;
             HSSFCell cellVal3;
+            HSSFCell cellVal5;
 
 
             for (int i = 0; i < cellnum; i++) {
@@ -4193,6 +4914,10 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Support Theater")) {
                     caseRegionRef = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
+
             }
             for (int k = 1; k < lastRow + 1; k++) {
                 cellVal = filtersheet.getRow(k).getCell(caseCellRef);
@@ -4227,8 +4952,12 @@ public class Controller implements Initializable {
 
                         int age = 0;
                         age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                        int ribDays = 0;
+                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                array.get(3), array.get(4), array.get(5), ribDays, age,
                                 localDate, array.get(9), array.get(10),
                                 array.get(11), array.get(12), array.get(13),
                                 array.get(14), array.get(15), array.get(16),
@@ -4323,6 +5052,8 @@ public class Controller implements Initializable {
             HSSFCell cellVal;
             HSSFCell cellVal2;
             HSSFCell cellVal3;
+            HSSFCell cellVal5;
+
 
             for (int i = 0; i < cellnum; i++) {
 
@@ -4340,6 +5071,10 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Account Name")) {
                     caseAccountRef = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
+
             }
 
             ArrayList<String> setAcc = new ArrayList<>(Arrays.asList(txAccounts.getText().split(",\\s*")));
@@ -4380,8 +5115,12 @@ public class Controller implements Initializable {
 
                                 int age = 0;
                                 age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                                int ribDays = 0;
+                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                        array.get(3), array.get(4), array.get(5), ribDays, age,
                                         localDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -4417,8 +5156,12 @@ public class Controller implements Initializable {
 
                                 int age = 0;
                                 age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                                int ribDays = 0;
+                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                        array.get(3), array.get(4), array.get(5), ribDays, age,
                                         localDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -4514,6 +5257,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal;
             HSSFCell cellVal2;
             HSSFCell cellVal3;
+            HSSFCell cellVal5;
 
             for (int i = 0; i < cellnum; i++) {
 
@@ -4530,6 +5274,9 @@ public class Controller implements Initializable {
                 }
                 if (filterColName.equals("Support Theater")) {
                     caseRegionRef = i;
+                }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
                 }
             }
             for (int k = 1; k < lastRow + 1; k++) {
@@ -4565,8 +5312,12 @@ public class Controller implements Initializable {
 
                             int age = 0;
                             age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                            int ribDays = 0;
+                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                             observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    array.get(3), array.get(4), array.get(5), ribDays, age,
                                     localDate, array.get(9), array.get(10),
                                     array.get(11), array.get(12), array.get(13),
                                     array.get(14), array.get(15), array.get(16),
@@ -4602,8 +5353,12 @@ public class Controller implements Initializable {
 
                             int age = 0;
                             age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                            int ribDays = 0;
+                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                             observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    array.get(3), array.get(4), array.get(5), ribDays, age,
                                     localDate, array.get(9), array.get(10),
                                     array.get(11), array.get(12), array.get(13),
                                     array.get(14), array.get(15), array.get(16),
@@ -4717,6 +5472,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Support Theater")) {
                     caseRegionRef = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
 
             }
             for (int k = 1; k < lastRow + 1; k++) {
@@ -4751,8 +5509,12 @@ public class Controller implements Initializable {
 
                             int age = 0;
                             age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                            int ribDays = 0;
+                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                             observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    array.get(3), array.get(4), array.get(5), ribDays, age,
                                     localDate, array.get(9), array.get(10),
                                     array.get(11), array.get(12), array.get(13),
                                     array.get(14), array.get(15), array.get(16),
@@ -4786,8 +5548,12 @@ public class Controller implements Initializable {
 
                             int age = 0;
                             age = Integer.parseInt(array.get(caseAgeRefCell));
+
+                            int ribDays = 0;
+                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                             observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                    array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                    array.get(3), array.get(4), array.get(5), ribDays, age,
                                     localDate, array.get(9), array.get(10),
                                     array.get(11), array.get(12), array.get(13),
                                     array.get(14), array.get(15), array.get(16),
@@ -4902,6 +5668,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Account Name")) {
                     caseAccountRef = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
 
             }
 
@@ -4942,8 +5711,11 @@ public class Controller implements Initializable {
 
                                 int age = 0;
                                 age = Integer.parseInt(array.get(caseAgeRefCell));
+                                int ribDays = 0;
+                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                        array.get(3), array.get(4), array.get(5), ribDays, age,
                                         localDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -4977,8 +5749,10 @@ public class Controller implements Initializable {
 
                                 int age = 0;
                                 age = Integer.parseInt(array.get(caseAgeRefCell));
+                                int ribDays = 0;
+                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6), age,
+                                        array.get(3), array.get(4), array.get(5), ribDays, age,
                                         localDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -5382,7 +6156,7 @@ public class Controller implements Initializable {
             if (MJwip != 0) {
                 lblStatus.setText("MAJOR WORK IN PROGRESS CASES");
                 tableCases.getItems().clear();
-                lblStatus.setText("BUSINESS CRITICAL WORK IN PROGRESS CASES");
+                lblStatus.setText("MAJOR CASE WORK IN PROGRESS CASES");
                 tableCases.getItems().clear();
                 String columnSelect = "Severity";
                 String filter = "Major";
@@ -5391,6 +6165,23 @@ public class Controller implements Initializable {
                 tableCases.scrollToColumnIndex(0);
             }
             if (MJwip == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnMNWIP) {
+            if (MNwip != 0) {
+                lblStatus.setText("MINOR WORK IN PROGRESS CASES");
+                tableCases.getItems().clear();
+                lblStatus.setText("MINOR CASE WORK IN PROGRESS CASES");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Minor";
+                initTableView(tableCases);
+                overviewWIPCaseTableView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (MNwip == 0) {
                 alertUser(strAlert);
             }
         }
@@ -5467,7 +6258,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Business Critical";
                 initTableView(tableCases);
-                overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
+                overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 5, true);
                 tableCases.scrollToColumnIndex(0);
             }
             if (bcDue == 0) {
@@ -5482,7 +6273,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Business Critical";
                 initTableView(tableCases);
-                overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
+                overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 5, false);
                 tableCases.scrollToColumnIndex(0);
             }
             if (misBCdue == 0) {
@@ -5497,7 +6288,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Major";
                 initTableView(tableCases);
-                overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, true);
+                overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
                 tableCases.scrollToColumnIndex(0);
             }
             if (dueMJday == 0) {
@@ -5512,10 +6303,90 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Major";
                 initTableView(tableCases);
-                overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
+                overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
                 tableCases.scrollToColumnIndex(0);
             }
             if (misMJdue == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnMNWac) {
+            if (custActMN != 0) {
+                lblStatus.setText("MINOR CASES PENDING INFORMATION FROM CUSTOMER");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String columnSelect2 = "Currently Responsible";
+                String filter1 = "Minor";
+                String filter2 = "Customer action";
+                initTableView(tableCases);
+                twoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (custActMN == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnMNupdated) {
+            if (custRpdMN != 0) {
+                lblStatus.setText("MINOR CASES PENDING OWNER ACTION");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String columnSelect2 = "Currently Responsible";
+                String filter1 = "Minor";
+                String filter2 = "Customer updated";
+                initTableView(tableCases);
+                twoFilterTableView(columnSelect1, columnSelect2, filter1, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (custRpdMN == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnMNEngineering) {
+            if (MNds != 0) {
+                lblStatus.setText("MINOR CASES WITH DESIGN");
+                tableCases.getItems().clear();
+                tableCases.getItems().clear();
+                String columSelect = "Severity";
+                String filter1 = "Minor";
+                initTableView(tableCases);
+                overviewEngineeringTableView(columSelect, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (MNds == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnMNINACT) {
+            if (MNpc != 0) {
+                lblStatus.setText("MINOR CASES PENDING CLOSURE");
+                tableCases.getItems().clear();
+                String columnSelect1 = "Severity";
+                String filter1 = "Minor";
+                initTableView(tableCases);
+                overViewInactiveTable(columnSelect1, filter1, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (MNpc == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnMNDue) {
+            if (dueMNday != 0) {
+                lblStatus.setText("MINOR DUE CASES");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Minor";
+                initTableView(tableCases);
+                overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (dueMJday == 0) {
                 alertUser(strAlert);
             }
         }
@@ -5527,7 +6398,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Minor";
                 initTableView(tableCases);
-                overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 180, false);
+                overviewDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
                 tableCases.scrollToColumnIndex(0);
             }
             if (misMNdue == 0) {
@@ -5542,7 +6413,7 @@ public class Controller implements Initializable {
                 String columnselect = "Case Owner";
                 String filter = "TS";
                 initTableView(tableCases);
-                overviewQueueView(columnselect, filter, tableCases, apnTableView, "GPS QUEUE");
+                overviewQueueView(columnselect, filter, tableCases, apnTableView, "RTS QUEUE");
                 tableCases.scrollToColumnIndex(0);
             }
             if (queueTS == 0) {
@@ -5557,10 +6428,55 @@ public class Controller implements Initializable {
                 String e2TableSelect = "Case Owner";
                 String e2TableSelect2 = "PS";
                 initTableView(tableCases);
-                overviewQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "RTS QUEUE");
+                overviewQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView, "GPS QUEUE");
                 tableCases.scrollToColumnIndex(0);
             }
             if (queuePS == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnBCQueue) {
+            if (bcQueue != 0) {
+                lblStatus.setText("BC CASES IN QUEUE");
+                tableCases.getItems().clear();
+                String e2TableSelect = "Severity";
+                String e2TableSelect2 = "Business Critical";
+                initTableView(tableCases);
+                overviewSevQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (bcQueue == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnMJQueue) {
+            if (mjQueue != 0) {
+                lblStatus.setText("MAJOR CASES IN QUEUE");
+                tableCases.getItems().clear();
+                String e2TableSelect = "Severity";
+                String e2TableSelect2 = "Major";
+                initTableView(tableCases);
+                overviewSevQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (mjQueue == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnMNQueue) {
+            if (mnQueue != 0) {
+                lblStatus.setText("MINOR CASES IN QUEUE");
+                tableCases.getItems().clear();
+                String e2TableSelect = "Severity";
+                String e2TableSelect2 = "Minor";
+                initTableView(tableCases);
+                overviewSevQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (mnQueue == 0) {
                 alertUser(strAlert);
             }
         }
@@ -5812,6 +6728,21 @@ public class Controller implements Initializable {
             }
         }
 
+        if (event.getSource() == btnMyBCQueue) {
+            if (myBCInQueue != 0) {
+                lblStatus.setText("BC CASES IN MY QUEUE(S)");
+                tableCases.getItems().clear();
+                String e2TableSelect = "Severity";
+                String e2TableSelect2 = "Business Critical";
+                initTableView(tableCases);
+                mySevQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (myBCInQueue == 0) {
+                alertUser(strAlert);
+            }
+        }
+
         if (event.getSource() == btnMyMJWIP) {
 
             if (myMJWIP != 0) {
@@ -5825,6 +6756,22 @@ public class Controller implements Initializable {
                 tableCases.scrollToColumnIndex(0);
             }
             if (myMJWIP == 0) {
+                alertUser(strAlert);
+            }
+        }
+        if (event.getSource() == btnMyMNWIP) {
+
+            if (myMNWIP != 0) {
+
+                lblStatus.setText("MY MINOR WORK IN PROGRESS CASES");
+                tableCases.getItems().clear();
+                String columFilter = "Severity";
+                String filter = "Minor";
+                initTableView(tableCases);
+                overviewMyWIPCaseTableView(columFilter, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (myMNWIP == 0) {
                 alertUser(strAlert);
             }
         }
@@ -5847,6 +6794,24 @@ public class Controller implements Initializable {
             }
         }
 
+        if (event.getSource() == btnMyMNWac) {
+
+            if (myMNWAC != 0) {
+                lblStatus.setText("MY MINOR CASES PENDING INFORMATION FROM CUSTOMER");
+                tableCases.getItems().clear();
+                String columSelect1 = "Severity";
+                String filter1 = "Minor";
+                String columSelect2 = "Currently Responsible";
+                String filter2 = "Customer action";
+                initTableView(tableCases);
+                twoFilterMyTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (myMNWAC == 0) {
+                alertUser(strAlert);
+            }
+        }
+
         if (event.getSource() == btnMyMJupdated) {
 
             if (myMJUpdated != 0) {
@@ -5861,6 +6826,24 @@ public class Controller implements Initializable {
                 tableCases.scrollToColumnIndex(0);
             }
             if (myMJUpdated == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnMyMNupdated) {
+
+            if (myMNUpdated != 0) {
+                lblStatus.setText("MY MINOR CASES CUSTOMER PROVIDED UPDATE");
+                tableCases.getItems().clear();
+                String columSelect1 = "Severity";
+                String filter1 = "Minor";
+                String columSelect2 = "Currently Responsible";
+                String filter2 = "Customer updated";
+                initTableView(tableCases);
+                twoFilterMyTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (myMNUpdated == 0) {
                 alertUser(strAlert);
             }
         }
@@ -5885,6 +6868,28 @@ public class Controller implements Initializable {
                 alertUser(strAlert);
             }
         }
+
+        if (event.getSource() == btnMyMNEngineering) {
+
+            if (myMNEng != 0) {
+
+                lblStatus.setText("MY MINOR CASES WITH DESIGN");
+                tableCases.getItems().clear();
+                tableCases.getItems().clear();
+                String columSelect1 = "Severity";
+                String filter1 = "Minor";
+                String columSelect2 = "Status";
+                String filter2 = "Develop Solution";
+                initTableView(tableCases);
+                twoFilterMyTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+
+            if (myMNEng == 0) {
+                alertUser(strAlert);
+            }
+        }
+
         if (event.getSource() == btnMyMJINACT) {
 
             if (myMJInactiveCases != 0) {
@@ -5902,6 +6907,53 @@ public class Controller implements Initializable {
             }
         }
 
+        if (event.getSource() == btnMyMNINACT) {
+
+            if (myMNINAct != 0) {
+
+                lblStatus.setText("MY MINOR INACTIVE (PENDING CLOSURE) CASES");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Minor";
+                initTableView(tableCases);
+                inactiveCasesMyTableView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (myMNINAct == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnMyMJQueue) {
+            if (myMJInQueue != 0) {
+                lblStatus.setText("MAJOR CASES IN MY QUEUE(S)");
+                tableCases.getItems().clear();
+                String e2TableSelect = "Severity";
+                String e2TableSelect2 = "Major";
+                initTableView(tableCases);
+                mySevQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (myMJInQueue == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnMyMNQueue) {
+            if (myMNInQueue != 0) {
+                lblStatus.setText("MINOR CASES IN MY QUEUE(S)");
+                tableCases.getItems().clear();
+                String e2TableSelect = "Severity";
+                String e2TableSelect2 = "Minor";
+                initTableView(tableCases);
+                mySevQueueView(e2TableSelect, e2TableSelect2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (myMNInQueue == 0) {
+                alertUser(strAlert);
+            }
+        }
+
         if (event.getSource() == btnMyBCDue) {
 
             if (myBCDueCases != 0) {
@@ -5910,7 +6962,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Business Critical";
                 initTableView(tableCases);
-                myDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
+                myDueFilterView(columnSelect, filter, tableCases, apnTableView, 5, true);
                 tableCases.scrollToColumnIndex(0);
             }
             if (myBCDueCases == 0) {
@@ -5926,7 +6978,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Business Critical";
                 initTableView(tableCases);
-                myDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
+                myDueFilterView(columnSelect, filter, tableCases, apnTableView, 5, false);
                 tableCases.scrollToColumnIndex(0);
             }
 
@@ -5943,11 +6995,28 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Major";
                 initTableView(tableCases);
-                myDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, true);
+                myDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
                 tableCases.scrollToColumnIndex(0);
             }
 
             if (myMJDueCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnMyMNDue) {
+
+            if (myMNDue != 0) {
+                lblStatus.setText("MY MINOR DUE CASES");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Minor";
+                initTableView(tableCases);
+                myDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+
+            if (myMNDue == 0) {
                 alertUser(strAlert);
             }
         }
@@ -5960,11 +7029,28 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Major";
                 initTableView(tableCases);
-                myDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
+                myDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
                 tableCases.scrollToColumnIndex(0);
             }
 
             if (myMJMissedCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnMyMNMissed) {
+
+            if (myMNMissed != 0) {
+                lblStatus.setText("MY MINOR CASED MISSED DUE");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Minor";
+                initTableView(tableCases);
+                myDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
+                tableCases.scrollToColumnIndex(0);
+            }
+
+            if (myMNMissed == 0) {
                 alertUser(strAlert);
             }
         }
@@ -5983,7 +7069,7 @@ public class Controller implements Initializable {
                 alertUser(strAlert);
             }
         }
-        if (event.getSource() == btnMyCoOwnQueue) {
+/*        if (event.getSource() == btnMyCoOwnQueue) {
 
             if (myCoOwnerQueueCases != 0) {
                 lblStatus.setText("CASES IN MY CO-OWNER QUEUE(S)");
@@ -5995,9 +7081,9 @@ public class Controller implements Initializable {
             if (myCoOwnerQueueCases == 0) {
                 alertUser(strAlert);
             }
-        }
+        }*/
 
-        if (event.getSource() == btnMyCoQueueAssigned){
+/*        if (event.getSource() == btnMyCoQueueAssigned){
             if (myCoOwnerQueueCasesAssigned != 0) {
                 lblStatus.setText("CASES ASSIGNED FROM MY CO-OWNER QUEUE(S)");
                 tableCases.getItems().clear();
@@ -6008,7 +7094,7 @@ public class Controller implements Initializable {
             if (myCoOwnerQueueCasesAssigned == 0){
                 alertUser(strAlert);
             }
-        }
+        }*/
 
         if (event.getSource() == btnMyUpdateToday) {
 
@@ -6263,6 +7349,21 @@ public class Controller implements Initializable {
             }
         }
 
+        if (event.getSource() == btnMNWIPProd) {
+            if (prodMNWIP != 0) {
+                lblStatus.setText("PRODUCT VIEW - MINOR WORK IN PROGRESS CASES");
+                tableCases.getItems().clear();
+                initTableView(tableCases);
+                String columnSelect = "Severity";
+                String filter = "Minor";
+                productWIPCaseView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (prodMNWIP == 0) {
+                alertUser(strAlert);
+            }
+        }
+
         if (event.getSource() == btnMJWacProd) {
             if (prodMJWAC != 0) {
                 lblStatus.setText("PRODUCT VIEW - MAJOR CASES PENDING CUSTOMER ACTION");
@@ -6280,6 +7381,23 @@ public class Controller implements Initializable {
             }
         }
 
+        if (event.getSource() == btnMNWacProd) {
+            if (prodMNWAC != 0) {
+                lblStatus.setText("PRODUCT VIEW - MINOR CASES PENDING CUSTOMER ACTION");
+                tableCases.getItems().clear();
+                String columSelect1 = "Severity";
+                String filter1 = "Minor";
+                String columSelect2 = "Currently Responsible";
+                String filter2 = "Customer action";
+                initTableView(tableCases);
+                twoFilterProductTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (prodMNWAC == 0) {
+                alertUser(strAlert);
+            }
+        }
+
         if (event.getSource() == btnMJupdatedProd) {
             if (prodMJUpdated != 0) {
                 lblStatus.setText("PRODUCT VIEW - MAJOR CASES CUSTOMER PROVIDED UPDATE");
@@ -6293,6 +7411,22 @@ public class Controller implements Initializable {
                 tableCases.scrollToColumnIndex(0);
             }
             if (prodMJUpdated == 0) {
+                alertUser(strAlert);
+            }
+        }
+        if (event.getSource() == btnMNupdatedProd) {
+            if (prodMNUpdated != 0) {
+                lblStatus.setText("PRODUCT VIEW - MINOR CASES CUSTOMER PROVIDED UPDATE");
+                tableCases.getItems().clear();
+                String columSelect1 = "Severity";
+                String filter1 = "Minor";
+                String columSelect2 = "Currently Responsible";
+                String filter2 = "Customer updated";
+                initTableView(tableCases);
+                twoFilterProductTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (prodMNUpdated == 0) {
                 alertUser(strAlert);
             }
         }
@@ -6314,6 +7448,23 @@ public class Controller implements Initializable {
                 alertUser(strAlert);
             }
         }
+        if (event.getSource() == btnMNEngineeringProd) {
+            if (prodMNEng != 0) {
+                lblStatus.setText("PRODUCT VIEW - MINOR CASES WITH DESIGN");
+                tableCases.getItems().clear();
+                tableCases.getItems().clear();
+                String columSelect1 = "Severity";
+                String filter1 = "Minor";
+                String columSelect2 = "Status";
+                String filter2 = "Develop Solution";
+                initTableView(tableCases);
+                twoFilterProductTableView(columSelect1, filter1, columSelect2, filter2, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (prodMNEng == 0) {
+                alertUser(strAlert);
+            }
+        }
 
         if (event.getSource() == btnMJINACTProd) {
             if (prodMJInactiveCases != 0) {
@@ -6330,6 +7481,21 @@ public class Controller implements Initializable {
                 alertUser(strAlert);
             }
         }
+        if (event.getSource() == btnMNINACTProd) {
+            if (prodMNInact != 0) {
+
+                lblStatus.setText("PRODUCT VIEW - MINOR INACTIVE (PC & FA) CASES");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Minor";
+                initTableView(tableCases);
+                inactiveCasesProductTableView(columnSelect, filter, tableCases, apnTableView);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (prodMNInact == 0) {
+                alertUser(strAlert);
+            }
+        }
 
         if (event.getSource() == btnBCDueProd) {
 
@@ -6339,7 +7505,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Business Critical";
                 initTableView(tableCases);
-                productDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
+                productDueFilterView(columnSelect, filter, tableCases, apnTableView, 5, true);
                 tableCases.scrollToColumnIndex(0);
             }
             if (prodBCDueCases == 0) {
@@ -6355,7 +7521,7 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Business Critical";
                 initTableView(tableCases);
-                productDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
+                productDueFilterView(columnSelect, filter, tableCases, apnTableView, 5, false);
                 tableCases.scrollToColumnIndex(0);
             }
             if (prodBCMissedCases == 0) {
@@ -6371,10 +7537,25 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Major";
                 initTableView(tableCases);
-                productDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, true);
+                productDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, true);
                 tableCases.scrollToColumnIndex(0);
             }
             if (prodMJDueCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+        if (event.getSource() == btnMNDueProd) {
+
+            if (prodMNDue != 0) {
+                lblStatus.setText("PRODUCT VIEW - MINOR DUE CASES");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Minor";
+                initTableView(tableCases);
+                productDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, true);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (prodMNDue == 0) {
                 alertUser(strAlert);
             }
         }
@@ -6387,10 +7568,26 @@ public class Controller implements Initializable {
                 String columnSelect = "Severity";
                 String filter = "Major";
                 initTableView(tableCases);
-                productDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
+                productDueFilterView(columnSelect, filter, tableCases, apnTableView, 15, false);
                 tableCases.scrollToColumnIndex(0);
             }
             if (prodMJMissedCases == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnMNMissedProd) {
+
+            if (prodMNMissed != 0) {
+                lblStatus.setText("PRODUCT VIEW - MINOR CASED MISSED DUE");
+                tableCases.getItems().clear();
+                String columnSelect = "Severity";
+                String filter = "Minor";
+                initTableView(tableCases);
+                productDueFilterView(columnSelect, filter, tableCases, apnTableView, 30, false);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (prodMNMissed == 0) {
                 alertUser(strAlert);
             }
         }
@@ -6399,10 +7596,53 @@ public class Controller implements Initializable {
                 lblStatus.setText("PRODUCT VIEW - CASES IN RTS QUEUE");
                 tableCases.getItems().clear();
                 initTableView(tableCases);
-                productViewCasesQueued(tableCases, apnTableView, false);
+                String sev = "All";
+                productViewCasesQueued(tableCases, apnTableView, false, sev);
                 tableCases.scrollToColumnIndex(0);
             }
             if (prodQueueTS == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnBCQueueProd) {
+            if (prodBCQueue != 0) {
+                lblStatus.setText("PRODUCT VIEW - BC CASES IN QUEUE(S)");
+                tableCases.getItems().clear();
+                initTableView(tableCases);
+                String sev = "BC";
+                productViewCasesQueued(tableCases, apnTableView, false, sev);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (prodBCQueue == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnMJQueueProd) {
+            if (prodMJQueue != 0) {
+                lblStatus.setText("PRODUCT VIEW - MAJOR CASES IN QUEUE(S)");
+                tableCases.getItems().clear();
+                initTableView(tableCases);
+                String sev = "Major";
+                productViewCasesQueued(tableCases, apnTableView, false, sev);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (prodMJQueue == 0) {
+                alertUser(strAlert);
+            }
+        }
+
+        if (event.getSource() == btnMNQueueProd) {
+            if (prodMNQueue != 0) {
+                lblStatus.setText("PRODUCT VIEW - MINOR CASES IN QUEUE(S)");
+                tableCases.getItems().clear();
+                initTableView(tableCases);
+                String sev = "Minor";
+                productViewCasesQueued(tableCases, apnTableView, false, sev);
+                tableCases.scrollToColumnIndex(0);
+            }
+            if (prodMNQueue == 0) {
                 alertUser(strAlert);
             }
         }
@@ -6412,7 +7652,8 @@ public class Controller implements Initializable {
                 lblStatus.setText("PRODUCT VIEW - CASES IN GPS QUEUE");
                 tableCases.getItems().clear();
                 initTableView(tableCases);
-                productViewCasesQueued(tableCases, apnTableView, true);
+                String sev = "All";
+                productViewCasesQueued(tableCases, apnTableView, true, sev);
                 tableCases.scrollToColumnIndex(0);
             }
             if (prodQueuePS == 0) {
@@ -6579,7 +7820,7 @@ public class Controller implements Initializable {
                                 txtCaseStatusNote.setText(details.get(2));
                                 txtCaseOwnerNote.setText(details.get(3));
                                 txtCaseCoOwnerNote.setText(details.get(4));
-                                txtCaseCoQueueNote.setText(details.get(5));
+                                //txtCaseCoQueueNote.setText(details.get(5));
                                 txtCaseAgeNote.setText(details.get(7));
                                 txtCaseTypeNote.setText(details.get(12));
                                 txtCaseProductNote.setText(details.get(13));
@@ -7028,7 +8269,7 @@ public class Controller implements Initializable {
         selectedCase.add(caseview.getCaseOwner());
         selectedCase.add(caseview.getCaseCoOwner());
         selectedCase.add(caseview.getCaseCoOwnerQueue());
-        selectedCase.add(caseview.getCaseResponsible());
+        selectedCase.add(caseview.getCaseResponsible().toString());
         selectedCase.add(caseview.getCaseAge().toString());
         if(caseview.getNextCaseUpdate() != null){
             selectedCase.add(caseview.getNextCaseUpdate().toString());
@@ -7100,6 +8341,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
 
             if (!customerText.getText().isEmpty()) {
@@ -7164,8 +8408,11 @@ public class Controller implements Initializable {
 
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
                                             localDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -7200,8 +8447,11 @@ public class Controller implements Initializable {
 
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
                                             localDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -7325,6 +8575,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
 
             if (!customerText.getText().isEmpty()) {
@@ -7371,8 +8624,11 @@ public class Controller implements Initializable {
 
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
                                             localDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -7407,8 +8663,11 @@ public class Controller implements Initializable {
 
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
                                             localDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -7498,7 +8757,7 @@ public class Controller implements Initializable {
         }
     }
 
-    private void productViewCasesQueued(TableView<CaseTableView> tableCases, AnchorPane apnTableView, boolean b) {
+    private void productViewCasesQueued(TableView<CaseTableView> tableCases, AnchorPane apnTableView, boolean b, String sev) {
 
         int caseCount = 0;
 
@@ -7511,6 +8770,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal2;
             HSSFCell cellVal3;
             HSSFCell cellVal4;
+            HSSFCell cellVal5;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -7529,6 +8789,12 @@ public class Controller implements Initializable {
                 }
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
+                }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
+                if (filterColName.equals("Severity")){
+                    mycaseSevRefCell = i;
                 }
             }
 
@@ -7551,6 +8817,8 @@ public class Controller implements Initializable {
                             String owner = cellVal3.getStringCellValue();
                             cellVal4 = filtersheet.getRow(i).getCell(mycaseAgeRefCell);
                             int compAge = Integer.parseInt(cellVal4.getStringCellValue());
+                            cellVal5 = filtersheet.getRow(i).getCell(mycaseSevRefCell);
+                            String severity = cellVal5.getStringCellValue();
 
 
                             if (b) {
@@ -7575,8 +8843,11 @@ public class Controller implements Initializable {
 
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
                                             localDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -7588,40 +8859,164 @@ public class Controller implements Initializable {
                                         tableCases.getItems().removeAll(observableList);
                                     }
                                 }
-                            } else {
-                                if (productName.equals(setProd.get(j)) && (owner.startsWith("TS ") || owner.startsWith("Tech-Ops"))) {
+                            } else{
+                                if(sev.equals("All")) {
+                                    if (productName.equals(setProd.get(j)) && (owner.startsWith("TS ") || owner.startsWith("Tech-Ops"))) {
 
-                                    ArrayList<String> array = new ArrayList<>();
-                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+                                        ArrayList<String> array = new ArrayList<>();
+                                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
-                                    while (iterCells.hasNext()) {
-                                        HSSFCell cell = (HSSFCell) iterCells.next();
-                                        array.add(cell.getStringCellValue());
+                                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                        while (iterCells.hasNext()) {
+                                            HSSFCell cell = (HSSFCell) iterCells.next();
+                                            array.add(cell.getStringCellValue());
+                                        }
+
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                        LocalDate localDate = null;
+
+                                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                        }
+
+                                        int age;
+                                        age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                        int ribDays = 0;
+                                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                array.get(3), array.get(4), array.get(5), ribDays, age,
+                                                localDate, array.get(9), array.get(10),
+                                                array.get(11), array.get(12), array.get(13),
+                                                array.get(14), array.get(15), array.get(16),
+                                                array.get(17)));
+
+                                        tableCases.getItems().addAll(observableList);
+                                        caseCount++;
+                                        if (tableCases.getItems().size() >= caseCount + 1) {
+                                            tableCases.getItems().removeAll(observableList);
+                                        }
                                     }
+                                }
+                                if (sev.equals("BC")){
+                                    if (severity.equals("Business Critical") && (productName.equals(setProd.get(j)) && (owner.startsWith("PS") ||
+                                            owner.startsWith("TS ") || owner.startsWith("Tech-Ops")))){
 
-                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                                    LocalDate localDate = null;
+                                        ArrayList<String> array = new ArrayList<>();
+                                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+                                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                        while (iterCells.hasNext()) {
+                                            HSSFCell cell = (HSSFCell) iterCells.next();
+                                            array.add(cell.getStringCellValue());
+                                        }
 
-                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                        LocalDate localDate = null;
 
+                                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                        }
+
+                                        int age;
+                                        age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                        int ribDays = 0;
+                                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                array.get(3), array.get(4), array.get(5), ribDays, age,
+                                                localDate, array.get(9), array.get(10),
+                                                array.get(11), array.get(12), array.get(13),
+                                                array.get(14), array.get(15), array.get(16),
+                                                array.get(17)));
+
+                                        tableCases.getItems().addAll(observableList);
+                                        caseCount++;
+                                        if (tableCases.getItems().size() >= caseCount + 1) {
+                                            tableCases.getItems().removeAll(observableList);
+                                        }
                                     }
+                                }
+                                if (sev.equals("Major")){
+                                    if (severity.equals("Major") && (productName.equals(setProd.get(j)) && (owner.startsWith("PS") ||
+                                            owner.startsWith("TS ") || owner.startsWith("Tech-Ops")))){
 
-                                    int age;
-                                    age = Integer.parseInt(array.get(mycaseAgeRefCell));
-                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
-                                            localDate, array.get(9), array.get(10),
-                                            array.get(11), array.get(12), array.get(13),
-                                            array.get(14), array.get(15), array.get(16),
-                                            array.get(17)));
+                                        ArrayList<String> array = new ArrayList<>();
+                                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                    tableCases.getItems().addAll(observableList);
-                                    caseCount++;
-                                    if (tableCases.getItems().size() >= caseCount + 1) {
-                                        tableCases.getItems().removeAll(observableList);
+                                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                        while (iterCells.hasNext()) {
+                                            HSSFCell cell = (HSSFCell) iterCells.next();
+                                            array.add(cell.getStringCellValue());
+                                        }
+
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                        LocalDate localDate = null;
+
+                                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                        }
+
+                                        int age;
+                                        age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                        int ribDays = 0;
+                                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                array.get(3), array.get(4), array.get(5), ribDays, age,
+                                                localDate, array.get(9), array.get(10),
+                                                array.get(11), array.get(12), array.get(13),
+                                                array.get(14), array.get(15), array.get(16),
+                                                array.get(17)));
+
+                                        tableCases.getItems().addAll(observableList);
+                                        caseCount++;
+                                        if (tableCases.getItems().size() >= caseCount + 1) {
+                                            tableCases.getItems().removeAll(observableList);
+                                        }
+                                    }
+                                }
+                                if (sev.equals("Minor")){
+                                    if (severity.equals("Minor") && (productName.equals(setProd.get(j)) && (owner.startsWith("PS") ||
+                                            owner.startsWith("TS ") || owner.startsWith("Tech-Ops")))){
+
+                                        ArrayList<String> array = new ArrayList<>();
+                                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                        while (iterCells.hasNext()) {
+                                            HSSFCell cell = (HSSFCell) iterCells.next();
+                                            array.add(cell.getStringCellValue());
+                                        }
+
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                        LocalDate localDate = null;
+
+                                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                        }
+
+                                        int age;
+                                        age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                        int ribDays = 0;
+                                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                array.get(3), array.get(4), array.get(5), ribDays, age,
+                                                localDate, array.get(9), array.get(10),
+                                                array.get(11), array.get(12), array.get(13),
+                                                array.get(14), array.get(15), array.get(16),
+                                                array.get(17)));
+
+                                        tableCases.getItems().addAll(observableList);
+                                        caseCount++;
+                                        if (tableCases.getItems().size() >= caseCount + 1) {
+                                            tableCases.getItems().removeAll(observableList);
+                                        }
                                     }
                                 }
                             }
@@ -7799,8 +9194,12 @@ public class Controller implements Initializable {
 
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
+
+                                    int rbbnDays = 0;
+                                    rbbnDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), rbbnDays,age,
                                             localDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -7836,8 +9235,11 @@ public class Controller implements Initializable {
 
                                     int age;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int rbbnDays = 0;
+                                    rbbnDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), rbbnDays,age,
                                             localDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -7969,6 +9371,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
 
             if (!txProducts.getText().isEmpty()) {
@@ -8013,8 +9418,11 @@ public class Controller implements Initializable {
 
                                 int age = 0;
                                 age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                int ribDays = 0;
+                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        array.get(3), array.get(4), array.get(5), ribDays,age,
                                         localDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -8150,6 +9558,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
 
             if (!txProducts.getText().isEmpty()) {
@@ -8196,8 +9607,11 @@ public class Controller implements Initializable {
 
                                 int age = 0;
                                 age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                int ribDays = 0;
+                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        array.get(3), array.get(4), array.get(5), ribDays,age,
                                         localDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -8330,6 +9744,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
 
             if (!txProducts.getText().isEmpty()) {
@@ -8373,8 +9790,11 @@ public class Controller implements Initializable {
 
                                 int age = 0;
                                 age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                int ribDays = 0;
+                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        array.get(3), array.get(4), array.get(5), ribDays,age,
                                         localDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -8502,6 +9922,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
 
             if (!txProducts.getText().isEmpty()) {
@@ -8544,8 +9967,11 @@ public class Controller implements Initializable {
 
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
                                             localDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -8580,8 +10006,11 @@ public class Controller implements Initializable {
 
                                     int age;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
                                             localDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -8713,6 +10142,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
 
             if ((!txProducts.getText().isEmpty())) {
@@ -8755,8 +10187,11 @@ public class Controller implements Initializable {
 
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
                                             localDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -8789,8 +10224,10 @@ public class Controller implements Initializable {
 
                                     int age;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
                                             localDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -8921,6 +10358,7 @@ public class Controller implements Initializable {
 
             browserLoginPane.toFront();
             apnBrowser.toFront();
+            webEngine.load("https://sonus.okta.com");
             progressBar.setVisible(true);
             progressBar.toFront();
             progressBar.setProgress(0.20);
@@ -8996,6 +10434,7 @@ public class Controller implements Initializable {
                         break;
                     case ("Support Hotlist Reason"):
                         caseSupHotListRRef = i;
+                        break;
                 }
             }
 
@@ -9963,6 +11402,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Age (Days)")) {
                     caseAgeRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
 
             for (int k = 1; k < lastRow + 1; k++) {
@@ -9997,8 +11439,11 @@ public class Controller implements Initializable {
 
                             int age = 0;
                             age = Integer.parseInt(array.get(caseAgeRefCell));
+                            int ribDays = 0;
+                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                             observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                    array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                    array.get(3), array.get(4), array.get(5), ribDays,age,
                                     caseUpdateDate, array.get(9), array.get(10),
                                     array.get(11), array.get(12), array.get(13),
                                     array.get(14), array.get(15), array.get(16),
@@ -10026,8 +11471,11 @@ public class Controller implements Initializable {
 
                             int age = 0;
                             age = Integer.parseInt(array.get(caseAgeRefCell));
+                            int ribDays = 0;
+                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                             observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                    array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                    array.get(3), array.get(4), array.get(5), ribDays,age,
                                     caseUpdateDate, array.get(9), array.get(10),
                                     array.get(11), array.get(12), array.get(13),
                                     array.get(14), array.get(15), array.get(16),
@@ -10053,8 +11501,11 @@ public class Controller implements Initializable {
 
                         int age = 0;
                         age = Integer.parseInt(array.get(caseAgeRefCell));
+                        int ribDays = 0;
+                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                array.get(3), array.get(4), array.get(5), ribDays,age,
                                 caseUpdateDate, array.get(9), array.get(10),
                                 array.get(11), array.get(12), array.get(13),
                                 array.get(14), array.get(15), array.get(16),
@@ -10179,6 +11630,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Co-Owner")){
                     myCoOwnCaseRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
 
             if ((!txUsers.getText().isEmpty()) || (!txWorkGroup.getText().isEmpty())) {
@@ -10230,8 +11684,11 @@ public class Controller implements Initializable {
 
                                     int age = 0;
                                     age = Integer.parseInt(array.get(caseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
                                             caseUpdateDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -10259,8 +11716,10 @@ public class Controller implements Initializable {
 
                                     int age = 0;
                                     age = Integer.parseInt(array.get(caseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
                                             caseUpdateDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -10288,8 +11747,11 @@ public class Controller implements Initializable {
 
                                 int age = 0;
                                 age = Integer.parseInt(array.get(caseAgeRefCell));
+                                int ribDays = 0;
+                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        array.get(3), array.get(4), array.get(5), ribDays,age,
                                         caseUpdateDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -10393,7 +11855,7 @@ public class Controller implements Initializable {
     }
 
 
-    private void createMyCoOwnerQueueCaseView(Boolean assigned){
+/*    private void createMyCoOwnerQueueCaseView(Boolean assigned){
 
         int caseCount = 0;
 
@@ -10603,7 +12065,7 @@ public class Controller implements Initializable {
         } catch (Exception e) {
             logger.log(Level.WARNING, "Create Table Failed!", e);
         }
-    }
+    }*/
 
     private void createMyQueueCaseView(String columnSelect, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
 
@@ -10627,6 +12089,9 @@ public class Controller implements Initializable {
                 }
                 if (filterColName.equals("Next Case Update")) {
                     caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
                 }
             }
 
@@ -10667,8 +12132,11 @@ public class Controller implements Initializable {
 
                                 int age;
                                 age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                int ribDays = 0;
+                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        array.get(3), array.get(4), array.get(5), ribDays,age,
                                         localDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -10804,6 +12272,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Co-Owwer")){
                     myCoOwnCaseRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
 
             if ((!txUsers.getText().isEmpty() || !txWorkGroup.getText().isEmpty())) {
@@ -10874,8 +12345,11 @@ public class Controller implements Initializable {
 
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
                                             localDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -10910,8 +12384,11 @@ public class Controller implements Initializable {
 
                                     int age;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
                                             localDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -11040,6 +12517,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Co-Owner")){
                     myCoOwnCaseRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
 
             if ((!txUsers.getText().isEmpty() || !txWorkGroup.getText().isEmpty())) {
@@ -11108,8 +12588,11 @@ public class Controller implements Initializable {
 
                                     int age = 0;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
                                             localDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -11144,8 +12627,11 @@ public class Controller implements Initializable {
 
                                     int age;
                                     age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
                                             localDate, array.get(9), array.get(10),
                                             array.get(11), array.get(12), array.get(13),
                                             array.get(14), array.get(15), array.get(16),
@@ -11379,6 +12865,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Co-Owner")){
                     myCoOwnCaseRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
 
             if ((!txUsers.getText().isEmpty() || !txWorkGroup.getText().isEmpty())) {
@@ -11448,8 +12937,11 @@ public class Controller implements Initializable {
 
                                 int age = 0;
                                 age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                int ribDays = 0;
+                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        array.get(3), array.get(4), array.get(5), ribDays,age,
                                         localDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -11586,6 +13078,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Co-Owner")){
                     myCoOwnCaseRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
 
             if ((!txUsers.getText().isEmpty() || !txWorkGroup.getText().isEmpty())) {
@@ -11660,8 +13155,11 @@ public class Controller implements Initializable {
 
                                 int age = 0;
                                 age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                int ribDays = 0;
+                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        array.get(3), array.get(4), array.get(5), ribDays,age,
                                         localDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -11790,6 +13288,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
 
             if ((!txUsers.getText().isEmpty() || !txWorkGroup.getText().isEmpty())) {
@@ -11860,8 +13361,11 @@ public class Controller implements Initializable {
 
                                 int age = 0;
                                 age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                int ribDays = 0;
+                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                 observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                        array.get(3), array.get(4), array.get(5), ribDays,age,
                                         localDate, array.get(9), array.get(10),
                                         array.get(11), array.get(12), array.get(13),
                                         array.get(14), array.get(15), array.get(16),
@@ -12064,8 +13568,11 @@ public class Controller implements Initializable {
 
                                         int age = 0;
                                         age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                        int ribDays = 0;
+                                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                                array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                                array.get(3), array.get(4), array.get(5), ribDays,age,
                                                 localDate, array.get(9), array.get(10),
                                                 array.get(11), array.get(12), array.get(13),
                                                 array.get(14), array.get(15), array.get(16),
@@ -12101,8 +13608,11 @@ public class Controller implements Initializable {
 
                                         int age;
                                         age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                        int ribDays = 0;
+                                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                                array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                                array.get(3), array.get(4), array.get(5), ribDays,age,
                                                 localDate, array.get(9), array.get(10),
                                                 array.get(11), array.get(12), array.get(13),
                                                 array.get(14), array.get(15), array.get(16),
@@ -12229,6 +13739,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
             for (int k = 1; k < lastRow + 1; k++) {
                 cellVal = filtersheet.getRow(k).getCell(caseCellRef);
@@ -12258,8 +13771,11 @@ public class Controller implements Initializable {
 
                         int age = 0;
                         age = Integer.parseInt(array.get(caseAgeRefCell));
+                        int ribDays = 0;
+                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                array.get(3), array.get(4), array.get(5), ribDays,age,
                                 localDate, array.get(9), array.get(10),
                                 array.get(11), array.get(12), array.get(13),
                                 array.get(14), array.get(15), array.get(16),
@@ -12293,8 +13809,11 @@ public class Controller implements Initializable {
 
                         int age = 0;
                         age = Integer.parseInt(array.get(caseAgeRefCell));
+                        int ribDays = 0;
+                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                array.get(3), array.get(4), array.get(5), ribDays,age,
                                 localDate, array.get(9), array.get(10),
                                 array.get(11), array.get(12), array.get(13),
                                 array.get(14), array.get(15), array.get(16),
@@ -12406,6 +13925,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
             for (int k = 1; k < lastRow + 1; k++) {
                 cellVal = filtersheet.getRow(k).getCell(caseCellRef);
@@ -12437,8 +13959,10 @@ public class Controller implements Initializable {
 
                     int age = 0;
                     age = Integer.parseInt(array.get(caseAgeRefCell));
+                    int ribDays = 0;
+                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                            array.get(3), array.get(4), array.get(5), ribDays,age,
                             localDate, array.get(9), array.get(10),
                             array.get(11), array.get(12), array.get(13),
                             array.get(14), array.get(15), array.get(16),
@@ -12546,6 +14070,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
             for (int k = 1; k < lastRow + 1; k++) {
                 cellVal = filtersheet.getRow(k).getCell(caseCellRef);
@@ -12575,8 +14102,11 @@ public class Controller implements Initializable {
 
                     int age = 0;
                     age = Integer.parseInt(array.get(caseAgeRefCell));
+                    int ribDays = 0;
+                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                            array.get(3), array.get(4), array.get(5), ribDays,age,
                             localDate, array.get(9), array.get(10),
                             array.get(11), array.get(12), array.get(13),
                             array.get(14), array.get(15), array.get(16),
@@ -12685,6 +14215,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
             for (int k = 1; k < lastRow + 1; k++) {
                 cellVal = filtersheet.getRow(k).getCell(caseCellRef);
@@ -12714,8 +14247,11 @@ public class Controller implements Initializable {
 
                     int age = 0;
                     age = Integer.parseInt(array.get(caseAgeRefCell));
+                    int ribDays = 0;
+                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                            array.get(3), array.get(4), array.get(5), ribDays,age,
                             localDate, array.get(9), array.get(10),
                             array.get(11), array.get(12), array.get(13),
                             array.get(14), array.get(15), array.get(16),
@@ -12822,6 +14358,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
             for (int k = 1; k < lastRow + 1; k++) {
                 cellVal = filtersheet.getRow(k).getCell(caseCellRef);
@@ -12853,8 +14392,11 @@ public class Controller implements Initializable {
 
                     int age = 0;
                     age = Integer.parseInt(array.get(caseAgeRefCell));
+                    int ribDays = 0;
+                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                            array.get(3), array.get(4), array.get(5), ribDays,age,
                             localDate, array.get(9), array.get(10),
                             array.get(11), array.get(12), array.get(13),
                             array.get(14), array.get(15), array.get(16),
@@ -12959,6 +14501,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Status")) {
                     caseStatRefCell = i;
                 }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
             }
             for (int k = 1; k < lastRow + 1; k++) {
                 cellVal = filtersheet.getRow(k).getCell(caseCellRef);
@@ -12989,8 +14534,11 @@ public class Controller implements Initializable {
 
                         int age = 0;
                         age = Integer.parseInt(array.get(caseAgeRefCell));
+                        int ribDays = 0;
+                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                array.get(3), array.get(4), array.get(5), ribDays,age,
                                 localDate, array.get(9), array.get(10),
                                 array.get(11), array.get(12), array.get(13),
                                 array.get(14), array.get(15), array.get(16),
@@ -13026,8 +14574,11 @@ public class Controller implements Initializable {
 
                         int age = 0;
                         age = Integer.parseInt(array.get(caseAgeRefCell));
+                        int ribDays = 0;
+                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), array.get(5), array.get(6),age,
+                                array.get(3), array.get(4), array.get(5), ribDays,age,
                                 localDate, array.get(9), array.get(10),
                                 array.get(11), array.get(12), array.get(13),
                                 array.get(14), array.get(15), array.get(16),
@@ -13108,6 +14659,318 @@ public class Controller implements Initializable {
         }
     }
 
+    private void overviewSevQueueView(String columnSelect, String filter, TableView tableView, AnchorPane anchorpane){
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(columnSelect)) {
+                    caseCellRef = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseCellRef2 = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
+                if (filterColName.equals("Case Owner")){
+                    caseOwnerRefCell = i;
+                }
+
+            }
+            for (int k = 1; k < lastRow + 1; k++) {
+
+                cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                String cellValToCompare = cellVal.getStringCellValue();
+
+                cellVal2 = filtersheet.getRow(k).getCell(caseOwnerRefCell);
+                String owner = cellVal2.getStringCellValue();
+
+                if (owner.startsWith("PS") || owner.startsWith("TS") || owner.startsWith("Tech-Ops")) {
+
+                    if (cellValToCompare.equals(filter) || cellValToCompare.startsWith(filter)) {
+
+                        ArrayList<String> array = new ArrayList<>();
+                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                        while (iterCells.hasNext()) {
+                            HSSFCell cell = (HSSFCell) iterCells.next();
+                            array.add(cell.getStringCellValue());
+                        }
+
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                        LocalDate localDate = null;
+
+                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                        }
+
+                        int age;
+                        age = Integer.parseInt(array.get(caseCellRef2));
+                        int ribDays = 0;
+                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
+                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                array.get(3), array.get(4), array.get(5), ribDays, age,
+                                localDate, array.get(9), array.get(10),
+                                array.get(11), array.get(12), array.get(13),
+                                array.get(14), array.get(15), array.get(16),
+                                array.get(17)));
+
+                        tableView.getItems().addAll(observableList);
+                        caseCount++;
+                        if (tableView.getItems().size() >= caseCount + 1) {
+                            tableView.getItems().removeAll(observableList);
+                        }
+                    }
+                }
+            }
+            btnToExcel.setVisible(true);
+            anchorpane.toFront();
+
+            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    exportExcelAction(tableView);
+                }
+            });
+
+            menu = new ContextMenu();
+            String caseno = "";
+            menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
+            tableCases.setContextMenu(menu);
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
+
+            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                        URL caseSearch = new URL(search);
+                        Desktop.getDesktop().browse(caseSearch.toURI());
+                    }catch (Exception e){
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                    }
+                }
+            });
+
+            // Selecting and Copy the Case Number to Clipboard
+            tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableView);
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
+                    }
+                }
+            });
+
+            btnBack.setVisible(true);
+            btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    apnHome.toFront();
+                    lblStatus.setText("GENERAL OVERVIEW");
+                    btnBack.setVisible(false);
+                    btnToExcel.setVisible(false);
+                    tableCases.getItems().clear();
+                }
+            });
+
+
+
+        }catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
+    private void mySevQueueView(String columnSelect, String filter, TableView tableView, AnchorPane anchorpane){
+
+        int caseCount = 0;
+
+        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
+
+            HSSFSheet filtersheet = workbook.getSheetAt(0);
+            int cellnum = filtersheet.getRow(0).getLastCellNum();
+            int lastRow = filtersheet.getLastRowNum();
+            HSSFCell cellVal;
+            HSSFCell cellVal2;
+
+            for (int i = 0; i < cellnum; i++) {
+
+                String filterColName = filtersheet.getRow(0).getCell(i).toString();
+                if (filterColName.equals(columnSelect)) {
+                    caseCellRef = i;
+                }
+                if (filterColName.equals("Age (Days)")) {
+                    caseCellRef2 = i;
+                }
+                if (filterColName.equals("Next Case Update")) {
+                    caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
+                }
+                if (filterColName.equals("Case Owner")){
+                    caseOwnerRefCell = i;
+                }
+            }
+
+            if(!txQueues.getText().isEmpty()){
+
+                String queueFilter = txQueues.getText();
+                ArrayList<String> setQueue = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
+                int queuefiltnum = setQueue.size();
+
+                if ((!queueFilter.equals(""))) {
+
+                    for (int j = 0; j < queuefiltnum; j++) {
+
+                        for (int k = 1; k < lastRow + 1; k++) {
+
+                            cellVal = filtersheet.getRow(k).getCell(caseCellRef);
+                            String cellValToCompare = cellVal.getStringCellValue();
+
+                            cellVal2 = filtersheet.getRow(k).getCell(caseOwnerRefCell);
+                            String owner = cellVal2.getStringCellValue();
+
+                            if (owner.equals(setQueue.get(j))){
+
+                                if (cellValToCompare.equals(filter) || cellValToCompare.startsWith(filter)) {
+                                    ArrayList<String> array = new ArrayList<>();
+                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
+                                    while (iterCells.hasNext()) {
+                                        HSSFCell cell = (HSSFCell) iterCells.next();
+                                        array.add(cell.getStringCellValue());
+                                    }
+
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                    LocalDate localDate = null;
+
+                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                    }
+
+                                    int age;
+                                    age = Integer.parseInt(array.get(caseCellRef2));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
+                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                            array.get(3), array.get(4), array.get(5), ribDays, age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
+
+                                    tableView.getItems().addAll(observableList);
+                                    caseCount++;
+                                    if (tableView.getItems().size() >= caseCount + 1) {
+                                        tableView.getItems().removeAll(observableList);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            btnToExcel.setVisible(true);
+            anchorpane.toFront();
+
+            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    exportExcelAction(tableView);
+                }
+            });
+
+            menu = new ContextMenu();
+            String caseno = "";
+            menu.getItems().add(openCaseSFDC);
+            menu.getItems().add(openCaseDetails);
+            tableCases.setContextMenu(menu);
+
+            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    myCaseDetails();
+                }
+            });
+
+            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    try {
+
+                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
+
+                        URL caseSearch = new URL(search);
+                        Desktop.getDesktop().browse(caseSearch.toURI());
+                    }catch (Exception e){
+                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
+                    }
+                }
+            });
+
+            // Selecting and Copy the Case Number to Clipboard
+            tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    try {
+                        copyCaseNumberToClipboard(tableView);
+                    } catch (Exception e) {
+                        logger.log(Level.WARNING, "Get Case Number Failed", e);
+                    }
+                }
+            });
+
+            btnBack.setVisible(true);
+            btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    apnHome.toFront();
+                    lblStatus.setText("GENERAL OVERVIEW");
+                    btnBack.setVisible(false);
+                    btnToExcel.setVisible(false);
+                    tableCases.getItems().clear();
+                }
+            });
+
+
+
+        }catch (Exception e) {
+            logger.log(Level.WARNING, "Create Table Failed!", e);
+        }
+    }
+
     private void overviewQueueView(String columnSelect, String filter, TableView tableView, AnchorPane anchorpane, String overText) {
 
         int caseCount = 0;
@@ -13130,6 +14993,9 @@ public class Controller implements Initializable {
                 }
                 if (filterColName.equals("Next Case Update")) {
                     caseNextUpdateDateRef = i;
+                }
+                if (filterColName.equals("Days by Ribbon (days)")) {
+                    rbnDaysRefCell = i;
                 }
 
             }
@@ -13159,9 +15025,11 @@ public class Controller implements Initializable {
 
                     int age;
                     age = Integer.parseInt(array.get(caseCellRef2));
+                    int ribDays = 0;
+                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
 
                     observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                            array.get(3), array.get(4), array.get(5), array.get(6),age,
+                            array.get(3), array.get(4), array.get(5), ribDays,age,
                             localDate, array.get(9), array.get(10),
                             array.get(11), array.get(12), array.get(13),
                             array.get(14), array.get(15), array.get(16),
@@ -13307,15 +15175,23 @@ public class Controller implements Initializable {
                             localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
 
                         }
+
+                        int age;
+                        age = Integer.parseInt(array.get(caseAgeRefCell));
+                        int ribDays = 0;
+                        ribDays = Integer.parseInt(array.get(rbbnDaysRefCell));
+
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), array.get(5), array.get(6),ageCase,
+                                array.get(3), array.get(4), array.get(5), ribDays,age,
                                 localDate, array.get(9), array.get(10),
                                 array.get(11), array.get(12), array.get(13),
                                 array.get(14), array.get(15), array.get(16),
                                 array.get(17)));
 
                         tableCases.getItems().addAll(observableList);
+
                         caseCount++;
+
                         if (tableCases.getItems().size() >= caseCount + 1) {
                             tableCases.getItems().removeAll(observableList);
                         }
@@ -13341,8 +15217,14 @@ public class Controller implements Initializable {
                             localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
 
                         }
+
+                        int age;
+                        age = Integer.parseInt(array.get(caseAgeRefCell));
+                        int ribDays = 0;
+                        ribDays = Integer.parseInt(array.get(rbbnDaysRefCell));
+
                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                array.get(3), array.get(4), array.get(5), array.get(6),ageCase,
+                                array.get(3), array.get(4), array.get(5), ribDays,age,
                                 localDate, array.get(9), array.get(10),
                                 array.get(11), array.get(12), array.get(13),
                                 array.get(14), array.get(15), array.get(16),
@@ -13639,7 +15521,6 @@ public class Controller implements Initializable {
             accBCWIP = 0;
             accMJDueCases = 0;
             accMJMissedCases = 0;
-            accMNMissedCases = 0;
             accRTSQueue = 0;
             accGPSQueue = 0;
             accMJUpdated = 0;
@@ -13660,6 +15541,16 @@ public class Controller implements Initializable {
             accUpdateNull = 0;
             accCoOwnCase = 0;
             accCoOwnQueue = 0;
+            accBCQueue = 0;
+            accMJQueue = 0;
+            accMNQueue = 0;
+            accMNWIP = 0;
+            accMNWAC = 0;
+            accMNUpdated = 0;
+            accMNEng = 0;
+            accMNInact = 0;
+            accMNDue = 0;
+            accMNMissedCases = 0;
 
             int cellnum = filtersheet.getRow(0).getLastCellNum();
             int lastRow = filtersheet.getLastRowNum();
@@ -13799,10 +15690,10 @@ public class Controller implements Initializable {
                                 if (caseSever.equals("Business Critical")) {
                                     if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                                         if (!caseStatus.equals("Develop Solution")) {
-                                            if (ribDays <= 15) {
+                                            if (ribDays <= 5) {
                                                 accBCDueCases++;
                                             }
-                                            if (ribDays > 15) {
+                                            if (ribDays > 5) {
                                                 accBCMissedCases++;
                                             }
                                         } else {
@@ -13823,15 +15714,18 @@ public class Controller implements Initializable {
                                             accBCupdated++;
                                         }
                                     }
+                                    if (caseOwn.startsWith("PS") || caseOwn.startsWith("TS") || caseOwn.startsWith("Tech-Ops")){
+                                        accBCQueue++;
+                                    }
                                 }
 
                                 if (caseSever.equals("Major")) {
                                     if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                                         if (!caseStatus.equals("Develop Solution")) {
-                                            if (ribDays <= 30) {
+                                            if (ribDays <= 15) {
                                                 accMJDueCases++;
                                             }
-                                            if (ribDays > 30) {
+                                            if (ribDays > 15) {
                                                 accMJMissedCases++;
                                             }
                                         } else {
@@ -13851,12 +15745,38 @@ public class Controller implements Initializable {
                                             accMJUpdated++;
                                         }
                                     }
+                                    if (caseOwn.startsWith("PS") || caseOwn.startsWith("TS") || caseOwn.startsWith("Tech-Ops")){
+                                        accMJQueue++;
+                                    }
                                 }
                                 if (caseSever.equals("Minor")) {
-                                    if ((caseStatus.equals("Open / Assign")) || (caseStatus.equals("Isolate Fault"))) {
-                                        if (ribDays > 180) {
-                                            accMNMissedCases++;
+                                    if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                                        if (!caseStatus.equals("Develop Solution")) {
+                                            if (ribDays <= 30) {
+                                                accMNDue++;
+                                            }
+                                            if (ribDays > 30) {
+                                                accMNMissedCases++;
+                                            }
+                                        } else {
+                                            accMNEng++;
                                         }
+                                    } else {
+                                        accMNInact++;
+                                    }
+                                    if (caseStatus.equals("Open / Assign") || (caseStatus.equals("Isolate Fault"))) {
+                                        accMNWIP++;
+                                    }
+                                    if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                                        if (responsible.equals("Customer action")) {
+                                            accMNWAC++;
+                                        }
+                                        if (responsible.equals("Customer updated")) {
+                                            accMNUpdated++;
+                                        }
+                                    }
+                                    if (caseOwn.startsWith("PS") || caseOwn.startsWith("TS") || caseOwn.startsWith("Tech-Ops")){
+                                        accMNQueue++;
                                     }
                                 }
 
@@ -13911,6 +15831,16 @@ public class Controller implements Initializable {
                     btnAccUpdateMissed.setText(String.valueOf(accUpdateMissed));
                     btnAccUpdateNull.setText(String.valueOf(accUpdateNull));
                     btnAccMNMissed.setText(String.valueOf(accMNMissedCases));
+                    btnAccBCQueue.setText(String.valueOf(accBCQueue));
+                    btnAccMJQueue.setText(String.valueOf(accMJQueue));
+                    btnAccMNQueue.setText(String.valueOf(accMNQueue));
+                    btnAccMNWIP.setText(String.valueOf(accMNWIP));
+                    btnAccMNWac.setText(String.valueOf(accMNWAC));
+                    btnAccMNupdated.setText(String.valueOf(accMNUpdated));
+                    btnAccMNEngineering.setText(String.valueOf(accMNEng));
+                    btnAccMNINACT.setText(String.valueOf(accMNInact));
+                    btnAccMNDue.setText(String.valueOf(accMNDue));
+
                 }
             }
 
@@ -13948,13 +15878,18 @@ public class Controller implements Initializable {
             BCpc = 0;
             BCwip = 0;
             dueMJday = 0;
+            dueMNday = 0;
             misMJdue = 0;
             misMNdue = 0;
             custActMJ = 0;
             custRpdMJ = 0;
+            custRpdMN = 0;
+            custActMN = 0;
             MJds = 0;
             MJpc = 0;
+            MNpc = 0;
             MJwip = 0;
+            MNwip = 0;
             e1Cases = 0;
             e2Cases = 0;
             outFollow = 0;
@@ -14065,6 +16000,20 @@ public class Controller implements Initializable {
                     queueTS++;
                 }
 
+                if (caseOwn.startsWith("PS") || caseOwn.startsWith("TS") || caseOwn.startsWith("Tech-Ops")){
+                    switch (caseSever) {
+                        case ("Business Critical"):
+                            bcQueue++;
+                            break;
+                        case ("Major"):
+                            mjQueue++;
+                            break;
+                        case ("Minor"):
+                            mnQueue++;
+                            break;
+                    }
+                }
+
                 if (followOut.equals("1") && !caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                     outFollow++;
                 }
@@ -14083,10 +16032,10 @@ public class Controller implements Initializable {
                 if (caseSever.equals("Business Critical")) {
                     if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                         if (!caseStatus.equals("Develop Solution")) {
-                            if (ribDays <= 15) {
+                            if (ribDays <= 5) {
                                 bcDue++;
                             }
-                            if (ribDays > 15) {
+                            if (ribDays > 5) {
                                 misBCdue++;
                             }
                         } else {
@@ -14112,10 +16061,10 @@ public class Controller implements Initializable {
                 if (caseSever.equals("Major")) {
                     if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                         if (!caseStatus.equals("Develop Solution")) {
-                            if (ribDays <= 30) {
+                            if (ribDays <= 15) {
                                 dueMJday++;
                             }
-                            if (ribDays > 30) {
+                            if (ribDays > 15) {
                                 misMJdue++;
                             }
                         } else {
@@ -14137,9 +16086,29 @@ public class Controller implements Initializable {
                     }
                 }
                 if (caseSever.equals("Minor")) {
-                    if ((caseStatus.equals("Open / Assign")) || (caseStatus.equals("Isolate Fault"))) {
-                        if (ribDays > 180) {
-                            misMNdue++;
+                    if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                        if (!caseStatus.equals("Develop Solution")) {
+                            if (ribDays <= 30) {
+                                dueMNday++;
+                            }
+                            if (ribDays > 30) {
+                                misMNdue++;
+                            }
+                        } else {
+                            MNds++;
+                        }
+                    } else {
+                        MNpc++;
+                    }
+                    if (caseStatus.equals("Open / Assign") || (caseStatus.equals("Isolate Fault"))) {
+                        MNwip++;
+                    }
+                    if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                        if (responsible.equals("Customer action")) {
+                            custActMN++;
+                        }
+                        if (responsible.equals("Customer updated")) {
+                            custRpdMN++;
                         }
                     }
                 }
@@ -14185,6 +16154,12 @@ public class Controller implements Initializable {
             btnMJEngineering.setText(String.valueOf(MJds));
             btnMJINACT.setText(String.valueOf(MJpc));
             btnMJWIP.setText(String.valueOf(MJwip));
+            btnMNWIP.setText(String.valueOf(MNwip));
+            btnMNWac.setText(String.valueOf(custActMN));
+            btnMNupdated.setText(String.valueOf(custRpdMN));
+            btnMNEngineering.setText(String.valueOf(MNds));
+            btnMNINACT.setText(String.valueOf(MNpc));
+            btnMNDue.setText(String.valueOf(dueMNday));
             btnPSQueue.setText(String.valueOf(queuePS));
             btnTSQueue.setText(String.valueOf(queueTS));
             btnE1Cases.setText(String.valueOf(e1Cases));
@@ -14194,6 +16169,9 @@ public class Controller implements Initializable {
             btnUpdateMissed.setText(String.valueOf(updateMissed));
             btnUpdateNull.setText(String.valueOf(updateNull));
             btnMNMissed.setText(String.valueOf(misMNdue));
+            btnBCQueue.setText(String.valueOf(bcQueue));
+            btnMJQueue.setText(String.valueOf(mjQueue));
+            btnMNQueue.setText(String.valueOf(mnQueue));
 
             /* Updating completed for overview page */
 
@@ -14255,6 +16233,16 @@ public class Controller implements Initializable {
             regUpdateNull = 0;
             regCoOwnCase = 0;
             regCoOwnQueue = 0;
+            regBCQueue = 0;
+            regMJQueue = 0;
+            regMNQueue = 0;
+            regMNWIP = 0;
+            regMNWAC = 0;
+            regMNUpdated = 0;
+            regMNEng = 0;
+            regMNInact = 0;
+            regMNDue = 0;
+            regMNMissed = 0;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -14362,6 +16350,18 @@ public class Controller implements Initializable {
                         regRTSQueue++;
                     }
 
+                    if(caseOwn.startsWith("PS") || caseOwn.startsWith("TS") || caseOwn.startsWith("Tech-Ops")){
+                        if (caseSever.equals("Business Critical")){
+                            regBCQueue++;
+                        }
+                        if (caseSever.equals("Major")){
+                            regMJQueue++;
+                        }
+                        if (caseSever.equals("Minor")){
+                            regMNQueue++;
+                        }
+                    }
+
                     if (followOut.equals("1") && !caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                         regOutFollow++;
                     }
@@ -14380,10 +16380,10 @@ public class Controller implements Initializable {
                     if (caseSever.equals("Business Critical")) {
                         if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                             if (!caseStatus.equals("Develop Solution")) {
-                                if (ribDays <= 15) {
+                                if (ribDays <= 5) {
                                     regBCDueCases++;
                                 }
-                                if (ribDays > 15) {
+                                if (ribDays > 5) {
                                     regBCMissedCases++;
                                 }
                             } else {
@@ -14409,10 +16409,10 @@ public class Controller implements Initializable {
                     if (caseSever.equals("Major")) {
                         if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
                             if (!caseStatus.equals("Develop Solution")) {
-                                if (ribDays <= 30) {
+                                if (ribDays <= 15) {
                                     regMJDueCases++;
                                 }
-                                if (ribDays > 30) {
+                                if (ribDays > 15) {
                                     regMJMissedCases++;
                                 }
                             } else {
@@ -14434,9 +16434,30 @@ public class Controller implements Initializable {
                         }
                     }
                     if (caseSever.equals("Minor")) {
-                        if ((caseStatus.equals("Open / Assign")) || (caseStatus.equals("Isolate Fault"))) {
-                            if (ribDays > 180) {
-                                regMNMissedCases++;
+
+                        if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                            if (!caseStatus.equals("Develop Solution")) {
+                                if (ribDays <= 30) {
+                                    regMNDue++;
+                                }
+                                if (ribDays > 30) {
+                                    regMNMissed++;
+                                }
+                            } else {
+                                regMNEng++;
+                            }
+                        } else {
+                            regMNInact++;
+                        }
+                        if (caseStatus.equals("Open / Assign") || (caseStatus.equals("Isolate Fault"))) {
+                            regMNWIP++;
+                        }
+                        if (!caseStatus.equals("Pending Closure") && !caseStatus.equals("Future Availability")) {
+                            if (responsible.equals("Customer action")) {
+                                regMNWAC++;
+                            }
+                            if (responsible.equals("Customer updated")) {
+                                regMNUpdated++;
                             }
                         }
                     }
@@ -14492,9 +16513,18 @@ public class Controller implements Initializable {
         btnRegUpdateToday.setText(String.valueOf(regUpdateToday));
         btnRegUpdateMissed.setText(String.valueOf(regUpdateMissed));
         btnRegUpdateNull.setText(String.valueOf(regUpdateNull));
-        btnRegMNMissed.setText(String.valueOf(regMNMissedCases));
+        btnRegMNMissed.setText(String.valueOf(regMNMissed));
         btnRegRTSQueue.setText(String.valueOf(regRTSQueue));
         btnRegGPSQueue.setText(String.valueOf(regGPSQueue));
+        btnRegBCQueue.setText(String.valueOf(regBCQueue));
+        btnRegMJQueue.setText(String.valueOf(regMJQueue));
+        btnRegMNQueue.setText(String.valueOf(regMNQueue));
+        btnRegMNWIP.setText(String.valueOf(regMNWIP));
+        btnRegMNWac.setText(String.valueOf(regMNWAC));
+        btnRegMNupdated.setText(String.valueOf(regMNUpdated));
+        btnRegMNINACT.setText(String.valueOf(regMNInact));
+        btnRegMNDue.setText(String.valueOf(regMNDue));
+        btnRegMNEngineering.setText(String.valueOf(regMNEng));
     }
 
     private void myCasesPage() {
@@ -14512,6 +16542,8 @@ public class Controller implements Initializable {
         HSSFCell myCoOwnedCase;
         HSSFCell myCoOwnerQueue;
         HSSFCell myRbbnDays;
+        HSSFCell myUser;
+        HSSFCell mySev;
 
         try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
 
@@ -14548,6 +16580,16 @@ public class Controller implements Initializable {
             myUpdateNull = 0;
             myCoOwnCase = 0;
             myCoOwnQueue = 0;
+            myBCInQueue = 0;
+            myMJInQueue = 0;
+            myMNInQueue = 0;
+            myMNUpdated = 0;
+            myMNWAC = 0;
+            myMNWIP = 0;
+            myMNEng = 0;
+            myMNDue = 0;
+            myMNMissed = 0;
+            myMNINAct = 0;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -14695,10 +16737,10 @@ public class Controller implements Initializable {
                                         myBCupdated++;
                                     }
                                     if ((mycaseStatus.equals("Open / Assign")) || (mycaseStatus.equals("Isolate Fault"))) {
-                                        if (myRibDays <= 15) {
+                                        if (myRibDays <= 5) {
                                             myBCDueCases++;
                                         }
-                                        if (myRibDays > 15) {
+                                        if (myRibDays > 5) {
                                             myBCMissedCases++;
                                         }
                                     }
@@ -14716,10 +16758,10 @@ public class Controller implements Initializable {
                                         myMJDSCases++;
                                     }
                                     if ((mycaseStatus.equals("Open / Assign")) || (mycaseStatus.equals("Isolate Fault"))) {
-                                        if (myRibDays <= 30) {
+                                        if (myRibDays <= 15) {
                                             myMJDueCases++;
                                         }
-                                        if (myRibDays > 30) {
+                                        if (myRibDays > 15) {
                                             myMJMissedCases++;
                                         }
                                     }
@@ -14736,6 +16778,30 @@ public class Controller implements Initializable {
                                         myMJWIP++;
                                     }
                                 }
+                                if (mycaseSever.equals("Minor")){
+                                    if (mycaseStatus.equals("Develop Solution")){
+                                        myMNEng++;
+                                    }
+                                    if (mycaseStatus.equals("Open / Assign") || (mycaseStatus.equals("Isolate Fault"))){
+                                        myMNWIP++;
+                                        if (myRibDays <= 30){
+                                            myMNDue++;
+                                        }
+                                        if (myRibDays > 30){
+                                            myMNMissed++;
+                                        }
+                                    }
+                                    if (mycaseStat.equals("Pending Closure") || mycaseStatus.equals("Future Availability")){
+                                        myMNINAct++;
+                                    }
+                                    if (myresponsible.equals("Customer action")){
+                                        myMNWAC++;
+                                    }
+                                    if (myresponsible.equals("Customer updated")){
+                                        myMNUpdated++;
+                                    }
+                                }
+
                                 if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
                                     myInactiveCases++;
                                 } else {
@@ -14780,9 +16846,11 @@ public class Controller implements Initializable {
                             myCoOwnerQueue = workbook.getSheetAt(0).getRow(l).getCell(myCoOwnQueueRefCell);
                             String coOwnQueue = myCoOwnerQueue.getStringCellValue();
 
-
                             myCoOwnedCase = workbook.getSheetAt(0).getRow(l).getCell(myCoOwnCaseRefCell);
                             String coOwn = myCoOwnedCase.getStringCellValue();
+
+                            mySev = workbook.getSheetAt(0).getRow(l).getCell(mycaseSevRefCell);
+                            String mySever = mySev.getStringCellValue();
 
                             if (casequeue.equals(setQueue.get(k))){
                                 myQueuedCases++;
@@ -14794,6 +16862,19 @@ public class Controller implements Initializable {
                             }
                             if (coOwnQueue.equals(setQueue.get(k)) && !coOwn.equals("NotSet")){
                                 myCoOwnerQueueCasesAssigned++;
+                            }
+                            if ((casequeue.equals(setQueue.get(k))) && (casequeue.startsWith("PS") || casequeue.startsWith("TS") || casequeue.startsWith("Tech-Ops"))){
+                                switch (mySever) {
+                                    case ("Business Critical"):
+                                        myBCInQueue++;
+                                        break;
+                                    case ("Major"):
+                                        myMJInQueue++;
+                                        break;
+                                    case ("Minor"):
+                                        myMNInQueue++;
+                                        break;
+                                }
                             }
                         }
                     }
@@ -14826,8 +16907,18 @@ public class Controller implements Initializable {
             btnMyUpdateToday.setText(String.valueOf(myUpdateToday));
             btnMyUpdateMissed.setText(String.valueOf(myUpdateMissed));
             btnMyUpdateNull.setText(String.valueOf(myUpdateNull));
-            btnMyCoOwnQueue.setText(String.valueOf(myCoOwnerQueueCases));
-            btnMyCoQueueAssigned.setText(String.valueOf(myCoOwnerQueueCasesAssigned));
+            //btnMyCoOwnQueue.setText(String.valueOf(myCoOwnerQueueCases));
+            //btnMyCoQueueAssigned.setText(String.valueOf(myCoOwnerQueueCasesAssigned));
+            btnMyBCQueue.setText(String.valueOf(myBCInQueue));
+            btnMyMJQueue.setText(String.valueOf(myMJInQueue));
+            btnMyMNQueue.setText(String.valueOf(myMNInQueue));
+            btnMyMNWIP.setText(String.valueOf(myMNWIP));
+            btnMyMNWac.setText(String.valueOf(myMNWAC));
+            btnMyMNupdated.setText(String.valueOf(myMNUpdated));
+            btnMyMNEngineering.setText(String.valueOf(myMNEng));
+            btnMyMNINACT.setText(String.valueOf(myMNINAct));
+            btnMyMNDue.setText(String.valueOf(myMNDue));
+            btnMyMNMissed.setText(String.valueOf(myMNMissed));
 
         } catch (Exception e) {
             logger.log(Level.WARNING, "Unable To Build My Cases Page...", e);        }
@@ -14882,6 +16973,16 @@ public class Controller implements Initializable {
             prodUpdateNull = 0;
             prodQueuePS = 0;
             prodQueueTS = 0;
+            prodBCQueue = 0;
+            prodMJQueue = 0;
+            prodMNQueue = 0;
+            prodMNWIP = 0;
+            prodMNWAC = 0;
+            prodMNUpdated = 0;
+            prodMNInact = 0;
+            prodMNEng = 0;
+            prodMNDue = 0;
+            prodMNMissed = 0;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -15004,39 +17105,34 @@ public class Controller implements Initializable {
                                 if (mycaseSever.equals("E2") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
                                     prodE2Cases++;
                                 }
-
                                 if (mycaseSever.equals("Business Critical")) {
                                     if (!mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
-
                                         prodBCCases++;
                                     }
-
                                     if (mycaseStatus.equals("Open / Assign") || mycaseStatus.equals("Isolate Fault")) {
                                         prodBCWIP++;
                                     }
-
                                     if (myresponsible.equals("Customer action")) {
                                         prodBCWac++;
                                     }
-
                                     if (myresponsible.equals("Customer updated")) {
                                         prodBCupdated++;
                                     }
-
                                     if (!mycaseStatus.equals("Develop Solution") || !mycaseStatus.equals("Future Availability") || !mycaseStatus.equals("Pending Closure")) {
-                                        if (prdRbnDays <= 15) {
+                                        if (prdRbnDays <= 5) {
                                             prodBCDueCases++;
-                                        } if (prdRbnDays > 15) {
+                                        } if (prdRbnDays > 5) {
                                             prodBCMissedCases++;
                                         }
                                     }
-
                                     if (mycaseStatus.equals("Develop Solution")) {
                                         prodBCDSCases++;
                                     }
-
                                     if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
                                         prodBCInactiveCases++;
+                                    }
+                                    if (caseuser.startsWith("PS") || caseuser.startsWith("TS") || caseuser.startsWith("Tech-Ops")){
+                                        prodBCQueue++;
                                     }
                                 }
                                 if (mycaseSever.equals("Major")) {
@@ -15044,11 +17140,10 @@ public class Controller implements Initializable {
                                     if (mycaseStatus.equals("Develop Solution")) {
                                         prodMJDSCases++;
                                     }
-
                                     if (!mycaseStatus.equals("Develop Solution") || !mycaseStatus.equals("Future Availability") || !mycaseStatus.equals("Pending Closure")) {
-                                        if (prdRbnDays < 30) {
+                                        if (prdRbnDays <= 15) {
                                             prodMJDueCases++;
-                                        } if (prdRbnDays > 30) {
+                                        } if (prdRbnDays > 15) {
                                             prodMJMissedCases++;
                                         }
                                     }
@@ -15064,6 +17159,9 @@ public class Controller implements Initializable {
                                     if (mycaseStatus.equals("Open / Assign") || (mycaseStatus.equals("Isolate Fault"))) {
                                         prodMJWIP++;
                                     }
+                                    if (caseuser.startsWith("PS") || caseuser.startsWith("TS") || caseuser.startsWith("Tech-Ops")){
+                                        prodMJQueue++;
+                                    }
                                 }
                                 if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
                                     prodInactiveCases++;
@@ -15078,13 +17176,51 @@ public class Controller implements Initializable {
                                         prodUpdateMissed++;
                                     }
                                 }
-
+                                if (mycaseSever.equals("Minor")) {
+                                    if (mycaseStatus.equals("Develop Solution")) {
+                                        prodMNEng++;
+                                    }
+                                    if (!mycaseStatus.equals("Develop Solution") || !mycaseStatus.equals("Future Availability") || !mycaseStatus.equals("Pending Closure")) {
+                                        if (prdRbnDays <= 30) {
+                                            prodMNDue++;
+                                        } if (prdRbnDays > 30) {
+                                            prodMNMissed++;
+                                        }
+                                    }
+                                    if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                                        prodMNInact++;
+                                    }
+                                    if (myresponsible.equals("Customer action")) {
+                                        prodMNWAC++;
+                                    }
+                                    if (myresponsible.equals("Customer updated")) {
+                                        prodMNUpdated++;
+                                    }
+                                    if (mycaseStatus.equals("Open / Assign") || (mycaseStatus.equals("Isolate Fault"))) {
+                                        prodMNWIP++;
+                                    }
+                                    if (caseuser.startsWith("PS") || caseuser.startsWith("TS") || caseuser.startsWith("Tech-Ops")){
+                                        prodMNQueue++;
+                                    }
+                                }
+                                if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                                    prodInactiveCases++;
+                                } else {
+                                    prodWOHCases++;
+                                }
+                                if ((caseUpdateDate != null)) {
+                                    if (caseUpdateDate.compareTo(dateToday) == 0) {
+                                        prodUpdateToday++;
+                                    }
+                                    if (caseUpdateDate.compareTo(dateToday) < 0) {
+                                        prodUpdateMissed++;
+                                    }
+                                }
                                 if (myCaseUpdate.equals("NotSet") && !mycaseStatus.equals("Pending Closure")) {
                                     prodUpdateNull++;
                                 }
                                 if (caseuser.startsWith("PS ")) {
                                     prodQueuePS++;
-
                                 }
                                 if (caseuser.startsWith("TS ") || caseuser.startsWith("Tech-Ops")) {
                                     prodQueueTS++;
@@ -15144,6 +17280,17 @@ public class Controller implements Initializable {
             //btnMyUpdateToday.setText(String.valueOf(myUpdateToday));
             //btnMyUpdateMissed.setText(String.valueOf(myUpdateMissed));
             //btnMyUpdateNull.setText(String.valueOf(myUpdateNull));
+            btnBCQueueProd.setText(String.valueOf(prodBCQueue));
+            btnMJQueueProd.setText(String.valueOf(prodMJQueue));
+            btnMNQueueProd.setText(String.valueOf(prodMNQueue));
+            btnMNWIPProd.setText(String.valueOf(prodMNWIP));
+            btnMNWacProd.setText(String.valueOf(prodMNWAC));
+            btnMNupdatedProd.setText(String.valueOf(prodMNUpdated));
+            btnMNEngineeringProd.setText(String.valueOf(prodMNEng));
+            btnMNINACTProd.setText(String.valueOf(prodMNInact));
+            btnMNDueProd.setText(String.valueOf(prodMNDue));
+            btnMNMissedProd.setText(String.valueOf(prodMNMissed));
+
 
         } catch (Exception e) {
             logger.log(Level.WARNING, "Unable To Build Products Page... ", e);
@@ -17093,7 +19240,7 @@ public class Controller implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("For any issues/requests please inform us:" + "\n" + "\n" +
                     "Alper Simsek"+ "    " + "asimsek@rbbn.com" + "\n" + "\n" +
-                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 1.16.1");
+                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 2.0.1");
             alert.showAndWait();
         }
 

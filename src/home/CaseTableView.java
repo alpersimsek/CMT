@@ -12,7 +12,7 @@ public class CaseTableView {
     private final SimpleStringProperty caseNumber;
     private final SimpleStringProperty caseStatus;
     private final SimpleStringProperty caseSeverity;
-    private final SimpleStringProperty caseResponsible;
+    private final SimpleIntegerProperty caseResponsible;
     private final SimpleStringProperty caseOwner;
     private final SimpleStringProperty caseCoOwner;
     private final SimpleStringProperty caseCoOwnerQueue;
@@ -29,13 +29,13 @@ public class CaseTableView {
     private final SimpleStringProperty caseOutFollow;
 
 
-    protected CaseTableView(String cNum, String cSev, String cStat, String cOwn, String coOwn, String coOwnQueu, String cResp, Integer cAge, LocalDate cNextUp, String cEsc, String cHot, String cOutF, String cSType, String cProd,
+    protected CaseTableView(String cNum, String cSev, String cStat, String cOwn, String coOwn, String coOwnQueu, Integer cResp, Integer cAge, LocalDate cNextUp, String cEsc, String cHot, String cOutF, String cSType, String cProd,
                             String cSubj, String cAcc, String cReg, String cSecur) {
         //this.caseCount = new SimpleIntegerProperty(cCount);
         this.caseNumber = new SimpleStringProperty(cNum);
         this.caseStatus = new SimpleStringProperty(cStat);
         this.caseSeverity = new SimpleStringProperty(cSev);
-        this.caseResponsible = new SimpleStringProperty(cResp);
+        this.caseResponsible = new SimpleIntegerProperty(cResp);
         this.caseOwner = new SimpleStringProperty(cOwn);
         this.caseCoOwner = new SimpleStringProperty(coOwn);
         this.caseCoOwnerQueue = new SimpleStringProperty(coOwnQueu);
@@ -83,11 +83,11 @@ public class CaseTableView {
         caseSeverity.set(cSev);
     }
 
-    public String getCaseResponsible() {
+    public Integer getCaseResponsible() {
         return caseResponsible.get();
     }
 
-    public void setCaseResponsible(String cResp) {
+    public void setCaseResponsible(Integer cResp) {
         caseResponsible.set(cResp);
     }
 

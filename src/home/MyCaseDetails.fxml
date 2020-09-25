@@ -120,21 +120,24 @@
                               <Insets />
                            </GridPane.margin>
                         </TextField>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Co-Owner :" wrappingWidth="73.13671875" GridPane.columnIndex="3">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cust. Int." wrappingWidth="73.13671875" GridPane.columnIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="8.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Text>
-                        <TextField fx:id="txtMyCaseDetCoOwn" editable="false" layoutX="65.0" layoutY="13.0" GridPane.columnIndex="4" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="CO Queue:" wrappingWidth="73.13671875" GridPane.columnIndex="6">
+                        <TextField fx:id="txtMyCaseDetCoOwn" editable="false" layoutX="65.0" layoutY="13.0" GridPane.columnIndex="4">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin></TextField>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Responsible" wrappingWidth="84.13671875" GridPane.columnIndex="6">
                            <font>
                               <Font size="14.0" />
                            </font>
                            <GridPane.margin>
-                              <Insets left="10.0" />
+                              <Insets />
                            </GridPane.margin>
                         </Text>
                         <TextField fx:id="txtMyCaseDetCoOwnQueue" editable="false" layoutX="315.0" layoutY="13.0" GridPane.columnIndex="7" />
@@ -155,26 +158,19 @@
                         <RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Responsible :" wrappingWidth="85.13671875">
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Update Date :" wrappingWidth="91.13671875">
                            <font>
                               <Font size="14.0" />
                            </font>
-                        </Text>
-                        <TextField fx:id="txtMyCaseDetResp" editable="false" GridPane.columnIndex="1">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
-                        </TextField>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Update Date :" wrappingWidth="91.13671875" GridPane.columnIndex="3">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                           <GridPane.margin>
-                              <Insets left="8.0" />
-                           </GridPane.margin>
                         </Text>
-                        <TextField fx:id="txtMyCaseDetUpd" editable="false" layoutX="65.0" layoutY="13.0" GridPane.columnIndex="4" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Product :" wrappingWidth="59.13671875" GridPane.columnIndex="6">
+                        <TextField fx:id="txtMyCaseDetUpd" editable="false" layoutX="65.0" layoutY="13.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
+                           <GridPane.margin>
+                              <Insets left="5.0" />
+                           </GridPane.margin></TextField>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Product :" wrappingWidth="59.13671875" GridPane.columnIndex="3">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -182,7 +178,7 @@
                               <Insets left="10.0" />
                            </GridPane.margin>
                         </Text>
-                        <TextField fx:id="txtMyCaseDetProd" editable="false" layoutX="315.0" layoutY="13.0" GridPane.columnIndex="7" />
+                        <TextField fx:id="txtMyCaseDetProd" editable="false" layoutX="315.0" layoutY="13.0" GridPane.columnIndex="4" GridPane.columnSpan="4" />
                      </children>
                   </GridPane>
                   <GridPane AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="130.0">

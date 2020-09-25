@@ -130,7 +130,7 @@ public class MyCaseDetails implements Initializable {
             txtMyCaseDetOwn.setText(caseSelection.get(3));
             txtMyCaseDetCoOwn.setText(caseSelection.get(4));
             txtMyCaseDetCoOwnQueue.setText(caseSelection.get(5));
-            txtMyCaseDetResp.setText(caseSelection.get(6));
+            //txtMyCaseDetResp.setText(caseSelection.get(6));
             txtMyCaseDetAge.setText(caseSelection.get(7));
             txtMyCaseDetUpd.setText(caseSelection.get(8));
             txtMyCaseDetEsc.setText(caseSelection.get(9));

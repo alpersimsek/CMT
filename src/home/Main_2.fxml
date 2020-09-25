@@ -1874,10 +1874,10 @@
                         <TableColumn fx:id="SeverityCol" maxWidth="80.0" minWidth="80.0" prefWidth="80.0" resizable="false" text="Severity" />
                         <TableColumn fx:id="StatusCol" maxWidth="150.0" minWidth="80.0" text="Status" />
                         <TableColumn fx:id="OwnerCol" maxWidth="200.0" minWidth="80.0" prefWidth="80.0" text="Owner" />
-                        <TableColumn fx:id="CoOwnerCol" maxWidth="200.0" minWidth="80.0" prefWidth="80.0" text="Co-Owner" />
-                        <TableColumn fx:id="CoOwnerQueueCol" maxWidth="150.0" minWidth="80.0" prefWidth="80.0" text="Co-Owner Queue" />
-                        <TableColumn fx:id="ResponsibleCol" maxWidth="200.0" minWidth="100.0" prefWidth="100.0" text="Responsible" />
-                        <TableColumn fx:id="AgeCol" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" resizable="false" text="Age" />
+                        <TableColumn fx:id="CoOwnerCol" maxWidth="200.0" minWidth="80.0" prefWidth="80.0" text="Cust. Int." />
+                        <TableColumn fx:id="CoOwnerQueueCol" maxWidth="150.0" minWidth="80.0" prefWidth="80.0" text="Responsible" />
+                        <TableColumn fx:id="ResponsibleCol" maxWidth="200.0" minWidth="100.0" prefWidth="100.0" text="RBBN Days" />
+                        <TableColumn fx:id="AgeCol" maxWidth="30.0" minWidth="30.0" prefWidth="30.0" resizable="false" text="Open Days" />
                         <TableColumn fx:id="NextUpdateCol" maxWidth="60.0" minWidth="60.0" prefWidth="60.0" resizable="false" text="Update" />
                         <TableColumn fx:id="EscalatedByCol" maxWidth="150.0" minWidth="60.0" prefWidth="60.0" text="Escalated By" />
                         <TableColumn fx:id="HotListCol" maxWidth="120.0" minWidth="50.0" prefWidth="50.0" text="Hot List" />
