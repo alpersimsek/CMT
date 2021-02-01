@@ -1,4 +1,5 @@
 package home;
+import netscape.javascript.JSObject;
 
 import com.jcraft.jsch.*;
 import com.univocity.parsers.csv.CsvParser;
@@ -471,6 +472,8 @@ public class Controller implements Initializable {
     private CheckBox checkBoxHotIssueNote;
     @FXML
     private CheckBox checkBoxEscalatedNote;
+    @FXML
+    private CheckBox checkRegProduct;
     @FXML
     private TextField txtCaseProductNote;
     @FXML
@@ -1116,6 +1119,7 @@ public class Controller implements Initializable {
     int mycaseSupTypeRefCell = 0;
     int mycaseStatRefCell = 0;
     int mycaseSevRefCell = 0;
+    int mycaseRegRefCell = 0;
     int mycaseRespRefCell = 0;
     int mycaseOwnerRefCell = 0;
     int mycaseEscalatedRefCell = 0;
@@ -1363,6 +1367,7 @@ public class Controller implements Initializable {
     int prjGatingDate = 0;
     int prjGatingPrev = 0;
     int prjAllCases = 0;
+    boolean reg_product = false;
 
     //Alert Strings
     String strAlert = "NO RECORD FOUND...";
@@ -5862,7 +5867,11 @@ public class Controller implements Initializable {
         }
 
         if (event.getSource() == btnProducts) {
-            lblStatus.setText("PRODUCT VIEW");
+            if (reg_product){
+                lblStatus.setText("PRODUCT VIEW - REGION : " + regChoice.getValue());
+            }else{
+                lblStatus.setText("PRODUCT VIEW");
+            }
             btnToExcel.setVisible(false);
             btnBack.setVisible(false);
             myProductsPage();
@@ -7758,6 +7767,13 @@ public class Controller implements Initializable {
             btnBack.setVisible(false);
             regionCases();
         }
+        if (event.getSource() == checkRegProduct){
+            if (checkRegProduct.isSelected()){
+                reg_product = true;
+            }else{
+                reg_product = false;
+            }
+        }
     }
 
     private void caseNoteTable(){
@@ -8771,6 +8787,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal3;
             HSSFCell cellVal4;
             HSSFCell cellVal5;
+            HSSFCell cellVal6;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -8796,6 +8813,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Severity")){
                     mycaseSevRefCell = i;
                 }
+                if (filterColName.equals("Support Theater")){
+                     mycaseRegRefCell = i;
+                }
             }
 
             if (!txProducts.getText().isEmpty()) {
@@ -8819,49 +8839,12 @@ public class Controller implements Initializable {
                             int compAge = Integer.parseInt(cellVal4.getStringCellValue());
                             cellVal5 = filtersheet.getRow(i).getCell(mycaseSevRefCell);
                             String severity = cellVal5.getStringCellValue();
+                            cellVal6 = filtersheet.getRow(i).getCell(mycaseRegRefCell);
+                            String caseregion = cellVal6.getStringCellValue();
 
-
-                            if (b) {
-                                if (productName.equals(setProd.get(j)) && owner.startsWith("PS ")) {
-
-                                    ArrayList<String> array = new ArrayList<>();
-                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
-
-                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
-                                    while (iterCells.hasNext()) {
-                                        HSSFCell cell = (HSSFCell) iterCells.next();
-                                        array.add(cell.getStringCellValue());
-                                    }
-
-                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                                    LocalDate localDate = null;
-
-                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
-
-                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
-                                    }
-
-                                    int age = 0;
-                                    age = Integer.parseInt(array.get(mycaseAgeRefCell));
-                                    int ribDays = 0;
-                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
-
-                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), ribDays,age,
-                                            localDate, array.get(9), array.get(10),
-                                            array.get(11), array.get(12), array.get(13),
-                                            array.get(14), array.get(15), array.get(16),
-                                            array.get(17)));
-
-                                    tableCases.getItems().addAll(observableList);
-                                    caseCount++;
-                                    if (tableCases.getItems().size() >= caseCount + 1) {
-                                        tableCases.getItems().removeAll(observableList);
-                                    }
-                                }
-                            } else{
-                                if(sev.equals("All")) {
-                                    if (productName.equals(setProd.get(j)) && (owner.startsWith("TS ") || owner.startsWith("Tech-Ops"))) {
+                            if (reg_product){
+                                if (b) {
+                                    if ((productName.equals(setProd.get(j)) && owner.startsWith("PS ")) && regChoice.getValue().equals(caseregion)) {
 
                                         ArrayList<String> array = new ArrayList<>();
                                         ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
@@ -8878,15 +8861,15 @@ public class Controller implements Initializable {
                                         if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
 
                                             localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
-
                                         }
 
-                                        int age;
+                                        int age = 0;
                                         age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                         int ribDays = 0;
                                         ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                                array.get(3), array.get(4), array.get(5), ribDays, age,
+                                                array.get(3), array.get(4), array.get(5), ribDays,age,
                                                 localDate, array.get(9), array.get(10),
                                                 array.get(11), array.get(12), array.get(13),
                                                 array.get(14), array.get(15), array.get(16),
@@ -8898,10 +8881,172 @@ public class Controller implements Initializable {
                                             tableCases.getItems().removeAll(observableList);
                                         }
                                     }
+                                } else{
+                                    if(sev.equals("All")) {
+                                        if ((productName.equals(setProd.get(j)) && (owner.startsWith("TS ") || owner.startsWith("Tech-Ops"))) &&
+                                                regChoice.getValue().equals(caseregion)) {
+
+                                            ArrayList<String> array = new ArrayList<>();
+                                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                            while (iterCells.hasNext()) {
+                                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                                array.add(cell.getStringCellValue());
+                                            }
+
+                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                            LocalDate localDate = null;
+
+                                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                            }
+
+                                            int age;
+                                            age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                            int ribDays = 0;
+                                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                    array.get(3), array.get(4), array.get(5), ribDays, age,
+                                                    localDate, array.get(9), array.get(10),
+                                                    array.get(11), array.get(12), array.get(13),
+                                                    array.get(14), array.get(15), array.get(16),
+                                                    array.get(17)));
+
+                                            tableCases.getItems().addAll(observableList);
+                                            caseCount++;
+                                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                                tableCases.getItems().removeAll(observableList);
+                                            }
+                                        }
+                                    }
+                                    if (sev.equals("BC")){
+                                        if ((severity.equals("Business Critical") && (productName.equals(setProd.get(j)) && (owner.startsWith("PS") ||
+                                                owner.startsWith("TS ") || owner.startsWith("Tech-Ops")))) && regChoice.getValue().equals(caseregion)){
+
+                                            ArrayList<String> array = new ArrayList<>();
+                                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                            while (iterCells.hasNext()) {
+                                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                                array.add(cell.getStringCellValue());
+                                            }
+
+                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                            LocalDate localDate = null;
+
+                                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                            }
+
+                                            int age;
+                                            age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                            int ribDays = 0;
+                                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                    array.get(3), array.get(4), array.get(5), ribDays, age,
+                                                    localDate, array.get(9), array.get(10),
+                                                    array.get(11), array.get(12), array.get(13),
+                                                    array.get(14), array.get(15), array.get(16),
+                                                    array.get(17)));
+
+                                            tableCases.getItems().addAll(observableList);
+                                            caseCount++;
+                                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                                tableCases.getItems().removeAll(observableList);
+                                            }
+                                        }
+                                    }
+                                    if (sev.equals("Major")){
+                                        if ((severity.equals("Major") && (productName.equals(setProd.get(j)) && (owner.startsWith("PS") ||
+                                                owner.startsWith("TS ") || owner.startsWith("Tech-Ops")))) && regChoice.getValue().equals(caseregion)){
+
+                                            ArrayList<String> array = new ArrayList<>();
+                                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                            while (iterCells.hasNext()) {
+                                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                                array.add(cell.getStringCellValue());
+                                            }
+
+                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                            LocalDate localDate = null;
+
+                                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                            }
+
+                                            int age;
+                                            age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                            int ribDays = 0;
+                                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                    array.get(3), array.get(4), array.get(5), ribDays, age,
+                                                    localDate, array.get(9), array.get(10),
+                                                    array.get(11), array.get(12), array.get(13),
+                                                    array.get(14), array.get(15), array.get(16),
+                                                    array.get(17)));
+
+                                            tableCases.getItems().addAll(observableList);
+                                            caseCount++;
+                                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                                tableCases.getItems().removeAll(observableList);
+                                            }
+                                        }
+                                    }
+                                    if (sev.equals("Minor")){
+                                        if ((severity.equals("Minor") && (productName.equals(setProd.get(j)) && (owner.startsWith("PS") ||
+                                                owner.startsWith("TS ") || owner.startsWith("Tech-Ops")))) && regChoice.getValue().equals(caseregion)){
+
+                                            ArrayList<String> array = new ArrayList<>();
+                                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+
+                                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                            while (iterCells.hasNext()) {
+                                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                                array.add(cell.getStringCellValue());
+                                            }
+
+                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                            LocalDate localDate = null;
+
+                                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                            }
+
+                                            int age;
+                                            age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                            int ribDays = 0;
+                                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                    array.get(3), array.get(4), array.get(5), ribDays, age,
+                                                    localDate, array.get(9), array.get(10),
+                                                    array.get(11), array.get(12), array.get(13),
+                                                    array.get(14), array.get(15), array.get(16),
+                                                    array.get(17)));
+
+                                            tableCases.getItems().addAll(observableList);
+                                            caseCount++;
+                                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                                tableCases.getItems().removeAll(observableList);
+                                            }
+                                        }
+                                    }
                                 }
-                                if (sev.equals("BC")){
-                                    if (severity.equals("Business Critical") && (productName.equals(setProd.get(j)) && (owner.startsWith("PS") ||
-                                            owner.startsWith("TS ") || owner.startsWith("Tech-Ops")))){
+
+                            }else{
+                                if (b) {
+                                    if ((productName.equals(setProd.get(j)) && owner.startsWith("PS ")) && regChoice.getValue().equals(caseregion)){
 
                                         ArrayList<String> array = new ArrayList<>();
                                         ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
@@ -8918,15 +9063,15 @@ public class Controller implements Initializable {
                                         if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
 
                                             localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
-
                                         }
 
-                                        int age;
+                                        int age = 0;
                                         age = Integer.parseInt(array.get(mycaseAgeRefCell));
                                         int ribDays = 0;
                                         ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
                                         observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                                array.get(3), array.get(4), array.get(5), ribDays, age,
+                                                array.get(3), array.get(4), array.get(5), ribDays,age,
                                                 localDate, array.get(9), array.get(10),
                                                 array.get(11), array.get(12), array.get(13),
                                                 array.get(14), array.get(15), array.get(16),
@@ -8938,84 +9083,165 @@ public class Controller implements Initializable {
                                             tableCases.getItems().removeAll(observableList);
                                         }
                                     }
-                                }
-                                if (sev.equals("Major")){
-                                    if (severity.equals("Major") && (productName.equals(setProd.get(j)) && (owner.startsWith("PS") ||
-                                            owner.startsWith("TS ") || owner.startsWith("Tech-Ops")))){
+                                } else{
+                                    if(sev.equals("All")) {
+                                        if ((productName.equals(setProd.get(j)) && (owner.startsWith("TS ") || owner.startsWith("Tech-Ops"))) &&
+                                                regChoice.getValue().equals(caseregion)){
 
-                                        ArrayList<String> array = new ArrayList<>();
-                                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+                                            ArrayList<String> array = new ArrayList<>();
+                                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
-                                        while (iterCells.hasNext()) {
-                                            HSSFCell cell = (HSSFCell) iterCells.next();
-                                            array.add(cell.getStringCellValue());
-                                        }
+                                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                            while (iterCells.hasNext()) {
+                                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                                array.add(cell.getStringCellValue());
+                                            }
 
-                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                                        LocalDate localDate = null;
+                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                            LocalDate localDate = null;
 
-                                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+                                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
 
-                                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
 
-                                        }
+                                            }
 
-                                        int age;
-                                        age = Integer.parseInt(array.get(mycaseAgeRefCell));
-                                        int ribDays = 0;
-                                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
-                                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                                array.get(3), array.get(4), array.get(5), ribDays, age,
-                                                localDate, array.get(9), array.get(10),
-                                                array.get(11), array.get(12), array.get(13),
-                                                array.get(14), array.get(15), array.get(16),
-                                                array.get(17)));
+                                            int age;
+                                            age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                            int ribDays = 0;
+                                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                    array.get(3), array.get(4), array.get(5), ribDays, age,
+                                                    localDate, array.get(9), array.get(10),
+                                                    array.get(11), array.get(12), array.get(13),
+                                                    array.get(14), array.get(15), array.get(16),
+                                                    array.get(17)));
 
-                                        tableCases.getItems().addAll(observableList);
-                                        caseCount++;
-                                        if (tableCases.getItems().size() >= caseCount + 1) {
-                                            tableCases.getItems().removeAll(observableList);
+                                            tableCases.getItems().addAll(observableList);
+                                            caseCount++;
+                                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                                tableCases.getItems().removeAll(observableList);
+                                            }
                                         }
                                     }
-                                }
-                                if (sev.equals("Minor")){
-                                    if (severity.equals("Minor") && (productName.equals(setProd.get(j)) && (owner.startsWith("PS") ||
-                                            owner.startsWith("TS ") || owner.startsWith("Tech-Ops")))){
+                                    if (sev.equals("BC")){
+                                        if ((severity.equals("Business Critical") && (productName.equals(setProd.get(j)) && (owner.startsWith("PS") ||
+                                                owner.startsWith("TS ") || owner.startsWith("Tech-Ops")))) && regChoice.getValue().equals(caseregion)){
 
-                                        ArrayList<String> array = new ArrayList<>();
-                                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+                                            ArrayList<String> array = new ArrayList<>();
+                                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
-                                        while (iterCells.hasNext()) {
-                                            HSSFCell cell = (HSSFCell) iterCells.next();
-                                            array.add(cell.getStringCellValue());
+                                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                            while (iterCells.hasNext()) {
+                                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                                array.add(cell.getStringCellValue());
+                                            }
+
+                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                            LocalDate localDate = null;
+
+                                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                            }
+
+                                            int age;
+                                            age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                            int ribDays = 0;
+                                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                    array.get(3), array.get(4), array.get(5), ribDays, age,
+                                                    localDate, array.get(9), array.get(10),
+                                                    array.get(11), array.get(12), array.get(13),
+                                                    array.get(14), array.get(15), array.get(16),
+                                                    array.get(17)));
+
+                                            tableCases.getItems().addAll(observableList);
+                                            caseCount++;
+                                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                                tableCases.getItems().removeAll(observableList);
+                                            }
                                         }
+                                    }
+                                    if (sev.equals("Major")){
+                                        if ((severity.equals("Major") && (productName.equals(setProd.get(j)) && (owner.startsWith("PS") ||
+                                                owner.startsWith("TS ") || owner.startsWith("Tech-Ops")))) && regChoice.getValue().equals(caseregion)){
 
-                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                                        LocalDate localDate = null;
+                                            ArrayList<String> array = new ArrayList<>();
+                                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+                                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                            while (iterCells.hasNext()) {
+                                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                                array.add(cell.getStringCellValue());
+                                            }
 
-                                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                            LocalDate localDate = null;
 
+                                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                            }
+
+                                            int age;
+                                            age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                            int ribDays = 0;
+                                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                    array.get(3), array.get(4), array.get(5), ribDays, age,
+                                                    localDate, array.get(9), array.get(10),
+                                                    array.get(11), array.get(12), array.get(13),
+                                                    array.get(14), array.get(15), array.get(16),
+                                                    array.get(17)));
+
+                                            tableCases.getItems().addAll(observableList);
+                                            caseCount++;
+                                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                                tableCases.getItems().removeAll(observableList);
+                                            }
                                         }
+                                    }
+                                    if (sev.equals("Minor")){
+                                        if ((severity.equals("Minor") && (productName.equals(setProd.get(j)) && (owner.startsWith("PS") ||
+                                                owner.startsWith("TS ") || owner.startsWith("Tech-Ops")))) && regChoice.getValue().equals(caseregion)){
 
-                                        int age;
-                                        age = Integer.parseInt(array.get(mycaseAgeRefCell));
-                                        int ribDays = 0;
-                                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
-                                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                                array.get(3), array.get(4), array.get(5), ribDays, age,
-                                                localDate, array.get(9), array.get(10),
-                                                array.get(11), array.get(12), array.get(13),
-                                                array.get(14), array.get(15), array.get(16),
-                                                array.get(17)));
+                                            ArrayList<String> array = new ArrayList<>();
+                                            ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                        tableCases.getItems().addAll(observableList);
-                                        caseCount++;
-                                        if (tableCases.getItems().size() >= caseCount + 1) {
-                                            tableCases.getItems().removeAll(observableList);
+                                            Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                            while (iterCells.hasNext()) {
+                                                HSSFCell cell = (HSSFCell) iterCells.next();
+                                                array.add(cell.getStringCellValue());
+                                            }
+
+                                            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                            LocalDate localDate = null;
+
+                                            if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                                localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                            }
+
+                                            int age;
+                                            age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                            int ribDays = 0;
+                                            ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                            observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                    array.get(3), array.get(4), array.get(5), ribDays, age,
+                                                    localDate, array.get(9), array.get(10),
+                                                    array.get(11), array.get(12), array.get(13),
+                                                    array.get(14), array.get(15), array.get(16),
+                                                    array.get(17)));
+
+                                            tableCases.getItems().addAll(observableList);
+                                            caseCount++;
+                                            if (tableCases.getItems().size() >= caseCount + 1) {
+                                                tableCases.getItems().removeAll(observableList);
+                                            }
                                         }
                                     }
                                 }
@@ -9123,6 +9349,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal3;
             HSSFCell cellVal4;
             HSSFCell cellVal5;
+            HSSFCell cellVal6;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -9144,6 +9371,9 @@ public class Controller implements Initializable {
                 }
                 if (filterColName.equals("Days by Ribbon (days)")) {
                     rbnDaysRefCell = i;
+                }
+                if (filterColName.equals("Support Theater)")) {
+                    mycaseRegRefCell = i;
                 }
             }
 
@@ -9169,10 +9399,12 @@ public class Controller implements Initializable {
                             cellVal5 = filtersheet.getRow(i).getCell(rbnDaysRefCell);
                             String rbday = cellVal5.getStringCellValue();
                             int ribDays = Integer.parseInt(rbday);
+                            cellVal6 = filtersheet.getRow(i).getCell(mycaseRegRefCell);
+                            String caseregion = cellVal6.getStringCellValue();
 
                             if (b) {
-                                if ((productName.equals(setProd.get(j)) && cellToCompare.equals(filter) && ribDays <= dueDay) &&
-                                        (!caseStatus.equals("Pending Closure") || !caseStatus.equals("Future Availability"))) {
+                                if (((productName.equals(setProd.get(j)) && cellToCompare.equals(filter) && ribDays <= dueDay) &&
+                                        (!caseStatus.equals("Pending Closure") || !caseStatus.equals("Future Availability"))) && regChoice.getValue().equals(caseregion)){
 
                                     ArrayList<String> array = new ArrayList<>();
                                     ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
@@ -9212,8 +9444,9 @@ public class Controller implements Initializable {
                                     }
                                 }
                             } else {
-                                if ((productName.equals(setProd.get(j)) && cellToCompare.equals(filter) && ribDays > dueDay)
-                                        && (!caseStatus.equals("Pending Closure") || !caseStatus.equals("Future Availability"))) {
+                                if (((productName.equals(setProd.get(j)) && cellToCompare.equals(filter) && ribDays > dueDay)
+                                        && (!caseStatus.equals("Pending Closure") || !caseStatus.equals("Future Availability"))) &&
+                                        regChoice.getValue().equals(caseregion)){
 
                                     ArrayList<String> array = new ArrayList<>();
                                     ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
@@ -9352,6 +9585,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal1;
             HSSFCell cellVal2;
             HSSFCell cellVal3;
+            HSSFCell cellVal4;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -9374,6 +9608,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Days by Ribbon (days)")) {
                     rbnDaysRefCell = i;
                 }
+                if (filterColName.equals("Support Theater")) {
+                    mycaseRegRefCell = i;
+                }
             }
 
             if (!txProducts.getText().isEmpty()) {
@@ -9394,44 +9631,89 @@ public class Controller implements Initializable {
                             String cellToCompare = cellVal2.getStringCellValue();
                             cellVal3 = filtersheet.getRow(i).getCell(caseStatRefCell);
                             String caseStatus = cellVal3.getStringCellValue();
+                            cellVal4 = filtersheet.getRow(i).getCell(mycaseRegRefCell);
+                            String caseregion = cellVal4.getStringCellValue();
 
-                            if (productName.equals(setProd.get(j)) && cellToCompare.equals(filter) &&
-                                    (caseStatus.equals("Pending Closure") || caseStatus.equals("Future Availability"))) {
+                            if (reg_product){
+                                if ((productName.equals(setProd.get(j)) && cellToCompare.equals(filter) &&
+                                        (caseStatus.equals("Pending Closure") || caseStatus.equals("Future Availability"))) && regChoice.getValue().equals(caseregion)){
 
-                                ArrayList<String> array = new ArrayList<>();
-                                ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+                                    ArrayList<String> array = new ArrayList<>();
+                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
-                                while (iterCells.hasNext()) {
-                                    HSSFCell cell = (HSSFCell) iterCells.next();
-                                    array.add(cell.getStringCellValue());
+                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                    while (iterCells.hasNext()) {
+                                        HSSFCell cell = (HSSFCell) iterCells.next();
+                                        array.add(cell.getStringCellValue());
+                                    }
+
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                    LocalDate localDate = null;
+
+                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                    }
+
+                                    int age = 0;
+                                    age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
+                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
+
+                                    tableCases.getItems().addAll(observableList);
+                                    caseCount++;
+                                    if (tableCases.getItems().size() >= caseCount + 1) {
+                                        tableCases.getItems().removeAll(observableList);
+                                    }
                                 }
+                            }
+                            else{
+                                if (productName.equals(setProd.get(j)) && cellToCompare.equals(filter) &&
+                                        (caseStatus.equals("Pending Closure") || caseStatus.equals("Future Availability"))) {
 
-                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                                LocalDate localDate = null;
+                                    ArrayList<String> array = new ArrayList<>();
+                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                    while (iterCells.hasNext()) {
+                                        HSSFCell cell = (HSSFCell) iterCells.next();
+                                        array.add(cell.getStringCellValue());
+                                    }
 
-                                    localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                    LocalDate localDate = null;
 
-                                }
+                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
 
-                                int age = 0;
-                                age = Integer.parseInt(array.get(mycaseAgeRefCell));
-                                int ribDays = 0;
-                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
 
-                                observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), ribDays,age,
-                                        localDate, array.get(9), array.get(10),
-                                        array.get(11), array.get(12), array.get(13),
-                                        array.get(14), array.get(15), array.get(16),
-                                        array.get(17)));
+                                    }
 
-                                tableCases.getItems().addAll(observableList);
-                                caseCount++;
-                                if (tableCases.getItems().size() >= caseCount + 1) {
-                                    tableCases.getItems().removeAll(observableList);
+                                    int age = 0;
+                                    age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
+                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
+
+                                    tableCases.getItems().addAll(observableList);
+                                    caseCount++;
+                                    if (tableCases.getItems().size() >= caseCount + 1) {
+                                        tableCases.getItems().removeAll(observableList);
+                                    }
                                 }
                             }
                         }
@@ -9536,6 +9818,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal2;
             HSSFCell cellVal3;
             HSSFCell cellVal4;
+            HSSFCell cellVal5;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -9561,6 +9844,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Days by Ribbon (days)")) {
                     rbnDaysRefCell = i;
                 }
+                if (filterColName.equals("Support Theater")) {
+                    mycaseRegRefCell = i;
+                }
             }
 
             if (!txProducts.getText().isEmpty()) {
@@ -9582,45 +9868,89 @@ public class Controller implements Initializable {
                             String caseStatus = cellVal3.getStringCellValue();
                             cellVal4 = filtersheet.getRow(i).getCell(caseCellRef2);
                             String responsible = cellVal4.getStringCellValue();
+                            cellVal5 = filtersheet.getRow(i).getCell(mycaseRegRefCell);
+                            String caseregion = cellVal5.getStringCellValue();
 
+                            if (reg_product){
+                                if ((productName.equals(setProd.get(j)) && cellToCompare.equals(filter1) && responsible.equals(filter2) &&
+                                        (!caseStatus.equals("Pending Closure") || (!caseStatus.equals("Future Availability")))) && regChoice.getValue().equals(caseregion)){
 
-                            if (productName.equals(setProd.get(j)) && cellToCompare.equals(filter1) && responsible.equals(filter2) &&
-                                    (!caseStatus.equals("Pending Closure") || (!caseStatus.equals("Future Availability")))) {
+                                    ArrayList<String> array = new ArrayList<>();
+                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                ArrayList<String> array = new ArrayList<>();
-                                ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                    while (iterCells.hasNext()) {
+                                        HSSFCell cell = (HSSFCell) iterCells.next();
+                                        array.add(cell.getStringCellValue());
+                                    }
 
-                                Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
-                                while (iterCells.hasNext()) {
-                                    HSSFCell cell = (HSSFCell) iterCells.next();
-                                    array.add(cell.getStringCellValue());
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                    LocalDate localDate = null;
+
+                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                    }
+
+                                    int age = 0;
+                                    age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
+                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
+
+                                    tableCases.getItems().addAll(observableList);
+                                    caseCount++;
+                                    if (tableCases.getItems().size() >= caseCount + 1) {
+                                        tableCases.getItems().removeAll(observableList);
+                                    }
                                 }
 
-                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                                LocalDate localDate = null;
+                            }else{
+                                if (productName.equals(setProd.get(j)) && cellToCompare.equals(filter1) && responsible.equals(filter2) &&
+                                        (!caseStatus.equals("Pending Closure") || (!caseStatus.equals("Future Availability")))) {
 
-                                if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+                                    ArrayList<String> array = new ArrayList<>();
+                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                    localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                    while (iterCells.hasNext()) {
+                                        HSSFCell cell = (HSSFCell) iterCells.next();
+                                        array.add(cell.getStringCellValue());
+                                    }
 
-                                }
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                    LocalDate localDate = null;
 
-                                int age = 0;
-                                age = Integer.parseInt(array.get(mycaseAgeRefCell));
-                                int ribDays = 0;
-                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
 
-                                observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), ribDays,age,
-                                        localDate, array.get(9), array.get(10),
-                                        array.get(11), array.get(12), array.get(13),
-                                        array.get(14), array.get(15), array.get(16),
-                                        array.get(17)));
+                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
 
-                                tableCases.getItems().addAll(observableList);
-                                caseCount++;
-                                if (tableCases.getItems().size() >= caseCount + 1) {
-                                    tableCases.getItems().removeAll(observableList);
+                                    }
+
+                                    int age = 0;
+                                    age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
+                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
+
+                                    tableCases.getItems().addAll(observableList);
+                                    caseCount++;
+                                    if (tableCases.getItems().size() >= caseCount + 1) {
+                                        tableCases.getItems().removeAll(observableList);
+                                    }
                                 }
                             }
                         }
@@ -9725,6 +10055,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal1;
             HSSFCell cellVal2;
             HSSFCell cellVal3;
+            HSSFCell cellVal4;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -9747,6 +10078,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Days by Ribbon (days)")) {
                     rbnDaysRefCell = i;
                 }
+                if (filterColName.equals("Support Theater")) {
+                    mycaseRegRefCell = i;
+                }
             }
 
             if (!txProducts.getText().isEmpty()) {
@@ -9767,43 +10101,88 @@ public class Controller implements Initializable {
                             String cellToCompare = cellVal2.getStringCellValue();
                             cellVal3 = filtersheet.getRow(i).getCell(caseStatRefCell);
                             String caseStatus = cellVal3.getStringCellValue();
+                            cellVal4 = filtersheet.getRow(i).getCell(mycaseRegRefCell);
+                            String caseregion = cellVal4.getStringCellValue();
 
-                            if (productName.equals(setProd.get(j)) && cellToCompare.equals(filter) && (caseStatus.equals("Open / Assign") || (caseStatus.equals("Isolate Fault")))) {
+                            if (reg_product){
+                                if ((productName.equals(setProd.get(j)) && cellToCompare.equals(filter) && (caseStatus.equals("Open / Assign") || (caseStatus.equals("Isolate Fault")))) &&
+                                        regChoice.getValue().equals(caseregion)){
 
-                                ArrayList<String> array = new ArrayList<>();
-                                ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+                                    ArrayList<String> array = new ArrayList<>();
+                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
-                                while (iterCells.hasNext()) {
-                                    HSSFCell cell = (HSSFCell) iterCells.next();
-                                    array.add(cell.getStringCellValue());
+                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                    while (iterCells.hasNext()) {
+                                        HSSFCell cell = (HSSFCell) iterCells.next();
+                                        array.add(cell.getStringCellValue());
+                                    }
+
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                    LocalDate localDate = null;
+
+                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                    }
+
+                                    int age = 0;
+                                    age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
+                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
+
+                                    tableCases.getItems().addAll(observableList);
+                                    caseCount++;
+                                    if (tableCases.getItems().size() >= caseCount + 1) {
+                                        tableCases.getItems().removeAll(observableList);
+                                    }
                                 }
+                            }
+                            else{
+                                if (productName.equals(setProd.get(j)) && cellToCompare.equals(filter) && (caseStatus.equals("Open / Assign") || (caseStatus.equals("Isolate Fault")))) {
 
-                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                                LocalDate localDate = null;
+                                    ArrayList<String> array = new ArrayList<>();
+                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                    while (iterCells.hasNext()) {
+                                        HSSFCell cell = (HSSFCell) iterCells.next();
+                                        array.add(cell.getStringCellValue());
+                                    }
 
-                                    localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                    LocalDate localDate = null;
 
-                                }
+                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
 
-                                int age = 0;
-                                age = Integer.parseInt(array.get(mycaseAgeRefCell));
-                                int ribDays = 0;
-                                ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
 
-                                observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                        array.get(3), array.get(4), array.get(5), ribDays,age,
-                                        localDate, array.get(9), array.get(10),
-                                        array.get(11), array.get(12), array.get(13),
-                                        array.get(14), array.get(15), array.get(16),
-                                        array.get(17)));
+                                    }
 
-                                tableCases.getItems().addAll(observableList);
-                                caseCount++;
-                                if (tableCases.getItems().size() >= caseCount + 1) {
-                                    tableCases.getItems().removeAll(observableList);
+                                    int age = 0;
+                                    age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                    int ribDays = 0;
+                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
+                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                            array.get(3), array.get(4), array.get(5), ribDays,age,
+                                            localDate, array.get(9), array.get(10),
+                                            array.get(11), array.get(12), array.get(13),
+                                            array.get(14), array.get(15), array.get(16),
+                                            array.get(17)));
+
+                                    tableCases.getItems().addAll(observableList);
+                                    caseCount++;
+                                    if (tableCases.getItems().size() >= caseCount + 1) {
+                                        tableCases.getItems().removeAll(observableList);
+                                    }
                                 }
                             }
                         }
@@ -9906,6 +10285,7 @@ public class Controller implements Initializable {
             int lastRow = filtersheet.getLastRowNum();
             HSSFCell cellVal1;
             HSSFCell cellVal3;
+            HSSFCell cellVal4;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -9925,6 +10305,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Days by Ribbon (days)")) {
                     rbnDaysRefCell = i;
                 }
+                if (filterColName.equals("Support Theater")) {
+                    mycaseRegRefCell = i;
+                }
             }
 
             if (!txProducts.getText().isEmpty()) {
@@ -9943,83 +10326,170 @@ public class Controller implements Initializable {
                             String prodName = cellVal1.getStringCellValue();
                             cellVal3 = filtersheet.getRow(i).getCell(caseStatRefCell);
                             String caseStatus = cellVal3.getStringCellValue();
+                            cellVal4 = filtersheet.getRow(i).getCell(mycaseRegRefCell);
+                            String caseregion = cellVal4.getStringCellValue();
 
-                            if (b) {
-                                if (prodName.equals(setProd.get(j)) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
+                            if (reg_product){
+                                if (b) {
+                                    if ((prodName.equals(setProd.get(j)) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) &&
+                                            regChoice.getValue().equals(caseregion)){
 
-                                    ArrayList<String> array = new ArrayList<>();
-                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+                                        ArrayList<String> array = new ArrayList<>();
+                                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
-                                    while (iterCells.hasNext()) {
-                                        HSSFCell cell = (HSSFCell) iterCells.next();
-                                        array.add(cell.getStringCellValue());
+                                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                        while (iterCells.hasNext()) {
+                                            HSSFCell cell = (HSSFCell) iterCells.next();
+                                            array.add(cell.getStringCellValue());
+                                        }
+
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                        LocalDate localDate = null;
+
+                                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                        }
+
+                                        int age = 0;
+                                        age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                        int ribDays = 0;
+                                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
+                                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                array.get(3), array.get(4), array.get(5), ribDays,age,
+                                                localDate, array.get(9), array.get(10),
+                                                array.get(11), array.get(12), array.get(13),
+                                                array.get(14), array.get(15), array.get(16),
+                                                array.get(17)));
+
+                                        tableCases.getItems().addAll(observableList);
+                                        caseCount++;
+                                        if (tableCases.getItems().size() >= caseCount + 1) {
+                                            tableCases.getItems().removeAll(observableList);
+                                        }
                                     }
+                                } else {
+                                    if ((prodName.equals(setProd.get(j)) && (caseStatus.equals("Pending Closure") || (caseStatus.equals("Future Availability")))) &&
+                                            regChoice.getValue().equals(caseregion)) {
 
-                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                                    LocalDate localDate = null;
+                                        ArrayList<String> array = new ArrayList<>();
+                                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+                                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                        while (iterCells.hasNext()) {
+                                            HSSFCell cell = (HSSFCell) iterCells.next();
+                                            array.add(cell.getStringCellValue());
+                                        }
 
-                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                        LocalDate localDate = null;
 
-                                    }
+                                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
 
-                                    int age = 0;
-                                    age = Integer.parseInt(array.get(mycaseAgeRefCell));
-                                    int ribDays = 0;
-                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
 
-                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), ribDays,age,
-                                            localDate, array.get(9), array.get(10),
-                                            array.get(11), array.get(12), array.get(13),
-                                            array.get(14), array.get(15), array.get(16),
-                                            array.get(17)));
+                                        }
 
-                                    tableCases.getItems().addAll(observableList);
-                                    caseCount++;
-                                    if (tableCases.getItems().size() >= caseCount + 1) {
-                                        tableCases.getItems().removeAll(observableList);
+                                        int age;
+                                        age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                        int ribDays = 0;
+                                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
+                                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                array.get(3), array.get(4), array.get(5), ribDays,age,
+                                                localDate, array.get(9), array.get(10),
+                                                array.get(11), array.get(12), array.get(13),
+                                                array.get(14), array.get(15), array.get(16),
+                                                array.get(17)));
+
+                                        tableCases.getItems().addAll(observableList);
+                                        caseCount++;
+                                        if (tableCases.getItems().size() >= caseCount + 1) {
+                                            tableCases.getItems().removeAll(observableList);
+                                        }
                                     }
                                 }
-                            } else {
-                                if (prodName.equals(setProd.get(j)) && (caseStatus.equals("Pending Closure") || (caseStatus.equals("Future Availability")))) {
+                            }
+                            else{
+                                if (b) {
+                                    if (prodName.equals(setProd.get(j)) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
 
-                                    ArrayList<String> array = new ArrayList<>();
-                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+                                        ArrayList<String> array = new ArrayList<>();
+                                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
-                                    while (iterCells.hasNext()) {
-                                        HSSFCell cell = (HSSFCell) iterCells.next();
-                                        array.add(cell.getStringCellValue());
+                                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                        while (iterCells.hasNext()) {
+                                            HSSFCell cell = (HSSFCell) iterCells.next();
+                                            array.add(cell.getStringCellValue());
+                                        }
+
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                        LocalDate localDate = null;
+
+                                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+
+                                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+
+                                        }
+
+                                        int age = 0;
+                                        age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                        int ribDays = 0;
+                                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
+                                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                array.get(3), array.get(4), array.get(5), ribDays,age,
+                                                localDate, array.get(9), array.get(10),
+                                                array.get(11), array.get(12), array.get(13),
+                                                array.get(14), array.get(15), array.get(16),
+                                                array.get(17)));
+
+                                        tableCases.getItems().addAll(observableList);
+                                        caseCount++;
+                                        if (tableCases.getItems().size() >= caseCount + 1) {
+                                            tableCases.getItems().removeAll(observableList);
+                                        }
                                     }
+                                } else {
+                                    if (prodName.equals(setProd.get(j)) && (caseStatus.equals("Pending Closure") || (caseStatus.equals("Future Availability")))) {
 
-                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                                    LocalDate localDate = null;
+                                        ArrayList<String> array = new ArrayList<>();
+                                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+                                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                        while (iterCells.hasNext()) {
+                                            HSSFCell cell = (HSSFCell) iterCells.next();
+                                            array.add(cell.getStringCellValue());
+                                        }
 
-                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                        LocalDate localDate = null;
 
-                                    }
+                                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
 
-                                    int age;
-                                    age = Integer.parseInt(array.get(mycaseAgeRefCell));
-                                    int ribDays = 0;
-                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
 
-                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), ribDays,age,
-                                            localDate, array.get(9), array.get(10),
-                                            array.get(11), array.get(12), array.get(13),
-                                            array.get(14), array.get(15), array.get(16),
-                                            array.get(17)));
+                                        }
 
-                                    tableCases.getItems().addAll(observableList);
-                                    caseCount++;
-                                    if (tableCases.getItems().size() >= caseCount + 1) {
-                                        tableCases.getItems().removeAll(observableList);
+                                        int age;
+                                        age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                        int ribDays = 0;
+                                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
+                                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                array.get(3), array.get(4), array.get(5), ribDays,age,
+                                                localDate, array.get(9), array.get(10),
+                                                array.get(11), array.get(12), array.get(13),
+                                                array.get(14), array.get(15), array.get(16),
+                                                array.get(17)));
+
+                                        tableCases.getItems().addAll(observableList);
+                                        caseCount++;
+                                        if (tableCases.getItems().size() >= caseCount + 1) {
+                                            tableCases.getItems().removeAll(observableList);
+                                        }
                                     }
                                 }
                             }
@@ -10123,6 +10593,7 @@ public class Controller implements Initializable {
             HSSFCell cellVal1;
             HSSFCell cellVal2;
             HSSFCell cellVal3;
+            HSSFCell cellVal4;
 
             for (int i = 0; i < cellnum; i++) {
                 String filterColName = filtersheet.getRow(0).getCell(i).toString();
@@ -10145,6 +10616,9 @@ public class Controller implements Initializable {
                 if (filterColName.equals("Days by Ribbon (days)")) {
                     rbnDaysRefCell = i;
                 }
+                if (filterColName.equals("Support Theater")) {
+                    mycaseRegRefCell = i;
+                }
             }
 
             if ((!txProducts.getText().isEmpty())) {
@@ -10165,78 +10639,160 @@ public class Controller implements Initializable {
                             String caseStatus = cellVal3.getStringCellValue();
                             cellVal2 = filtersheet.getRow(i).getCell(myCaseCellRef1);
                             String cellValToCompare = cellVal2.getStringCellValue();
+                            cellVal4 = filtersheet.getRow(i).getCell(mycaseRegRefCell);
+                            String caseregion = cellVal4.getStringCellValue();
 
-                            if (bool) {
-                                if ((product.equals(setProduct.get(j)) && cellValToCompare.equals(filter)) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
+                            if (reg_product){
+                                if (bool) {
+                                    if (((product.equals(setProduct.get(j)) && cellValToCompare.equals(filter)) && (!caseStatus.equals("Pending Closure") &&
+                                            (!caseStatus.equals("Future Availability")))) && regChoice.getValue().equals(caseregion)){
 
-                                    ArrayList<String> array = new ArrayList<>();
-                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+                                        ArrayList<String> array = new ArrayList<>();
+                                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
-                                    while (iterCells.hasNext()) {
-                                        HSSFCell cell = (HSSFCell) iterCells.next();
-                                        array.add(cell.getStringCellValue());
+                                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                        while (iterCells.hasNext()) {
+                                            HSSFCell cell = (HSSFCell) iterCells.next();
+                                            array.add(cell.getStringCellValue());
+                                        }
+
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                        LocalDate localDate = null;
+
+                                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+                                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                        }
+
+                                        int age = 0;
+                                        age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                        int ribDays = 0;
+                                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
+                                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                array.get(3), array.get(4), array.get(5), ribDays,age,
+                                                localDate, array.get(9), array.get(10),
+                                                array.get(11), array.get(12), array.get(13),
+                                                array.get(14), array.get(15), array.get(16),
+                                                array.get(17)));
+
+                                        tableCases.getItems().addAll(observableList);
+                                        caseCount++;
+                                        if (tableCases.getItems().size() >= caseCount + 1) {
+                                            tableCases.getItems().removeAll(observableList);
+                                        }
                                     }
+                                } else {
+                                    if (((product.equals(setProduct.get(j)) && !cellValToCompare.equals(filter)) && (!caseStatus.equals("Pending Closure") &&
+                                            (!caseStatus.equals("Future Availability")))) && regChoice.getValue().equals(caseregion)){
 
-                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                                    LocalDate localDate = null;
+                                        ArrayList<String> array = new ArrayList<>();
+                                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
-                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
-                                    }
+                                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                        while (iterCells.hasNext()) {
+                                            HSSFCell cell = (HSSFCell) iterCells.next();
+                                            array.add(cell.getStringCellValue());
+                                        }
 
-                                    int age = 0;
-                                    age = Integer.parseInt(array.get(mycaseAgeRefCell));
-                                    int ribDays = 0;
-                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                        LocalDate localDate = null;
 
-                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), ribDays,age,
-                                            localDate, array.get(9), array.get(10),
-                                            array.get(11), array.get(12), array.get(13),
-                                            array.get(14), array.get(15), array.get(16),
-                                            array.get(17)));
+                                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+                                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                        }
 
-                                    tableCases.getItems().addAll(observableList);
-                                    caseCount++;
-                                    if (tableCases.getItems().size() >= caseCount + 1) {
-                                        tableCases.getItems().removeAll(observableList);
+                                        int age;
+                                        age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                        int ribDays = 0;
+                                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                array.get(3), array.get(4), array.get(5), ribDays,age,
+                                                localDate, array.get(9), array.get(10),
+                                                array.get(11), array.get(12), array.get(13),
+                                                array.get(14), array.get(15), array.get(16),
+                                                array.get(17)));
+
+                                        tableCases.getItems().addAll(observableList);
+                                        caseCount++;
+                                        if (tableCases.getItems().size() >= caseCount + 1) {
+                                            tableCases.getItems().removeAll(observableList);
+                                        }
                                     }
                                 }
-                            } else {
-                                if ((product.equals(setProduct.get(j)) && !cellValToCompare.equals(filter)) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
+                            }
+                            else{
+                                if (bool) {
+                                    if ((product.equals(setProduct.get(j)) && cellValToCompare.equals(filter)) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
 
-                                    ArrayList<String> array = new ArrayList<>();
-                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
+                                        ArrayList<String> array = new ArrayList<>();
+                                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
-                                    while (iterCells.hasNext()) {
-                                        HSSFCell cell = (HSSFCell) iterCells.next();
-                                        array.add(cell.getStringCellValue());
+                                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                        while (iterCells.hasNext()) {
+                                            HSSFCell cell = (HSSFCell) iterCells.next();
+                                            array.add(cell.getStringCellValue());
+                                        }
+
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                        LocalDate localDate = null;
+
+                                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+                                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                        }
+
+                                        int age = 0;
+                                        age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                        int ribDays = 0;
+                                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+
+                                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                array.get(3), array.get(4), array.get(5), ribDays,age,
+                                                localDate, array.get(9), array.get(10),
+                                                array.get(11), array.get(12), array.get(13),
+                                                array.get(14), array.get(15), array.get(16),
+                                                array.get(17)));
+
+                                        tableCases.getItems().addAll(observableList);
+                                        caseCount++;
+                                        if (tableCases.getItems().size() >= caseCount + 1) {
+                                            tableCases.getItems().removeAll(observableList);
+                                        }
                                     }
+                                } else {
+                                    if ((product.equals(setProduct.get(j)) && !cellValToCompare.equals(filter)) && (!caseStatus.equals("Pending Closure") && (!caseStatus.equals("Future Availability")))) {
 
-                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                                    LocalDate localDate = null;
+                                        ArrayList<String> array = new ArrayList<>();
+                                        ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
 
-                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
-                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
-                                    }
+                                        Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(i).cellIterator();
+                                        while (iterCells.hasNext()) {
+                                            HSSFCell cell = (HSSFCell) iterCells.next();
+                                            array.add(cell.getStringCellValue());
+                                        }
 
-                                    int age;
-                                    age = Integer.parseInt(array.get(mycaseAgeRefCell));
-                                    int ribDays = 0;
-                                    ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
-                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), ribDays,age,
-                                            localDate, array.get(9), array.get(10),
-                                            array.get(11), array.get(12), array.get(13),
-                                            array.get(14), array.get(15), array.get(16),
-                                            array.get(17)));
+                                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
+                                        LocalDate localDate = null;
 
-                                    tableCases.getItems().addAll(observableList);
-                                    caseCount++;
-                                    if (tableCases.getItems().size() >= caseCount + 1) {
-                                        tableCases.getItems().removeAll(observableList);
+                                        if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
+                                            localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
+                                        }
+
+                                        int age;
+                                        age = Integer.parseInt(array.get(mycaseAgeRefCell));
+                                        int ribDays = 0;
+                                        ribDays = Integer.parseInt(array.get(rbnDaysRefCell));
+                                        observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
+                                                array.get(3), array.get(4), array.get(5), ribDays,age,
+                                                localDate, array.get(9), array.get(10),
+                                                array.get(11), array.get(12), array.get(13),
+                                                array.get(14), array.get(15), array.get(16),
+                                                array.get(17)));
+
+                                        tableCases.getItems().addAll(observableList);
+                                        caseCount++;
+                                        if (tableCases.getItems().size() >= caseCount + 1) {
+                                            tableCases.getItems().removeAll(observableList);
+                                        }
                                     }
                                 }
                             }
@@ -10375,9 +10931,13 @@ public class Controller implements Initializable {
                             webEngine.load("https://sonus.okta.com/home/salesforce/0oayiqwes0HuzLJ6a1t6/46?fromHome=true");
                             progressBar.setProgress(0.50);
                             apnBrowser.toBack();
+                            btnLogin.setDisable(true);
                             progressBar.setProgress(0.60);
+                            webEngine.setJavaScriptEnabled(true);
+
                         }
-                        if (webEngine.getLocation().contains("salesforce.com/500") || webEngine.getLocation().contains("salesforce.com/home")){
+                        if (webEngine.getLocation().contains("salesforce.com/500") || webEngine.getLocation().contains("salesforce.com/home")
+                                || webEngine.getLocation().contains("lightning/page/home") || webEngine.getLocation().contains("rbbn.lightning.force.com/one/one.app")){
 
                                 //webEngine.getLocation().equals("https://rbbn.my.salesforce.com/500/o") || webEngine.getLocation().equals("https://rbbn.my.salesforce.com/home/home.jsp") ||
                                 //webEngine.getLocation().equals("https://na104.salesforce.com/500/o") || webEngine.getLocation().equals("https://na104.salesforce.com/home/home.jsp")) {
@@ -10396,7 +10956,7 @@ public class Controller implements Initializable {
                             progressBar.setProgress(1);
                             apnMyCases.toFront();
                             myCasesPage();
-                            regionChoice();
+                            // regionChoice();
                             lblStatus.setText("MY CASES");
                         }
                     }
@@ -11194,7 +11754,10 @@ public class Controller implements Initializable {
 
             FileWriter writer = new FileWriter(new File(settingsFolder + "\\cmt_region_default_settings.txt"));
             String str = regChoice.getValue().toString();
+            String check = Boolean.toString(reg_product);
             writer.write(str);
+            writer.write("\n");
+            writer.write(check);
             writer.close();
 
         } catch (Exception e) {
@@ -11352,7 +11915,14 @@ public class Controller implements Initializable {
                 readRegion.add(s.nextLine());
             }
             s.close();
-            regChoice.setValue(readRegion.get(0));
+            if (readRegion.size() > 1) {
+                regChoice.setValue(readRegion.get(0));
+                reg_product = Boolean.parseBoolean(readRegion.get(1));
+                if (reg_product){
+                    checkRegProduct.setSelected(true);
+                }
+
+            }
         }
 
         if (settingWGFile.isFile()) {
@@ -11853,219 +12423,6 @@ public class Controller implements Initializable {
             logger.log(Level.WARNING, "Create Table Failed!", e);
         }
     }
-
-
-/*    private void createMyCoOwnerQueueCaseView(Boolean assigned){
-
-        int caseCount = 0;
-
-        try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
-
-            HSSFSheet filtersheet = workbook.getSheetAt(0);
-            int cellnum = filtersheet.getRow(0).getLastCellNum();
-            int lastRow = filtersheet.getLastRowNum();
-            HSSFCell cellVal;
-            HSSFCell cellVal2;
-
-            for (int i = 0; i < cellnum; i++) {
-
-                String filterColName = filtersheet.getRow(0).getCell(i).toString();
-
-                if (filterColName.equals("Co-Owner")){
-                    myCoOwnCaseRefCell = i;
-                }
-                if (filterColName.equals("Co-Owner Queue")){
-                    myCoOwnQueueRefCell = i;
-                }
-
-                if (filterColName.equals("Age (Days)")) {
-                    mycaseAgeRefCell = i;
-                }
-                if (filterColName.equals("Next Case Update")) {
-                    caseNextUpdateDateRef = i;
-                }
-            }
-
-            if (!txQueues.getText().isEmpty()) {
-
-                String queueFilter = txQueues.getText();
-                ArrayList<String> setQueue = new ArrayList<>(Arrays.asList(txQueues.getText().split(",\\s*")));
-                int queuefiltnum = setQueue.size();
-
-                if ((!queueFilter.equals(""))) {
-
-                    for (int j = 0; j < queuefiltnum; j++) {
-
-                        for (int k = 1; k < lastRow + 1; k++) {
-
-                            cellVal = filtersheet.getRow(k).getCell(myCoOwnCaseRefCell);
-                            String cellValToCompare = cellVal.getStringCellValue();
-
-                            cellVal2 = filtersheet.getRow(k).getCell(myCoOwnQueueRefCell);
-                            String cellValToCompare2 = cellVal2.getStringCellValue();
-
-                            if (!assigned) {
-
-                                if (cellValToCompare2.equals(setQueue.get(j)) && cellValToCompare.equals("NotSet")) {
-
-                                    ArrayList<String> array = new ArrayList<>();
-                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
-
-                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
-                                    while (iterCells.hasNext()) {
-                                        HSSFCell cell = (HSSFCell) iterCells.next();
-                                        array.add(cell.getStringCellValue());
-                                    }
-
-                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                                    LocalDate localDate = null;
-
-                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
-
-                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
-
-                                    }
-
-                                    int age;
-                                    age = Integer.parseInt(array.get(mycaseAgeRefCell));
-                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6), age,
-                                            localDate, array.get(9), array.get(10),
-                                            array.get(11), array.get(12), array.get(13),
-                                            array.get(14), array.get(15), array.get(16),
-                                            array.get(17)));
-
-                                    tableCases.getItems().addAll(observableList);
-                                    caseCount++;
-                                    if (tableCases.getItems().size() >= caseCount + 1) {
-                                        tableCases.getItems().removeAll(observableList);
-                                    }
-                                }
-                            }if (assigned){
-                                if (cellValToCompare2.equals(setQueue.get(j)) && !cellValToCompare.equals("NotSet")) {
-
-                                    ArrayList<String> array = new ArrayList<>();
-                                    ObservableList<CaseTableView> observableList = FXCollections.observableArrayList();
-
-                                    Iterator<org.apache.poi.ss.usermodel.Cell> iterCells = filtersheet.getRow(k).cellIterator();
-                                    while (iterCells.hasNext()) {
-                                        HSSFCell cell = (HSSFCell) iterCells.next();
-                                        array.add(cell.getStringCellValue());
-                                    }
-
-                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-                                    LocalDate localDate = null;
-
-                                    if (!array.get(caseNextUpdateDateRef).equals("NotSet")) {
-
-                                        localDate = LocalDate.parse(array.get(caseNextUpdateDateRef), formatter);
-
-                                    }
-
-                                    int age;
-                                    age = Integer.parseInt(array.get(mycaseAgeRefCell));
-                                    observableList.add(new CaseTableView(array.get(0), array.get(1), array.get(2),
-                                            array.get(3), array.get(4), array.get(5), array.get(6), age,
-                                            localDate, array.get(9), array.get(10),
-                                            array.get(11), array.get(12), array.get(13),
-                                            array.get(14), array.get(15), array.get(16),
-                                            array.get(17)));
-
-                                    tableCases.getItems().addAll(observableList);
-                                    caseCount++;
-                                    if (tableCases.getItems().size() >= caseCount + 1) {
-                                        tableCases.getItems().removeAll(observableList);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            btnToExcel.setVisible(true);
-            apnTableView.toFront();
-
-            btnToExcel.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    exportExcelAction(tableCases);
-                }
-            });
-
-            menu = new ContextMenu();
-            String caseno = "";
-            menu.getItems().add(openCaseSFDC);
-            menu.getItems().add(casePersonalNote);
-            menu.getItems().add(openCaseComments);
-            menu.getItems().add(openCaseDetails);
-            tableCases.setContextMenu(menu);
-
-            casePersonalNote.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    newCaseNote();
-
-                }});
-
-            openCaseDetails.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    myCaseDetails();
-                }
-            });
-
-            openCaseSFDC.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    try {
-
-                        String search = "https://rbbn.my.salesforce.com/_ui/search/ui/UnifiedSearchResults?searchType=2&sen=001&sen=500&sen=005&sen=a0U&sen=00O&str="+getCaseNumber(tableCases, caseno);
-
-                        URL caseSearch = new URL(search);
-                        Desktop.getDesktop().browse(caseSearch.toURI());
-                    }catch (Exception e){
-                        logger.log(Level.WARNING, "Search Case in SFDC Failed!", e);
-                    }
-
-                }
-            });
-
-            openCaseComments.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    viewCaseComments();
-                }
-            });
-
-            // Selecting and Copy the Case Number to Clipboard
-            tableCases.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    try {
-                        copyCaseNumberToClipboard(tableCases);
-                    } catch (Exception e) {
-                        logger.log(Level.WARNING, "Get Case Number Failed", e);
-                    }
-                }
-            });
-
-            btnBack.setVisible(true);
-            btnBack.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    apnMyCases.toFront();
-                    lblStatus.setText("MY CASES");
-                    btnBack.setVisible(false);
-                    btnToExcel.setVisible(false);
-                    tableCases.getItems().clear();
-                }
-            });
-
-        } catch (Exception e) {
-            logger.log(Level.WARNING, "Create Table Failed!", e);
-        }
-    }*/
 
     private void createMyQueueCaseView(String columnSelect, TableView<CaseTableView> tableCases, AnchorPane apnTableView) {
 
@@ -16938,6 +17295,7 @@ public class Controller implements Initializable {
         HSSFCell mycaseUpdate;
         HSSFCell productName;
         HSSFCell caseRbnDays;
+        HSSFCell caseRegion;
 
 
         try (HSSFWorkbook workbook = new HSSFWorkbook(new POIFSFileSystem(new FileInputStream(dataFolder + "\\cmt_case_data_V3.xls")))) {
@@ -17027,6 +17385,9 @@ public class Controller implements Initializable {
                     case ("Days by Ribbon (days)"):
                         rbbnDaysRefCell = i;
                         break;
+                    case ("Support Theater"):
+                        caseRegionRef = i;
+                        break;
                 }
             }
 
@@ -17088,142 +17449,294 @@ public class Controller implements Initializable {
                             String prodRbnDays = caseRbnDays.getStringCellValue();
                             int prdRbnDays = Integer.parseInt(prodRbnDays);
 
-                            if (productCellStr.equals(setProducts.get(j))) {
+                            caseRegion = filtersheet.getRow(i).getCell(caseRegionRef);
+                            String productRegion = caseRegion.getStringCellValue();
 
-                                if (!mystrFltStatus.equals("NotSet") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
-                                    prodHotList++;
-                                }
-                                if (myfollowOut.equals("1") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
-                                    prodOutFollow++;
-                                }
-                                if (!myescalatedCases.equals("NotSet") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
-                                    prodEscCases++;
-                                }
-                                if (mycaseSever.equals("Critical") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
-                                    prodE1Case++;
-                                }
-                                if (mycaseSever.equals("E2") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
-                                    prodE2Cases++;
-                                }
-                                if (mycaseSever.equals("Business Critical")) {
-                                    if (!mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
-                                        prodBCCases++;
-                                    }
-                                    if (mycaseStatus.equals("Open / Assign") || mycaseStatus.equals("Isolate Fault")) {
-                                        prodBCWIP++;
-                                    }
-                                    if (myresponsible.equals("Customer action")) {
-                                        prodBCWac++;
-                                    }
-                                    if (myresponsible.equals("Customer updated")) {
-                                        prodBCupdated++;
-                                    }
-                                    if (!mycaseStatus.equals("Develop Solution") || !mycaseStatus.equals("Future Availability") || !mycaseStatus.equals("Pending Closure")) {
-                                        if (prdRbnDays <= 5) {
-                                            prodBCDueCases++;
-                                        } if (prdRbnDays > 5) {
-                                            prodBCMissedCases++;
-                                        }
-                                    }
-                                    if (mycaseStatus.equals("Develop Solution")) {
-                                        prodBCDSCases++;
-                                    }
-                                    if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
-                                        prodBCInactiveCases++;
-                                    }
-                                    if (caseuser.startsWith("PS") || caseuser.startsWith("TS") || caseuser.startsWith("Tech-Ops")){
-                                        prodBCQueue++;
-                                    }
-                                }
-                                if (mycaseSever.equals("Major")) {
 
-                                    if (mycaseStatus.equals("Develop Solution")) {
-                                        prodMJDSCases++;
+                            if (reg_product){
+                                if ((productCellStr.equals(setProducts.get(j))) && regChoice.getValue().equals(productRegion)) {
+
+                                    if (!mystrFltStatus.equals("NotSet") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                        prodHotList++;
                                     }
-                                    if (!mycaseStatus.equals("Develop Solution") || !mycaseStatus.equals("Future Availability") || !mycaseStatus.equals("Pending Closure")) {
-                                        if (prdRbnDays <= 15) {
-                                            prodMJDueCases++;
-                                        } if (prdRbnDays > 15) {
-                                            prodMJMissedCases++;
+                                    if (myfollowOut.equals("1") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                        prodOutFollow++;
+                                    }
+                                    if (!myescalatedCases.equals("NotSet") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                        prodEscCases++;
+                                    }
+                                    if (mycaseSever.equals("Critical") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                        prodE1Case++;
+                                    }
+                                    if (mycaseSever.equals("E2") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                        prodE2Cases++;
+                                    }
+                                    if (mycaseSever.equals("Business Critical")) {
+                                        if (!mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                            prodBCCases++;
+                                        }
+                                        if (mycaseStatus.equals("Open / Assign") || mycaseStatus.equals("Isolate Fault")) {
+                                            prodBCWIP++;
+                                        }
+                                        if (myresponsible.equals("Customer action")) {
+                                            prodBCWac++;
+                                        }
+                                        if (myresponsible.equals("Customer updated")) {
+                                            prodBCupdated++;
+                                        }
+                                        if (!mycaseStatus.equals("Develop Solution") || !mycaseStatus.equals("Future Availability") || !mycaseStatus.equals("Pending Closure")) {
+                                            if (prdRbnDays <= 5) {
+                                                prodBCDueCases++;
+                                            }
+                                            if (prdRbnDays > 5) {
+                                                prodBCMissedCases++;
+                                            }
+                                        }
+                                        if (mycaseStatus.equals("Develop Solution")) {
+                                            prodBCDSCases++;
+                                        }
+                                        if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                                            prodBCInactiveCases++;
+                                        }
+                                        if (caseuser.startsWith("PS") || caseuser.startsWith("TS") || caseuser.startsWith("Tech-Ops")) {
+                                            prodBCQueue++;
+                                        }
+                                    }
+                                    if (mycaseSever.equals("Major")) {
+
+                                        if (mycaseStatus.equals("Develop Solution")) {
+                                            prodMJDSCases++;
+                                        }
+                                        if (!mycaseStatus.equals("Develop Solution") || !mycaseStatus.equals("Future Availability") || !mycaseStatus.equals("Pending Closure")) {
+                                            if (prdRbnDays <= 15) {
+                                                prodMJDueCases++;
+                                            }
+                                            if (prdRbnDays > 15) {
+                                                prodMJMissedCases++;
+                                            }
+                                        }
+                                        if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                                            prodMJInactiveCases++;
+                                        }
+                                        if (myresponsible.equals("Customer action")) {
+                                            prodMJWAC++;
+                                        }
+                                        if (myresponsible.equals("Customer updated")) {
+                                            prodMJUpdated++;
+                                        }
+                                        if (mycaseStatus.equals("Open / Assign") || (mycaseStatus.equals("Isolate Fault"))) {
+                                            prodMJWIP++;
+                                        }
+                                        if (caseuser.startsWith("PS") || caseuser.startsWith("TS") || caseuser.startsWith("Tech-Ops")) {
+                                            prodMJQueue++;
                                         }
                                     }
                                     if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
-                                        prodMJInactiveCases++;
+                                        prodInactiveCases++;
+                                    } else {
+                                        prodWOHCases++;
                                     }
-                                    if (myresponsible.equals("Customer action")) {
-                                        prodMJWAC++;
+                                    if ((caseUpdateDate != null)) {
+                                        if (caseUpdateDate.compareTo(dateToday) == 0) {
+                                            prodUpdateToday++;
+                                        }
+                                        if (caseUpdateDate.compareTo(dateToday) < 0) {
+                                            prodUpdateMissed++;
+                                        }
                                     }
-                                    if (myresponsible.equals("Customer updated")) {
-                                        prodMJUpdated++;
-                                    }
-                                    if (mycaseStatus.equals("Open / Assign") || (mycaseStatus.equals("Isolate Fault"))) {
-                                        prodMJWIP++;
-                                    }
-                                    if (caseuser.startsWith("PS") || caseuser.startsWith("TS") || caseuser.startsWith("Tech-Ops")){
-                                        prodMJQueue++;
-                                    }
-                                }
-                                if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
-                                    prodInactiveCases++;
-                                } else {
-                                    prodWOHCases++;
-                                }
-                                if ((caseUpdateDate != null)) {
-                                    if (caseUpdateDate.compareTo(dateToday) == 0) {
-                                        prodUpdateToday++;
-                                    }
-                                    if (caseUpdateDate.compareTo(dateToday) < 0) {
-                                        prodUpdateMissed++;
-                                    }
-                                }
-                                if (mycaseSever.equals("Minor")) {
-                                    if (mycaseStatus.equals("Develop Solution")) {
-                                        prodMNEng++;
-                                    }
-                                    if (!mycaseStatus.equals("Develop Solution") || !mycaseStatus.equals("Future Availability") || !mycaseStatus.equals("Pending Closure")) {
-                                        if (prdRbnDays <= 30) {
-                                            prodMNDue++;
-                                        } if (prdRbnDays > 30) {
-                                            prodMNMissed++;
+                                    if (mycaseSever.equals("Minor")) {
+                                        if (mycaseStatus.equals("Develop Solution")) {
+                                            prodMNEng++;
+                                        }
+                                        if (!mycaseStatus.equals("Develop Solution") || !mycaseStatus.equals("Future Availability") || !mycaseStatus.equals("Pending Closure")) {
+                                            if (prdRbnDays <= 30) {
+                                                prodMNDue++;
+                                            }
+                                            if (prdRbnDays > 30) {
+                                                prodMNMissed++;
+                                            }
+                                        }
+                                        if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                                            prodMNInact++;
+                                        }
+                                        if (myresponsible.equals("Customer action")) {
+                                            prodMNWAC++;
+                                        }
+                                        if (myresponsible.equals("Customer updated")) {
+                                            prodMNUpdated++;
+                                        }
+                                        if (mycaseStatus.equals("Open / Assign") || (mycaseStatus.equals("Isolate Fault"))) {
+                                            prodMNWIP++;
+                                        }
+                                        if (caseuser.startsWith("PS") || caseuser.startsWith("TS") || caseuser.startsWith("Tech-Ops")) {
+                                            prodMNQueue++;
                                         }
                                     }
                                     if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
-                                        prodMNInact++;
+                                        prodInactiveCases++;
+                                    } else {
+                                        prodWOHCases++;
                                     }
-                                    if (myresponsible.equals("Customer action")) {
-                                        prodMNWAC++;
+                                    if ((caseUpdateDate != null)) {
+                                        if (caseUpdateDate.compareTo(dateToday) == 0) {
+                                            prodUpdateToday++;
+                                        }
+                                        if (caseUpdateDate.compareTo(dateToday) < 0) {
+                                            prodUpdateMissed++;
+                                        }
                                     }
-                                    if (myresponsible.equals("Customer updated")) {
-                                        prodMNUpdated++;
+                                    if (myCaseUpdate.equals("NotSet") && !mycaseStatus.equals("Pending Closure")) {
+                                        prodUpdateNull++;
                                     }
-                                    if (mycaseStatus.equals("Open / Assign") || (mycaseStatus.equals("Isolate Fault"))) {
-                                        prodMNWIP++;
+                                    if (caseuser.startsWith("PS ")) {
+                                        prodQueuePS++;
                                     }
-                                    if (caseuser.startsWith("PS") || caseuser.startsWith("TS") || caseuser.startsWith("Tech-Ops")){
-                                        prodMNQueue++;
-                                    }
-                                }
-                                if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
-                                    prodInactiveCases++;
-                                } else {
-                                    prodWOHCases++;
-                                }
-                                if ((caseUpdateDate != null)) {
-                                    if (caseUpdateDate.compareTo(dateToday) == 0) {
-                                        prodUpdateToday++;
-                                    }
-                                    if (caseUpdateDate.compareTo(dateToday) < 0) {
-                                        prodUpdateMissed++;
+                                    if (caseuser.startsWith("TS ") || caseuser.startsWith("Tech-Ops")) {
+                                        prodQueueTS++;
                                     }
                                 }
-                                if (myCaseUpdate.equals("NotSet") && !mycaseStatus.equals("Pending Closure")) {
-                                    prodUpdateNull++;
-                                }
-                                if (caseuser.startsWith("PS ")) {
-                                    prodQueuePS++;
-                                }
-                                if (caseuser.startsWith("TS ") || caseuser.startsWith("Tech-Ops")) {
-                                    prodQueueTS++;
+                            }
+                            else{
+                                if (productCellStr.equals(setProducts.get(j))) {
+
+                                    if (!mystrFltStatus.equals("NotSet") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                        prodHotList++;
+                                    }
+                                    if (myfollowOut.equals("1") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                        prodOutFollow++;
+                                    }
+                                    if (!myescalatedCases.equals("NotSet") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                        prodEscCases++;
+                                    }
+                                    if (mycaseSever.equals("Critical") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                        prodE1Case++;
+                                    }
+                                    if (mycaseSever.equals("E2") && !mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                        prodE2Cases++;
+                                    }
+                                    if (mycaseSever.equals("Business Critical")) {
+                                        if (!mycaseStatus.equals("Pending Closure") && !mycaseStatus.equals("Future Availability")) {
+                                            prodBCCases++;
+                                        }
+                                        if (mycaseStatus.equals("Open / Assign") || mycaseStatus.equals("Isolate Fault")) {
+                                            prodBCWIP++;
+                                        }
+                                        if (myresponsible.equals("Customer action")) {
+                                            prodBCWac++;
+                                        }
+                                        if (myresponsible.equals("Customer updated")) {
+                                            prodBCupdated++;
+                                        }
+                                        if (!mycaseStatus.equals("Develop Solution") || !mycaseStatus.equals("Future Availability") || !mycaseStatus.equals("Pending Closure")) {
+                                            if (prdRbnDays <= 5) {
+                                                prodBCDueCases++;
+                                            }
+                                            if (prdRbnDays > 5) {
+                                                prodBCMissedCases++;
+                                            }
+                                        }
+                                        if (mycaseStatus.equals("Develop Solution")) {
+                                            prodBCDSCases++;
+                                        }
+                                        if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                                            prodBCInactiveCases++;
+                                        }
+                                        if (caseuser.startsWith("PS") || caseuser.startsWith("TS") || caseuser.startsWith("Tech-Ops")) {
+                                            prodBCQueue++;
+                                        }
+                                    }
+                                    if (mycaseSever.equals("Major")) {
+
+                                        if (mycaseStatus.equals("Develop Solution")) {
+                                            prodMJDSCases++;
+                                        }
+                                        if (!mycaseStatus.equals("Develop Solution") || !mycaseStatus.equals("Future Availability") || !mycaseStatus.equals("Pending Closure")) {
+                                            if (prdRbnDays <= 15) {
+                                                prodMJDueCases++;
+                                            }
+                                            if (prdRbnDays > 15) {
+                                                prodMJMissedCases++;
+                                            }
+                                        }
+                                        if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                                            prodMJInactiveCases++;
+                                        }
+                                        if (myresponsible.equals("Customer action")) {
+                                            prodMJWAC++;
+                                        }
+                                        if (myresponsible.equals("Customer updated")) {
+                                            prodMJUpdated++;
+                                        }
+                                        if (mycaseStatus.equals("Open / Assign") || (mycaseStatus.equals("Isolate Fault"))) {
+                                            prodMJWIP++;
+                                        }
+                                        if (caseuser.startsWith("PS") || caseuser.startsWith("TS") || caseuser.startsWith("Tech-Ops")) {
+                                            prodMJQueue++;
+                                        }
+                                    }
+                                    if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                                        prodInactiveCases++;
+                                    } else {
+                                        prodWOHCases++;
+                                    }
+                                    if ((caseUpdateDate != null)) {
+                                        if (caseUpdateDate.compareTo(dateToday) == 0) {
+                                            prodUpdateToday++;
+                                        }
+                                        if (caseUpdateDate.compareTo(dateToday) < 0) {
+                                            prodUpdateMissed++;
+                                        }
+                                    }
+                                    if (mycaseSever.equals("Minor")) {
+                                        if (mycaseStatus.equals("Develop Solution")) {
+                                            prodMNEng++;
+                                        }
+                                        if (!mycaseStatus.equals("Develop Solution") || !mycaseStatus.equals("Future Availability") || !mycaseStatus.equals("Pending Closure")) {
+                                            if (prdRbnDays <= 30) {
+                                                prodMNDue++;
+                                            }
+                                            if (prdRbnDays > 30) {
+                                                prodMNMissed++;
+                                            }
+                                        }
+                                        if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                                            prodMNInact++;
+                                        }
+                                        if (myresponsible.equals("Customer action")) {
+                                            prodMNWAC++;
+                                        }
+                                        if (myresponsible.equals("Customer updated")) {
+                                            prodMNUpdated++;
+                                        }
+                                        if (mycaseStatus.equals("Open / Assign") || (mycaseStatus.equals("Isolate Fault"))) {
+                                            prodMNWIP++;
+                                        }
+                                        if (caseuser.startsWith("PS") || caseuser.startsWith("TS") || caseuser.startsWith("Tech-Ops")) {
+                                            prodMNQueue++;
+                                        }
+                                    }
+                                    if (mycaseStatus.equals("Pending Closure") || mycaseStatus.equals("Future Availability")) {
+                                        prodInactiveCases++;
+                                    } else {
+                                        prodWOHCases++;
+                                    }
+                                    if ((caseUpdateDate != null)) {
+                                        if (caseUpdateDate.compareTo(dateToday) == 0) {
+                                            prodUpdateToday++;
+                                        }
+                                        if (caseUpdateDate.compareTo(dateToday) < 0) {
+                                            prodUpdateMissed++;
+                                        }
+                                    }
+                                    if (myCaseUpdate.equals("NotSet") && !mycaseStatus.equals("Pending Closure")) {
+                                        prodUpdateNull++;
+                                    }
+                                    if (caseuser.startsWith("PS ")) {
+                                        prodQueuePS++;
+                                    }
+                                    if (caseuser.startsWith("TS ") || caseuser.startsWith("Tech-Ops")) {
+                                        prodQueueTS++;
+                                    }
                                 }
                             }
                         }
@@ -17245,8 +17758,18 @@ public class Controller implements Initializable {
                             caseQueue = workbook.getSheetAt(0).getRow(l).getCell(caseOwnerRefCell);
                             String casequeue = caseQueue.getStringCellValue();
 
-                            if (casequeue.equals(setQueue.get(k))) {
-                                prodQueuedCases++;
+                            caseRegion = workbook.getSheetAt(0).getRow(l).getCell(caseRegionRef);
+                            String productRegion = caseRegion.getStringCellValue();
+
+                            if (reg_product){
+                                if (casequeue.equals(setQueue.get(k)) && regChoice.getValue().equals(productRegion)) {
+                                    prodQueuedCases++;
+                                }
+                            }
+                            else{
+                                if (casequeue.equals(setQueue.get(k))) {
+                                    prodQueuedCases++;
+                                }
                             }
                         }
                     }
@@ -19240,7 +19763,7 @@ public class Controller implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText("For any issues/requests please inform us:" + "\n" + "\n" +
                     "Alper Simsek"+ "    " + "asimsek@rbbn.com" + "\n" + "\n" +
-                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 2.0.1");
+                    "Vehbi Benli" + "       " + "vbenli@rbbn.com" + "\n" + "\n" +"RBBN RSD Version 2.0.2");
             alert.showAndWait();
         }
 

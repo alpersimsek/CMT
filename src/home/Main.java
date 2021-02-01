@@ -26,7 +26,7 @@ public class Main extends Application {
 
             loader = new FXMLLoader(getClass().getResource("Main.fxml"));
             Parent root = loader.load();
-            primaryStage.setTitle("RBBN Case Management Tool Version 2.0.1");
+            primaryStage.setTitle("RBBN Case Management Tool Version 2.0.2");
             primaryStage.getIcons().add(new Image("home/image/rbbicon.png"));
             primaryStage.setScene(new Scene(root, 1280, 1000));
             primaryStage.show();
